@@ -39885,10 +39885,11 @@ ${content}</tr>
       } else {
         var history = context2.history();
         var changes = history.changes(actionDiscardTags(history.difference(), _discardTags));
-        var layerTag = osm.layerTag();
-        if (layerTag && layerTag.key && layerTag.value) {
+        var layerTagKey = osm.layerTagKey();
+        var layerTagValue = osm.layerTagValue();
+        if (layerTagKey && layerTagValue) {
           var requiredTags = {};
-          requiredTags[layerTag.key] = layerTag.value;
+          requiredTags[layerTagKey] = layerTagValue;
           changes = history.changes(actionEnforceRequiredTags(changes.created, requiredTags));
         }
         if (changes.modified.length || changes.created.length || changes.deleted.length) {
@@ -65453,10 +65454,16 @@ ${content}</tr>
       _mainLocalizer.preferredLocaleCodes(locale2);
       return context2;
     };
-    context2.layerTag = function(obj) {
+    context2.layerTagKey = function(obj) {
       if (!arguments.length)
-        return _connection.layerTag();
-      _connection.layerTag(obj);
+        return _connection.layerTagKey();
+      _connection.layerTagKey(obj);
+      return context2;
+    };
+    context2.layerTagValue = function(obj) {
+      if (!arguments.length)
+        return _connection.layerTagValue();
+      _connection.layerTagValue(obj);
       return context2;
     };
     function afterLoad(cid, callback) {
@@ -66638,7 +66645,8 @@ ${content}</tr>
   var _userChangesets;
   var _userDetails;
   var _off;
-  var _layerTag;
+  var _layerTagKey = "PDM:LAYER";
+  var _layerTagValue;
   var _maxWayNodes = 2e3;
   function authLoading() {
     dispatch7.call("authLoading");
@@ -66841,10 +66849,17 @@ ${content}</tr>
         return null;
       var uid;
       uid = osmEntity.id.fromOSM(child.type, child.id);
-      if (_layerTag && _layerTag.key && _layerTag.value) {
-        if (!child.tags || child.tags[_layerTag.key] !== _layerTag.value) {
-          _tileCache.seen[uid] = true;
-          return null;
+      if (_layerTagKey) {
+        if (_layerTagValue) {
+          if (!child.tags || !(_layerTagValue === "*" && child.tags[_layerTagKey]) && !(_layerTagValue !== "*" && child.tags[_layerTagKey] === _layerTagValue)) {
+            _tileCache.seen[uid] = true;
+            return null;
+          }
+        } else {
+          if (child.tags && child.tags[_layerTagKey]) {
+            _tileCache.seen[uid] = true;
+            return null;
+          }
         }
       }
       if (options2.skipSeen) {
@@ -67084,10 +67099,16 @@ ${content}</tr>
       _changeset = {};
       return this;
     },
-    layerTag: function(layerTag) {
+    layerTagKey: function(str2) {
       if (!arguments.length)
-        return _layerTag;
-      _layerTag = layerTag;
+        return _layerTagKey;
+      _layerTagKey = str2;
+      return context;
+    },
+    layerTagValue: function(str2) {
+      if (!arguments.length)
+        return _layerTagValue;
+      _layerTagValue = str2;
       return context;
     },
     getConnectionId: function() {

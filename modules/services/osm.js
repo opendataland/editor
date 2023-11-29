@@ -41,7 +41,8 @@ var _userChangesets;
 var _userDetails;
 var _off;
 
-var _layerTag;
+var _layerTagKey = "PDM:LAYER";
+var _layerTagValue;
 
 // set a default but also load this from the API status
 var _maxWayNodes = 2000;
@@ -282,11 +283,20 @@ function parseJSON(payload, callback, options) {
         var uid;
 
         uid = osmEntity.id.fromOSM(child.type, child.id);
-        if (_layerTag && _layerTag.key && _layerTag.value) {
-            if (!child.tags ||
-                child.tags[_layerTag.key] !== _layerTag.value) {
-                _tileCache.seen[uid] = true;
-                return null;
+        if (_layerTagKey) {
+            if (_layerTagValue) {
+                if (!child.tags ||
+                    (!(_layerTagValue === "*" && child.tags[_layerTagKey]) &&
+                    !(_layerTagValue !== "*" && child.tags[_layerTagKey] === _layerTagValue))) {
+                    _tileCache.seen[uid] = true;
+                    return null;
+                }
+            } else {
+                // if layer key is specified but not value, show everything without a layer
+                if (child.tags && child.tags[_layerTagKey]) {
+                    _tileCache.seen[uid] = true;
+                    return null;
+                }
             }
         }
         if (options.skipSeen) {
@@ -569,10 +579,17 @@ export default {
         return this;
     },
 
-    // An object containing a "key" and "value" for a tag to filter all data 
-    layerTag: function(layerTag) {
-        if (!arguments.length) return _layerTag;
-        _layerTag = layerTag;
+
+    layerTagKey: function(str) {
+        if (!arguments.length) return _layerTagKey;
+        _layerTagKey = str;
+        return context;
+    },
+
+
+    layerTagValue: function(str) {
+        if (!arguments.length) return _layerTagValue;
+        _layerTagValue = str;
         return context;
     },
 

@@ -290,10 +290,11 @@ export function coreUploader(context) {
             var history = context.history();
             var changes = history.changes(actionDiscardTags(history.difference(), _discardTags));
             
-            var layerTag = osm.layerTag();
-            if (layerTag && layerTag.key && layerTag.value) {
+            var layerTagKey = osm.layerTagKey();
+            var layerTagValue = osm.layerTagValue();
+            if (layerTagKey && layerTagValue) {
                 var requiredTags = {};
-                requiredTags[layerTag.key] = layerTag.value;
+                requiredTags[layerTagKey] = layerTagValue;
                 changes = history.changes(actionEnforceRequiredTags(changes.created, requiredTags));
             }
             

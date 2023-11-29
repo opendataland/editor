@@ -119,10 +119,16 @@ export function coreContext() {
     return context;
   };
 
-  // An object containing a "key" and "value" for a tag to filter all data 
-  context.layerTag = function(obj) {
-    if (!arguments.length) return _connection.layerTag();
-    _connection.layerTag(obj);
+
+  context.layerTagKey = function(obj) {
+    if (!arguments.length) return _connection.layerTagKey();
+    _connection.layerTagKey(obj);
+    return context;
+  };
+
+  context.layerTagValue = function(obj) {
+    if (!arguments.length) return _connection.layerTagValue();
+    _connection.layerTagValue(obj);
     return context;
   };
 

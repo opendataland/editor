@@ -20292,7 +20292,7 @@
       ]
     },
     "modules/core/uploader.js": {
-      "bytes": 13611,
+      "bytes": 13654,
       "imports": [
         {
           "path": "node_modules/d3-dispatch/src/index.js",
@@ -26259,7 +26259,7 @@
       ]
     },
     "modules/core/context.js": {
-      "bytes": 17169,
+      "bytes": 17270,
       "imports": [
         {
           "path": "node_modules/lodash-es/debounce.js",
@@ -26443,7 +26443,7 @@
       "imports": []
     },
     "modules/services/osm.js": {
-      "bytes": 46788,
+      "bytes": 47315,
       "imports": [
         {
           "path": "node_modules/lodash-es/throttle.js",
@@ -30614,7 +30614,7 @@
       "imports": [],
       "exports": [],
       "inputs": {},
-      "bytes": 5243542
+      "bytes": 5244619
     },
     "dist/iD.js": {
       "imports": [],
@@ -31882,7 +31882,7 @@
           "bytesInOutput": 17750
         },
         "modules/core/uploader.js": {
-          "bytesInOutput": 10077
+          "bytesInOutput": 10116
         },
         "modules/util/IntervalTasksQueue.js": {
           "bytesInOutput": 575
@@ -32455,7 +32455,7 @@
           "bytesInOutput": 14157
         },
         "modules/core/context.js": {
-          "bytesInOutput": 14649
+          "bytesInOutput": 14844
         },
         "modules/core/index.js": {
           "bytesInOutput": 0
@@ -32464,7 +32464,7 @@
           "bytesInOutput": 15114
         },
         "modules/services/osm.js": {
-          "bytesInOutput": 38149
+          "bytesInOutput": 38593
         },
         "modules/services/osm_wikibase.js": {
           "bytesInOutput": 8424
@@ -32584,7 +32584,7 @@
           "bytesInOutput": 472
         }
       },
-      "bytes": 3330715
+      "bytes": 3331393
     }
   }
 }
