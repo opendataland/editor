@@ -11844,6 +11844,7 @@
     actionDeleteWay: () => actionDeleteWay,
     actionDiscardTags: () => actionDiscardTags,
     actionDisconnect: () => actionDisconnect,
+    actionEnforceRequiredTags: () => actionEnforceRequiredTags,
     actionExtract: () => actionExtract,
     actionJoin: () => actionJoin,
     actionMerge: () => actionMerge,
@@ -25016,6 +25017,31 @@
       return action;
     };
     return action;
+  }
+
+  // modules/actions/enforce_required_tags.js
+  function actionEnforceRequiredTags(createdEntites, requiredTags) {
+    requiredTags = requiredTags || {};
+    return (graph) => {
+      createdEntites.forEach(checkTags);
+      return graph;
+      function checkTags(entity) {
+        let didAdd = false;
+        let tags = {};
+        for (var key in entity.tags) {
+          tags[key] = entity.tags[key];
+        }
+        for (var key in requiredTags) {
+          if (!tags[key] || tags[key] !== requiredTags[key]) {
+            didAdd = true;
+            tags[key] = requiredTags[key];
+          }
+        }
+        if (didAdd) {
+          graph = graph.replace(entity.update({ tags }));
+        }
+      }
+    };
   }
 
   // modules/actions/extract.js
@@ -39859,6 +39885,12 @@ ${content}</tr>
       } else {
         var history = context2.history();
         var changes = history.changes(actionDiscardTags(history.difference(), _discardTags));
+        var layerTag = osm.layerTag();
+        if (layerTag && layerTag.key && layerTag.value) {
+          var requiredTags = {};
+          requiredTags[layerTag.key] = layerTag.value;
+          changes = history.changes(actionEnforceRequiredTags(changes.created, requiredTags));
+        }
         if (changes.modified.length || changes.created.length || changes.deleted.length) {
           dispatch10.call("willAttemptUpload", this);
           osm.putChangeset(changeset, changes, uploadCallback);
@@ -59309,6 +59341,9 @@ ${content}</tr>
   }
 
   // modules/ui/entity_editor.js
+  var readOnlyTags2 = [
+    /^PDM:.*$/
+  ];
   function uiEntityEditor(context2) {
     var dispatch10 = dispatch_default("choose");
     var _state = "select";
@@ -59345,7 +59380,7 @@ ${content}</tr>
           }),
           uiSectionEntityIssues(context2),
           uiSectionPresetFields(context2).on("change", changeTags).on("revert", revertTags),
-          uiSectionRawTagEditor("raw-tag-editor", context2).on("change", changeTags),
+          uiSectionRawTagEditor("raw-tag-editor", context2).on("change", changeTags).readOnlyTags(readOnlyTags2),
           uiSectionRawMemberEditor(context2),
           uiSectionRawMembershipEditor(context2)
         ];
@@ -65418,10 +65453,10 @@ ${content}</tr>
       _mainLocalizer.preferredLocaleCodes(locale2);
       return context2;
     };
-    context2.includeOnlyFilter = function(obj) {
+    context2.layerTag = function(obj) {
       if (!arguments.length)
-        return _connection.includeOnlyFilter();
-      _connection.includeOnlyFilter(obj);
+        return _connection.layerTag();
+      _connection.layerTag(obj);
       return context2;
     };
     function afterLoad(cid, callback) {
@@ -66603,7 +66638,7 @@ ${content}</tr>
   var _userChangesets;
   var _userDetails;
   var _off;
-  var _includeOnlyFilter;
+  var _layerTag;
   var _maxWayNodes = 2e3;
   function authLoading() {
     dispatch7.call("authLoading");
@@ -66806,12 +66841,10 @@ ${content}</tr>
         return null;
       var uid;
       uid = osmEntity.id.fromOSM(child.type, child.id);
-      if (_includeOnlyFilter && _includeOnlyFilter.tags) {
-        for (var key in _includeOnlyFilter.tags) {
-          if (!child.tags || _includeOnlyFilter.tags[key] === "*" && !child.tags[key] || child.tags[key] !== _includeOnlyFilter.tags[key]) {
-            _tileCache.seen[uid] = true;
-            return null;
-          }
+      if (_layerTag && _layerTag.key && _layerTag.value) {
+        if (!child.tags || child.tags[_layerTag.key] !== _layerTag.value) {
+          _tileCache.seen[uid] = true;
+          return null;
         }
       }
       if (options2.skipSeen) {
@@ -67051,10 +67084,10 @@ ${content}</tr>
       _changeset = {};
       return this;
     },
-    includeOnlyFilter: function(includeOnlyFilter) {
+    layerTag: function(layerTag) {
       if (!arguments.length)
-        return _includeOnlyFilter;
-      _includeOnlyFilter = includeOnlyFilter;
+        return _layerTag;
+      _layerTag = layerTag;
       return context;
     },
     getConnectionId: function() {

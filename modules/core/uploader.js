@@ -9,6 +9,7 @@ import { actionRevert } from '../actions/revert';
 import { coreGraph } from '../core/graph';
 import { t } from '../core/localizer';
 import { utilArrayUnion, utilArrayUniq, utilDisplayName, utilDisplayType, utilRebind } from '../util';
+import { actionEnforceRequiredTags } from '../actions';
 
 
 export function coreUploader(context) {
@@ -288,6 +289,14 @@ export function coreUploader(context) {
         } else {
             var history = context.history();
             var changes = history.changes(actionDiscardTags(history.difference(), _discardTags));
+            
+            var layerTag = osm.layerTag();
+            if (layerTag && layerTag.key && layerTag.value) {
+                var requiredTags = {};
+                requiredTags[layerTag.key] = layerTag.value;
+                changes = history.changes(actionEnforceRequiredTags(changes.created, requiredTags));
+            }
+            
             if (changes.modified.length || changes.created.length || changes.deleted.length) {
 
                 dispatch.call('willAttemptUpload', this);

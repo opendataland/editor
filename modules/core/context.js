@@ -119,10 +119,10 @@ export function coreContext() {
     return context;
   };
 
-  // An object containing tags that must be present on features in order for them to be appear in the editor
-  context.entityFilter = function(obj) {
-    if (!arguments.length) return _connection.entityFilter();
-    _connection.entityFilter(obj);
+  // An object containing a "key" and "value" for a tag to filter all data 
+  context.layerTag = function(obj) {
+    if (!arguments.length) return _connection.layerTag();
+    _connection.layerTag(obj);
     return context;
   };
 

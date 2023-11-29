@@ -17063,6 +17063,10 @@
         }
       ]
     },
+    "modules/actions/enforce_required_tags.js": {
+      "bytes": 643,
+      "imports": []
+    },
     "modules/actions/extract.js": {
       "bytes": 4069,
       "imports": [
@@ -17504,7 +17508,7 @@
       "imports": []
     },
     "modules/actions/index.js": {
-      "bytes": 1915,
+      "bytes": 1984,
       "imports": [
         {
           "path": "modules/actions/add_entity.js",
@@ -17572,6 +17576,10 @@
         },
         {
           "path": "modules/actions/disconnect.js",
+          "kind": "import-statement"
+        },
+        {
+          "path": "modules/actions/enforce_required_tags.js",
           "kind": "import-statement"
         },
         {
@@ -20284,7 +20292,7 @@
       ]
     },
     "modules/core/uploader.js": {
-      "bytes": 13209,
+      "bytes": 13611,
       "imports": [
         {
           "path": "node_modules/d3-dispatch/src/index.js",
@@ -20324,6 +20332,10 @@
         },
         {
           "path": "modules/util/index.js",
+          "kind": "import-statement"
+        },
+        {
+          "path": "modules/actions/index.js",
           "kind": "import-statement"
         }
       ]
@@ -23685,7 +23697,7 @@
       ]
     },
     "modules/ui/entity_editor.js": {
-      "bytes": 11162,
+      "bytes": 11230,
       "imports": [
         {
           "path": "node_modules/d3-dispatch/src/index.js",
@@ -26247,7 +26259,7 @@
       ]
     },
     "modules/core/context.js": {
-      "bytes": 17229,
+      "bytes": 17169,
       "imports": [
         {
           "path": "node_modules/lodash-es/debounce.js",
@@ -26431,7 +26443,7 @@
       "imports": []
     },
     "modules/services/osm.js": {
-      "bytes": 47049,
+      "bytes": 46788,
       "imports": [
         {
           "path": "node_modules/lodash-es/throttle.js",
@@ -30602,7 +30614,7 @@
       "imports": [],
       "exports": [],
       "inputs": {},
-      "bytes": 5241941
+      "bytes": 5243437
     },
     "dist/iD.js": {
       "imports": [],
@@ -30742,7 +30754,7 @@
           "bytesInOutput": 13820
         },
         "modules/index.js": {
-          "bytesInOutput": 19036
+          "bytesInOutput": 19100
         },
         "modules/actions/add_entity.js": {
           "bytesInOutput": 107
@@ -31518,6 +31530,9 @@
         "modules/actions/disconnect.js": {
           "bytesInOutput": 3078
         },
+        "modules/actions/enforce_required_tags.js": {
+          "bytesInOutput": 672
+        },
         "modules/actions/extract.js": {
           "bytesInOutput": 3071
         },
@@ -31867,7 +31882,7 @@
           "bytesInOutput": 17750
         },
         "modules/core/uploader.js": {
-          "bytesInOutput": 9787
+          "bytesInOutput": 10077
         },
         "modules/util/IntervalTasksQueue.js": {
           "bytesInOutput": 575
@@ -32197,7 +32212,7 @@
           "bytesInOutput": 7305
         },
         "modules/ui/entity_editor.js": {
-          "bytesInOutput": 8420
+          "bytesInOutput": 8492
         },
         "modules/ui/sections/entity_issues.js": {
           "bytesInOutput": 6897
@@ -32440,7 +32455,7 @@
           "bytesInOutput": 14157
         },
         "modules/core/context.js": {
-          "bytesInOutput": 14676
+          "bytesInOutput": 14649
         },
         "modules/core/index.js": {
           "bytesInOutput": 0
@@ -32449,7 +32464,7 @@
           "bytesInOutput": 15114
         },
         "modules/services/osm.js": {
-          "bytesInOutput": 38335
+          "bytesInOutput": 38149
         },
         "modules/services/osm_wikibase.js": {
           "bytesInOutput": 8424
@@ -32569,7 +32584,7 @@
           "bytesInOutput": 472
         }
       },
-      "bytes": 3329754
+      "bytes": 3330686
     }
   }
 }

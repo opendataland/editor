@@ -15,6 +15,7 @@ export { actionDeleteRelation } from './delete_relation';
 export { actionDeleteWay } from './delete_way';
 export { actionDiscardTags } from './discard_tags';
 export { actionDisconnect } from './disconnect';
+export { actionEnforceRequiredTags } from './enforce_required_tags';
 export { actionExtract } from './extract';
 export { actionJoin } from './join';
 export { actionMerge } from './merge';
