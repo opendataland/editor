@@ -14229,8 +14229,8 @@
   var centroid_default = centroidStream;
 
   // node_modules/d3-geo/src/path/context.js
-  function PathContext(context) {
-    this._context = context;
+  function PathContext(context2) {
+    this._context = context2;
   }
   PathContext.prototype = {
     _radius: 4.5,
@@ -14403,7 +14403,7 @@
   }
 
   // node_modules/d3-geo/src/path/index.js
-  function path_default(projection2, context) {
+  function path_default(projection2, context2) {
     let digits = 3, pointRadius = 4.5, projectionStream, contextStream;
     function path(object) {
       if (object) {
@@ -14437,8 +14437,8 @@
     };
     path.context = function(_) {
       if (!arguments.length)
-        return context;
-      contextStream = _ == null ? (context = null, new PathString(digits)) : new PathContext(context = _);
+        return context2;
+      contextStream = _ == null ? (context2 = null, new PathString(digits)) : new PathContext(context2 = _);
       if (typeof pointRadius !== "function")
         contextStream.pointRadius(pointRadius);
       return path;
@@ -14460,11 +14460,11 @@
           throw new RangeError(`invalid digits: ${_}`);
         digits = d;
       }
-      if (context === null)
+      if (context2 === null)
         contextStream = new PathString(digits);
       return path;
     };
-    return path.projection(projection2).digits(digits).context(context);
+    return path.projection(projection2).digits(digits).context(context2);
   }
 
   // node_modules/d3-geo/src/transform.js
@@ -15789,8 +15789,8 @@
   }
 
   // node_modules/d3-selection/src/selection/merge.js
-  function merge_default(context) {
-    var selection2 = context.selection ? context.selection() : context;
+  function merge_default(context2) {
+    var selection2 = context2.selection ? context2.selection() : context2;
     for (var groups0 = this._groups, groups1 = selection2._groups, m0 = groups0.length, m1 = groups1.length, m = Math.min(m0, m1), merges = new Array(m0), j2 = 0; j2 < m; ++j2) {
       for (var group0 = groups0[j2], group1 = groups1[j2], n2 = group0.length, merge3 = merges[j2] = new Array(n2), node, i2 = 0; i2 < n2; ++i2) {
         if (node = group0[i2] || group1[i2]) {
@@ -22593,8 +22593,8 @@
       }).forEach(collectDeepDescendants);
     }
   }
-  function utilHighlightEntities(ids, highlighted, context) {
-    context.surface().selectAll(utilEntityOrDeepMemberSelector(ids, context.graph())).classed("highlighted", highlighted);
+  function utilHighlightEntities(ids, highlighted, context2) {
+    context2.surface().selectAll(utilEntityOrDeepMemberSelector(ids, context2.graph())).classed("highlighted", highlighted);
   }
   function utilGetAllNodes(ids, graph) {
     var seen = /* @__PURE__ */ new Set();
@@ -28239,18 +28239,18 @@
   }
 
   // modules/behavior/edit.js
-  function behaviorEdit(context) {
+  function behaviorEdit(context2) {
     function behavior() {
-      context.map().minzoom(context.minEditableZoom());
+      context2.map().minzoom(context2.minEditableZoom());
     }
     behavior.off = function() {
-      context.map().minzoom(0);
+      context2.map().minzoom(0);
     };
     return behavior;
   }
 
   // modules/behavior/hover.js
-  function behaviorHover(context) {
+  function behaviorHover(context2) {
     var dispatch10 = dispatch_default("hover");
     var _selection = select_default2(null);
     var _newNodeId = null;
@@ -28294,7 +28294,7 @@
         return datum2;
       }
       function pointerover(d3_event) {
-        if (context.mode().id.indexOf("drag") === -1 && (!d3_event.pointerType || d3_event.pointerType === "mouse") && d3_event.buttons)
+        if (context2.mode().id.indexOf("drag") === -1 && (!d3_event.pointerType || d3_event.pointerType === "mouse") && d3_event.buttons)
           return;
         var target = eventTarget(d3_event);
         if (target && _targets.indexOf(target) === -1) {
@@ -28311,19 +28311,19 @@
         }
       }
       function allowsVertex(d) {
-        return d.geometry(context.graph()) === "vertex" || _mainPresetIndex.allowsVertex(d, context.graph());
+        return d.geometry(context2.graph()) === "vertex" || _mainPresetIndex.allowsVertex(d, context2.graph());
       }
       function modeAllowsHover(target) {
-        var mode = context.mode();
+        var mode = context2.mode();
         if (mode.id === "add-point") {
-          return mode.preset.matchGeometry("vertex") || target.type !== "way" && target.geometry(context.graph()) !== "vertex";
+          return mode.preset.matchGeometry("vertex") || target.type !== "way" && target.geometry(context2.graph()) !== "vertex";
         }
         return true;
       }
       function updateHover(d3_event, targets) {
         _selection.selectAll(".hover").classed("hover", false);
         _selection.selectAll(".hover-suppressed").classed("hover-suppressed", false);
-        var mode = context.mode();
+        var mode = context2.mode();
         if (!_newNodeId && (mode.id === "draw-line" || mode.id === "draw-area")) {
           var node = targets.find(function(target) {
             return target instanceof osmEntity && target.type === "node";
@@ -28391,7 +28391,7 @@
   // modules/behavior/draw.js
   var _disableSpace = false;
   var _lastSpace = null;
-  function behaviorDraw(context) {
+  function behaviorDraw(context2) {
     var dispatch10 = dispatch_default(
       "move",
       "down",
@@ -28404,8 +28404,8 @@
       "finish"
     );
     var keybinding = utilKeybinding("draw");
-    var _hover = behaviorHover(context).altDisables(true).ignoreVertex(true).on("hover", context.ui().sidebar.hover);
-    var _edit = behaviorEdit(context);
+    var _hover = behaviorHover(context2).altDisables(true).ignoreVertex(true).on("hover", context2.ui().sidebar.hover);
+    var _edit = behaviorEdit(context2);
     var _closeTolerance = 4;
     var _tolerance = 12;
     var _mouseLeave = false;
@@ -28414,7 +28414,7 @@
     var _downPointer;
     var _pointerPrefix = "PointerEvent" in window ? "pointer" : "mouse";
     function datum2(d3_event) {
-      var mode = context.mode();
+      var mode = context2.mode();
       var isNote = mode && mode.id.indexOf("note") !== -1;
       if (d3_event.altKey || isNote)
         return {};
@@ -28454,9 +28454,9 @@
         select_default2(window).on("click.draw-block", function() {
           d3_event.stopPropagation();
         }, true);
-        context.map().dblclickZoomEnable(false);
+        context2.map().dblclickZoomEnable(false);
         window.setTimeout(function() {
-          context.map().dblclickZoomEnable(true);
+          context2.map().dblclickZoomEnable(true);
           select_default2(window).on("click.draw-block", null);
         }, 500);
         click(d3_event, p2);
@@ -28493,21 +28493,21 @@
       _mouseLeave = true;
     }
     function allowsVertex(d) {
-      return d.geometry(context.graph()) === "vertex" || _mainPresetIndex.allowsVertex(d, context.graph());
+      return d.geometry(context2.graph()) === "vertex" || _mainPresetIndex.allowsVertex(d, context2.graph());
     }
     function click(d3_event, loc) {
       var d = datum2(d3_event);
       var target = d && d.properties && d.properties.entity;
-      var mode = context.mode();
+      var mode = context2.mode();
       if (target && target.type === "node" && allowsVertex(target)) {
         dispatch10.call("clickNode", this, target, d);
         return;
       } else if (target && target.type === "way" && (mode.id !== "add-point" || mode.preset.matchGeometry("vertex"))) {
         var choice = geoChooseEdge(
-          context.graph().childNodes(target),
+          context2.graph().childNodes(target),
           loc,
-          context.projection,
-          context.activeID()
+          context2.projection,
+          context2.activeID()
         );
         if (choice) {
           var edge = [target.nodes[choice.index - 1], target.nodes[choice.index]];
@@ -28515,14 +28515,14 @@
           return;
         }
       } else if (mode.id !== "add-point" || mode.preset.matchGeometry("point")) {
-        var locLatLng = context.projection.invert(loc);
+        var locLatLng = context2.projection.invert(loc);
         dispatch10.call("click", this, locLatLng, d);
       }
     }
     function space(d3_event) {
       d3_event.preventDefault();
       d3_event.stopPropagation();
-      var currSpace = context.map().mouse();
+      var currSpace = context2.map().mouse();
       if (_disableSpace && _lastSpace) {
         var dist = geoVecLength(_lastSpace, currSpace);
         if (dist > _tolerance) {
@@ -28539,7 +28539,7 @@
         _disableSpace = false;
         select_default2(window).on("keyup.space-block", null);
       });
-      var loc = context.map().mouse() || context.projection(context.map().center());
+      var loc = context2.map().mouse() || context2.projection(context2.map().center());
       click(d3_event, loc);
     }
     function backspace(d3_event) {
@@ -28555,8 +28555,8 @@
       dispatch10.call("finish");
     }
     function behavior(selection2) {
-      context.install(_hover);
-      context.install(_edit);
+      context2.install(_hover);
+      context2.install(_edit);
       _downPointer = null;
       keybinding.on("\u232B", backspace).on("\u2326", del).on("\u238B", ret).on("\u21A9", ret).on("space", space).on("\u2325space", space);
       selection2.on("mouseenter.draw", mouseenter).on("mouseleave.draw", mouseleave).on(_pointerPrefix + "down.draw", pointerdown).on(_pointerPrefix + "move.draw", pointermove);
@@ -28565,9 +28565,9 @@
       return behavior;
     }
     behavior.off = function(selection2) {
-      context.ui().sidebar.hover.cancel();
-      context.uninstall(_hover);
-      context.uninstall(_edit);
+      context2.ui().sidebar.hover.cancel();
+      context2.uninstall(_hover);
+      context2.uninstall(_edit);
       selection2.on("mouseenter.draw", null).on("mouseleave.draw", null).on(_pointerPrefix + "down.draw", null).on(_pointerPrefix + "move.draw", null);
       select_default2(window).on(_pointerPrefix + "up.draw", null).on("pointercancel.draw", null);
       select_default2(document).call(keybinding.unbind);
@@ -29204,19 +29204,19 @@
   }
 
   // modules/behavior/operation.js
-  function behaviorOperation(context) {
+  function behaviorOperation(context2) {
     var _operation;
     function keypress(d3_event) {
-      if (!context.map().withinEditableZoom())
+      if (!context2.map().withinEditableZoom())
         return;
       if (_operation.availableForKeypress && !_operation.availableForKeypress())
         return;
       d3_event.preventDefault();
       var disabled = _operation.disabled();
       if (disabled) {
-        context.ui().flash.duration(4e3).iconName("#iD-operation-" + _operation.id).iconClass("operation disabled").label(_operation.tooltip)();
+        context2.ui().flash.duration(4e3).iconName("#iD-operation-" + _operation.id).iconClass("operation disabled").label(_operation.tooltip)();
       } else {
-        context.ui().flash.duration(2e3).iconName("#iD-operation-" + _operation.id).iconClass("operation").label(_operation.annotation() || _operation.title)();
+        context2.ui().flash.duration(2e3).iconName("#iD-operation-" + _operation.id).iconClass("operation").label(_operation.annotation() || _operation.title)();
         if (_operation.point)
           _operation.point(null);
         _operation();
@@ -29224,12 +29224,12 @@
     }
     function behavior() {
       if (_operation && _operation.available()) {
-        context.keybinding().on(_operation.keys, keypress);
+        context2.keybinding().on(_operation.keys, keypress);
       }
       return behavior;
     }
     behavior.off = function() {
-      context.keybinding().off(_operation.keys);
+      context2.keybinding().off(_operation.keys);
     };
     behavior.which = function(_) {
       if (!arguments.length)
@@ -29241,23 +29241,23 @@
   }
 
   // modules/operations/circularize.js
-  function operationCircularize(context, selectedIDs) {
+  function operationCircularize(context2, selectedIDs) {
     var _extent;
     var _actions = selectedIDs.map(getAction).filter(Boolean);
     var _amount = _actions.length === 1 ? "single" : "multiple";
-    var _coords = utilGetAllNodes(selectedIDs, context.graph()).map(function(n2) {
+    var _coords = utilGetAllNodes(selectedIDs, context2.graph()).map(function(n2) {
       return n2.loc;
     });
     function getAction(entityID) {
-      var entity = context.entity(entityID);
+      var entity = context2.entity(entityID);
       if (entity.type !== "way" || new Set(entity.nodes).size <= 1)
         return null;
       if (!_extent) {
-        _extent = entity.extent(context.graph());
+        _extent = entity.extent(context2.graph());
       } else {
-        _extent = _extent.extend(entity.extent(context.graph()));
+        _extent = _extent.extend(entity.extent(context2.graph()));
       }
-      return actionCircularize(entityID, context.projection);
+      return actionCircularize(entityID, context2.projection);
     }
     var operation = function() {
       if (!_actions.length)
@@ -29271,9 +29271,9 @@
         return graph;
       };
       combinedAction.transitionable = true;
-      context.perform(combinedAction, operation.annotation());
+      context2.perform(combinedAction, operation.annotation());
       window.setTimeout(function() {
-        context.validator().validate();
+        context2.validator().validate();
       }, 300);
     };
     operation.available = function() {
@@ -29283,32 +29283,32 @@
       if (!_actions.length)
         return "";
       var actionDisableds = _actions.map(function(action) {
-        return action.disabled(context.graph());
+        return action.disabled(context2.graph());
       }).filter(Boolean);
       if (actionDisableds.length === _actions.length) {
         if (new Set(actionDisableds).size > 1) {
           return "multiple_blockers";
         }
         return actionDisableds[0];
-      } else if (_extent.percentContainedIn(context.map().extent()) < 0.8) {
+      } else if (_extent.percentContainedIn(context2.map().extent()) < 0.8) {
         return "too_large";
       } else if (someMissing()) {
         return "not_downloaded";
-      } else if (selectedIDs.some(context.hasHiddenConnections)) {
+      } else if (selectedIDs.some(context2.hasHiddenConnections)) {
         return "connected_to_hidden";
       }
       return false;
       function someMissing() {
-        if (context.inIntro())
+        if (context2.inIntro())
           return false;
-        var osm = context.connection();
+        var osm = context2.connection();
         if (osm) {
           var missing = _coords.filter(function(loc) {
             return !osm.isDataLoaded(loc);
           });
           if (missing.length) {
             missing.forEach(function(loc) {
-              context.loadTileAtLoc(loc);
+              context2.loadTileAtLoc(loc);
             });
             return true;
           }
@@ -29326,7 +29326,7 @@
     operation.id = "circularize";
     operation.keys = [_t("operations.circularize.key")];
     operation.title = _t("operations.circularize.title");
-    operation.behavior = behaviorOperation(context).which(operation);
+    operation.behavior = behaviorOperation(context2).which(operation);
     return operation;
   }
 
@@ -29380,22 +29380,22 @@
   };
 
   // modules/operations/delete.js
-  function operationDelete(context, selectedIDs) {
+  function operationDelete(context2, selectedIDs) {
     var multi = selectedIDs.length === 1 ? "single" : "multiple";
     var action = actionDeleteMultiple(selectedIDs);
-    var nodes = utilGetAllNodes(selectedIDs, context.graph());
+    var nodes = utilGetAllNodes(selectedIDs, context2.graph());
     var coords = nodes.map(function(n2) {
       return n2.loc;
     });
-    var extent = utilTotalExtent(selectedIDs, context.graph());
+    var extent = utilTotalExtent(selectedIDs, context2.graph());
     var operation = function() {
       var nextSelectedID;
       var nextSelectedLoc;
       if (selectedIDs.length === 1) {
         var id2 = selectedIDs[0];
-        var entity = context.entity(id2);
-        var geometry = entity.geometry(context.graph());
-        var parents = context.graph().parentWays(entity);
+        var entity = context2.entity(id2);
+        var geometry = entity.geometry(context2.graph());
+        var parents = context2.graph().parentWays(entity);
         var parent = parents[0];
         if (geometry === "vertex") {
           var nodes2 = parent.nodes;
@@ -29405,36 +29405,36 @@
           } else if (i2 === nodes2.length - 1) {
             i2--;
           } else {
-            var a = geoSphericalDistance(entity.loc, context.entity(nodes2[i2 - 1]).loc);
-            var b = geoSphericalDistance(entity.loc, context.entity(nodes2[i2 + 1]).loc);
+            var a = geoSphericalDistance(entity.loc, context2.entity(nodes2[i2 - 1]).loc);
+            var b = geoSphericalDistance(entity.loc, context2.entity(nodes2[i2 + 1]).loc);
             i2 = a < b ? i2 - 1 : i2 + 1;
           }
           nextSelectedID = nodes2[i2];
-          nextSelectedLoc = context.entity(nextSelectedID).loc;
+          nextSelectedLoc = context2.entity(nextSelectedID).loc;
         }
       }
-      context.perform(action, operation.annotation());
-      context.validator().validate();
+      context2.perform(action, operation.annotation());
+      context2.validator().validate();
       if (nextSelectedID && nextSelectedLoc) {
-        if (context.hasEntity(nextSelectedID)) {
-          context.enter(modeSelect(context, [nextSelectedID]).follow(true));
+        if (context2.hasEntity(nextSelectedID)) {
+          context2.enter(modeSelect(context2, [nextSelectedID]).follow(true));
         } else {
-          context.map().centerEase(nextSelectedLoc);
-          context.enter(modeBrowse(context));
+          context2.map().centerEase(nextSelectedLoc);
+          context2.enter(modeBrowse(context2));
         }
       } else {
-        context.enter(modeBrowse(context));
+        context2.enter(modeBrowse(context2));
       }
     };
     operation.available = function() {
       return true;
     };
     operation.disabled = function() {
-      if (extent.percentContainedIn(context.map().extent()) < 0.8) {
+      if (extent.percentContainedIn(context2.map().extent()) < 0.8) {
         return "too_large";
       } else if (someMissing()) {
         return "not_downloaded";
-      } else if (selectedIDs.some(context.hasHiddenConnections)) {
+      } else if (selectedIDs.some(context2.hasHiddenConnections)) {
         return "connected_to_hidden";
       } else if (selectedIDs.some(protectedMember)) {
         return "part_of_relation";
@@ -29445,16 +29445,16 @@
       }
       return false;
       function someMissing() {
-        if (context.inIntro())
+        if (context2.inIntro())
           return false;
-        var osm = context.connection();
+        var osm = context2.connection();
         if (osm) {
           var missing = coords.filter(function(loc) {
             return !osm.isDataLoaded(loc);
           });
           if (missing.length) {
             missing.forEach(function(loc) {
-              context.loadTileAtLoc(loc);
+              context2.loadTileAtLoc(loc);
             });
             return true;
           }
@@ -29462,18 +29462,18 @@
         return false;
       }
       function hasWikidataTag(id2) {
-        var entity = context.entity(id2);
+        var entity = context2.entity(id2);
         return entity.tags.wikidata && entity.tags.wikidata.trim().length > 0;
       }
       function incompleteRelation(id2) {
-        var entity = context.entity(id2);
-        return entity.type === "relation" && !entity.isComplete(context.graph());
+        var entity = context2.entity(id2);
+        return entity.type === "relation" && !entity.isComplete(context2.graph());
       }
       function protectedMember(id2) {
-        var entity = context.entity(id2);
+        var entity = context2.entity(id2);
         if (entity.type !== "way")
           return false;
-        var parents = context.graph().parentRelations(entity);
+        var parents = context2.graph().parentRelations(entity);
         for (var i2 = 0; i2 < parents.length; i2++) {
           var parent = parents[i2];
           var type3 = parent.tags.type;
@@ -29490,47 +29490,47 @@
       return disable ? _t("operations.delete." + disable + "." + multi) : _t("operations.delete.description." + multi);
     };
     operation.annotation = function() {
-      return selectedIDs.length === 1 ? _t("operations.delete.annotation." + context.graph().geometry(selectedIDs[0])) : _t("operations.delete.annotation.feature", { n: selectedIDs.length });
+      return selectedIDs.length === 1 ? _t("operations.delete.annotation." + context2.graph().geometry(selectedIDs[0])) : _t("operations.delete.annotation.feature", { n: selectedIDs.length });
     };
     operation.id = "delete";
     operation.keys = [uiCmd("\u2318\u232B"), uiCmd("\u2318\u2326"), uiCmd("\u2326")];
     operation.title = _t("operations.delete.title");
-    operation.behavior = behaviorOperation(context).which(operation);
+    operation.behavior = behaviorOperation(context2).which(operation);
     return operation;
   }
 
   // modules/operations/orthogonalize.js
-  function operationOrthogonalize(context, selectedIDs) {
+  function operationOrthogonalize(context2, selectedIDs) {
     var _extent;
     var _type;
     var _actions = selectedIDs.map(chooseAction).filter(Boolean);
     var _amount = _actions.length === 1 ? "single" : "multiple";
-    var _coords = utilGetAllNodes(selectedIDs, context.graph()).map(function(n2) {
+    var _coords = utilGetAllNodes(selectedIDs, context2.graph()).map(function(n2) {
       return n2.loc;
     });
     function chooseAction(entityID) {
-      var entity = context.entity(entityID);
-      var geometry = entity.geometry(context.graph());
+      var entity = context2.entity(entityID);
+      var geometry = entity.geometry(context2.graph());
       if (!_extent) {
-        _extent = entity.extent(context.graph());
+        _extent = entity.extent(context2.graph());
       } else {
-        _extent = _extent.extend(entity.extent(context.graph()));
+        _extent = _extent.extend(entity.extent(context2.graph()));
       }
       if (entity.type === "way" && new Set(entity.nodes).size > 2) {
         if (_type && _type !== "feature")
           return null;
         _type = "feature";
-        return actionOrthogonalize(entityID, context.projection);
+        return actionOrthogonalize(entityID, context2.projection);
       } else if (geometry === "vertex") {
         if (_type && _type !== "corner")
           return null;
         _type = "corner";
-        var graph = context.graph();
+        var graph = context2.graph();
         var parents = graph.parentWays(entity);
         if (parents.length === 1) {
           var way = parents[0];
           if (way.nodes.indexOf(entityID) !== -1) {
-            return actionOrthogonalize(way.id, context.projection, entityID);
+            return actionOrthogonalize(way.id, context2.projection, entityID);
           }
         }
       }
@@ -29548,9 +29548,9 @@
         return graph;
       };
       combinedAction.transitionable = true;
-      context.perform(combinedAction, operation.annotation());
+      context2.perform(combinedAction, operation.annotation());
       window.setTimeout(function() {
-        context.validator().validate();
+        context2.validator().validate();
       }, 300);
     };
     operation.available = function() {
@@ -29560,32 +29560,32 @@
       if (!_actions.length)
         return "";
       var actionDisableds = _actions.map(function(action) {
-        return action.disabled(context.graph());
+        return action.disabled(context2.graph());
       }).filter(Boolean);
       if (actionDisableds.length === _actions.length) {
         if (new Set(actionDisableds).size > 1) {
           return "multiple_blockers";
         }
         return actionDisableds[0];
-      } else if (_extent && _extent.percentContainedIn(context.map().extent()) < 0.8) {
+      } else if (_extent && _extent.percentContainedIn(context2.map().extent()) < 0.8) {
         return "too_large";
       } else if (someMissing()) {
         return "not_downloaded";
-      } else if (selectedIDs.some(context.hasHiddenConnections)) {
+      } else if (selectedIDs.some(context2.hasHiddenConnections)) {
         return "connected_to_hidden";
       }
       return false;
       function someMissing() {
-        if (context.inIntro())
+        if (context2.inIntro())
           return false;
-        var osm = context.connection();
+        var osm = context2.connection();
         if (osm) {
           var missing = _coords.filter(function(loc) {
             return !osm.isDataLoaded(loc);
           });
           if (missing.length) {
             missing.forEach(function(loc) {
-              context.loadTileAtLoc(loc);
+              context2.loadTileAtLoc(loc);
             });
             return true;
           }
@@ -29603,57 +29603,57 @@
     operation.id = "orthogonalize";
     operation.keys = [_t("operations.orthogonalize.key")];
     operation.title = _t("operations.orthogonalize.title");
-    operation.behavior = behaviorOperation(context).which(operation);
+    operation.behavior = behaviorOperation(context2).which(operation);
     return operation;
   }
 
   // modules/operations/reflect.js
-  function operationReflectShort(context, selectedIDs) {
-    return operationReflect(context, selectedIDs, "short");
+  function operationReflectShort(context2, selectedIDs) {
+    return operationReflect(context2, selectedIDs, "short");
   }
-  function operationReflectLong(context, selectedIDs) {
-    return operationReflect(context, selectedIDs, "long");
+  function operationReflectLong(context2, selectedIDs) {
+    return operationReflect(context2, selectedIDs, "long");
   }
-  function operationReflect(context, selectedIDs, axis) {
+  function operationReflect(context2, selectedIDs, axis) {
     axis = axis || "long";
     var multi = selectedIDs.length === 1 ? "single" : "multiple";
-    var nodes = utilGetAllNodes(selectedIDs, context.graph());
+    var nodes = utilGetAllNodes(selectedIDs, context2.graph());
     var coords = nodes.map(function(n2) {
       return n2.loc;
     });
-    var extent = utilTotalExtent(selectedIDs, context.graph());
+    var extent = utilTotalExtent(selectedIDs, context2.graph());
     var operation = function() {
-      var action = actionReflect(selectedIDs, context.projection).useLongAxis(Boolean(axis === "long"));
-      context.perform(action, operation.annotation());
+      var action = actionReflect(selectedIDs, context2.projection).useLongAxis(Boolean(axis === "long"));
+      context2.perform(action, operation.annotation());
       window.setTimeout(function() {
-        context.validator().validate();
+        context2.validator().validate();
       }, 300);
     };
     operation.available = function() {
       return nodes.length >= 3;
     };
     operation.disabled = function() {
-      if (extent.percentContainedIn(context.map().extent()) < 0.8) {
+      if (extent.percentContainedIn(context2.map().extent()) < 0.8) {
         return "too_large";
       } else if (someMissing()) {
         return "not_downloaded";
-      } else if (selectedIDs.some(context.hasHiddenConnections)) {
+      } else if (selectedIDs.some(context2.hasHiddenConnections)) {
         return "connected_to_hidden";
       } else if (selectedIDs.some(incompleteRelation)) {
         return "incomplete_relation";
       }
       return false;
       function someMissing() {
-        if (context.inIntro())
+        if (context2.inIntro())
           return false;
-        var osm = context.connection();
+        var osm = context2.connection();
         if (osm) {
           var missing = coords.filter(function(loc) {
             return !osm.isDataLoaded(loc);
           });
           if (missing.length) {
             missing.forEach(function(loc) {
-              context.loadTileAtLoc(loc);
+              context2.loadTileAtLoc(loc);
             });
             return true;
           }
@@ -29661,8 +29661,8 @@
         return false;
       }
       function incompleteRelation(id2) {
-        var entity = context.entity(id2);
-        return entity.type === "relation" && !entity.isComplete(context.graph());
+        var entity = context2.entity(id2);
+        return entity.type === "relation" && !entity.isComplete(context2.graph());
       }
     };
     operation.tooltip = function() {
@@ -29675,46 +29675,46 @@
     operation.id = "reflect-" + axis;
     operation.keys = [_t("operations.reflect.key." + axis)];
     operation.title = _t("operations.reflect.title." + axis);
-    operation.behavior = behaviorOperation(context).which(operation);
+    operation.behavior = behaviorOperation(context2).which(operation);
     return operation;
   }
 
   // modules/operations/move.js
-  function operationMove(context, selectedIDs) {
+  function operationMove(context2, selectedIDs) {
     var multi = selectedIDs.length === 1 ? "single" : "multiple";
-    var nodes = utilGetAllNodes(selectedIDs, context.graph());
+    var nodes = utilGetAllNodes(selectedIDs, context2.graph());
     var coords = nodes.map(function(n2) {
       return n2.loc;
     });
-    var extent = utilTotalExtent(selectedIDs, context.graph());
+    var extent = utilTotalExtent(selectedIDs, context2.graph());
     var operation = function() {
-      context.enter(modeMove(context, selectedIDs));
+      context2.enter(modeMove(context2, selectedIDs));
     };
     operation.available = function() {
       return selectedIDs.length > 0;
     };
     operation.disabled = function() {
-      if (extent.percentContainedIn(context.map().extent()) < 0.8) {
+      if (extent.percentContainedIn(context2.map().extent()) < 0.8) {
         return "too_large";
       } else if (someMissing()) {
         return "not_downloaded";
-      } else if (selectedIDs.some(context.hasHiddenConnections)) {
+      } else if (selectedIDs.some(context2.hasHiddenConnections)) {
         return "connected_to_hidden";
       } else if (selectedIDs.some(incompleteRelation)) {
         return "incomplete_relation";
       }
       return false;
       function someMissing() {
-        if (context.inIntro())
+        if (context2.inIntro())
           return false;
-        var osm = context.connection();
+        var osm = context2.connection();
         if (osm) {
           var missing = coords.filter(function(loc) {
             return !osm.isDataLoaded(loc);
           });
           if (missing.length) {
             missing.forEach(function(loc) {
-              context.loadTileAtLoc(loc);
+              context2.loadTileAtLoc(loc);
             });
             return true;
           }
@@ -29722,8 +29722,8 @@
         return false;
       }
       function incompleteRelation(id2) {
-        var entity = context.entity(id2);
-        return entity.type === "relation" && !entity.isComplete(context.graph());
+        var entity = context2.entity(id2);
+        return entity.type === "relation" && !entity.isComplete(context2.graph());
       }
     };
     operation.tooltip = function() {
@@ -29731,18 +29731,18 @@
       return disable ? _t("operations.move." + disable + "." + multi) : _t("operations.move.description." + multi);
     };
     operation.annotation = function() {
-      return selectedIDs.length === 1 ? _t("operations.move.annotation." + context.graph().geometry(selectedIDs[0])) : _t("operations.move.annotation.feature", { n: selectedIDs.length });
+      return selectedIDs.length === 1 ? _t("operations.move.annotation." + context2.graph().geometry(selectedIDs[0])) : _t("operations.move.annotation.feature", { n: selectedIDs.length });
     };
     operation.id = "move";
     operation.keys = [_t("operations.move.key")];
     operation.title = _t("operations.move.title");
-    operation.behavior = behaviorOperation(context).which(operation);
+    operation.behavior = behaviorOperation(context2).which(operation);
     operation.mouseOnly = true;
     return operation;
   }
 
   // modules/modes/rotate.js
-  function modeRotate(context, entityIDs) {
+  function modeRotate(context2, entityIDs) {
     var _tolerancePx = 4;
     var mode = {
       id: "rotate",
@@ -29750,15 +29750,15 @@
     };
     var keybinding = utilKeybinding("rotate");
     var behaviors = [
-      behaviorEdit(context),
-      operationCircularize(context, entityIDs).behavior,
-      operationDelete(context, entityIDs).behavior,
-      operationMove(context, entityIDs).behavior,
-      operationOrthogonalize(context, entityIDs).behavior,
-      operationReflectLong(context, entityIDs).behavior,
-      operationReflectShort(context, entityIDs).behavior
+      behaviorEdit(context2),
+      operationCircularize(context2, entityIDs).behavior,
+      operationDelete(context2, entityIDs).behavior,
+      operationMove(context2, entityIDs).behavior,
+      operationOrthogonalize(context2, entityIDs).behavior,
+      operationReflectLong(context2, entityIDs).behavior,
+      operationReflectShort(context2, entityIDs).behavior
     ];
-    var annotation = entityIDs.length === 1 ? _t("operations.rotate.annotation." + context.graph().geometry(entityIDs[0])) : _t("operations.rotate.annotation.feature", { n: entityIDs.length });
+    var annotation = entityIDs.length === 1 ? _t("operations.rotate.annotation." + context2.graph().geometry(entityIDs[0])) : _t("operations.rotate.annotation.feature", { n: entityIDs.length });
     var _prevGraph;
     var _prevAngle;
     var _prevTransform;
@@ -29766,22 +29766,22 @@
     var _pointerPrefix = "PointerEvent" in window ? "pointer" : "mouse";
     function doRotate(d3_event) {
       var fn;
-      if (context.graph() !== _prevGraph) {
-        fn = context.perform;
+      if (context2.graph() !== _prevGraph) {
+        fn = context2.perform;
       } else {
-        fn = context.replace;
+        fn = context2.replace;
       }
-      var projection2 = context.projection;
+      var projection2 = context2.projection;
       var currTransform = projection2.transform();
       if (!_prevTransform || currTransform.k !== _prevTransform.k || currTransform.x !== _prevTransform.x || currTransform.y !== _prevTransform.y) {
-        var nodes = utilGetAllNodes(entityIDs, context.graph());
+        var nodes = utilGetAllNodes(entityIDs, context2.graph());
         var points = nodes.map(function(n2) {
           return projection2(n2.loc);
         });
         _pivot = getPivot(points);
         _prevAngle = void 0;
       }
-      var currMouse = context.map().mouse(d3_event);
+      var currMouse = context2.map().mouse(d3_event);
       var currAngle = Math.atan2(currMouse[1] - _pivot[1], currMouse[0] - _pivot[0]);
       if (typeof _prevAngle === "undefined")
         _prevAngle = currAngle;
@@ -29789,7 +29789,7 @@
       fn(actionRotate(entityIDs, _pivot, delta, projection2));
       _prevTransform = currTransform;
       _prevAngle = currAngle;
-      _prevGraph = context.graph();
+      _prevGraph = context2.graph();
     }
     function getPivot(points) {
       var _pivot2;
@@ -29809,29 +29809,29 @@
     }
     function finish(d3_event) {
       d3_event.stopPropagation();
-      context.replace(actionNoop(), annotation);
-      context.enter(modeSelect(context, entityIDs));
+      context2.replace(actionNoop(), annotation);
+      context2.enter(modeSelect(context2, entityIDs));
     }
     function cancel() {
       if (_prevGraph)
-        context.pop();
-      context.enter(modeSelect(context, entityIDs));
+        context2.pop();
+      context2.enter(modeSelect(context2, entityIDs));
     }
     function undone() {
-      context.enter(modeBrowse(context));
+      context2.enter(modeBrowse(context2));
     }
     mode.enter = function() {
       _prevGraph = null;
-      context.features().forceVisible(entityIDs);
-      behaviors.forEach(context.install);
+      context2.features().forceVisible(entityIDs);
+      behaviors.forEach(context2.install);
       var downEvent;
-      context.surface().on(_pointerPrefix + "down.modeRotate", function(d3_event) {
+      context2.surface().on(_pointerPrefix + "down.modeRotate", function(d3_event) {
         downEvent = d3_event;
       });
       select_default2(window).on(_pointerPrefix + "move.modeRotate", doRotate, true).on(_pointerPrefix + "up.modeRotate", function(d3_event) {
         if (!downEvent)
           return;
-        var mapNode = context.container().select(".main-map").node();
+        var mapNode = context2.container().select(".main-map").node();
         var pointGetter = utilFastMouse(mapNode);
         var p1 = pointGetter(downEvent);
         var p2 = pointGetter(d3_event);
@@ -29840,17 +29840,17 @@
           finish(d3_event);
         downEvent = null;
       }, true);
-      context.history().on("undone.modeRotate", undone);
+      context2.history().on("undone.modeRotate", undone);
       keybinding.on("\u238B", cancel).on("\u21A9", finish);
       select_default2(document).call(keybinding);
     };
     mode.exit = function() {
-      behaviors.forEach(context.uninstall);
-      context.surface().on(_pointerPrefix + "down.modeRotate", null);
+      behaviors.forEach(context2.uninstall);
+      context2.surface().on(_pointerPrefix + "down.modeRotate", null);
       select_default2(window).on(_pointerPrefix + "move.modeRotate", null, true).on(_pointerPrefix + "up.modeRotate", null, true);
-      context.history().on("undone.modeRotate", null);
+      context2.history().on("undone.modeRotate", null);
       select_default2(document).call(keybinding.unbind);
-      context.features().forceVisible([]);
+      context2.features().forceVisible([]);
     };
     mode.selectedIDs = function() {
       if (!arguments.length)
@@ -29861,41 +29861,41 @@
   }
 
   // modules/operations/rotate.js
-  function operationRotate(context, selectedIDs) {
+  function operationRotate(context2, selectedIDs) {
     var multi = selectedIDs.length === 1 ? "single" : "multiple";
-    var nodes = utilGetAllNodes(selectedIDs, context.graph());
+    var nodes = utilGetAllNodes(selectedIDs, context2.graph());
     var coords = nodes.map(function(n2) {
       return n2.loc;
     });
-    var extent = utilTotalExtent(selectedIDs, context.graph());
+    var extent = utilTotalExtent(selectedIDs, context2.graph());
     var operation = function() {
-      context.enter(modeRotate(context, selectedIDs));
+      context2.enter(modeRotate(context2, selectedIDs));
     };
     operation.available = function() {
       return nodes.length >= 2;
     };
     operation.disabled = function() {
-      if (extent.percentContainedIn(context.map().extent()) < 0.8) {
+      if (extent.percentContainedIn(context2.map().extent()) < 0.8) {
         return "too_large";
       } else if (someMissing()) {
         return "not_downloaded";
-      } else if (selectedIDs.some(context.hasHiddenConnections)) {
+      } else if (selectedIDs.some(context2.hasHiddenConnections)) {
         return "connected_to_hidden";
       } else if (selectedIDs.some(incompleteRelation)) {
         return "incomplete_relation";
       }
       return false;
       function someMissing() {
-        if (context.inIntro())
+        if (context2.inIntro())
           return false;
-        var osm = context.connection();
+        var osm = context2.connection();
         if (osm) {
           var missing = coords.filter(function(loc) {
             return !osm.isDataLoaded(loc);
           });
           if (missing.length) {
             missing.forEach(function(loc) {
-              context.loadTileAtLoc(loc);
+              context2.loadTileAtLoc(loc);
             });
             return true;
           }
@@ -29903,8 +29903,8 @@
         return false;
       }
       function incompleteRelation(id2) {
-        var entity = context.entity(id2);
-        return entity.type === "relation" && !entity.isComplete(context.graph());
+        var entity = context2.entity(id2);
+        return entity.type === "relation" && !entity.isComplete(context2.graph());
       }
     };
     operation.tooltip = function() {
@@ -29912,18 +29912,18 @@
       return disable ? _t("operations.rotate." + disable + "." + multi) : _t("operations.rotate.description." + multi);
     };
     operation.annotation = function() {
-      return selectedIDs.length === 1 ? _t("operations.rotate.annotation." + context.graph().geometry(selectedIDs[0])) : _t("operations.rotate.annotation.feature", { n: selectedIDs.length });
+      return selectedIDs.length === 1 ? _t("operations.rotate.annotation." + context2.graph().geometry(selectedIDs[0])) : _t("operations.rotate.annotation.feature", { n: selectedIDs.length });
     };
     operation.id = "rotate";
     operation.keys = [_t("operations.rotate.key")];
     operation.title = _t("operations.rotate.title");
-    operation.behavior = behaviorOperation(context).which(operation);
+    operation.behavior = behaviorOperation(context2).which(operation);
     operation.mouseOnly = true;
     return operation;
   }
 
   // modules/modes/move.js
-  function modeMove(context, entityIDs, baseGraph) {
+  function modeMove(context2, entityIDs, baseGraph) {
     var _tolerancePx = 4;
     var mode = {
       id: "move",
@@ -29931,15 +29931,15 @@
     };
     var keybinding = utilKeybinding("move");
     var behaviors = [
-      behaviorEdit(context),
-      operationCircularize(context, entityIDs).behavior,
-      operationDelete(context, entityIDs).behavior,
-      operationOrthogonalize(context, entityIDs).behavior,
-      operationReflectLong(context, entityIDs).behavior,
-      operationReflectShort(context, entityIDs).behavior,
-      operationRotate(context, entityIDs).behavior
+      behaviorEdit(context2),
+      operationCircularize(context2, entityIDs).behavior,
+      operationDelete(context2, entityIDs).behavior,
+      operationOrthogonalize(context2, entityIDs).behavior,
+      operationReflectLong(context2, entityIDs).behavior,
+      operationReflectShort(context2, entityIDs).behavior,
+      operationRotate(context2, entityIDs).behavior
     ];
-    var annotation = entityIDs.length === 1 ? _t("operations.move.annotation." + context.graph().geometry(entityIDs[0])) : _t("operations.move.annotation.feature", { n: entityIDs.length });
+    var annotation = entityIDs.length === 1 ? _t("operations.move.annotation." + context2.graph().geometry(entityIDs[0])) : _t("operations.move.annotation.feature", { n: entityIDs.length });
     var _prevGraph;
     var _cache4;
     var _origin;
@@ -29948,24 +29948,24 @@
     function doMove(nudge) {
       nudge = nudge || [0, 0];
       var fn;
-      if (_prevGraph !== context.graph()) {
+      if (_prevGraph !== context2.graph()) {
         _cache4 = {};
-        _origin = context.map().mouseCoordinates();
-        fn = context.perform;
+        _origin = context2.map().mouseCoordinates();
+        fn = context2.perform;
       } else {
-        fn = context.overwrite;
+        fn = context2.overwrite;
       }
-      var currMouse = context.map().mouse();
-      var origMouse = context.projection(_origin);
+      var currMouse = context2.map().mouse();
+      var origMouse = context2.projection(_origin);
       var delta = geoVecSubtract(geoVecSubtract(currMouse, origMouse), nudge);
-      fn(actionMove(entityIDs, delta, context.projection, _cache4));
-      _prevGraph = context.graph();
+      fn(actionMove(entityIDs, delta, context2.projection, _cache4));
+      _prevGraph = context2.graph();
     }
     function startNudge(nudge) {
       if (_nudgeInterval)
         window.clearInterval(_nudgeInterval);
       _nudgeInterval = window.setInterval(function() {
-        context.map().pan(nudge);
+        context2.map().pan(nudge);
         doMove(nudge);
       }, 50);
     }
@@ -29977,7 +29977,7 @@
     }
     function move() {
       doMove();
-      var nudge = geoViewportEdge(context.map().mouse(), context.map().dimensions());
+      var nudge = geoViewportEdge(context2.map().mouse(), context2.map().dimensions());
       if (nudge) {
         startNudge(nudge);
       } else {
@@ -29986,39 +29986,39 @@
     }
     function finish(d3_event) {
       d3_event.stopPropagation();
-      context.replace(actionNoop(), annotation);
-      context.enter(modeSelect(context, entityIDs));
+      context2.replace(actionNoop(), annotation);
+      context2.enter(modeSelect(context2, entityIDs));
       stopNudge();
     }
     function cancel() {
       if (baseGraph) {
-        while (context.graph() !== baseGraph)
-          context.pop();
-        context.enter(modeBrowse(context));
+        while (context2.graph() !== baseGraph)
+          context2.pop();
+        context2.enter(modeBrowse(context2));
       } else {
         if (_prevGraph)
-          context.pop();
-        context.enter(modeSelect(context, entityIDs));
+          context2.pop();
+        context2.enter(modeSelect(context2, entityIDs));
       }
       stopNudge();
     }
     function undone() {
-      context.enter(modeBrowse(context));
+      context2.enter(modeBrowse(context2));
     }
     mode.enter = function() {
-      _origin = context.map().mouseCoordinates();
+      _origin = context2.map().mouseCoordinates();
       _prevGraph = null;
       _cache4 = {};
-      context.features().forceVisible(entityIDs);
-      behaviors.forEach(context.install);
+      context2.features().forceVisible(entityIDs);
+      behaviors.forEach(context2.install);
       var downEvent;
-      context.surface().on(_pointerPrefix + "down.modeMove", function(d3_event) {
+      context2.surface().on(_pointerPrefix + "down.modeMove", function(d3_event) {
         downEvent = d3_event;
       });
       select_default2(window).on(_pointerPrefix + "move.modeMove", move, true).on(_pointerPrefix + "up.modeMove", function(d3_event) {
         if (!downEvent)
           return;
-        var mapNode = context.container().select(".main-map").node();
+        var mapNode = context2.container().select(".main-map").node();
         var pointGetter = utilFastMouse(mapNode);
         var p1 = pointGetter(downEvent);
         var p2 = pointGetter(d3_event);
@@ -30027,20 +30027,20 @@
           finish(d3_event);
         downEvent = null;
       }, true);
-      context.history().on("undone.modeMove", undone);
+      context2.history().on("undone.modeMove", undone);
       keybinding.on("\u238B", cancel).on("\u21A9", finish);
       select_default2(document).call(keybinding);
     };
     mode.exit = function() {
       stopNudge();
       behaviors.forEach(function(behavior) {
-        context.uninstall(behavior);
+        context2.uninstall(behavior);
       });
-      context.surface().on(_pointerPrefix + "down.modeMove", null);
+      context2.surface().on(_pointerPrefix + "down.modeMove", null);
       select_default2(window).on(_pointerPrefix + "move.modeMove", null, true).on(_pointerPrefix + "up.modeMove", null, true);
-      context.history().on("undone.modeMove", null);
+      context2.history().on("undone.modeMove", null);
       select_default2(document).call(keybinding.unbind);
-      context.features().forceVisible([]);
+      context2.features().forceVisible([]);
     };
     mode.selectedIDs = function() {
       if (!arguments.length)
@@ -30051,25 +30051,25 @@
   }
 
   // modules/behavior/paste.js
-  function behaviorPaste(context) {
+  function behaviorPaste(context2) {
     function doPaste(d3_event) {
-      if (!context.map().withinEditableZoom())
+      if (!context2.map().withinEditableZoom())
         return;
       d3_event.preventDefault();
-      var baseGraph = context.graph();
-      var mouse = context.map().mouse();
-      var projection2 = context.projection;
+      var baseGraph = context2.graph();
+      var mouse = context2.map().mouse();
+      var projection2 = context2.projection;
       var viewport = geoExtent(projection2.clipExtent()).polygon();
       if (!geoPointInPolygon(mouse, viewport))
         return;
-      var oldIDs = context.copyIDs();
+      var oldIDs = context2.copyIDs();
       if (!oldIDs.length)
         return;
       var extent = geoExtent();
-      var oldGraph = context.copyGraph();
+      var oldGraph = context2.copyGraph();
       var newIDs = [];
       var action = actionCopyEntities(oldIDs, oldGraph);
-      context.perform(action);
+      context2.perform(action);
       var copies = action.copies();
       var originals = /* @__PURE__ */ new Set();
       Object.values(copies).forEach(function(entity) {
@@ -30079,7 +30079,7 @@
         var oldEntity = oldGraph.entity(id2);
         var newEntity = copies[id2];
         extent._extend(oldEntity.extent(oldGraph));
-        var parents = context.graph().parentWays(newEntity);
+        var parents = context2.graph().parentWays(newEntity);
         var parentCopied = parents.some(function(parent) {
           return originals.has(parent.id);
         });
@@ -30087,17 +30087,17 @@
           newIDs.push(newEntity.id);
         }
       }
-      var copyPoint = context.copyLonLat() && projection2(context.copyLonLat()) || projection2(extent.center());
+      var copyPoint = context2.copyLonLat() && projection2(context2.copyLonLat()) || projection2(extent.center());
       var delta = geoVecSubtract(mouse, copyPoint);
-      context.perform(actionMove(newIDs, delta, projection2));
-      context.enter(modeMove(context, newIDs, baseGraph));
+      context2.perform(actionMove(newIDs, delta, projection2));
+      context2.enter(modeMove(context2, newIDs, baseGraph));
     }
     function behavior() {
-      context.keybinding().on(uiCmd("\u2318V"), doPaste);
+      context2.keybinding().on(uiCmd("\u2318V"), doPaste);
       return behavior;
     }
     behavior.off = function() {
-      context.keybinding().off(uiCmd("\u2318V"));
+      context2.keybinding().off(uiCmd("\u2318V"));
     };
     return behavior;
   }
@@ -30232,13 +30232,13 @@
   }
 
   // modules/modes/drag_node.js
-  function modeDragNode(context) {
+  function modeDragNode(context2) {
     var mode = {
       id: "drag-node",
       button: "browse"
     };
-    var hover = behaviorHover(context).altDisables(true).on("hover", context.ui().sidebar.hover);
-    var edit2 = behaviorEdit(context);
+    var hover = behaviorHover(context2).altDisables(true).on("hover", context2.ui().sidebar.hover);
+    var edit2 = behaviorEdit(context2);
     var _nudgeInterval;
     var _restoreSelectedIDs = [];
     var _wasMidpoint = false;
@@ -30250,7 +30250,7 @@
       if (_nudgeInterval)
         window.clearInterval(_nudgeInterval);
       _nudgeInterval = window.setInterval(function() {
-        context.map().pan(nudge);
+        context2.map().pan(nudge);
         doMove(d3_event, entity, nudge);
       }, 50);
     }
@@ -30261,14 +30261,14 @@
       }
     }
     function moveAnnotation(entity) {
-      return _t("operations.move.annotation." + entity.geometry(context.graph()));
+      return _t("operations.move.annotation." + entity.geometry(context2.graph()));
     }
     function connectAnnotation(nodeEntity, targetEntity) {
-      var nodeGeometry = nodeEntity.geometry(context.graph());
-      var targetGeometry = targetEntity.geometry(context.graph());
+      var nodeGeometry = nodeEntity.geometry(context2.graph());
+      var targetGeometry = targetEntity.geometry(context2.graph());
       if (nodeGeometry === "vertex" && targetGeometry === "vertex") {
-        var nodeParentWayIDs = context.graph().parentWays(nodeEntity);
-        var targetParentWayIDs = context.graph().parentWays(targetEntity);
+        var nodeParentWayIDs = context2.graph().parentWays(nodeEntity);
+        var targetParentWayIDs = context2.graph().parentWays(targetEntity);
         var sharedParentWays = utilArrayIntersection(nodeParentWayIDs, targetParentWayIDs);
         if (sharedParentWays.length !== 0) {
           if (sharedParentWays[0].areAdjacent(nodeEntity.id, targetEntity.id)) {
@@ -30282,52 +30282,52 @@
     function shouldSnapToNode(target) {
       if (!_activeEntity)
         return false;
-      return _activeEntity.geometry(context.graph()) !== "vertex" || (target.geometry(context.graph()) === "vertex" || _mainPresetIndex.allowsVertex(target, context.graph()));
+      return _activeEntity.geometry(context2.graph()) !== "vertex" || (target.geometry(context2.graph()) === "vertex" || _mainPresetIndex.allowsVertex(target, context2.graph()));
     }
     function origin(entity) {
-      return context.projection(entity.loc);
+      return context2.projection(entity.loc);
     }
     function keydown(d3_event) {
       if (d3_event.keyCode === utilKeybinding.modifierCodes.alt) {
-        if (context.surface().classed("nope")) {
-          context.surface().classed("nope-suppressed", true);
+        if (context2.surface().classed("nope")) {
+          context2.surface().classed("nope-suppressed", true);
         }
-        context.surface().classed("nope", false).classed("nope-disabled", true);
+        context2.surface().classed("nope", false).classed("nope-disabled", true);
       }
     }
     function keyup(d3_event) {
       if (d3_event.keyCode === utilKeybinding.modifierCodes.alt) {
-        if (context.surface().classed("nope-suppressed")) {
-          context.surface().classed("nope", true);
+        if (context2.surface().classed("nope-suppressed")) {
+          context2.surface().classed("nope", true);
         }
-        context.surface().classed("nope-suppressed", false).classed("nope-disabled", false);
+        context2.surface().classed("nope-suppressed", false).classed("nope-disabled", false);
       }
     }
     function start2(d3_event, entity) {
       _wasMidpoint = entity.type === "midpoint";
-      var hasHidden = context.features().hasHiddenConnections(entity, context.graph());
-      _isCancelled = !context.editable() || d3_event.shiftKey || hasHidden;
+      var hasHidden = context2.features().hasHiddenConnections(entity, context2.graph());
+      _isCancelled = !context2.editable() || d3_event.shiftKey || hasHidden;
       if (_isCancelled) {
         if (hasHidden) {
-          context.ui().flash.duration(4e3).iconName("#iD-icon-no").label(_t("modes.drag_node.connected_to_hidden"))();
+          context2.ui().flash.duration(4e3).iconName("#iD-icon-no").label(_t("modes.drag_node.connected_to_hidden"))();
         }
         return drag.cancel();
       }
       if (_wasMidpoint) {
         var midpoint = entity;
         entity = osmNode();
-        context.perform(actionAddMidpoint(midpoint, entity));
-        entity = context.entity(entity.id);
-        var vertex = context.surface().selectAll("." + entity.id);
+        context2.perform(actionAddMidpoint(midpoint, entity));
+        entity = context2.entity(entity.id);
+        var vertex = context2.surface().selectAll("." + entity.id);
         drag.targetNode(vertex.node()).targetEntity(entity);
       } else {
-        context.perform(actionNoop());
+        context2.perform(actionNoop());
       }
       _activeEntity = entity;
       _startLoc = entity.loc;
-      hover.ignoreVertex(entity.geometry(context.graph()) === "vertex");
-      context.surface().selectAll("." + _activeEntity.id).classed("active", true);
-      context.enter(mode);
+      hover.ignoreVertex(entity.geometry(context2.graph()) === "vertex");
+      context2.surface().selectAll("." + _activeEntity.id).classed("active", true);
+      context2.enter(mode);
     }
     function datum2(d3_event) {
       if (!d3_event || d3_event.altKey) {
@@ -30339,9 +30339,9 @@
     }
     function doMove(d3_event, entity, nudge) {
       nudge = nudge || [0, 0];
-      var currPoint = d3_event && d3_event.point || context.projection(_lastLoc);
+      var currPoint = d3_event && d3_event.point || context2.projection(_lastLoc);
       var currMouse = geoVecSubtract(currPoint, nudge);
-      var loc = context.projection.invert(currMouse);
+      var loc = context2.projection.invert(currMouse);
       var target, edge;
       if (!_nudgeInterval) {
         var d = datum2(d3_event);
@@ -30353,43 +30353,43 @@
             loc = targetLoc;
           }
         } else if (targetNodes) {
-          edge = geoChooseEdge(targetNodes, context.map().mouse(), context.projection, end.id);
+          edge = geoChooseEdge(targetNodes, context2.map().mouse(), context2.projection, end.id);
           if (edge) {
             loc = edge.loc;
           }
         }
       }
-      context.replace(
+      context2.replace(
         actionMoveNode(entity.id, loc)
       );
       var isInvalid = false;
       if (target) {
-        isInvalid = hasRelationConflict(entity, target, edge, context.graph());
+        isInvalid = hasRelationConflict(entity, target, edge, context2.graph());
       }
       if (!isInvalid) {
-        isInvalid = hasInvalidGeometry(entity, context.graph());
+        isInvalid = hasInvalidGeometry(entity, context2.graph());
       }
-      var nope = context.surface().classed("nope");
+      var nope = context2.surface().classed("nope");
       if (isInvalid === "relation" || isInvalid === "restriction") {
         if (!nope) {
-          context.ui().flash.duration(4e3).iconName("#iD-icon-no").label(_t.html(
+          context2.ui().flash.duration(4e3).iconName("#iD-icon-no").label(_t.html(
             "operations.connect." + isInvalid,
             { relation: _mainPresetIndex.item("type/restriction").name() }
           ))();
         }
       } else if (isInvalid) {
         var errorID = isInvalid === "line" ? "lines" : "areas";
-        context.ui().flash.duration(3e3).iconName("#iD-icon-no").label(_t.html("self_intersection.error." + errorID))();
+        context2.ui().flash.duration(3e3).iconName("#iD-icon-no").label(_t.html("self_intersection.error." + errorID))();
       } else {
         if (nope) {
-          context.ui().flash.duration(1).label("")();
+          context2.ui().flash.duration(1).label("")();
         }
       }
-      var nopeDisabled = context.surface().classed("nope-disabled");
+      var nopeDisabled = context2.surface().classed("nope-disabled");
       if (nopeDisabled) {
-        context.surface().classed("nope", false).classed("nope-suppressed", isInvalid);
+        context2.surface().classed("nope", false).classed("nope-suppressed", isInvalid);
       } else {
-        context.surface().classed("nope", isInvalid).classed("nope-suppressed", false);
+        context2.surface().classed("nope", isInvalid).classed("nope-suppressed", false);
       }
       _lastLoc = loc;
     }
@@ -30456,10 +30456,10 @@
       if (_isCancelled)
         return;
       d3_event.stopPropagation();
-      context.surface().classed("nope-disabled", d3_event.altKey);
-      _lastLoc = context.projection.invert(point);
+      context2.surface().classed("nope-disabled", d3_event.altKey);
+      _lastLoc = context2.projection.invert(point);
       doMove(d3_event, entity);
-      var nudge = geoViewportEdge(point, context.map().dimensions());
+      var nudge = geoViewportEdge(point, context2.map().dimensions());
       if (nudge) {
         startNudge(d3_event, entity, nudge);
       } else {
@@ -30469,17 +30469,17 @@
     function end(d3_event, entity) {
       if (_isCancelled)
         return;
-      var wasPoint = entity.geometry(context.graph()) === "point";
+      var wasPoint = entity.geometry(context2.graph()) === "point";
       var d = datum2(d3_event);
-      var nope = d && d.properties && d.properties.nope || context.surface().classed("nope");
+      var nope = d && d.properties && d.properties.nope || context2.surface().classed("nope");
       var target = d && d.properties && d.properties.entity;
       if (nope) {
-        context.perform(
+        context2.perform(
           _actionBounceBack(entity.id, _startLoc)
         );
       } else if (target && target.type === "way") {
-        var choice = geoChooseEdge(context.graph().childNodes(target), context.map().mouse(), context.projection, entity.id);
-        context.replace(
+        var choice = geoChooseEdge(context2.graph().childNodes(target), context2.map().mouse(), context2.projection, entity.id);
+        context2.replace(
           actionAddMidpoint({
             loc: choice.loc,
             edge: [target.nodes[choice.index - 1], target.nodes[choice.index]]
@@ -30487,31 +30487,31 @@
           connectAnnotation(entity, target)
         );
       } else if (target && target.type === "node" && shouldSnapToNode(target)) {
-        context.replace(
+        context2.replace(
           actionConnect([target.id, entity.id]),
           connectAnnotation(entity, target)
         );
       } else if (_wasMidpoint) {
-        context.replace(
+        context2.replace(
           actionNoop(),
           _t("operations.add.annotation.vertex")
         );
       } else {
-        context.replace(
+        context2.replace(
           actionNoop(),
           moveAnnotation(entity)
         );
       }
       if (wasPoint) {
-        context.enter(modeSelect(context, [entity.id]));
+        context2.enter(modeSelect(context2, [entity.id]));
       } else {
         var reselection = _restoreSelectedIDs.filter(function(id2) {
-          return context.graph().hasEntity(id2);
+          return context2.graph().hasEntity(id2);
         });
         if (reselection.length) {
-          context.enter(modeSelect(context, reselection));
+          context2.enter(modeSelect(context2, reselection));
         } else {
-          context.enter(modeBrowse(context));
+          context2.enter(modeBrowse(context2));
         }
       }
     }
@@ -30519,7 +30519,7 @@
       var moveNode = actionMoveNode(nodeID, toLoc);
       var action = function(graph, t) {
         if (t === 1)
-          context.pop();
+          context2.pop();
         return moveNode(graph, t);
       };
       action.transitionable = true;
@@ -30527,23 +30527,23 @@
     }
     function cancel() {
       drag.cancel();
-      context.enter(modeBrowse(context));
+      context2.enter(modeBrowse(context2));
     }
-    var drag = behaviorDrag().selector(".layer-touch.points .target").surface(context.container().select(".main-map").node()).origin(origin).on("start", start2).on("move", move).on("end", end);
+    var drag = behaviorDrag().selector(".layer-touch.points .target").surface(context2.container().select(".main-map").node()).origin(origin).on("start", start2).on("move", move).on("end", end);
     mode.enter = function() {
-      context.install(hover);
-      context.install(edit2);
+      context2.install(hover);
+      context2.install(edit2);
       select_default2(window).on("keydown.dragNode", keydown).on("keyup.dragNode", keyup);
-      context.history().on("undone.drag-node", cancel);
+      context2.history().on("undone.drag-node", cancel);
     };
     mode.exit = function() {
-      context.ui().sidebar.hover.cancel();
-      context.uninstall(hover);
-      context.uninstall(edit2);
+      context2.ui().sidebar.hover.cancel();
+      context2.uninstall(hover);
+      context2.uninstall(edit2);
       select_default2(window).on("keydown.dragNode", null).on("keyup.dragNode", null);
-      context.history().on("undone.drag-node", null);
+      context2.history().on("undone.drag-node", null);
       _activeEntity = null;
-      context.surface().classed("nope", false).classed("nope-suppressed", false).classed("nope-disabled", false).selectAll(".active").classed("active", false);
+      context2.surface().classed("nope", false).classed("nope-suppressed", false).classed("nope-disabled", false).selectAll(".active").classed("active", false);
       stopNudge();
     };
     mode.selectedIDs = function() {
@@ -33855,10 +33855,10 @@ ${content}</tr>
     loadMapFeatures: function(projection2) {
       loadTiles("points", mapFeatureTileUrl, 14, projection2);
     },
-    ensureViewerLoaded: function(context) {
+    ensureViewerLoaded: function(context2) {
       if (_loadViewerPromise)
         return _loadViewerPromise;
-      const wrap2 = context.container().select(".photoviewer").selectAll(".mly-wrapper").data([0]);
+      const wrap2 = context2.container().select(".photoviewer").selectAll(".mly-wrapper").data([0]);
       wrap2.enter().append("div").attr("id", "ideditor-mly").attr("class", "photo-wrapper mly-wrapper").classed("hide", true);
       const that = this;
       _loadViewerPromise = new Promise((resolve, reject) => {
@@ -33869,25 +33869,25 @@ ${content}</tr>
             resolve();
         }
         const head = select_default2("head");
-        head.selectAll("#ideditor-mapillary-viewercss").data([0]).enter().append("link").attr("id", "ideditor-mapillary-viewercss").attr("rel", "stylesheet").attr("crossorigin", "anonymous").attr("href", context.asset(viewercss)).on("load.serviceMapillary", loaded).on("error.serviceMapillary", function() {
+        head.selectAll("#ideditor-mapillary-viewercss").data([0]).enter().append("link").attr("id", "ideditor-mapillary-viewercss").attr("rel", "stylesheet").attr("crossorigin", "anonymous").attr("href", context2.asset(viewercss)).on("load.serviceMapillary", loaded).on("error.serviceMapillary", function() {
           reject();
         });
-        head.selectAll("#ideditor-mapillary-viewerjs").data([0]).enter().append("script").attr("id", "ideditor-mapillary-viewerjs").attr("crossorigin", "anonymous").attr("src", context.asset(viewerjs)).on("load.serviceMapillary", loaded).on("error.serviceMapillary", function() {
+        head.selectAll("#ideditor-mapillary-viewerjs").data([0]).enter().append("script").attr("id", "ideditor-mapillary-viewerjs").attr("crossorigin", "anonymous").attr("src", context2.asset(viewerjs)).on("load.serviceMapillary", loaded).on("error.serviceMapillary", function() {
           reject();
         });
       }).catch(function() {
         _loadViewerPromise = null;
       }).then(function() {
-        that.initViewer(context);
+        that.initViewer(context2);
       });
       return _loadViewerPromise;
     },
-    loadSignResources: function(context) {
-      context.ui().svgDefs.addSprites(["mapillary-sprite"], false);
+    loadSignResources: function(context2) {
+      context2.ui().svgDefs.addSprites(["mapillary-sprite"], false);
       return this;
     },
-    loadObjectResources: function(context) {
-      context.ui().svgDefs.addSprites(["mapillary-object-sprite"], false);
+    loadObjectResources: function(context2) {
+      context2.ui().svgDefs.addSprites(["mapillary-object-sprite"], false);
       return this;
     },
     resetTags: function() {
@@ -33907,11 +33907,11 @@ ${content}</tr>
         this.resetTags();
       }
     },
-    filterViewer: function(context) {
-      const showsPano = context.photos().showsPanoramic();
-      const showsFlat = context.photos().showsFlat();
-      const fromDate = context.photos().fromDate();
-      const toDate = context.photos().toDate();
+    filterViewer: function(context2) {
+      const showsPano = context2.photos().showsPanoramic();
+      const showsFlat = context2.photos().showsFlat();
+      const fromDate = context2.photos().fromDate();
+      const toDate = context2.photos().toDate();
       const filter2 = ["all"];
       if (!showsPano)
         filter2.push(["!=", "cameraType", "spherical"]);
@@ -33929,8 +33929,8 @@ ${content}</tr>
       _mlyViewerFilter = filter2;
       return filter2;
     },
-    showViewer: function(context) {
-      const wrap2 = context.container().select(".photoviewer").classed("hide", false);
+    showViewer: function(context2) {
+      const wrap2 = context2.container().select(".photoviewer").classed("hide", false);
       const isHidden = wrap2.selectAll(".photo-wrapper.mly-wrapper.hide").size();
       if (isHidden && _mlyViewer) {
         wrap2.selectAll(".photo-wrapper:not(.mly-wrapper)").classed("hide", true);
@@ -33939,12 +33939,12 @@ ${content}</tr>
       }
       return this;
     },
-    hideViewer: function(context) {
+    hideViewer: function(context2) {
       _mlyActiveImage = null;
       if (!_mlyFallback && _mlyViewer) {
         _mlyViewer.getComponent("sequence").stop();
       }
-      const viewer = context.container().select(".photoviewer");
+      const viewer = context2.container().select(".photoviewer");
       if (!viewer.empty())
         viewer.datum(null);
       viewer.classed("hide", true).selectAll(".photo-wrapper").classed("hide", true);
@@ -33952,7 +33952,7 @@ ${content}</tr>
       dispatch5.call("imageChanged");
       dispatch5.call("loadedMapFeatures");
       dispatch5.call("loadedSigns");
-      return this.setStyles(context, null);
+      return this.setStyles(context2, null);
     },
     updateUrlImage: function(imageId) {
       if (!window.mocha) {
@@ -33971,7 +33971,7 @@ ${content}</tr>
       }
       return this;
     },
-    initViewer: function(context) {
+    initViewer: function(context2) {
       const that = this;
       if (!window.mapillary)
         return;
@@ -34004,7 +34004,7 @@ ${content}</tr>
       if (_mlyViewerFilter) {
         _mlyViewer.setFilter(_mlyViewerFilter);
       }
-      context.ui().photoviewer.on("resize.mapillary", function() {
+      context2.ui().photoviewer.on("resize.mapillary", function() {
         if (_mlyViewer)
           _mlyViewer.resize();
       });
@@ -34012,9 +34012,9 @@ ${content}</tr>
         that.resetTags();
         const image = node.image;
         that.setActiveImage(image);
-        that.setStyles(context, null);
+        that.setStyles(context2, null);
         const loc = [image.originalLngLat.lng, image.originalLngLat.lat];
-        context.map().centerEase(loc);
+        context2.map().centerEase(loc);
         that.updateUrlImage(image.id);
         if (_mlyShowFeatureDetections || _mlyShowSignDetections) {
           that.updateDetections(image.id, `${apiUrl}/${image.id}/detections?access_token=${accessToken}&fields=id,image,geometry,value`);
@@ -34025,7 +34025,7 @@ ${content}</tr>
         dispatch5.call("bearingChanged", void 0, e);
       }
     },
-    selectImage: function(context, imageId) {
+    selectImage: function(context2, imageId) {
       if (_mlyViewer && imageId) {
         _mlyViewer.moveTo(imageId).catch(function(e) {
           console.error("mly3", e);
@@ -34052,16 +34052,16 @@ ${content}</tr>
         _mlyActiveImage = null;
       }
     },
-    setStyles: function(context, hovered) {
+    setStyles: function(context2, hovered) {
       const hoveredImageId = hovered && hovered.id;
       const hoveredSequenceId = hovered && hovered.sequence_id;
       const selectedSequenceId = _mlyActiveImage && _mlyActiveImage.sequence_id;
-      context.container().selectAll(".layer-mapillary .viewfield-group").classed("highlighted", function(d) {
+      context2.container().selectAll(".layer-mapillary .viewfield-group").classed("highlighted", function(d) {
         return d.sequence_id === selectedSequenceId || d.id === hoveredImageId;
       }).classed("hovered", function(d) {
         return d.id === hoveredImageId;
       });
-      context.container().selectAll(".layer-mapillary .sequence").classed("highlighted", function(d) {
+      context2.container().selectAll(".layer-mapillary .sequence").classed("highlighted", function(d) {
         return d.properties.id === hoveredSequenceId;
       }).classed("currentView", function(d) {
         return d.properties.id === selectedSequenceId;
@@ -34190,15 +34190,15 @@ ${content}</tr>
       }
       return null;
     };
-    this.fixes = function(context) {
-      var fixes = this.dynamicFixes ? this.dynamicFixes(context) : [];
+    this.fixes = function(context2) {
+      var fixes = this.dynamicFixes ? this.dynamicFixes(context2) : [];
       var issue = this;
       if (issue.severity === "warning") {
         fixes.push(new validationIssueFix({
           title: _t.html("issues.fix.ignore_issue.title"),
           icon: "iD-icon-close",
           onClick: function() {
-            context.validator().ignoreIssue(this.issue.id);
+            context2.validator().ignoreIssue(this.issue.id);
           }
         }));
       }
@@ -35564,14 +35564,14 @@ ${content}</tr>
   }
 
   // modules/ui/loading.js
-  function uiLoading(context) {
+  function uiLoading(context2) {
     let _modalSelection = select_default2(null);
     let _message = "";
     let _blocking = false;
     let loading = (selection2) => {
       _modalSelection = uiModal(selection2, _blocking);
       let loadertext = _modalSelection.select(".content").classed("loading-modal", true).append("div").attr("class", "modal-section fillL");
-      loadertext.append("img").attr("class", "loader").attr("src", context.imagePath("loader-white.gif"));
+      loadertext.append("img").attr("class", "loader").attr("src", context2.imagePath("loader-white.gif"));
       loadertext.append("h3").html(_message);
       _modalSelection.select("button.close").attr("class", "hide");
       return loading;
@@ -35598,7 +35598,7 @@ ${content}</tr>
   }
 
   // modules/core/history.js
-  function coreHistory(context) {
+  function coreHistory(context2) {
     var dispatch10 = dispatch_default("reset", "change", "merge", "restore", "undone", "redone", "storage_error");
     var lock = utilSessionMutex("lock");
     var _hasUnresolvedRestorableChanges = lock.lock() && !!corePreferences(getKey("saved_history"));
@@ -35625,8 +35625,8 @@ ${content}</tr>
         annotation,
         imageryUsed: _imageryUsed,
         photoOverlaysUsed: _photoOverlaysUsed,
-        transform: context.projection.transform(),
-        selectedIDs: context.selectedIDs()
+        transform: context2.projection.transform(),
+        selectedIDs: context2.selectedIDs()
       };
     }
     function _perform(args, t) {
@@ -35995,7 +35995,7 @@ ${content}</tr>
             _stack[0].graph.rebase(baseEntities, stack, true);
             _tree.rebase(baseEntities, true);
             if (loadChildNodes) {
-              var osm = context.connection();
+              var osm = context2.connection();
               var baseWays = baseEntities.filter(function(e) {
                 return e.type === "way";
               });
@@ -36007,9 +36007,9 @@ ${content}</tr>
               });
               if (missing.length && osm) {
                 loadComplete = false;
-                context.map().redrawEnable(false);
-                var loading = uiLoading(context).blocking(true);
-                context.container().call(loading);
+                context2.map().redrawEnable(false);
+                var loading = uiLoading(context2).blocking(true);
+                context2.container().call(loading);
                 var childNodesLoaded = function(err, result) {
                   if (!err) {
                     var visibleGroups = utilArrayGroupBy(result.data, "visible");
@@ -36032,7 +36032,7 @@ ${content}</tr>
                   }
                   if (err || !missing.length) {
                     loading.close();
-                    context.map().redrawEnable(true);
+                    context2.map().redrawEnable(true);
                     dispatch10.call("change");
                     dispatch10.call("restore", this);
                   }
@@ -36076,7 +36076,7 @@ ${content}</tr>
         }
         var transform2 = _stack[_index].transform;
         if (transform2) {
-          context.map().transformEase(transform2, 0);
+          context2.map().transformEase(transform2, 0);
         }
         if (loadComplete) {
           dispatch10.call("change");
@@ -36099,7 +36099,7 @@ ${content}</tr>
         return history;
       },
       clearSaved: function() {
-        context.debouncedSave.cancel();
+        context2.debouncedSave.cancel();
         if (lock.locked()) {
           _hasUnresolvedRestorableChanges = false;
           corePreferences(getKey("saved_history"), null);
@@ -36151,7 +36151,7 @@ ${content}</tr>
   });
 
   // modules/validations/almost_junction.js
-  function validationAlmostJunction(context) {
+  function validationAlmostJunction(context2) {
     const type3 = "almost_junction";
     const EXTEND_TH_METERS = 5;
     const WELD_TH_METERS = 0.75;
@@ -36168,7 +36168,7 @@ ${content}</tr>
         return [];
       if (entity.isDegenerate())
         return [];
-      const tree = context.history().tree();
+      const tree = context2.history().tree();
       const extendableNodeInfos = findConnectableEndNodesByExtension(entity);
       let issues = [];
       extendableNodeInfos.forEach((extendableNodeInfo) => {
@@ -36176,17 +36176,17 @@ ${content}</tr>
           type: type3,
           subtype: "highway-highway",
           severity: "warning",
-          message: function(context2) {
-            const entity1 = context2.hasEntity(this.entityIds[0]);
+          message: function(context3) {
+            const entity1 = context3.hasEntity(this.entityIds[0]);
             if (this.entityIds[0] === this.entityIds[2]) {
               return entity1 ? _t.html("issues.almost_junction.self.message", {
-                feature: utilDisplayLabel(entity1, context2.graph())
+                feature: utilDisplayLabel(entity1, context3.graph())
               }) : "";
             } else {
-              const entity2 = context2.hasEntity(this.entityIds[2]);
+              const entity2 = context3.hasEntity(this.entityIds[2]);
               return entity1 && entity2 ? _t.html("issues.almost_junction.message", {
-                feature: utilDisplayLabel(entity1, context2.graph()),
-                feature2: utilDisplayLabel(entity2, context2.graph())
+                feature: utilDisplayLabel(entity1, context3.graph()),
+                feature2: utilDisplayLabel(entity2, context3.graph())
               }) : "";
             }
           },
@@ -36207,21 +36207,21 @@ ${content}</tr>
         }));
       });
       return issues;
-      function makeFixes(context2) {
+      function makeFixes(context3) {
         let fixes = [new validationIssueFix({
           icon: "iD-icon-abutment",
           title: _t.html("issues.fix.connect_features.title"),
-          onClick: function(context3) {
+          onClick: function(context4) {
             const annotation = _t("issues.fix.connect_almost_junction.annotation");
             const [, endNodeId, crossWayId] = this.issue.entityIds;
-            const midNode = context3.entity(this.issue.data.midId);
-            const endNode = context3.entity(endNodeId);
-            const crossWay = context3.entity(crossWayId);
+            const midNode = context4.entity(this.issue.data.midId);
+            const endNode = context4.entity(endNodeId);
+            const crossWay = context4.entity(crossWayId);
             const nearEndNodes = findNearbyEndNodes(endNode, crossWay);
             if (nearEndNodes.length > 0) {
               const collinear = findSmallJoinAngle(midNode, endNode, nearEndNodes);
               if (collinear) {
-                context3.perform(
+                context4.perform(
                   actionMergeNodes([collinear.id, endNode.id], collinear.loc),
                   annotation
                 );
@@ -36230,31 +36230,31 @@ ${content}</tr>
             }
             const targetEdge = this.issue.data.edge;
             const crossLoc = this.issue.data.cross_loc;
-            const edgeNodes = [context3.entity(targetEdge[0]), context3.entity(targetEdge[1])];
+            const edgeNodes = [context4.entity(targetEdge[0]), context4.entity(targetEdge[1])];
             const closestNodeInfo = geoSphericalClosestNode(edgeNodes, crossLoc);
             if (closestNodeInfo.distance < WELD_TH_METERS) {
-              context3.perform(
+              context4.perform(
                 actionMergeNodes([closestNodeInfo.node.id, endNode.id], closestNodeInfo.node.loc),
                 annotation
               );
             } else {
-              context3.perform(
+              context4.perform(
                 actionAddMidpoint({ loc: crossLoc, edge: targetEdge }, endNode),
                 annotation
               );
             }
           }
         })];
-        const node = context2.hasEntity(this.entityIds[1]);
+        const node = context3.hasEntity(this.entityIds[1]);
         if (node && !node.hasInterestingTags()) {
           fixes.push(new validationIssueFix({
             icon: "maki-barrier",
             title: _t.html("issues.fix.tag_as_disconnected.title"),
-            onClick: function(context3) {
+            onClick: function(context4) {
               const nodeID = this.issue.entityIds[1];
-              const tags = Object.assign({}, context3.entity(nodeID).tags);
+              const tags = Object.assign({}, context4.entity(nodeID).tags);
               tags.noexit = "yes";
-              context3.perform(
+              context4.perform(
                 actionChangeTags(nodeID, tags),
                 _t("issues.fix.tag_as_disconnected.annotation")
               );
@@ -36319,8 +36319,8 @@ ${content}</tr>
         let joinTo;
         let minAngle = Infinity;
         endNodes.forEach((endNode) => {
-          const a1 = geoAngle(midNode, tipNode, context.projection) + Math.PI;
-          const a2 = geoAngle(midNode, endNode, context.projection) + Math.PI;
+          const a1 = geoAngle(midNode, tipNode, context2.projection) + Math.PI;
+          const a2 = geoAngle(midNode, endNode, context2.projection) + Math.PI;
           const diff = Math.max(a1, a2) - Math.min(a1, a2);
           if (diff < minAngle) {
             joinTo = endNode;
@@ -36396,7 +36396,7 @@ ${content}</tr>
   }
 
   // modules/validations/close_nodes.js
-  function validationCloseNodes(context) {
+  function validationCloseNodes(context2) {
     var type3 = "close_nodes";
     var pointThresholdMeters = 0.2;
     var validation = function(entity, graph) {
@@ -36510,7 +36510,7 @@ ${content}</tr>
           [lon - lon_range, lat - lat_range],
           [lon + lon_range, lat + lat_range]
         ]);
-        var intersected = context.history().tree().intersects(queryExtent, graph);
+        var intersected = context2.history().tree().intersects(queryExtent, graph);
         for (var j2 = 0; j2 < intersected.length; j2++) {
           var nearby = intersected[j2];
           if (nearby.id === node.id)
@@ -36534,11 +36534,11 @@ ${content}</tr>
               type: type3,
               subtype: "detached",
               severity: "warning",
-              message: function(context2) {
-                var entity2 = context2.hasEntity(this.entityIds[0]), entity22 = context2.hasEntity(this.entityIds[1]);
+              message: function(context3) {
+                var entity2 = context3.hasEntity(this.entityIds[0]), entity22 = context3.hasEntity(this.entityIds[1]);
                 return entity2 && entity22 ? _t.html("issues.close_nodes.detached.message", {
-                  feature: utilDisplayLabel(entity2, context2.graph()),
-                  feature2: utilDisplayLabel(entity22, context2.graph())
+                  feature: utilDisplayLabel(entity2, context3.graph()),
+                  feature2: utilDisplayLabel(entity22, context3.graph())
                 }) : "";
               },
               reference: showReference,
@@ -36586,9 +36586,9 @@ ${content}</tr>
           type: type3,
           subtype: "vertices",
           severity: "warning",
-          message: function(context2) {
-            var entity2 = context2.hasEntity(this.entityIds[0]);
-            return entity2 ? _t.html("issues.close_nodes.message", { way: utilDisplayLabel(entity2, context2.graph()) }) : "";
+          message: function(context3) {
+            var entity2 = context3.hasEntity(this.entityIds[0]);
+            return entity2 ? _t.html("issues.close_nodes.message", { way: utilDisplayLabel(entity2, context3.graph()) }) : "";
           },
           reference: showReference,
           entityIds: [way.id, node1.id, node2.id],
@@ -36598,10 +36598,10 @@ ${content}</tr>
               new validationIssueFix({
                 icon: "iD-icon-plus",
                 title: _t.html("issues.fix.merge_points.title"),
-                onClick: function(context2) {
+                onClick: function(context3) {
                   var entityIds = this.issue.entityIds;
                   var action = actionMergeNodes([entityIds[1], entityIds[2]]);
-                  context2.perform(action, _t("issues.fix.merge_close_vertices.annotation"));
+                  context3.perform(action, _t("issues.fix.merge_close_vertices.annotation"));
                 }
               }),
               new validationIssueFix({
@@ -36622,7 +36622,7 @@ ${content}</tr>
   }
 
   // modules/validations/crossing_ways.js
-  function validationCrossingWays(context) {
+  function validationCrossingWays(context2) {
     var type3 = "crossing_ways";
     function getFeatureWithFeatureTypeTagsForWay(way, graph) {
       if (getFeatureType(way, graph) === null) {
@@ -36886,7 +36886,7 @@ ${content}</tr>
       return [];
     }
     var validation = function checkCrossingWays(entity, graph) {
-      var tree = context.history().tree();
+      var tree = context2.history().tree();
       var ways = waysToCheck(entity, graph);
       var issues = [];
       var wayIndex, crossingIndex, crossings;
@@ -36939,8 +36939,8 @@ ${content}</tr>
         type: type3,
         subtype,
         severity: "warning",
-        message: function(context2) {
-          var graph2 = context2.graph();
+        message: function(context3) {
+          var graph2 = context3.graph();
           var entity1 = graph2.hasEntity(this.entityIds[0]), entity2 = graph2.hasEntity(this.entityIds[1]);
           return entity1 && entity2 ? _t.html("issues.crossing_ways.message", {
             feature: utilDisplayLabel(entity1, graph2),
@@ -36958,8 +36958,8 @@ ${content}</tr>
         },
         hash: uniqueID,
         loc: crossing.crossPoint,
-        dynamicFixes: function(context2) {
-          var mode = context2.mode();
+        dynamicFixes: function(context3) {
+          var mode = context3.mode();
           if (!mode || mode.id !== "select" || mode.selectedIDs().length !== 1)
             return [];
           var selectedIndex = this.entityIds[0] === mode.selectedIDs()[0] ? 0 : 1;
@@ -36977,7 +36977,7 @@ ${content}</tr>
           } else if (isCrossingTunnels || isCrossingBridges || featureType1 === "building" || featureType2 === "building") {
             fixes.push(makeChangeLayerFix("higher"));
             fixes.push(makeChangeLayerFix("lower"));
-          } else if (context2.graph().geometry(this.entityIds[0]) === "line" && context2.graph().geometry(this.entityIds[1]) === "line") {
+          } else if (context3.graph().geometry(this.entityIds[0]) === "line" && context3.graph().geometry(this.entityIds[1]) === "line") {
             if (allowsBridge(selectedFeatureType) && selectedFeatureType !== "waterway") {
               fixes.push(makeAddBridgeOrTunnelFix("add_a_bridge", "temaki-bridge", "bridge"));
             }
@@ -37001,15 +37001,15 @@ ${content}</tr>
       return new validationIssueFix({
         icon: iconName,
         title: _t.html("issues.fix." + fixTitleID + ".title"),
-        onClick: function(context2) {
-          var mode = context2.mode();
+        onClick: function(context3) {
+          var mode = context3.mode();
           if (!mode || mode.id !== "select")
             return;
           var selectedIDs = mode.selectedIDs();
           if (selectedIDs.length !== 1)
             return;
           var selectedWayID = selectedIDs[0];
-          if (!context2.hasEntity(selectedWayID))
+          if (!context3.hasEntity(selectedWayID))
             return;
           var resultWayIDs = [selectedWayID];
           var edge, crossedEdge, crossedWayID;
@@ -37023,7 +37023,7 @@ ${content}</tr>
             crossedWayID = this.issue.entityIds[0];
           }
           var crossingLoc = this.issue.loc;
-          var projection2 = context2.projection;
+          var projection2 = context3.projection;
           var action = function actionAddStructure(graph) {
             var edgeNodes = [graph.entity(edge[0]), graph.entity(edge[1])];
             var crossedWay = graph.hasEntity(crossedWayID);
@@ -37139,8 +37139,8 @@ ${content}</tr>
             graph = actionChangeTags(structureWay.id, tags)(graph);
             return graph;
           };
-          context2.perform(action, _t("issues.fix." + fixTitleID + ".annotation"));
-          context2.enter(modeSelect(context2, resultWayIDs));
+          context3.perform(action, _t("issues.fix." + fixTitleID + ".annotation"));
+          context3.enter(modeSelect(context3, resultWayIDs));
         }
       });
     }
@@ -37152,11 +37152,11 @@ ${content}</tr>
       return new validationIssueFix({
         icon: "iD-icon-crossing",
         title: _t.html("issues.fix." + fixTitleID + ".title"),
-        onClick: function(context2) {
+        onClick: function(context3) {
           var loc = this.issue.loc;
           var connectionTags2 = this.issue.data.connectionTags;
           var edges = this.issue.data.edges;
-          context2.perform(
+          context3.perform(
             function actionConnectCrossingWays(graph) {
               var node = osmNode({ loc, tags: connectionTags2 });
               graph = graph.replace(node);
@@ -37185,8 +37185,8 @@ ${content}</tr>
       return new validationIssueFix({
         icon: "iD-icon-" + (higherOrLower === "higher" ? "up" : "down"),
         title: _t.html("issues.fix.tag_this_as_" + higherOrLower + ".title"),
-        onClick: function(context2) {
-          var mode = context2.mode();
+        onClick: function(context3) {
+          var mode = context3.mode();
           if (!mode || mode.id !== "select")
             return;
           var selectedIDs = mode.selectedIDs();
@@ -37197,7 +37197,7 @@ ${content}</tr>
             return entityId === selectedID;
           }))
             return;
-          var entity = context2.hasEntity(selectedID);
+          var entity = context3.hasEntity(selectedID);
           if (!entity)
             return;
           var tags = Object.assign({}, entity.tags);
@@ -37216,7 +37216,7 @@ ${content}</tr>
             }
           }
           tags.layer = layer.toString();
-          context2.perform(
+          context3.perform(
             actionChangeTags(entity.id, tags),
             _t("operations.change_tags.annotation")
           );
@@ -37228,10 +37228,10 @@ ${content}</tr>
   }
 
   // modules/behavior/draw_way.js
-  function behaviorDrawWay(context, wayID, mode, startGraph) {
+  function behaviorDrawWay(context2, wayID, mode, startGraph) {
     const keybinding = utilKeybinding("drawWay");
     var dispatch10 = dispatch_default("rejectedSelfIntersection");
-    var behavior = behaviorDraw(context);
+    var behavior = behaviorDraw(context2);
     var _nodeIndex;
     var _origWay;
     var _wayGeometry;
@@ -37242,17 +37242,17 @@ ${content}</tr>
     var _didResolveTempEdit = false;
     function createDrawNode(loc) {
       _drawNode = osmNode({ loc });
-      context.pauseChangeDispatch();
-      context.replace(function actionAddDrawNode(graph) {
+      context2.pauseChangeDispatch();
+      context2.replace(function actionAddDrawNode(graph) {
         var way = graph.entity(wayID);
         return graph.replace(_drawNode).replace(way.addNode(_drawNode.id, _nodeIndex));
       }, _annotation);
-      context.resumeChangeDispatch();
+      context2.resumeChangeDispatch();
       setActiveElements();
     }
     function removeDrawNode() {
-      context.pauseChangeDispatch();
-      context.replace(
+      context2.pauseChangeDispatch();
+      context2.replace(
         function actionDeleteDrawNode(graph) {
           var way = graph.entity(wayID);
           return graph.replace(way.removeNode(_drawNode.id)).remove(_drawNode);
@@ -37260,59 +37260,59 @@ ${content}</tr>
         _annotation
       );
       _drawNode = void 0;
-      context.resumeChangeDispatch();
+      context2.resumeChangeDispatch();
     }
     function keydown(d3_event) {
       if (d3_event.keyCode === utilKeybinding.modifierCodes.alt) {
-        if (context.surface().classed("nope")) {
-          context.surface().classed("nope-suppressed", true);
+        if (context2.surface().classed("nope")) {
+          context2.surface().classed("nope-suppressed", true);
         }
-        context.surface().classed("nope", false).classed("nope-disabled", true);
+        context2.surface().classed("nope", false).classed("nope-disabled", true);
       }
     }
     function keyup(d3_event) {
       if (d3_event.keyCode === utilKeybinding.modifierCodes.alt) {
-        if (context.surface().classed("nope-suppressed")) {
-          context.surface().classed("nope", true);
+        if (context2.surface().classed("nope-suppressed")) {
+          context2.surface().classed("nope", true);
         }
-        context.surface().classed("nope-suppressed", false).classed("nope-disabled", false);
+        context2.surface().classed("nope-suppressed", false).classed("nope-disabled", false);
       }
     }
     function allowsVertex(d) {
-      return d.geometry(context.graph()) === "vertex" || _mainPresetIndex.allowsVertex(d, context.graph());
+      return d.geometry(context2.graph()) === "vertex" || _mainPresetIndex.allowsVertex(d, context2.graph());
     }
     function move(d3_event, datum2) {
-      var loc = context.map().mouseCoordinates();
+      var loc = context2.map().mouseCoordinates();
       if (!_drawNode)
         createDrawNode(loc);
-      context.surface().classed("nope-disabled", d3_event.altKey);
+      context2.surface().classed("nope-disabled", d3_event.altKey);
       var targetLoc = datum2 && datum2.properties && datum2.properties.entity && allowsVertex(datum2.properties.entity) && datum2.properties.entity.loc;
       var targetNodes = datum2 && datum2.properties && datum2.properties.nodes;
       if (targetLoc) {
         loc = targetLoc;
       } else if (targetNodes) {
-        var choice = geoChooseEdge(targetNodes, context.map().mouse(), context.projection, _drawNode.id);
+        var choice = geoChooseEdge(targetNodes, context2.map().mouse(), context2.projection, _drawNode.id);
         if (choice) {
           loc = choice.loc;
         }
       }
-      context.replace(actionMoveNode(_drawNode.id, loc), _annotation);
-      _drawNode = context.entity(_drawNode.id);
+      context2.replace(actionMoveNode(_drawNode.id, loc), _annotation);
+      _drawNode = context2.entity(_drawNode.id);
       checkGeometry(true);
     }
     function checkGeometry(includeDrawNode) {
-      var nopeDisabled = context.surface().classed("nope-disabled");
+      var nopeDisabled = context2.surface().classed("nope-disabled");
       var isInvalid = isInvalidGeometry(includeDrawNode);
       if (nopeDisabled) {
-        context.surface().classed("nope", false).classed("nope-suppressed", isInvalid);
+        context2.surface().classed("nope", false).classed("nope-suppressed", isInvalid);
       } else {
-        context.surface().classed("nope", isInvalid).classed("nope-suppressed", false);
+        context2.surface().classed("nope", isInvalid).classed("nope-suppressed", false);
       }
     }
     function isInvalidGeometry(includeDrawNode) {
       var testNode = _drawNode;
-      var parentWay = context.graph().entity(wayID);
-      var nodes = context.graph().childNodes(parentWay).slice();
+      var parentWay = context2.graph().entity(wayID);
+      var nodes = context2.graph().childNodes(parentWay).slice();
       if (includeDrawNode) {
         if (parentWay.isClosed()) {
           nodes.pop();
@@ -37332,33 +37332,33 @@ ${content}</tr>
     }
     function undone() {
       _didResolveTempEdit = true;
-      context.pauseChangeDispatch();
+      context2.pauseChangeDispatch();
       var nextMode;
-      if (context.graph() === startGraph) {
-        nextMode = modeSelect(context, [wayID]);
+      if (context2.graph() === startGraph) {
+        nextMode = modeSelect(context2, [wayID]);
       } else {
-        context.pop(1);
+        context2.pop(1);
         nextMode = mode;
       }
-      context.perform(actionNoop());
-      context.pop(1);
-      context.resumeChangeDispatch();
-      context.enter(nextMode);
+      context2.perform(actionNoop());
+      context2.pop(1);
+      context2.resumeChangeDispatch();
+      context2.enter(nextMode);
     }
     function setActiveElements() {
       if (!_drawNode)
         return;
-      context.surface().selectAll("." + _drawNode.id).classed("active", true);
+      context2.surface().selectAll("." + _drawNode.id).classed("active", true);
     }
     function resetToStartGraph() {
-      while (context.graph() !== startGraph) {
-        context.pop();
+      while (context2.graph() !== startGraph) {
+        context2.pop();
       }
     }
     var drawWay = function(surface) {
       _drawNode = void 0;
       _didResolveTempEdit = false;
-      _origWay = context.entity(wayID);
+      _origWay = context2.entity(wayID);
       if (typeof _nodeIndex === "number") {
         _headNodeID = _origWay.nodes[_nodeIndex];
       } else if (_origWay.isClosed()) {
@@ -37366,14 +37366,14 @@ ${content}</tr>
       } else {
         _headNodeID = _origWay.nodes[_origWay.nodes.length - 1];
       }
-      _wayGeometry = _origWay.geometry(context.graph());
+      _wayGeometry = _origWay.geometry(context2.graph());
       _annotation = _t(
         (_origWay.nodes.length === (_origWay.isClosed() ? 2 : 1) ? "operations.start.annotation." : "operations.continue.annotation.") + _wayGeometry
       );
       _pointerHasMoved = false;
-      context.pauseChangeDispatch();
-      context.perform(actionNoop(), _annotation);
-      context.resumeChangeDispatch();
+      context2.pauseChangeDispatch();
+      context2.perform(actionNoop(), _annotation);
+      context2.resumeChangeDispatch();
       behavior.hover().initialNodeID(_headNodeID);
       behavior.on("move", function() {
         _pointerHasMoved = true;
@@ -37383,47 +37383,47 @@ ${content}</tr>
       }).on("downcancel", function() {
         if (_drawNode)
           removeDrawNode();
-      }).on("click", drawWay.add).on("clickWay", drawWay.addWay).on("clickNode", drawWay.addNode).on("undo", context.undo).on("cancel", drawWay.cancel).on("finish", drawWay.finish);
+      }).on("click", drawWay.add).on("clickWay", drawWay.addWay).on("clickNode", drawWay.addNode).on("undo", context2.undo).on("cancel", drawWay.cancel).on("finish", drawWay.finish);
       select_default2(window).on("keydown.drawWay", keydown).on("keyup.drawWay", keyup);
-      context.map().dblclickZoomEnable(false).on("drawn.draw", setActiveElements);
+      context2.map().dblclickZoomEnable(false).on("drawn.draw", setActiveElements);
       setActiveElements();
       surface.call(behavior);
-      context.history().on("undone.draw", undone);
+      context2.history().on("undone.draw", undone);
     };
     drawWay.off = function(surface) {
       if (!_didResolveTempEdit) {
-        context.pauseChangeDispatch();
+        context2.pauseChangeDispatch();
         resetToStartGraph();
-        context.resumeChangeDispatch();
+        context2.resumeChangeDispatch();
       }
       _drawNode = void 0;
       _nodeIndex = void 0;
-      context.map().on("drawn.draw", null);
+      context2.map().on("drawn.draw", null);
       surface.call(behavior.off).selectAll(".active").classed("active", false);
       surface.classed("nope", false).classed("nope-suppressed", false).classed("nope-disabled", false);
       select_default2(window).on("keydown.drawWay", null).on("keyup.drawWay", null);
-      context.history().on("undone.draw", null);
+      context2.history().on("undone.draw", null);
     };
     function attemptAdd(d, loc, doAdd) {
       if (_drawNode) {
-        context.replace(actionMoveNode(_drawNode.id, loc), _annotation);
-        _drawNode = context.entity(_drawNode.id);
+        context2.replace(actionMoveNode(_drawNode.id, loc), _annotation);
+        _drawNode = context2.entity(_drawNode.id);
       } else {
         createDrawNode(loc);
       }
       checkGeometry(true);
-      if (d && d.properties && d.properties.nope || context.surface().classed("nope")) {
+      if (d && d.properties && d.properties.nope || context2.surface().classed("nope")) {
         if (!_pointerHasMoved) {
           removeDrawNode();
         }
         dispatch10.call("rejectedSelfIntersection", this);
         return;
       }
-      context.pauseChangeDispatch();
+      context2.pauseChangeDispatch();
       doAdd();
       _didResolveTempEdit = true;
-      context.resumeChangeDispatch();
-      context.enter(mode);
+      context2.resumeChangeDispatch();
+      context2.enter(mode);
     }
     drawWay.add = function(loc, d) {
       attemptAdd(d, loc, function() {
@@ -37431,7 +37431,7 @@ ${content}</tr>
     };
     drawWay.addWay = function(loc, edge, d) {
       attemptAdd(d, loc, function() {
-        context.replace(
+        context2.replace(
           actionAddMidpoint({ loc, edge }, _drawNode),
           _annotation
         );
@@ -37443,7 +37443,7 @@ ${content}</tr>
         return;
       }
       attemptAdd(d, node.loc, function() {
-        context.replace(
+        context2.replace(
           function actionReplaceDrawNode(graph) {
             graph = graph.replace(graph.entity(wayID).removeNode(_drawNode.id)).remove(_drawNode);
             return graph.replace(graph.entity(wayID).addNode(node.id, _nodeIndex));
@@ -37465,20 +37465,20 @@ ${content}</tr>
       try {
         const isDrawingArea = _origWay.nodes[0] === _origWay.nodes.slice(-1)[0];
         const [secondLastNodeId, lastNodeId] = _origWay.nodes.slice(isDrawingArea ? -3 : -2);
-        const historyGraph = context.history().graph();
+        const historyGraph = context2.history().graph();
         if (!lastNodeId || !secondLastNodeId || !historyGraph.hasEntity(lastNodeId) || !historyGraph.hasEntity(secondLastNodeId)) {
-          context.ui().flash.duration(4e3).iconName("#iD-icon-no").label(_t.html("operations.follow.error.needs_more_initial_nodes"))();
+          context2.ui().flash.duration(4e3).iconName("#iD-icon-no").label(_t.html("operations.follow.error.needs_more_initial_nodes"))();
           return;
         }
         const lastNodesParents = historyGraph.parentWays(historyGraph.entity(lastNodeId)).filter((w) => w.id !== wayID);
         const secondLastNodesParents = historyGraph.parentWays(historyGraph.entity(secondLastNodeId)).filter((w) => w.id !== wayID);
         const featureType = getFeatureType(lastNodesParents);
         if (lastNodesParents.length !== 1 || secondLastNodesParents.length === 0) {
-          context.ui().flash.duration(4e3).iconName("#iD-icon-no").label(_t.html(`operations.follow.error.intersection_of_multiple_ways.${featureType}`))();
+          context2.ui().flash.duration(4e3).iconName("#iD-icon-no").label(_t.html(`operations.follow.error.intersection_of_multiple_ways.${featureType}`))();
           return;
         }
         if (!secondLastNodesParents.some((n2) => n2.id === lastNodesParents[0].id)) {
-          context.ui().flash.duration(4e3).iconName("#iD-icon-no").label(_t.html(`operations.follow.error.intersection_of_different_ways.${featureType}`))();
+          context2.ui().flash.duration(4e3).iconName("#iD-icon-no").label(_t.html(`operations.follow.error.intersection_of_different_ways.${featureType}`))();
           return;
         }
         const way = lastNodesParents[0];
@@ -37495,41 +37495,41 @@ ${content}</tr>
           properties: { target: true, entity: nextNode }
         });
       } catch (ex) {
-        context.ui().flash.duration(4e3).iconName("#iD-icon-no").label(_t.html("operations.follow.error.unknown"))();
+        context2.ui().flash.duration(4e3).iconName("#iD-icon-no").label(_t.html("operations.follow.error.unknown"))();
       }
     }
     keybinding.on(_t("operations.follow.key"), followMode);
     select_default2(document).call(keybinding);
     drawWay.finish = function() {
       checkGeometry(false);
-      if (context.surface().classed("nope")) {
+      if (context2.surface().classed("nope")) {
         dispatch10.call("rejectedSelfIntersection", this);
         return;
       }
-      context.pauseChangeDispatch();
-      context.pop(1);
+      context2.pauseChangeDispatch();
+      context2.pop(1);
       _didResolveTempEdit = true;
-      context.resumeChangeDispatch();
-      var way = context.hasEntity(wayID);
+      context2.resumeChangeDispatch();
+      var way = context2.hasEntity(wayID);
       if (!way || way.isDegenerate()) {
         drawWay.cancel();
         return;
       }
       window.setTimeout(function() {
-        context.map().dblclickZoomEnable(true);
+        context2.map().dblclickZoomEnable(true);
       }, 1e3);
       var isNewFeature = !mode.isContinuing;
-      context.enter(modeSelect(context, [wayID]).newFeature(isNewFeature));
+      context2.enter(modeSelect(context2, [wayID]).newFeature(isNewFeature));
     };
     drawWay.cancel = function() {
-      context.pauseChangeDispatch();
+      context2.pauseChangeDispatch();
       resetToStartGraph();
-      context.resumeChangeDispatch();
+      context2.resumeChangeDispatch();
       window.setTimeout(function() {
-        context.map().dblclickZoomEnable(true);
+        context2.map().dblclickZoomEnable(true);
       }, 1e3);
-      context.surface().classed("nope", false).classed("nope-disabled", false).classed("nope-suppressed", false);
-      context.enter(modeBrowse(context));
+      context2.surface().classed("nope", false).classed("nope-disabled", false).classed("nope-suppressed", false);
+      context2.enter(modeBrowse(context2));
     };
     drawWay.nodeIndex = function(val) {
       if (!arguments.length)
@@ -37546,22 +37546,22 @@ ${content}</tr>
   }
 
   // modules/modes/draw_line.js
-  function modeDrawLine(context, wayID, startGraph, button, affix, continuing) {
+  function modeDrawLine(context2, wayID, startGraph, button, affix, continuing) {
     var mode = {
       button,
       id: "draw-line"
     };
-    var behavior = behaviorDrawWay(context, wayID, mode, startGraph).on("rejectedSelfIntersection.modeDrawLine", function() {
-      context.ui().flash.iconName("#iD-icon-no").label(_t.html("self_intersection.error.lines"))();
+    var behavior = behaviorDrawWay(context2, wayID, mode, startGraph).on("rejectedSelfIntersection.modeDrawLine", function() {
+      context2.ui().flash.iconName("#iD-icon-no").label(_t.html("self_intersection.error.lines"))();
     });
     mode.wayID = wayID;
     mode.isContinuing = continuing;
     mode.enter = function() {
       behavior.nodeIndex(affix === "prefix" ? 0 : void 0);
-      context.install(behavior);
+      context2.install(behavior);
     };
     mode.exit = function() {
-      context.uninstall(behavior);
+      context2.uninstall(behavior);
     };
     mode.selectedIDs = function() {
       return [wayID];
@@ -37586,9 +37586,9 @@ ${content}</tr>
         type: type3,
         subtype: "highway",
         severity: "warning",
-        message: function(context) {
-          var entity2 = this.entityIds.length && context.hasEntity(this.entityIds[0]);
-          var label = entity2 && utilDisplayLabel(entity2, context.graph());
+        message: function(context2) {
+          var entity2 = this.entityIds.length && context2.hasEntity(this.entityIds[0]);
+          var label = entity2 && utilDisplayLabel(entity2, context2.graph());
           return _t.html("issues.disconnected_way.routable.message", { count: this.entityIds.length, highway: label });
         },
         reference: showReference,
@@ -37597,9 +37597,9 @@ ${content}</tr>
         }),
         dynamicFixes: makeFixes
       })];
-      function makeFixes(context) {
+      function makeFixes(context2) {
         var fixes = [];
-        var singleEntity = this.entityIds.length === 1 && context.hasEntity(this.entityIds[0]);
+        var singleEntity = this.entityIds.length === 1 && context2.hasEntity(this.entityIds[0]);
         if (singleEntity) {
           if (singleEntity.type === "way" && !singleEntity.isClosed()) {
             var textDirection = _mainLocalizer.textDirection();
@@ -37619,9 +37619,9 @@ ${content}</tr>
             icon: "iD-operation-delete",
             title: _t.html("issues.fix.delete_feature.title"),
             entityIds: [singleEntity.id],
-            onClick: function(context2) {
+            onClick: function(context3) {
               var id2 = this.issue.entityIds[0];
-              var operation = operationDelete(context2, [id2]);
+              var operation = operationDelete(context3, [id2]);
               if (!operation.disabled()) {
                 operation();
               }
@@ -37708,19 +37708,19 @@ ${content}</tr>
           icon: "iD-operation-continue" + (useLeftContinue ? "-left" : ""),
           title: _t.html("issues.fix.continue_from_" + whichEnd + ".title"),
           entityIds: [vertexID],
-          onClick: function(context) {
+          onClick: function(context2) {
             var wayId = this.issue.entityIds[0];
-            var way = context.hasEntity(wayId);
+            var way = context2.hasEntity(wayId);
             var vertexId = this.entityIds[0];
-            var vertex2 = context.hasEntity(vertexId);
+            var vertex2 = context2.hasEntity(vertexId);
             if (!way || !vertex2)
               return;
-            var map2 = context.map();
-            if (!context.editable() || !map2.trimmedExtent().contains(vertex2.loc)) {
+            var map2 = context2.map();
+            if (!context2.editable() || !map2.trimmedExtent().contains(vertex2.loc)) {
               map2.zoomToEase(vertex2);
             }
-            context.enter(
-              modeDrawLine(context, wayId, context.graph(), "line", way.affix(vertexId), true)
+            context2.enter(
+              modeDrawLine(context2, wayId, context2.graph(), "line", way.affix(vertexId), true)
             );
           }
         });
@@ -37753,11 +37753,11 @@ ${content}</tr>
             type: type3,
             subtype: "email",
             severity: "warning",
-            message: function(context) {
-              var entity2 = context.hasEntity(this.entityIds[0]);
+            message: function(context2) {
+              var entity2 = context2.hasEntity(this.entityIds[0]);
               return entity2 ? _t.html(
                 "issues.invalid_format.email.message" + this.data,
-                { feature: utilDisplayLabel(entity2, context.graph()), email: emails.join(", ") }
+                { feature: utilDisplayLabel(entity2, context2.graph()), email: emails.join(", ") }
               ) : "";
             },
             reference: showReferenceEmail,
@@ -37774,7 +37774,7 @@ ${content}</tr>
   }
 
   // modules/validations/help_request.js
-  function validationHelpRequest(context) {
+  function validationHelpRequest(context2) {
     var type3 = "help_request";
     var validation = function checkFixmeTag(entity) {
       if (!entity.tags.fixme)
@@ -37782,7 +37782,7 @@ ${content}</tr>
       if (entity.version === void 0)
         return [];
       if (entity.v !== void 0) {
-        var baseEntity = context.history().base().hasEntity(entity.id);
+        var baseEntity = context2.history().base().hasEntity(entity.id);
         if (!baseEntity || !baseEntity.tags.fixme)
           return [];
       }
@@ -37790,10 +37790,10 @@ ${content}</tr>
         type: type3,
         subtype: "fixme_tag",
         severity: "warning",
-        message: function(context2) {
-          var entity2 = context2.hasEntity(this.entityIds[0]);
+        message: function(context3) {
+          var entity2 = context3.hasEntity(this.entityIds[0]);
           return entity2 ? _t.html("issues.fixme_tag.message", {
-            feature: utilDisplayLabel(entity2, context2.graph(), true)
+            feature: utilDisplayLabel(entity2, context3.graph(), true)
           }) : "";
         },
         dynamicFixes: function() {
@@ -37945,10 +37945,10 @@ ${content}</tr>
           type: type3,
           subtype: wayType,
           severity: "warning",
-          message: function(context) {
-            var entity2 = context.hasEntity(this.entityIds[0]);
+          message: function(context2) {
+            var entity2 = context2.hasEntity(this.entityIds[0]);
             return entity2 ? _t.html("issues.impossible_oneway." + messageID + ".message", {
-              feature: utilDisplayLabel(entity2, context.graph())
+              feature: utilDisplayLabel(entity2, context2.graph())
             }) : "";
           },
           reference: getReference(referenceID),
@@ -37960,9 +37960,9 @@ ${content}</tr>
                 icon: "iD-operation-reverse",
                 title: _t.html("issues.fix.reverse_feature.title"),
                 entityIds: [way.id],
-                onClick: function(context) {
+                onClick: function(context2) {
                   var id2 = this.issue.entityIds[0];
-                  context.perform(actionReverse(id2), _t("operations.reverse.annotation.line", { n: 1 }));
+                  context2.perform(actionReverse(id2), _t("operations.reverse.annotation.line", { n: 1 }));
                 }
               }));
             }
@@ -37972,12 +37972,12 @@ ${content}</tr>
               fixes.push(new validationIssueFix({
                 icon: "iD-operation-continue" + (useLeftContinue ? "-left" : ""),
                 title: _t.html("issues.fix.continue_from_" + (isFirst ? "start" : "end") + ".title"),
-                onClick: function(context) {
+                onClick: function(context2) {
                   var entityID = this.issue.entityIds[0];
                   var vertexID = this.issue.entityIds[1];
-                  var way2 = context.entity(entityID);
-                  var vertex = context.entity(vertexID);
-                  continueDrawing(way2, vertex, context);
+                  var way2 = context2.entity(entityID);
+                  var vertex = context2.entity(vertexID);
+                  continueDrawing(way2, vertex, context2);
                 }
               }));
             }
@@ -37992,13 +37992,13 @@ ${content}</tr>
         }
       }
     };
-    function continueDrawing(way, vertex, context) {
-      var map2 = context.map();
-      if (!context.editable() || !map2.trimmedExtent().contains(vertex.loc)) {
+    function continueDrawing(way, vertex, context2) {
+      var map2 = context2.map();
+      if (!context2.editable() || !map2.trimmedExtent().contains(vertex.loc)) {
         map2.zoomToEase(vertex);
       }
-      context.enter(
-        modeDrawLine(context, way.id, context.graph(), "line", way.affix(vertex.id), true)
+      context2.enter(
+        modeDrawLine(context2, way.id, context2.graph(), "line", way.affix(vertex.id), true)
       );
     }
     validation.type = type3;
@@ -38041,10 +38041,10 @@ ${content}</tr>
         return new validationIssue({
           type: type3,
           severity: "warning",
-          message: (context) => {
-            const entity2 = context.hasEntity(entityID);
+          message: (context2) => {
+            const entity2 = context2.hasEntity(entityID);
             return entity2 ? _t.html("issues.incompatible_source.feature.message", {
-              feature: utilDisplayLabel(entity2, context.graph(), true),
+              feature: utilDisplayLabel(entity2, context2.graph(), true),
               value: source
             }) : "";
           },
@@ -38114,9 +38114,9 @@ ${content}</tr>
         testNodes.pop();
         testNodes.push(testNodes[0]);
         if (!geoHasSelfIntersections(testNodes, testNodes[0].id)) {
-          return function(context) {
-            var way2 = context.entity(this.issue.entityIds[0]);
-            context.perform(
+          return function(context2) {
+            var way2 = context2.entity(this.issue.entityIds[0]);
+            context2.perform(
               actionMergeNodes([way2.nodes[0], way2.nodes[way2.nodes.length - 1]], nodes[0].loc),
               _t("issues.fix.connect_endpoints.annotation")
             );
@@ -38126,12 +38126,12 @@ ${content}</tr>
       testNodes = nodes.slice();
       testNodes.push(testNodes[0]);
       if (!geoHasSelfIntersections(testNodes, testNodes[0].id)) {
-        return function(context) {
+        return function(context2) {
           var wayId = this.issue.entityIds[0];
-          var way2 = context.entity(wayId);
+          var way2 = context2.entity(wayId);
           var nodeId = way2.nodes[0];
           var index = way2.nodes.length;
-          context.perform(
+          context2.perform(
             actionAddVertex(wayId, nodeId, index),
             _t("issues.fix.connect_endpoints.annotation")
           );
@@ -38146,8 +38146,8 @@ ${content}</tr>
         type: type3,
         subtype: "area_as_line",
         severity: "warning",
-        message: function(context) {
-          var entity2 = context.hasEntity(this.entityIds[0]);
+        message: function(context2) {
+          var entity2 = context2.hasEntity(this.entityIds[0]);
           return entity2 ? _t.html("issues.tag_suggests_area.message", {
             feature: utilDisplayLabel(entity2, "area", true),
             tag: utilTagText({ tags: tagSuggestingArea })
@@ -38156,10 +38156,10 @@ ${content}</tr>
         reference: showReference,
         entityIds: [entity.id],
         hash: JSON.stringify(tagSuggestingArea),
-        dynamicFixes: function(context) {
+        dynamicFixes: function(context2) {
           var fixes = [];
-          var entity2 = context.entity(this.entityIds[0]);
-          var connectEndsOnClick = makeConnectEndpointsFixOnClick(entity2, context.graph());
+          var entity2 = context2.entity(this.entityIds[0]);
+          var connectEndsOnClick = makeConnectEndpointsFixOnClick(entity2, context2.graph());
           fixes.push(new validationIssueFix({
             title: _t.html("issues.fix.connect_endpoints.title"),
             onClick: connectEndsOnClick
@@ -38167,14 +38167,14 @@ ${content}</tr>
           fixes.push(new validationIssueFix({
             icon: "iD-operation-delete",
             title: _t.html("issues.fix.remove_tag.title"),
-            onClick: function(context2) {
+            onClick: function(context3) {
               var entityId = this.issue.entityIds[0];
-              var entity3 = context2.entity(entityId);
+              var entity3 = context3.entity(entityId);
               var tags = Object.assign({}, entity3.tags);
               for (var key in tagSuggestingArea) {
                 delete tags[key];
               }
-              context2.perform(
+              context3.perform(
                 actionChangeTags(entityId, tags),
                 _t("issues.fix.remove_tag.annotation")
               );
@@ -38201,8 +38201,8 @@ ${content}</tr>
           type: type3,
           subtype: "vertex_as_point",
           severity: "warning",
-          message: function(context) {
-            var entity2 = context.hasEntity(this.entityIds[0]);
+          message: function(context2) {
+            var entity2 = context2.hasEntity(this.entityIds[0]);
             return entity2 ? _t.html("issues.vertex_as_point.message", {
               feature: utilDisplayLabel(entity2, "vertex", true)
             }) : "";
@@ -38217,8 +38217,8 @@ ${content}</tr>
           type: type3,
           subtype: "point_as_vertex",
           severity: "warning",
-          message: function(context) {
-            var entity2 = context.hasEntity(this.entityIds[0]);
+          message: function(context2) {
+            var entity2 = context2.hasEntity(this.entityIds[0]);
             return entity2 ? _t.html("issues.point_as_vertex.message", {
               feature: utilDisplayLabel(entity2, "point", true)
             }) : "";
@@ -38275,8 +38275,8 @@ ${content}</tr>
         type: type3,
         subtype,
         severity: "warning",
-        message: function(context) {
-          var entity2 = context.hasEntity(this.entityIds[0]);
+        message: function(context2) {
+          var entity2 = context2.hasEntity(this.entityIds[0]);
           return entity2 ? _t.html("issues." + referenceId + ".message", {
             feature: utilDisplayLabel(entity2, targetGeom, true)
           }) : "";
@@ -38288,21 +38288,21 @@ ${content}</tr>
         dynamicFixes
       });
     }
-    function lineToAreaDynamicFixes(context) {
+    function lineToAreaDynamicFixes(context2) {
       var convertOnClick;
       var entityId = this.entityIds[0];
-      var entity = context.entity(entityId);
+      var entity = context2.entity(entityId);
       var tags = Object.assign({}, entity.tags);
       delete tags.area;
       if (!osmTagSuggestingArea(tags)) {
-        convertOnClick = function(context2) {
+        convertOnClick = function(context3) {
           var entityId2 = this.issue.entityIds[0];
-          var entity2 = context2.entity(entityId2);
+          var entity2 = context3.entity(entityId2);
           var tags2 = Object.assign({}, entity2.tags);
           if (tags2.area) {
             delete tags2.area;
           }
-          context2.perform(
+          context3.perform(
             actionChangeTags(entityId2, tags2),
             _t("issues.fix.convert_to_line.annotation")
           );
@@ -38316,18 +38316,18 @@ ${content}</tr>
         })
       ];
     }
-    function extractPointDynamicFixes(context) {
+    function extractPointDynamicFixes(context2) {
       var entityId = this.entityIds[0];
       var extractOnClick = null;
-      if (!context.hasHiddenConnections(entityId)) {
-        extractOnClick = function(context2) {
+      if (!context2.hasHiddenConnections(entityId)) {
+        extractOnClick = function(context3) {
           var entityId2 = this.issue.entityIds[0];
-          var action = actionExtract(entityId2, context2.projection);
-          context2.perform(
+          var action = actionExtract(entityId2, context3.projection);
+          context3.perform(
             action,
             _t("operations.extract.annotation", { n: 1 })
           );
-          context2.enter(modeSelect(context2, [action.getExtractedNodeID()]));
+          context3.enter(modeSelect(context3, [action.getExtractedNodeID()]));
         };
       }
       return [
@@ -38355,10 +38355,10 @@ ${content}</tr>
           type: type3,
           subtype: "unclosed_multipolygon_part",
           severity: "warning",
-          message: function(context) {
-            var entity2 = context.hasEntity(this.entityIds[0]);
+          message: function(context2) {
+            var entity2 = context2.hasEntity(this.entityIds[0]);
             return entity2 ? _t.html("issues.unclosed_multipolygon_part.message", {
-              feature: utilDisplayLabel(entity2, context.graph(), true)
+              feature: utilDisplayLabel(entity2, context2.graph(), true)
             }) : "";
           },
           reference: showReference,
@@ -38422,11 +38422,11 @@ ${content}</tr>
       return new validationIssue({
         type: type3,
         severity: "warning",
-        message: function(context) {
-          var member2 = context.hasEntity(this.entityIds[1]), relation2 = context.hasEntity(this.entityIds[0]);
+        message: function(context2) {
+          var member2 = context2.hasEntity(this.entityIds[1]), relation2 = context2.hasEntity(this.entityIds[0]);
           return member2 && relation2 ? _t.html("issues.missing_role.message", {
-            member: utilDisplayLabel(member2, context.graph()),
-            relation: utilDisplayLabel(relation2, context.graph())
+            member: utilDisplayLabel(member2, context2.graph()),
+            relation: utilDisplayLabel(relation2, context2.graph())
           }) : "";
         },
         reference: showReference,
@@ -38442,8 +38442,8 @@ ${content}</tr>
             new validationIssueFix({
               icon: "iD-operation-delete",
               title: _t.html("issues.fix.remove_from_relation.title"),
-              onClick: function(context) {
-                context.perform(
+              onClick: function(context2) {
+                context2.perform(
                   actionDeleteMember(this.issue.entityIds[0], this.issue.data.member.index),
                   _t("operations.delete_member.annotation", {
                     n: 1
@@ -38461,10 +38461,10 @@ ${content}</tr>
     function makeAddRoleFix(role) {
       return new validationIssueFix({
         title: _t.html("issues.fix.set_as_" + role + ".title"),
-        onClick: function(context) {
+        onClick: function(context2) {
           var oldMember = this.issue.data.member;
           var member = { id: this.issue.entityIds[1], type: oldMember.type, role };
-          context.perform(
+          context2.perform(
             actionChangeMember(this.issue.entityIds[0], member, oldMember.index),
             _t("operations.change_role.annotation", {
               n: 1
@@ -38478,7 +38478,7 @@ ${content}</tr>
   }
 
   // modules/validations/missing_tag.js
-  function validationMissingTag(context) {
+  function validationMissingTag(context2) {
     var type3 = "missing_tag";
     function hasDescriptiveTags(entity, graph) {
       var onlyAttributeKeys = ["description", "name", "note", "start_date"];
@@ -38502,7 +38502,7 @@ ${content}</tr>
     }
     var validation = function checkMissingTag(entity, graph) {
       var subtype;
-      var osm = context.connection();
+      var osm = context2.connection();
       var isUnloadedNode = entity.type === "node" && osm && !osm.isDataLoaded(entity.loc);
       if (!isUnloadedNode && entity.geometry(graph) !== "vertex" && !entity.hasParentRelations(graph)) {
         if (Object.keys(entity.tags).length === 0) {
@@ -38526,32 +38526,32 @@ ${content}</tr>
         type: type3,
         subtype,
         severity,
-        message: function(context2) {
-          var entity2 = context2.hasEntity(this.entityIds[0]);
+        message: function(context3) {
+          var entity2 = context3.hasEntity(this.entityIds[0]);
           return entity2 ? _t.html("issues." + messageID + ".message", {
-            feature: utilDisplayLabel(entity2, context2.graph())
+            feature: utilDisplayLabel(entity2, context3.graph())
           }) : "";
         },
         reference: showReference,
         entityIds: [entity.id],
-        dynamicFixes: function(context2) {
+        dynamicFixes: function(context3) {
           var fixes = [];
           var selectFixType = subtype === "highway_classification" ? "select_road_type" : "select_preset";
           fixes.push(new validationIssueFix({
             icon: "iD-icon-search",
             title: _t.html("issues.fix." + selectFixType + ".title"),
-            onClick: function(context3) {
-              context3.ui().sidebar.showPresetList();
+            onClick: function(context4) {
+              context4.ui().sidebar.showPresetList();
             }
           }));
           var deleteOnClick;
           var id2 = this.entityIds[0];
-          var operation = operationDelete(context2, [id2]);
+          var operation = operationDelete(context3, [id2]);
           var disabledReasonID = operation.disabled();
           if (!disabledReasonID) {
-            deleteOnClick = function(context3) {
+            deleteOnClick = function(context4) {
               var id3 = this.issue.entityIds[0];
-              var operation2 = operationDelete(context3, [id3]);
+              var operation2 = operationDelete(context4, [id3]);
               if (!operation2.disabled()) {
                 operation2();
               }
@@ -38659,8 +38659,8 @@ ${content}</tr>
             new validationIssueFix({
               autoArgs,
               title: _t.html("issues.fix.upgrade_tags.title"),
-              onClick: (context) => {
-                context.perform(doUpgrade, _t("issues.fix.upgrade_tags.annotation"));
+              onClick: (context2) => {
+                context2.perform(doUpgrade, _t("issues.fix.upgrade_tags.annotation"));
               }
             })
           ];
@@ -38669,8 +38669,8 @@ ${content}</tr>
             fixes.push(
               new validationIssueFix({
                 title: _t.html("issues.fix.tag_as_not.title", { name: item.displayName }),
-                onClick: (context) => {
-                  context.perform(addNotTag, _t("issues.fix.tag_as_not.annotation"));
+                onClick: (context2) => {
+                  context2.perform(addNotTag, _t("issues.fix.tag_as_not.annotation"));
                 }
               })
             );
@@ -38712,8 +38712,8 @@ ${content}</tr>
         }
         return actionChangeTags(currEntity.id, newTags2)(graph2);
       }
-      function showMessage(context) {
-        const currEntity = context.hasEntity(entity.id);
+      function showMessage(context2) {
+        const currEntity = context2.hasEntity(entity.id);
         if (!currEntity)
           return "";
         let messageID = `issues.outdated_tags.${prefix}message`;
@@ -38721,7 +38721,7 @@ ${content}</tr>
           messageID += "_incomplete";
         }
         return _t.html(messageID, {
-          feature: utilDisplayLabel(currEntity, context.graph(), true)
+          feature: utilDisplayLabel(currEntity, context2.graph(), true)
         });
       }
       function showReference(selection2) {
@@ -38759,8 +38759,8 @@ ${content}</tr>
             new validationIssueFix({
               autoArgs: [doUpgrade, _t("issues.fix.move_tags.annotation")],
               title: _t.html("issues.fix.move_tags.title"),
-              onClick: (context) => {
-                context.perform(doUpgrade, _t("issues.fix.move_tags.annotation"));
+              onClick: (context2) => {
+                context2.perform(doUpgrade, _t("issues.fix.move_tags.annotation"));
               }
             })
           ];
@@ -38775,13 +38775,13 @@ ${content}</tr>
         graph2 = graph2.replace(currMultipolygon);
         return actionChangeTags(currOuterWay.id, {})(graph2);
       }
-      function showMessage(context) {
-        let currMultipolygon = context.hasEntity(multipolygon.id);
+      function showMessage(context2) {
+        let currMultipolygon = context2.hasEntity(multipolygon.id);
         if (!currMultipolygon)
           return "";
         return _t.html(
           "issues.old_multipolygon.message",
-          { multipolygon: utilDisplayLabel(currMultipolygon, context.graph(), true) }
+          { multipolygon: utilDisplayLabel(currMultipolygon, context2.graph(), true) }
         );
       }
       function showReference(selection2) {
@@ -38854,8 +38854,8 @@ ${content}</tr>
             new validationIssueFix({
               icon: "iD-operation-delete",
               title: _t.html("issues.fix." + fixID + ".title"),
-              onClick: function(context) {
-                context.perform(doUpgrade, _t("issues.fix.upgrade_tags.annotation"));
+              onClick: function(context2) {
+                context2.perform(doUpgrade, _t("issues.fix.upgrade_tags.annotation"));
               }
             })
           ];
@@ -38875,13 +38875,13 @@ ${content}</tr>
         });
         return actionChangeTags(currEntity.id, newTags)(graph);
       }
-      function showMessage(context) {
-        var currEntity = context.hasEntity(this.entityIds[0]);
+      function showMessage(context2) {
+        var currEntity = context2.hasEntity(this.entityIds[0]);
         if (!currEntity)
           return "";
         return _t.html(
           "issues.private_data.contact.message",
-          { feature: utilDisplayLabel(currEntity, context.graph()) }
+          { feature: utilDisplayLabel(currEntity, context2.graph()) }
         );
       }
       function showReference(selection2) {
@@ -38951,11 +38951,11 @@ ${content}</tr>
         type: type3,
         subtype: "generic_name",
         severity: "warning",
-        message: function(context) {
-          let entity = context.hasEntity(this.entityIds[0]);
+        message: function(context2) {
+          let entity = context2.hasEntity(this.entityIds[0]);
           if (!entity)
             return "";
-          let preset = _mainPresetIndex.match(entity, context.graph());
+          let preset = _mainPresetIndex.match(entity, context2.graph());
           let langName = langCode && _mainLocalizer.languageName(langCode);
           return _t.html(
             "issues.generic_name.message" + (langName ? "_language" : ""),
@@ -38970,12 +38970,12 @@ ${content}</tr>
             new validationIssueFix({
               icon: "iD-operation-delete",
               title: _t.html("issues.fix.remove_the_name.title"),
-              onClick: function(context) {
+              onClick: function(context2) {
                 let entityId2 = this.issue.entityIds[0];
-                let entity = context.entity(entityId2);
+                let entity = context2.entity(entityId2);
                 let tags = Object.assign({}, entity.tags);
                 delete tags[nameKey];
-                context.perform(
+                context2.perform(
                   actionChangeTags(entityId2, tags),
                   _t("issues.fix.remove_generic_name.annotation")
                 );
@@ -38993,11 +38993,11 @@ ${content}</tr>
         type: type3,
         subtype: "not_name",
         severity: "warning",
-        message: function(context) {
-          const entity = context.hasEntity(this.entityIds[0]);
+        message: function(context2) {
+          const entity = context2.hasEntity(this.entityIds[0]);
           if (!entity)
             return "";
-          const preset = _mainPresetIndex.match(entity, context.graph());
+          const preset = _mainPresetIndex.match(entity, context2.graph());
           const langName = langCode && _mainLocalizer.languageName(langCode);
           return _t.html(
             "issues.incorrect_name.message" + (langName ? "_language" : ""),
@@ -39012,12 +39012,12 @@ ${content}</tr>
             new validationIssueFix({
               icon: "iD-operation-delete",
               title: _t.html("issues.fix.remove_the_name.title"),
-              onClick: function(context) {
+              onClick: function(context2) {
                 const entityId2 = this.issue.entityIds[0];
-                const entity = context.entity(entityId2);
+                const entity = context2.entity(entityId2);
                 let tags = Object.assign({}, entity.tags);
                 delete tags[nameKey];
-                context.perform(
+                context2.perform(
                   actionChangeTags(entityId2, tags),
                   _t("issues.fix.remove_mistaken_name.annotation")
                 );
@@ -39064,7 +39064,7 @@ ${content}</tr>
   }
 
   // modules/validations/unsquare_way.js
-  function validationUnsquareWay(context) {
+  function validationUnsquareWay(context2) {
     var type3 = "unsquare_way";
     var DEFAULT_DEG_THRESHOLD = 5;
     var epsilon3 = 0.05;
@@ -39106,13 +39106,13 @@ ${content}</tr>
       var storedDegreeThreshold = corePreferences("validate-square-degrees");
       var degreeThreshold = isNaN(storedDegreeThreshold) ? DEFAULT_DEG_THRESHOLD : parseFloat(storedDegreeThreshold);
       var points = nodes.map(function(node) {
-        return context.projection(node.loc);
+        return context2.projection(node.loc);
       });
       if (!geoOrthoCanOrthogonalize(points, isClosed, epsilon3, degreeThreshold, true))
         return [];
       var autoArgs;
       if (!entity.tags.wikidata) {
-        var autoAction = actionOrthogonalize(entity.id, context.projection, void 0, degreeThreshold);
+        var autoAction = actionOrthogonalize(entity.id, context2.projection, void 0, degreeThreshold);
         autoAction.transitionable = false;
         autoArgs = [autoAction, _t("operations.orthogonalize.annotation.feature", { n: 1 })];
       }
@@ -39120,10 +39120,10 @@ ${content}</tr>
         type: type3,
         subtype: "building",
         severity: "warning",
-        message: function(context2) {
-          var entity2 = context2.hasEntity(this.entityIds[0]);
+        message: function(context3) {
+          var entity2 = context3.hasEntity(this.entityIds[0]);
           return entity2 ? _t.html("issues.unsquare_way.message", {
-            feature: utilDisplayLabel(entity2, context2.graph())
+            feature: utilDisplayLabel(entity2, context3.graph())
           }) : "";
         },
         reference: showReference,
@@ -39135,10 +39135,10 @@ ${content}</tr>
               icon: "iD-operation-orthogonalize",
               title: _t.html("issues.fix.square_feature.title"),
               autoArgs,
-              onClick: function(context2, completionHandler) {
+              onClick: function(context3, completionHandler) {
                 var entityId = this.issue.entityIds[0];
-                context2.perform(
-                  actionOrthogonalize(entityId, context2.projection, void 0, degreeThreshold),
+                context3.perform(
+                  actionOrthogonalize(entityId, context3.projection, void 0, degreeThreshold),
                   _t("operations.orthogonalize.annotation.feature", { n: 1 })
                 );
                 window.setTimeout(function() {
@@ -39158,7 +39158,7 @@ ${content}</tr>
   }
 
   // modules/core/validator.js
-  function coreValidator(context) {
+  function coreValidator(context2) {
     let dispatch10 = dispatch_default("validated", "focusedIssue");
     let validator = utilRebind({}, dispatch10, "on");
     let _rules = {};
@@ -39173,9 +39173,9 @@ ${content}</tr>
     let _deferredST = /* @__PURE__ */ new Set();
     let _headPromise;
     const RETRY = 5e3;
-    const _errorOverrides = parseHashParam(context.initialHashParams.validationError);
-    const _warningOverrides = parseHashParam(context.initialHashParams.validationWarning);
-    const _disableOverrides = parseHashParam(context.initialHashParams.validationDisable);
+    const _errorOverrides = parseHashParam(context2.initialHashParams.validationError);
+    const _warningOverrides = parseHashParam(context2.initialHashParams.validationWarning);
+    const _disableOverrides = parseHashParam(context2.initialHashParams.validationDisable);
     function parseHashParam(param) {
       let result = [];
       let rules = (param || "").split(",");
@@ -39198,7 +39198,7 @@ ${content}</tr>
       Object.values(validations_exports).forEach((validation) => {
         if (typeof validation !== "function")
           return;
-        const fn = validation(context);
+        const fn = validation(context2);
         const key = fn.type;
         _rules[key] = fn;
       });
@@ -39242,7 +39242,7 @@ ${content}</tr>
       if (!cache.graph || typeof checkUnsquareWay !== "function")
         return;
       cache.uncacheIssuesOfType("unsquare_way");
-      const buildings = context.history().tree().intersects(geoExtent([-180, -90], [180, 90]), cache.graph).filter((entity) => entity.type === "way" && entity.tags.building && entity.tags.building !== "no");
+      const buildings = context2.history().tree().intersects(geoExtent([-180, -90], [180, 90]), cache.graph).filter((entity) => entity.type === "way" && entity.tags.building && entity.tags.building !== "no");
       buildings.forEach((entity) => {
         const detected = checkUnsquareWay(entity, cache.graph);
         if (!detected.length)
@@ -39252,7 +39252,7 @@ ${content}</tr>
     }
     validator.getIssues = (options2) => {
       const opts = Object.assign({ what: "all", where: "all", includeIgnored: false, includeDisabledRules: false }, options2);
-      const view = context.map().extent();
+      const view = context2.map().extent();
       let seen = /* @__PURE__ */ new Set();
       let results = [];
       if (_headCache.graph && _headCache.graph !== _baseCache.graph) {
@@ -39290,10 +39290,10 @@ ${content}</tr>
           return false;
         if (!opts.includeIgnored && _ignoredIssueIDs.has(issue.id))
           return false;
-        if ((issue.entityIds || []).some((id2) => !context.hasEntity(id2)))
+        if ((issue.entityIds || []).some((id2) => !context2.hasEntity(id2)))
           return false;
         if (opts.where === "visible") {
-          const extent = issue.extent(context.graph());
+          const extent = issue.extent(context2.graph());
           if (!view.intersects(extent))
             return false;
         }
@@ -39304,7 +39304,7 @@ ${content}</tr>
       return Array.from(_resolvedIssueIDs).map((issueID) => _baseCache.issuesByIssueID[issueID]).filter(Boolean);
     };
     validator.focusIssue = (issue) => {
-      const graph = context.graph();
+      const graph = context2.graph();
       let selectID;
       let focusCenter;
       const issueExtent = issue.extent(graph);
@@ -39328,12 +39328,12 @@ ${content}</tr>
         }
       }
       if (focusCenter) {
-        const setZoom = Math.max(context.map().zoom(), 19);
-        context.map().unobscuredCenterZoomEase(focusCenter, setZoom);
+        const setZoom = Math.max(context2.map().zoom(), 19);
+        context2.map().unobscuredCenterZoomEase(focusCenter, setZoom);
       }
       if (selectID) {
         window.setTimeout(() => {
-          context.enter(modeSelect(context, [selectID]));
+          context2.enter(modeSelect(context2, [selectID]));
           dispatch10.call("focusedIssue", this, issue);
         }, 250);
       }
@@ -39400,13 +39400,13 @@ ${content}</tr>
       _ignoredIssueIDs.add(issueID);
     };
     validator.validate = () => {
-      const baseGraph = context.history().base();
+      const baseGraph = context2.history().base();
       if (!_headCache.graph)
         _headCache.graph = baseGraph;
       if (!_baseCache.graph)
         _baseCache.graph = baseGraph;
       const prevGraph = _headCache.graph;
-      const currGraph = context.graph();
+      const currGraph = context2.graph();
       if (currGraph === prevGraph) {
         _headIsCurrent = true;
         dispatch10.call("validated");
@@ -39417,7 +39417,7 @@ ${content}</tr>
         return _headPromise;
       }
       _headCache.graph = currGraph;
-      _completeDiff = context.history().difference().complete();
+      _completeDiff = context2.history().difference().complete();
       const incrementalDiff = coreDifference(prevGraph, currGraph);
       let entityIDs = Object.keys(incrementalDiff.complete());
       entityIDs = _headCache.withAllRelatedEntities(entityIDs);
@@ -39434,15 +39434,15 @@ ${content}</tr>
       });
       return _headPromise;
     };
-    context.history().on("restore.validator", validator.validate).on("undone.validator", validator.validate).on("redone.validator", validator.validate).on("reset.validator", () => {
+    context2.history().on("restore.validator", validator.validate).on("undone.validator", validator.validate).on("redone.validator", validator.validate).on("reset.validator", () => {
       reset(false);
       validator.validate();
     });
-    context.on("exit.validator", validator.validate);
-    context.history().on("merge.validator", (entities) => {
+    context2.on("exit.validator", validator.validate);
+    context2.history().on("merge.validator", (entities) => {
       if (!entities)
         return;
-      const baseGraph = context.history().base();
+      const baseGraph = context2.history().base();
       if (!_headCache.graph)
         _headCache.graph = baseGraph;
       if (!_baseCache.graph)
@@ -39640,7 +39640,7 @@ ${content}</tr>
   }
 
   // modules/core/uploader.js
-  function coreUploader(context) {
+  function coreUploader(context2) {
     var dispatch10 = dispatch_default(
       "saveStarted",
       "saveEnded",
@@ -39668,7 +39668,7 @@ ${content}</tr>
       if (_isSaving && !tryAgain) {
         return;
       }
-      var osm = context.connection();
+      var osm = context2.connection();
       if (!osm)
         return;
       if (!osm.authenticated()) {
@@ -39683,7 +39683,7 @@ ${content}</tr>
         _isSaving = true;
         dispatch10.call("saveStarted", this);
       }
-      var history = context.history();
+      var history = context2.history();
       _conflicts = [];
       _errors = [];
       _origChanges = history.changes(actionDiscardTags(history.difference(), _discardTags));
@@ -39697,11 +39697,11 @@ ${content}</tr>
       }
     };
     function performFullConflictCheck(changeset) {
-      var osm = context.connection();
+      var osm = context2.connection();
       if (!osm)
         return;
-      var history = context.history();
-      var localGraph = context.graph();
+      var history = context2.history();
+      var localGraph = context2.graph();
       var remoteGraph = coreGraph(history.base(), true);
       var summary = history.difference().summary();
       var _toCheck = [];
@@ -39848,7 +39848,7 @@ ${content}</tr>
       }
     }
     function upload(changeset) {
-      var osm = context.connection();
+      var osm = context2.connection();
       if (!osm) {
         _errors.push({ msg: "No OSM Service" });
       }
@@ -39857,7 +39857,7 @@ ${content}</tr>
       } else if (_errors.length) {
         didResultInErrors();
       } else {
-        var history = context.history();
+        var history = context2.history();
         var changes = history.changes(actionDiscardTags(history.difference(), _discardTags));
         if (changes.modified.length || changes.created.length || changes.deleted.length) {
           dispatch10.call("willAttemptUpload", this);
@@ -39885,10 +39885,10 @@ ${content}</tr>
     function didResultInNoChanges() {
       dispatch10.call("resultNoChanges", this);
       endSave();
-      context.flush();
+      context2.flush();
     }
     function didResultInErrors() {
-      context.history().pop();
+      context2.history().pop();
       dispatch10.call("resultErrors", this, _errors);
       endSave();
     }
@@ -39900,11 +39900,11 @@ ${content}</tr>
       endSave();
     }
     function didResultInSuccess(changeset) {
-      context.history().clearSaved();
+      context2.history().clearSaved();
       dispatch10.call("resultSuccess", this, changeset);
       window.setTimeout(function() {
         endSave();
-        context.flush();
+        context2.flush();
       }, 2500);
     }
     function endSave() {
@@ -39912,13 +39912,13 @@ ${content}</tr>
       dispatch10.call("saveEnded", this);
     }
     uploader.cancelConflictResolution = function() {
-      context.history().pop();
+      context2.history().pop();
     };
     uploader.processResolvedConflicts = function(changeset) {
-      var history = context.history();
+      var history = context2.history();
       for (var i2 = 0; i2 < _conflicts.length; i2++) {
         if (_conflicts[i2].chosen === 1) {
-          var entity = context.hasEntity(_conflicts[i2].id);
+          var entity = context2.hasEntity(_conflicts[i2].id);
           if (entity && entity.type === "way") {
             var children2 = utilArrayUniq(entity.nodes);
             for (var j2 = 0; j2 < children2.length; j2++) {
@@ -40384,7 +40384,7 @@ ${content}</tr>
   var import_which_polygon4 = __toESM(require_which_polygon());
 
   // modules/renderer/tile_layer.js
-  function rendererTileLayer(context) {
+  function rendererTileLayer(context2) {
     var transformProp = utilPrefixCSSProperty("Transform");
     var tiler8 = utilTiler();
     var _tileSize = 256;
@@ -40454,7 +40454,7 @@ ${content}</tr>
       if (!_source)
         return;
       var requests = [];
-      var showDebug = context.getDebug("tile") && !_source.overlay;
+      var showDebug = context2.getDebug("tile") && !_source.overlay;
       if (_source.validZoom(_zoom)) {
         tiler8.skipNullIsland(!!_source.overlay);
         tiler8().forEach(function(d) {
@@ -40541,7 +40541,7 @@ ${content}</tr>
         });
         debug2.selectAll(".tile-label-debug-vintage").each(function(d) {
           var span = select_default2(this);
-          var center = context.projection.invert(tileCenter(d));
+          var center = context2.projection.invert(tileCenter(d));
           _source.getMetadata(center, d, function(err, result) {
             if (result && result.vintage && result.vintage.range) {
               span.text(result.vintage.range);
@@ -40578,9 +40578,9 @@ ${content}</tr>
 
   // modules/renderer/background.js
   var _imageryIndex = null;
-  function rendererBackground(context) {
+  function rendererBackground(context2) {
     const dispatch10 = dispatch_default("change");
-    const baseLayer = rendererTileLayer(context).projection(context.projection);
+    const baseLayer = rendererTileLayer(context2).projection(context2.projection);
     let _checkedBlocklists = [];
     let _isValid = true;
     let _overlayLayers = [];
@@ -40627,13 +40627,13 @@ ${content}</tr>
     }
     function background(selection2) {
       const currSource = baseLayer.source();
-      if (context.map().zoom() > 18) {
+      if (context2.map().zoom() > 18) {
         if (currSource && /^EsriWorldImagery/.test(currSource.id)) {
-          const center = context.map().center();
+          const center = context2.map().center();
           currSource.fetchTilemap(center);
         }
       }
-      const sources = background.sources(context.map().extent());
+      const sources = background.sources(context2.map().extent());
       const wasValid = _isValid;
       _isValid = !!sources.filter((d) => d === currSource).length;
       if (wasValid !== _isValid) {
@@ -40677,7 +40677,7 @@ ${content}</tr>
     }
     background.updateImagery = function() {
       let currSource = baseLayer.source();
-      if (context.inIntro() || !currSource)
+      if (context2.inIntro() || !currSource)
         return;
       let o = _overlayLayers.filter((d) => !d.source().isLocatorOverlay() && !d.source().isHidden()).map((d) => d.source().id).join(",");
       const meters = geoOffsetToMeters(currSource.offset());
@@ -40714,7 +40714,7 @@ ${content}</tr>
         imageryUsed.push(currUsed);
       }
       _overlayLayers.filter((d) => !d.source().isLocatorOverlay() && !d.source().isHidden()).forEach((d) => imageryUsed.push(d.source().imageryUsed()));
-      const dataLayer = context.layers().layer("data");
+      const dataLayer = context2.layers().layer("data");
       if (dataLayer && dataLayer.enabled() && dataLayer.hasData()) {
         imageryUsed.push(dataLayer.getSrc());
       }
@@ -40726,14 +40726,14 @@ ${content}</tr>
         kartaview: "KartaView Images"
       };
       for (let layerID in photoOverlayLayers) {
-        const layer = context.layers().layer(layerID);
+        const layer = context2.layers().layer(layerID);
         if (layer && layer.enabled()) {
           photoOverlaysUsed.push(layerID);
           imageryUsed.push(photoOverlayLayers[layerID]);
         }
       }
-      context.history().imageryUsed(imageryUsed);
-      context.history().photoOverlaysUsed(photoOverlaysUsed);
+      context2.history().imageryUsed(imageryUsed);
+      context2.history().photoOverlaysUsed(photoOverlaysUsed);
     };
     background.sources = (extent, zoom, includeCurrent) => {
       if (!_imageryIndex)
@@ -40741,7 +40741,7 @@ ${content}</tr>
       let visible = {};
       (_imageryIndex.query.bbox(extent.rectangle(), true) || []).forEach((d) => visible[d.id] = true);
       const currSource = baseLayer.source();
-      const osm = context.connection();
+      const osm = context2.connection();
       const blocklists = osm && osm.imageryBlocklists() || [];
       const blocklistChanged = blocklists.length !== _checkedBlocklists.length || blocklists.some((regex, index) => String(regex) !== _checkedBlocklists[index]);
       if (blocklistChanged) {
@@ -40771,7 +40771,7 @@ ${content}</tr>
     background.baseLayerSource = function(d) {
       if (!arguments.length)
         return baseLayer.source();
-      const osm = context.connection();
+      const osm = context2.connection();
       if (!osm)
         return background;
       const blocklists = osm.imageryBlocklists();
@@ -40823,7 +40823,7 @@ ${content}</tr>
           return;
         }
       }
-      layer = rendererTileLayer(context).source(d).projection(context.projection).dimensions(
+      layer = rendererTileLayer(context2).source(d).projection(context2.projection).dimensions(
         baseLayer.dimensions()
       );
       _overlayLayers.push(layer);
@@ -40855,7 +40855,7 @@ ${content}</tr>
       if (!arguments.length)
         return _brightness;
       _brightness = d;
-      if (context.mode())
+      if (context2.mode())
         dispatch10.call("change");
       return background;
     };
@@ -40863,7 +40863,7 @@ ${content}</tr>
       if (!arguments.length)
         return _contrast;
       _contrast = d;
-      if (context.mode())
+      if (context2.mode())
         dispatch10.call("change");
       return background;
     };
@@ -40871,7 +40871,7 @@ ${content}</tr>
       if (!arguments.length)
         return _saturation;
       _saturation = d;
-      if (context.mode())
+      if (context2.mode())
         dispatch10.call("change");
       return background;
     };
@@ -40879,7 +40879,7 @@ ${content}</tr>
       if (!arguments.length)
         return _sharpness;
       _sharpness = d;
-      if (context.mode())
+      if (context2.mode())
         dispatch10.call("change");
       return background;
     };
@@ -40926,7 +40926,7 @@ ${content}</tr>
           }
         });
         if (hash.gpx) {
-          const gpx2 = context.layers().layer("data");
+          const gpx2 = context2.layers().layer("data");
           if (gpx2) {
             gpx2.url(hash.gpx, ".gpx");
           }
@@ -40944,7 +40944,7 @@ ${content}</tr>
   }
 
   // modules/renderer/features.js
-  function rendererFeatures(context) {
+  function rendererFeatures(context2) {
     var dispatch10 = dispatch_default("change", "redraw");
     var features2 = utilRebind({}, dispatch10, "on");
     var _deferred2 = /* @__PURE__ */ new Set();
@@ -41368,7 +41368,7 @@ ${content}</tr>
       _forceVisible = {};
       for (var i2 = 0; i2 < entityIDs.length; i2++) {
         _forceVisible[entityIDs[i2]] = true;
-        var entity = context.hasEntity(entityIDs[i2]);
+        var entity = context2.hasEntity(entityIDs[i2]);
         if (entity && entity.type === "relation") {
           for (var j2 in entity.members) {
             _forceVisible[entity.members[j2].id] = true;
@@ -41389,11 +41389,11 @@ ${content}</tr>
         hashDisabled.forEach(features2.disable);
       }
     };
-    context.history().on("merge.features", function(newEntities) {
+    context2.history().on("merge.features", function(newEntities) {
       if (!newEntities)
         return;
       var handle = window.requestIdleCallback(function() {
-        var graph = context.graph();
+        var graph = context2.graph();
         var types = utilArrayGroupBy(newEntities, "type");
         var entities = [].concat(types.relation || [], types.way || [], types.node || []);
         for (var i2 = 0; i2 < entities.length; i2++) {
@@ -41928,7 +41928,7 @@ ${content}</tr>
   }
 
   // modules/svg/areas.js
-  function svgAreas(projection2, context) {
+  function svgAreas(projection2, context2) {
     function getPatternStyle(tags) {
       var imageID = svgTagPattern(tags);
       if (imageID) {
@@ -41937,11 +41937,11 @@ ${content}</tr>
       return "";
     }
     function drawTargets(selection2, graph, entities, filter2) {
-      var targetClass = context.getDebug("target") ? "pink " : "nocolor ";
-      var nopeClass = context.getDebug("target") ? "red " : "nocolor ";
+      var targetClass = context2.getDebug("target") ? "pink " : "nocolor ";
+      var nopeClass = context2.getDebug("target") ? "red " : "nocolor ";
       var getPath = svgPath(projection2).geojson;
-      var activeID = context.activeID();
-      var base = context.history().base();
+      var activeID = context2.activeID();
+      var base = context2.history().base();
       var data = { targets: [], nopes: [] };
       entities.forEach(function(way) {
         var features2 = svgSegmentWay(way, graph, activeID);
@@ -41982,7 +41982,7 @@ ${content}</tr>
       var path = svgPath(projection2, graph, true);
       var areas = {};
       var multipolygon;
-      var base = context.history().base();
+      var base = context2.history().base();
       for (var i2 = 0; i2 < entities.length; i2++) {
         var entity = entities[i2];
         if (entity.geometry(graph) !== "area")
@@ -42018,7 +42018,7 @@ ${content}</tr>
         stroke: strokes,
         fill: fills
       };
-      var clipPaths = context.surface().selectAll("defs").selectAll(".clipPath-osm").filter(filter2).data(data.clip, osmEntity.key);
+      var clipPaths = context2.surface().selectAll("defs").selectAll(".clipPath-osm").filter(filter2).data(data.clip, osmEntity.key);
       clipPaths.exit().remove();
       var clipPathsEnter = clipPaths.enter().append("clipPath").attr("class", "clipPath-osm").attr("id", function(entity2) {
         return "ideditor-" + entity2.id + "-clippath";
@@ -42613,7 +42613,7 @@ ${content}</tr>
   var _initialized = false;
   var _enabled = false;
   var _geojson;
-  function svgData(projection2, context, dispatch10) {
+  function svgData(projection2, context2, dispatch10) {
     var throttledRedraw = throttle_default(function() {
       dispatch10.call("change");
     }, 1e3);
@@ -42634,7 +42634,7 @@ ${content}</tr>
         d3_event.preventDefault();
         d3_event.dataTransfer.dropEffect = "copy";
       }
-      context.container().attr("dropzone", "copy").on("drop.svgData", function(d3_event) {
+      context2.container().attr("dropzone", "copy").on("drop.svgData", function(d3_event) {
         d3_event.stopPropagation();
         d3_event.preventDefault();
         if (!detected.filedrop)
@@ -42721,7 +42721,7 @@ ${content}</tr>
       layer = selection2.selectAll(".layer-mapdata").data(_enabled && hasData ? [0] : []);
       layer.exit().remove();
       layer = layer.enter().append("g").attr("class", "layer-mapdata").merge(layer);
-      var surface = context.surface();
+      var surface = context2.surface();
       if (!surface || surface.empty())
         return;
       var geoData, polygonData;
@@ -42863,7 +42863,7 @@ ${content}</tr>
     drawData.template = function(val, src) {
       if (!arguments.length)
         return _template;
-      var osm = context.connection();
+      var osm = context2.connection();
       if (osm) {
         var blocklists = osm.imageryBlocklists();
         var fail = false;
@@ -42948,7 +42948,7 @@ ${content}</tr>
       var features2 = getFeatures(_geojson);
       if (!features2.length)
         return;
-      var map2 = context.map();
+      var map2 = context2.map();
       var viewport = map2.trimmedExtent().polygon();
       var coords = features2.reduce(function(coords2, feature3) {
         var geom = feature3.geometry;
@@ -42981,13 +42981,13 @@ ${content}</tr>
   }
 
   // modules/svg/debug.js
-  function svgDebug(projection2, context) {
+  function svgDebug(projection2, context2) {
     function drawDebug(selection2) {
-      const showTile = context.getDebug("tile");
-      const showCollision = context.getDebug("collision");
-      const showImagery = context.getDebug("imagery");
-      const showTouchTargets = context.getDebug("target");
-      const showDownloaded = context.getDebug("downloaded");
+      const showTile = context2.getDebug("tile");
+      const showCollision = context2.getDebug("collision");
+      const showImagery = context2.getDebug("imagery");
+      const showTouchTargets = context2.getDebug("target");
+      const showDownloaded = context2.getDebug("downloaded");
       let debugData = [];
       if (showTile) {
         debugData.push({ class: "red", label: "tile" });
@@ -43004,7 +43004,7 @@ ${content}</tr>
       if (showDownloaded) {
         debugData.push({ class: "purple", label: "downloaded" });
       }
-      let legend = context.container().select(".main-content").selectAll(".debug-legend").data(debugData.length ? [0] : []);
+      let legend = context2.container().select(".main-content").selectAll(".debug-legend").data(debugData.length ? [0] : []);
       legend.exit().remove();
       legend = legend.enter().append("div").attr("class", "fillD debug-legend").merge(legend);
       let legendItems = legend.selectAll(".debug-legend-item").data(debugData, (d) => d.label);
@@ -43013,7 +43013,7 @@ ${content}</tr>
       let layer = selection2.selectAll(".layer-debug").data(showImagery || showDownloaded ? [0] : []);
       layer.exit().remove();
       layer = layer.enter().append("g").attr("class", "layer-debug").merge(layer);
-      const extent = context.map().extent();
+      const extent = context2.map().extent();
       _mainFileFetcher.get("imagery").then((d) => {
         const hits = showImagery && d.query.bbox(extent.rectangle(), true) || [];
         const features2 = hits.map((d2) => d2.features[d2.id]);
@@ -43022,7 +43022,7 @@ ${content}</tr>
         imagery.enter().append("path").attr("class", "debug-imagery debug orange");
       }).catch(() => {
       });
-      const osm = context.connection();
+      const osm = context2.connection();
       let dataDownloaded = [];
       if (osm && showDownloaded) {
         const rtree = osm.caches("get").tile.rtree;
@@ -43050,7 +43050,7 @@ ${content}</tr>
     }
     drawDebug.enabled = function() {
       if (!arguments.length) {
-        return context.getDebug("tile") || context.getDebug("collision") || context.getDebug("imagery") || context.getDebug("target") || context.getDebug("downloaded");
+        return context2.getDebug("tile") || context2.getDebug("collision") || context2.getDebug("imagery") || context2.getDebug("target") || context2.getDebug("downloaded");
       } else {
         return this;
       }
@@ -43059,7 +43059,7 @@ ${content}</tr>
   }
 
   // modules/svg/defs.js
-  function svgDefs(context) {
+  function svgDefs(context2) {
     var _defsSelection = select_default2(null);
     var _spritesheetIds = [
       "iD-sprite",
@@ -43118,7 +43118,7 @@ ${content}</tr>
         return "pattern-color-" + d[0];
       });
       patterns2.append("image").attr("x", 0).attr("y", 0).attr("width", 32).attr("height", 32).attr("xlink:href", function(d) {
-        return context.imagePath("pattern/" + d[1] + ".png");
+        return context2.imagePath("pattern/" + d[1] + ".png");
       });
       _defsSelection.selectAll("clipPath").data([12, 18, 20, 32, 45]).enter().append("clipPath").attr("id", function(d) {
         return "ideditor-clip-square-" + d;
@@ -43135,7 +43135,7 @@ ${content}</tr>
       spritesheets.enter().append("g").attr("class", function(d) {
         return "spritesheet spritesheet-" + d;
       }).each(function(d) {
-        var url = context.imagePath(d + ".svg");
+        var url = context2.imagePath(d + ".svg");
         var node = select_default2(this).node();
         svg(url).then(function(svg2) {
           node.appendChild(
@@ -43156,7 +43156,7 @@ ${content}</tr>
   // modules/svg/keepRight.js
   var _layerEnabled = false;
   var _qaService;
-  function svgKeepRight(projection2, context, dispatch10) {
+  function svgKeepRight(projection2, context2, dispatch10) {
     const throttledRedraw = throttle_default(() => dispatch10.call("change"), 1e3);
     const minZoom3 = 12;
     let touchLayer = select_default2(null);
@@ -43205,7 +43205,7 @@ ${content}</tr>
       if (!layerVisible || !_layerEnabled)
         return;
       const service = getService();
-      const selectedID = context.selectedErrorID();
+      const selectedID = context2.selectedErrorID();
       const data = service ? service.getItems(projection2) : [];
       const getTransform = svgPointTransform(projection2);
       const markers = drawLayer.selectAll(".qaItem.keepRight").data(data, (d) => d.id);
@@ -43217,7 +43217,7 @@ ${content}</tr>
       markers.merge(markersEnter).sort(sortY).classed("selected", (d) => d.id === selectedID).attr("transform", getTransform);
       if (touchLayer.empty())
         return;
-      const fillClass = context.getDebug("target") ? "pink " : "nocolor ";
+      const fillClass = context2.getDebug("target") ? "pink " : "nocolor ";
       const targets = touchLayer.selectAll(".qaItem.keepRight").data(data, (d) => d.id);
       targets.exit().remove();
       targets.enter().append("rect").attr("width", "20px").attr("height", "20px").attr("x", "-8px").attr("y", "-22px").merge(targets).sort(sortY).attr("class", (d) => `qaItem ${d.service} target ${fillClass} itemId-${d.id}`).attr("transform", getTransform);
@@ -43227,7 +43227,7 @@ ${content}</tr>
     }
     function drawKeepRight(selection2) {
       const service = getService();
-      const surface = context.surface();
+      const surface = context2.surface();
       if (surface && !surface.empty()) {
         touchLayer = surface.selectAll(".data-layer.touch .layer-touch.markers");
       }
@@ -43235,7 +43235,7 @@ ${content}</tr>
       drawLayer.exit().remove();
       drawLayer = drawLayer.enter().append("g").attr("class", "layer-keepRight").style("display", _layerEnabled ? "block" : "none").merge(drawLayer);
       if (_layerEnabled) {
-        if (service && ~~context.map().zoom() >= minZoom3) {
+        if (service && ~~context2.map().zoom() >= minZoom3) {
           editOn();
           service.loadIssues(projection2);
           updateMarkers();
@@ -43252,8 +43252,8 @@ ${content}</tr>
         layerOn();
       } else {
         layerOff();
-        if (context.selectedErrorID()) {
-          context.enter(modeBrowse(context));
+        if (context2.selectedErrorID()) {
+          context2.enter(modeBrowse(context2));
         }
       }
       dispatch10.call("change");
@@ -43334,7 +43334,7 @@ ${content}</tr>
 
   // modules/svg/labels.js
   var import_rbush7 = __toESM(require_rbush_min());
-  function svgLabels(projection2, context) {
+  function svgLabels(projection2, context2) {
     var path = path_default(projection2);
     var detected = utilDetect();
     var baselineHack = detected.ie || detected.browser.toLowerCase() === "edge" || detected.browser.toLowerCase() === "firefox" && detected.version >= 70;
@@ -43443,7 +43443,7 @@ ${content}</tr>
       var icons = selection2.selectAll("use." + classes).filter(filter2).data(entities, osmEntity.key);
       icons.exit().remove();
       icons.enter().append("use").attr("class", "icon " + classes).attr("width", "17px").attr("height", "17px").merge(icons).attr("transform", get3(labels, "transform")).attr("xlink:href", function(d) {
-        var preset = _mainPresetIndex.match(d, context.graph());
+        var preset = _mainPresetIndex.match(d, context2.graph());
         var picon = preset && preset.icon;
         return picon ? "#" + picon : "";
       });
@@ -43451,7 +43451,7 @@ ${content}</tr>
     function drawCollisionBoxes(selection2, rtree, which) {
       var classes = "debug " + which + " " + (which === "debug-skipped" ? "orange" : "yellow");
       var gj = [];
-      if (context.getDebug("collision")) {
+      if (context2.getDebug("collision")) {
         gj = rtree.all().map(function(d) {
           return { type: "Polygon", coordinates: [[
             [d.minX, d.minY],
@@ -43467,7 +43467,7 @@ ${content}</tr>
       boxes.enter().append("path").attr("class", classes).merge(boxes).attr("d", path_default());
     }
     function drawLabels(selection2, graph, entities, filter2, dimensions, fullRedraw) {
-      var wireframe = context.surface().classed("fill-wireframe");
+      var wireframe = context2.surface().classed("fill-wireframe");
       var zoom = geoScaleToZoom(projection2.scale());
       var labelable = [];
       var renderNodeAs = {};
@@ -43572,7 +43572,7 @@ ${content}</tr>
         }
       }
       function isInterestingVertex(entity2) {
-        var selectedIDs = context.selectedIDs();
+        var selectedIDs = context2.selectedIDs();
         return entity2.hasInterestingTags() || entity2.isEndpoint(graph) || entity2.isConnected(graph) || selectedIDs.indexOf(entity2.id) !== -1 || graph.parentWays(entity2).some(function(parent) {
           return selectedIDs.indexOf(parent.id) !== -1;
         });
@@ -43615,7 +43615,7 @@ ${content}</tr>
         }
       }
       function getLineLabel(entity2, width2, height) {
-        var viewport = geoExtent(context.projection.clipExtent()).polygon();
+        var viewport = geoExtent(context2.projection.clipExtent()).polygon();
         var points = graph.childNodes(entity2).map(function(node) {
           return projection2(node.loc);
         });
@@ -43731,7 +43731,7 @@ ${content}</tr>
         var areaWidth = projection2(extent[1])[0] - projection2(extent[0])[0];
         if (isNaN(centroid[0]) || areaWidth < 20)
           return;
-        var preset2 = _mainPresetIndex.match(entity2, context.graph());
+        var preset2 = _mainPresetIndex.match(entity2, context2.graph());
         var picon = preset2 && preset2.icon;
         var iconSize = 17;
         var padding = 2;
@@ -43839,9 +43839,9 @@ ${content}</tr>
       var drawLayer = selection2.selectAll(".layer-osm.labels");
       var layers = drawLayer.selectAll(".labels-group.halo, .labels-group.label");
       layers.selectAll(".nolabel").classed("nolabel", false);
-      var mouse = context.map().mouse();
-      var graph = context.graph();
-      var selectedIDs = context.selectedIDs();
+      var mouse = context2.map().mouse();
+      var graph = context2.graph();
+      var selectedIDs = context2.selectedIDs();
       var ids = [];
       var pad2, bbox;
       if (mouse) {
@@ -43861,7 +43861,7 @@ ${content}</tr>
       layers.selectAll(utilEntitySelector(ids)).classed("nolabel", true);
       var debug2 = selection2.selectAll(".labels-group.debug");
       var gj = [];
-      if (context.getDebug("collision")) {
+      if (context2.getDebug("collision")) {
         gj = bbox ? [{
           type: "Polygon",
           coordinates: [[
@@ -43883,12 +43883,12 @@ ${content}</tr>
         throttleFilterLabels(selection2);
       };
       selection2.on("mousemove.hidelabels", listener);
-      context.on("enter.hidelabels", listener);
+      context2.on("enter.hidelabels", listener);
     };
     drawLabels.off = function(selection2) {
       throttleFilterLabels.cancel();
       selection2.on("mousemove.hidelabels", null);
-      context.on("enter.hidelabels", null);
+      context2.on("enter.hidelabels", null);
     };
     return drawLabels;
   }
@@ -43896,7 +43896,7 @@ ${content}</tr>
   // modules/svg/improveOSM.js
   var _layerEnabled2 = false;
   var _qaService2;
-  function svgImproveOSM(projection2, context, dispatch10) {
+  function svgImproveOSM(projection2, context2, dispatch10) {
     const throttledRedraw = throttle_default(() => dispatch10.call("change"), 1e3);
     const minZoom3 = 12;
     let touchLayer = select_default2(null);
@@ -43945,7 +43945,7 @@ ${content}</tr>
       if (!layerVisible || !_layerEnabled2)
         return;
       const service = getService();
-      const selectedID = context.selectedErrorID();
+      const selectedID = context2.selectedErrorID();
       const data = service ? service.getItems(projection2) : [];
       const getTransform = svgPointTransform(projection2);
       const markers = drawLayer.selectAll(".qaItem.improveOSM").data(data, (d) => d.id);
@@ -43958,7 +43958,7 @@ ${content}</tr>
       markers.merge(markersEnter).sort(sortY).classed("selected", (d) => d.id === selectedID).attr("transform", getTransform);
       if (touchLayer.empty())
         return;
-      const fillClass = context.getDebug("target") ? "pink " : "nocolor ";
+      const fillClass = context2.getDebug("target") ? "pink " : "nocolor ";
       const targets = touchLayer.selectAll(".qaItem.improveOSM").data(data, (d) => d.id);
       targets.exit().remove();
       targets.enter().append("rect").attr("width", "20px").attr("height", "30px").attr("x", "-10px").attr("y", "-28px").merge(targets).sort(sortY).attr("class", (d) => `qaItem ${d.service} target ${fillClass} itemId-${d.id}`).attr("transform", getTransform);
@@ -43968,7 +43968,7 @@ ${content}</tr>
     }
     function drawImproveOSM(selection2) {
       const service = getService();
-      const surface = context.surface();
+      const surface = context2.surface();
       if (surface && !surface.empty()) {
         touchLayer = surface.selectAll(".data-layer.touch .layer-touch.markers");
       }
@@ -43976,7 +43976,7 @@ ${content}</tr>
       drawLayer.exit().remove();
       drawLayer = drawLayer.enter().append("g").attr("class", "layer-improveOSM").style("display", _layerEnabled2 ? "block" : "none").merge(drawLayer);
       if (_layerEnabled2) {
-        if (service && ~~context.map().zoom() >= minZoom3) {
+        if (service && ~~context2.map().zoom() >= minZoom3) {
           editOn();
           service.loadIssues(projection2);
           updateMarkers();
@@ -43993,8 +43993,8 @@ ${content}</tr>
         layerOn();
       } else {
         layerOff();
-        if (context.selectedErrorID()) {
-          context.enter(modeBrowse(context));
+        if (context2.selectedErrorID()) {
+          context2.enter(modeBrowse(context2));
         }
       }
       dispatch10.call("change");
@@ -44007,7 +44007,7 @@ ${content}</tr>
   // modules/svg/osmose.js
   var _layerEnabled3 = false;
   var _qaService3;
-  function svgOsmose(projection2, context, dispatch10) {
+  function svgOsmose(projection2, context2, dispatch10) {
     const throttledRedraw = throttle_default(() => dispatch10.call("change"), 1e3);
     const minZoom3 = 12;
     let touchLayer = select_default2(null);
@@ -44056,7 +44056,7 @@ ${content}</tr>
       if (!layerVisible || !_layerEnabled3)
         return;
       const service = getService();
-      const selectedID = context.selectedErrorID();
+      const selectedID = context2.selectedErrorID();
       const data = service ? service.getItems(projection2) : [];
       const getTransform = svgPointTransform(projection2);
       const markers = drawLayer.selectAll(".qaItem.osmose").data(data, (d) => d.id);
@@ -44069,7 +44069,7 @@ ${content}</tr>
       markers.merge(markersEnter).sort(sortY).classed("selected", (d) => d.id === selectedID).attr("transform", getTransform);
       if (touchLayer.empty())
         return;
-      const fillClass = context.getDebug("target") ? "pink" : "nocolor";
+      const fillClass = context2.getDebug("target") ? "pink" : "nocolor";
       const targets = touchLayer.selectAll(".qaItem.osmose").data(data, (d) => d.id);
       targets.exit().remove();
       targets.enter().append("rect").attr("width", "20px").attr("height", "30px").attr("x", "-10px").attr("y", "-28px").merge(targets).sort(sortY).attr("class", (d) => `qaItem ${d.service} target ${fillClass} itemId-${d.id}`).attr("transform", getTransform);
@@ -44079,7 +44079,7 @@ ${content}</tr>
     }
     function drawOsmose(selection2) {
       const service = getService();
-      const surface = context.surface();
+      const surface = context2.surface();
       if (surface && !surface.empty()) {
         touchLayer = surface.selectAll(".data-layer.touch .layer-touch.markers");
       }
@@ -44087,7 +44087,7 @@ ${content}</tr>
       drawLayer.exit().remove();
       drawLayer = drawLayer.enter().append("g").attr("class", "layer-osmose").style("display", _layerEnabled3 ? "block" : "none").merge(drawLayer);
       if (_layerEnabled3) {
-        if (service && ~~context.map().zoom() >= minZoom3) {
+        if (service && ~~context2.map().zoom() >= minZoom3) {
           editOn();
           service.loadIssues(projection2);
           updateMarkers();
@@ -44106,8 +44106,8 @@ ${content}</tr>
         });
       } else {
         layerOff();
-        if (context.selectedErrorID()) {
-          context.enter(modeBrowse(context));
+        if (context2.selectedErrorID()) {
+          context2.enter(modeBrowse(context2));
         }
       }
       dispatch10.call("change");
@@ -44118,7 +44118,7 @@ ${content}</tr>
   }
 
   // modules/svg/streetside.js
-  function svgStreetside(projection2, context, dispatch10) {
+  function svgStreetside(projection2, context2, dispatch10) {
     var throttledRedraw = throttle_default(function() {
       dispatch10.call("change");
     }, 1e3);
@@ -44172,20 +44172,20 @@ ${content}</tr>
         _viewerYaw = 0;
       }
       _selectedSequence = d.sequenceKey;
-      service.ensureViewerLoaded(context).then(function() {
-        service.selectImage(context, d.key).yaw(_viewerYaw).showViewer(context);
+      service.ensureViewerLoaded(context2).then(function() {
+        service.selectImage(context2, d.key).yaw(_viewerYaw).showViewer(context2);
       });
-      context.map().centerEase(d.loc);
+      context2.map().centerEase(d.loc);
     }
     function mouseover(d3_event, d) {
       var service = getService();
       if (service)
-        service.setStyles(context, d);
+        service.setStyles(context2, d);
     }
     function mouseout() {
       var service = getService();
       if (service)
-        service.setStyles(context, null);
+        service.setStyles(context2, null);
     }
     function transform2(d) {
       var t = svgPointTransform(projection2)(d);
@@ -44203,14 +44203,14 @@ ${content}</tr>
       if (!viewer)
         return;
       _viewerYaw = viewer.getYaw();
-      if (context.map().isTransformed())
+      if (context2.map().isTransformed())
         return;
       layer.selectAll(".viewfield-group.currentView").attr("transform", transform2);
     }
     function filterBubbles(bubbles) {
-      var fromDate = context.photos().fromDate();
-      var toDate = context.photos().toDate();
-      var usernames = context.photos().usernames();
+      var fromDate = context2.photos().fromDate();
+      var toDate = context2.photos().toDate();
+      var usernames = context2.photos().usernames();
       if (fromDate) {
         var fromTimestamp = new Date(fromDate).getTime();
         bubbles = bubbles.filter(function(bubble) {
@@ -44231,9 +44231,9 @@ ${content}</tr>
       return bubbles;
     }
     function filterSequences(sequences) {
-      var fromDate = context.photos().fromDate();
-      var toDate = context.photos().toDate();
-      var usernames = context.photos().usernames();
+      var fromDate = context2.photos().fromDate();
+      var toDate = context2.photos().toDate();
+      var usernames = context2.photos().usernames();
       if (fromDate) {
         var fromTimestamp = new Date(fromDate).getTime();
         sequences = sequences.filter(function(sequences2) {
@@ -44254,15 +44254,15 @@ ${content}</tr>
       return sequences;
     }
     function update() {
-      var viewer = context.container().select(".photoviewer");
+      var viewer = context2.container().select(".photoviewer");
       var selected = viewer.empty() ? void 0 : viewer.datum();
-      var z = ~~context.map().zoom();
+      var z = ~~context2.map().zoom();
       var showMarkers = z >= minMarkerZoom;
       var showViewfields = z >= minViewfieldZoom;
       var service = getService();
       var sequences = [];
       var bubbles = [];
-      if (context.photos().showsPanoramic()) {
+      if (context2.photos().showsPanoramic()) {
         sequences = service ? service.sequences(projection2) : [];
         bubbles = service && showMarkers ? service.bubbles(projection2) : [];
         sequences = filterSequences(sequences);
@@ -44305,7 +44305,7 @@ ${content}</tr>
       layerEnter.append("g").attr("class", "markers");
       layer = layerEnter.merge(layer);
       if (enabled) {
-        if (service && ~~context.map().zoom() >= minZoom3) {
+        if (service && ~~context2.map().zoom() >= minZoom3) {
           editOn();
           update();
           service.loadBubbles(projection2);
@@ -44320,10 +44320,10 @@ ${content}</tr>
       svgStreetside.enabled = _;
       if (svgStreetside.enabled) {
         showLayer();
-        context.photos().on("change.streetside", update);
+        context2.photos().on("change.streetside", update);
       } else {
         hideLayer();
-        context.photos().on("change.streetside", null);
+        context2.photos().on("change.streetside", null);
       }
       dispatch10.call("change");
       return this;
@@ -44336,7 +44336,7 @@ ${content}</tr>
   }
 
   // modules/svg/mapillary_images.js
-  function svgMapillaryImages(projection2, context, dispatch10) {
+  function svgMapillaryImages(projection2, context2, dispatch10) {
     const throttledRedraw = throttle_default(function() {
       dispatch10.call("change");
     }, 1e3);
@@ -44384,20 +44384,20 @@ ${content}</tr>
       const service = getService();
       if (!service)
         return;
-      service.ensureViewerLoaded(context).then(function() {
-        service.selectImage(context, image.id).showViewer(context);
+      service.ensureViewerLoaded(context2).then(function() {
+        service.selectImage(context2, image.id).showViewer(context2);
       });
-      context.map().centerEase(image.loc);
+      context2.map().centerEase(image.loc);
     }
     function mouseover(d3_event, image) {
       const service = getService();
       if (service)
-        service.setStyles(context, image);
+        service.setStyles(context2, image);
     }
     function mouseout() {
       const service = getService();
       if (service)
-        service.setStyles(context, null);
+        service.setStyles(context2, null);
     }
     function transform2(d) {
       let t = svgPointTransform(projection2)(d);
@@ -44407,10 +44407,10 @@ ${content}</tr>
       return t;
     }
     function filterImages(images) {
-      const showsPano = context.photos().showsPanoramic();
-      const showsFlat = context.photos().showsFlat();
-      const fromDate = context.photos().fromDate();
-      const toDate = context.photos().toDate();
+      const showsPano = context2.photos().showsPanoramic();
+      const showsFlat = context2.photos().showsFlat();
+      const fromDate = context2.photos().fromDate();
+      const toDate = context2.photos().toDate();
       if (!showsPano || !showsFlat) {
         images = images.filter(function(image) {
           if (image.is_pano)
@@ -44431,10 +44431,10 @@ ${content}</tr>
       return images;
     }
     function filterSequences(sequences) {
-      const showsPano = context.photos().showsPanoramic();
-      const showsFlat = context.photos().showsFlat();
-      const fromDate = context.photos().fromDate();
-      const toDate = context.photos().toDate();
+      const showsPano = context2.photos().showsPanoramic();
+      const showsFlat = context2.photos().showsFlat();
+      const fromDate = context2.photos().fromDate();
+      const toDate = context2.photos().toDate();
       if (!showsPano || !showsFlat) {
         sequences = sequences.filter(function(sequence) {
           if (sequence.properties.hasOwnProperty("is_pano")) {
@@ -44458,7 +44458,7 @@ ${content}</tr>
       return sequences;
     }
     function update() {
-      const z = ~~context.map().zoom();
+      const z = ~~context2.map().zoom();
       const showMarkers = z >= minMarkerZoom;
       const showViewfields = z >= minViewfieldZoom;
       const service = getService();
@@ -44466,7 +44466,7 @@ ${content}</tr>
       let images = service && showMarkers ? service.images(projection2) : [];
       images = filterImages(images);
       sequences = filterSequences(sequences, service);
-      service.filterViewer(context);
+      service.filterViewer(context2);
       let traces = layer.selectAll(".sequences").selectAll(".sequence").data(sequences, function(d) {
         return d.properties.id;
       });
@@ -44505,7 +44505,7 @@ ${content}</tr>
       layerEnter.append("g").attr("class", "markers");
       layer = layerEnter.merge(layer);
       if (enabled) {
-        if (service && ~~context.map().zoom() >= minZoom3) {
+        if (service && ~~context2.map().zoom() >= minZoom3) {
           editOn();
           update();
           service.loadImages(projection2);
@@ -44520,10 +44520,10 @@ ${content}</tr>
       svgMapillaryImages.enabled = _;
       if (svgMapillaryImages.enabled) {
         showLayer();
-        context.photos().on("change.mapillary_images", update);
+        context2.photos().on("change.mapillary_images", update);
       } else {
         hideLayer();
-        context.photos().on("change.mapillary_images", null);
+        context2.photos().on("change.mapillary_images", null);
       }
       dispatch10.call("change");
       return this;
@@ -44536,7 +44536,7 @@ ${content}</tr>
   }
 
   // modules/svg/mapillary_position.js
-  function svgMapillaryPosition(projection2, context) {
+  function svgMapillaryPosition(projection2, context2) {
     const throttledRedraw = throttle_default(function() {
       update();
     }, 1e3);
@@ -44556,7 +44556,7 @@ ${content}</tr>
         _mapillary.event.on("imageChanged", throttledRedraw);
         _mapillary.event.on("bearingChanged", function(e) {
           viewerCompassAngle = e.bearing;
-          if (context.map().isTransformed())
+          if (context2.map().isTransformed())
             return;
           layer.selectAll(".viewfield-group.currentView").filter(function(d) {
             return d.is_pano;
@@ -44584,7 +44584,7 @@ ${content}</tr>
       return t;
     }
     function update() {
-      const z = ~~context.map().zoom();
+      const z = ~~context2.map().zoom();
       const showViewfields = z >= minViewfieldZoom;
       const service = getService();
       const image = service && service.getActiveImage();
@@ -44607,7 +44607,7 @@ ${content}</tr>
       const layerEnter = layer.enter().append("g").attr("class", "layer-mapillary-position");
       layerEnter.append("g").attr("class", "markers");
       layer = layerEnter.merge(layer);
-      if (service && ~~context.map().zoom() >= minZoom3) {
+      if (service && ~~context2.map().zoom() >= minZoom3) {
         editOn();
         update();
       } else {
@@ -44626,7 +44626,7 @@ ${content}</tr>
   }
 
   // modules/svg/mapillary_signs.js
-  function svgMapillarySigns(projection2, context, dispatch10) {
+  function svgMapillarySigns(projection2, context2, dispatch10) {
     const throttledRedraw = throttle_default(function() {
       dispatch10.call("change");
     }, 1e3);
@@ -44652,7 +44652,7 @@ ${content}</tr>
       const service = getService();
       if (!service)
         return;
-      service.loadSignResources(context);
+      service.loadSignResources(context2);
       editOn();
     }
     function hideLayer() {
@@ -44670,24 +44670,24 @@ ${content}</tr>
       const service = getService();
       if (!service)
         return;
-      context.map().centerEase(d.loc);
+      context2.map().centerEase(d.loc);
       const selectedImageId = service.getActiveImage() && service.getActiveImage().id;
       service.getDetections(d.id).then((detections) => {
         if (detections.length) {
           const imageId = detections[0].image.id;
           if (imageId === selectedImageId) {
-            service.highlightDetection(detections[0]).selectImage(context, imageId);
+            service.highlightDetection(detections[0]).selectImage(context2, imageId);
           } else {
-            service.ensureViewerLoaded(context).then(function() {
-              service.highlightDetection(detections[0]).selectImage(context, imageId).showViewer(context);
+            service.ensureViewerLoaded(context2).then(function() {
+              service.highlightDetection(detections[0]).selectImage(context2, imageId).showViewer(context2);
             });
           }
         }
       });
     }
     function filterData(detectedFeatures) {
-      var fromDate = context.photos().fromDate();
-      var toDate = context.photos().toDate();
+      var fromDate = context2.photos().fromDate();
+      var toDate = context2.photos().toDate();
       if (fromDate) {
         var fromTimestamp = new Date(fromDate).getTime();
         detectedFeatures = detectedFeatures.filter(function(feature3) {
@@ -44725,7 +44725,7 @@ ${content}</tr>
       layer.exit().remove();
       layer = layer.enter().append("g").attr("class", "layer-mapillary-signs layer-mapillary-detections").style("display", enabled ? "block" : "none").merge(layer);
       if (enabled) {
-        if (service && ~~context.map().zoom() >= minZoom3) {
+        if (service && ~~context2.map().zoom() >= minZoom3) {
           editOn();
           update();
           service.loadSigns(projection2);
@@ -44743,10 +44743,10 @@ ${content}</tr>
       svgMapillarySigns.enabled = _;
       if (svgMapillarySigns.enabled) {
         showLayer();
-        context.photos().on("change.mapillary_signs", update);
+        context2.photos().on("change.mapillary_signs", update);
       } else {
         hideLayer();
-        context.photos().on("change.mapillary_signs", null);
+        context2.photos().on("change.mapillary_signs", null);
       }
       dispatch10.call("change");
       return this;
@@ -44759,7 +44759,7 @@ ${content}</tr>
   }
 
   // modules/svg/mapillary_map_features.js
-  function svgMapillaryMapFeatures(projection2, context, dispatch10) {
+  function svgMapillaryMapFeatures(projection2, context2, dispatch10) {
     const throttledRedraw = throttle_default(function() {
       dispatch10.call("change");
     }, 1e3);
@@ -44785,7 +44785,7 @@ ${content}</tr>
       const service = getService();
       if (!service)
         return;
-      service.loadObjectResources(context);
+      service.loadObjectResources(context2);
       editOn();
     }
     function hideLayer() {
@@ -44803,24 +44803,24 @@ ${content}</tr>
       const service = getService();
       if (!service)
         return;
-      context.map().centerEase(d.loc);
+      context2.map().centerEase(d.loc);
       const selectedImageId = service.getActiveImage() && service.getActiveImage().id;
       service.getDetections(d.id).then((detections) => {
         if (detections.length) {
           const imageId = detections[0].image.id;
           if (imageId === selectedImageId) {
-            service.highlightDetection(detections[0]).selectImage(context, imageId);
+            service.highlightDetection(detections[0]).selectImage(context2, imageId);
           } else {
-            service.ensureViewerLoaded(context).then(function() {
-              service.highlightDetection(detections[0]).selectImage(context, imageId).showViewer(context);
+            service.ensureViewerLoaded(context2).then(function() {
+              service.highlightDetection(detections[0]).selectImage(context2, imageId).showViewer(context2);
             });
           }
         }
       });
     }
     function filterData(detectedFeatures) {
-      const fromDate = context.photos().fromDate();
-      const toDate = context.photos().toDate();
+      const fromDate = context2.photos().fromDate();
+      const toDate = context2.photos().toDate();
       if (fromDate) {
         detectedFeatures = detectedFeatures.filter(function(feature3) {
           return new Date(feature3.last_seen_at).getTime() >= new Date(fromDate).getTime();
@@ -44863,7 +44863,7 @@ ${content}</tr>
       layer.exit().remove();
       layer = layer.enter().append("g").attr("class", "layer-mapillary-map-features layer-mapillary-detections").style("display", enabled ? "block" : "none").merge(layer);
       if (enabled) {
-        if (service && ~~context.map().zoom() >= minZoom3) {
+        if (service && ~~context2.map().zoom() >= minZoom3) {
           editOn();
           update();
           service.loadMapFeatures(projection2);
@@ -44881,10 +44881,10 @@ ${content}</tr>
       svgMapillaryMapFeatures.enabled = _;
       if (svgMapillaryMapFeatures.enabled) {
         showLayer();
-        context.photos().on("change.mapillary_map_features", update);
+        context2.photos().on("change.mapillary_map_features", update);
       } else {
         hideLayer();
-        context.photos().on("change.mapillary_map_features", null);
+        context2.photos().on("change.mapillary_map_features", null);
       }
       dispatch10.call("change");
       return this;
@@ -44897,7 +44897,7 @@ ${content}</tr>
   }
 
   // modules/svg/kartaview_images.js
-  function svgKartaviewImages(projection2, context, dispatch10) {
+  function svgKartaviewImages(projection2, context2, dispatch10) {
     var throttledRedraw = throttle_default(function() {
       dispatch10.call("change");
     }, 1e3);
@@ -44945,20 +44945,20 @@ ${content}</tr>
       var service = getService();
       if (!service)
         return;
-      service.ensureViewerLoaded(context).then(function() {
-        service.selectImage(context, d.key).showViewer(context);
+      service.ensureViewerLoaded(context2).then(function() {
+        service.selectImage(context2, d.key).showViewer(context2);
       });
-      context.map().centerEase(d.loc);
+      context2.map().centerEase(d.loc);
     }
     function mouseover(d3_event, d) {
       var service = getService();
       if (service)
-        service.setStyles(context, d);
+        service.setStyles(context2, d);
     }
     function mouseout() {
       var service = getService();
       if (service)
-        service.setStyles(context, null);
+        service.setStyles(context2, null);
     }
     function transform2(d) {
       var t = svgPointTransform(projection2)(d);
@@ -44968,9 +44968,9 @@ ${content}</tr>
       return t;
     }
     function filterImages(images) {
-      var fromDate = context.photos().fromDate();
-      var toDate = context.photos().toDate();
-      var usernames = context.photos().usernames();
+      var fromDate = context2.photos().fromDate();
+      var toDate = context2.photos().toDate();
+      var usernames = context2.photos().usernames();
       if (fromDate) {
         var fromTimestamp = new Date(fromDate).getTime();
         images = images.filter(function(item) {
@@ -44991,9 +44991,9 @@ ${content}</tr>
       return images;
     }
     function filterSequences(sequences) {
-      var fromDate = context.photos().fromDate();
-      var toDate = context.photos().toDate();
-      var usernames = context.photos().usernames();
+      var fromDate = context2.photos().fromDate();
+      var toDate = context2.photos().toDate();
+      var usernames = context2.photos().usernames();
       if (fromDate) {
         var fromTimestamp = new Date(fromDate).getTime();
         sequences = sequences.filter(function(image) {
@@ -45014,15 +45014,15 @@ ${content}</tr>
       return sequences;
     }
     function update() {
-      var viewer = context.container().select(".photoviewer");
+      var viewer = context2.container().select(".photoviewer");
       var selected = viewer.empty() ? void 0 : viewer.datum();
-      var z = ~~context.map().zoom();
+      var z = ~~context2.map().zoom();
       var showMarkers = z >= minMarkerZoom;
       var showViewfields = z >= minViewfieldZoom;
       var service = getService();
       var sequences = [];
       var images = [];
-      if (context.photos().showsFlat()) {
+      if (context2.photos().showsFlat()) {
         sequences = service ? service.sequences(projection2) : [];
         images = service && showMarkers ? service.images(projection2) : [];
         sequences = filterSequences(sequences);
@@ -45056,7 +45056,7 @@ ${content}</tr>
       layerEnter.append("g").attr("class", "markers");
       layer = layerEnter.merge(layer);
       if (enabled) {
-        if (service && ~~context.map().zoom() >= minZoom3) {
+        if (service && ~~context2.map().zoom() >= minZoom3) {
           editOn();
           update();
           service.loadImages(projection2);
@@ -45071,10 +45071,10 @@ ${content}</tr>
       svgKartaviewImages.enabled = _;
       if (svgKartaviewImages.enabled) {
         showLayer();
-        context.photos().on("change.kartaview_images", update);
+        context2.photos().on("change.kartaview_images", update);
       } else {
         hideLayer();
-        context.photos().on("change.kartaview_images", null);
+        context2.photos().on("change.kartaview_images", null);
       }
       dispatch10.call("change");
       return this;
@@ -45087,7 +45087,7 @@ ${content}</tr>
   }
 
   // modules/svg/osm.js
-  function svgOsm(projection2, context, dispatch10) {
+  function svgOsm(projection2, context2, dispatch10) {
     var enabled = true;
     function drawOsm(selection2) {
       selection2.selectAll(".layer-osm").data(["covered", "areas", "lines", "points", "labels"]).enter().append("g").attr("class", function(d) {
@@ -45098,14 +45098,14 @@ ${content}</tr>
       });
     }
     function showLayer() {
-      var layer = context.surface().selectAll(".data-layer.osm");
+      var layer = context2.surface().selectAll(".data-layer.osm");
       layer.interrupt();
       layer.classed("disabled", false).style("opacity", 0).transition().duration(250).style("opacity", 1).on("end interrupt", function() {
         dispatch10.call("change");
       });
     }
     function hideLayer() {
-      var layer = context.surface().selectAll(".data-layer.osm");
+      var layer = context2.surface().selectAll(".data-layer.osm");
       layer.interrupt();
       layer.transition().duration(250).style("opacity", 0).on("end interrupt", function() {
         layer.classed("disabled", true);
@@ -45130,7 +45130,7 @@ ${content}</tr>
   // modules/svg/notes.js
   var _notesEnabled = false;
   var _osmService;
-  function svgNotes(projection2, context, dispatch10) {
+  function svgNotes(projection2, context2, dispatch10) {
     if (!dispatch10) {
       dispatch10 = dispatch_default("change");
     }
@@ -45186,7 +45186,7 @@ ${content}</tr>
       if (!_notesVisible || !_notesEnabled)
         return;
       var service = getService();
-      var selectedID = context.selectedNoteID();
+      var selectedID = context2.selectedNoteID();
       var data = service ? service.notes(projection2) : [];
       var getTransform = svgPointTransform(projection2);
       var notes = drawLayer.selectAll(".note").data(data, function(d) {
@@ -45211,13 +45211,13 @@ ${content}</tr>
         return "#iD-icon-apply";
       });
       notes.merge(notesEnter).sort(sortY).classed("selected", function(d) {
-        var mode = context.mode();
+        var mode = context2.mode();
         var isMoving = mode && mode.id === "drag-note";
         return !isMoving && d.id === selectedID;
       }).attr("transform", getTransform);
       if (touchLayer.empty())
         return;
-      var fillClass = context.getDebug("target") ? "pink " : "nocolor ";
+      var fillClass = context2.getDebug("target") ? "pink " : "nocolor ";
       var targets = touchLayer.selectAll(".note").data(data, function(d) {
         return d.id;
       });
@@ -45236,7 +45236,7 @@ ${content}</tr>
     }
     function drawNotes(selection2) {
       var service = getService();
-      var surface = context.surface();
+      var surface = context2.surface();
       if (surface && !surface.empty()) {
         touchLayer = surface.selectAll(".data-layer.touch .layer-touch.markers");
       }
@@ -45244,7 +45244,7 @@ ${content}</tr>
       drawLayer.exit().remove();
       drawLayer = drawLayer.enter().append("g").attr("class", "layer-notes").style("display", _notesEnabled ? "block" : "none").merge(drawLayer);
       if (_notesEnabled) {
-        if (service && ~~context.map().zoom() >= minZoom3) {
+        if (service && ~~context2.map().zoom() >= minZoom3) {
           editOn();
           service.loadNotes(projection2);
           updateMarkers();
@@ -45261,8 +45261,8 @@ ${content}</tr>
         layerOn();
       } else {
         layerOff();
-        if (context.selectedNoteID()) {
-          context.enter(modeBrowse(context));
+        if (context2.selectedNoteID()) {
+          context2.enter(modeBrowse(context2));
         }
       }
       dispatch10.call("change");
@@ -45308,25 +45308,25 @@ ${content}</tr>
   }
 
   // modules/svg/layers.js
-  function svgLayers(projection2, context) {
+  function svgLayers(projection2, context2) {
     var dispatch10 = dispatch_default("change");
     var svg2 = select_default2(null);
     var _layers = [
-      { id: "osm", layer: svgOsm(projection2, context, dispatch10) },
-      { id: "notes", layer: svgNotes(projection2, context, dispatch10) },
-      { id: "data", layer: svgData(projection2, context, dispatch10) },
-      { id: "keepRight", layer: svgKeepRight(projection2, context, dispatch10) },
-      { id: "improveOSM", layer: svgImproveOSM(projection2, context, dispatch10) },
-      { id: "osmose", layer: svgOsmose(projection2, context, dispatch10) },
-      { id: "streetside", layer: svgStreetside(projection2, context, dispatch10) },
-      { id: "mapillary", layer: svgMapillaryImages(projection2, context, dispatch10) },
-      { id: "mapillary-position", layer: svgMapillaryPosition(projection2, context, dispatch10) },
-      { id: "mapillary-map-features", layer: svgMapillaryMapFeatures(projection2, context, dispatch10) },
-      { id: "mapillary-signs", layer: svgMapillarySigns(projection2, context, dispatch10) },
-      { id: "kartaview", layer: svgKartaviewImages(projection2, context, dispatch10) },
-      { id: "debug", layer: svgDebug(projection2, context, dispatch10) },
-      { id: "geolocate", layer: svgGeolocate(projection2, context, dispatch10) },
-      { id: "touch", layer: svgTouch(projection2, context, dispatch10) }
+      { id: "osm", layer: svgOsm(projection2, context2, dispatch10) },
+      { id: "notes", layer: svgNotes(projection2, context2, dispatch10) },
+      { id: "data", layer: svgData(projection2, context2, dispatch10) },
+      { id: "keepRight", layer: svgKeepRight(projection2, context2, dispatch10) },
+      { id: "improveOSM", layer: svgImproveOSM(projection2, context2, dispatch10) },
+      { id: "osmose", layer: svgOsmose(projection2, context2, dispatch10) },
+      { id: "streetside", layer: svgStreetside(projection2, context2, dispatch10) },
+      { id: "mapillary", layer: svgMapillaryImages(projection2, context2, dispatch10) },
+      { id: "mapillary-position", layer: svgMapillaryPosition(projection2, context2, dispatch10) },
+      { id: "mapillary-map-features", layer: svgMapillaryMapFeatures(projection2, context2, dispatch10) },
+      { id: "mapillary-signs", layer: svgMapillarySigns(projection2, context2, dispatch10) },
+      { id: "kartaview", layer: svgKartaviewImages(projection2, context2, dispatch10) },
+      { id: "debug", layer: svgDebug(projection2, context2, dispatch10) },
+      { id: "geolocate", layer: svgGeolocate(projection2, context2, dispatch10) },
+      { id: "touch", layer: svgTouch(projection2, context2, dispatch10) }
     ];
     function drawLayers(selection2) {
       svg2 = selection2.selectAll(".surface").data([0]);
@@ -45388,7 +45388,7 @@ ${content}</tr>
 
   // modules/svg/lines.js
   var import_fast_deep_equal6 = __toESM(require_fast_deep_equal());
-  function svgLines(projection2, context) {
+  function svgLines(projection2, context2) {
     var detected = utilDetect();
     var highway_stack = {
       motorway: 0,
@@ -45405,11 +45405,11 @@ ${content}</tr>
       footway: 11
     };
     function drawTargets(selection2, graph, entities, filter2) {
-      var targetClass = context.getDebug("target") ? "pink " : "nocolor ";
-      var nopeClass = context.getDebug("target") ? "red " : "nocolor ";
+      var targetClass = context2.getDebug("target") ? "pink " : "nocolor ";
+      var nopeClass = context2.getDebug("target") ? "red " : "nocolor ";
       var getPath = svgPath(projection2).geojson;
-      var activeID = context.activeID();
-      var base = context.history().base();
+      var activeID = context2.activeID();
+      var base = context2.history().base();
       var data = { targets: [], nopes: [] };
       entities.forEach(function(way) {
         var features2 = svgSegmentWay(way, graph, activeID);
@@ -45447,9 +45447,9 @@ ${content}</tr>
       }).classed("segment-edited", segmentWasEdited);
     }
     function drawLines(selection2, graph, entities, filter2) {
-      var base = context.history().base();
+      var base = context2.history().base();
       function waystack(a, b) {
-        var selected = context.selectedIDs();
+        var selected = context2.selectedIDs();
         var scoreA = selected.indexOf(a.id) !== -1 ? 20 : 0;
         var scoreB = selected.indexOf(b.id) !== -1 ? 20 : 0;
         if (a.tags.highway) {
@@ -45461,7 +45461,7 @@ ${content}</tr>
         return scoreA - scoreB;
       }
       function drawLineGroup(selection3, klass, isSelected) {
-        var mode = context.mode();
+        var mode = context2.mode();
         var isDrawing = mode && /^draw/.test(mode.id);
         var selectedClass = !isDrawing && isSelected ? "selected " : "";
         var lines = selection3.selectAll("path").filter(filter2).data(getPathData(isSelected), osmEntity.key);
@@ -45494,9 +45494,9 @@ ${content}</tr>
           var data = pathdata[layer] || [];
           return data.filter(function(d) {
             if (isSelected) {
-              return context.selectedIDs().indexOf(d.id) !== -1;
+              return context2.selectedIDs().indexOf(d.id) !== -1;
             } else {
-              return context.selectedIDs().indexOf(d.id) === -1;
+              return context2.selectedIDs().indexOf(d.id) === -1;
             }
           });
         };
@@ -45610,10 +45610,10 @@ ${content}</tr>
   }
 
   // modules/svg/midpoints.js
-  function svgMidpoints(projection2, context) {
+  function svgMidpoints(projection2, context2) {
     var targetRadius = 8;
     function drawTargets(selection2, graph, entities, filter2) {
-      var fillClass = context.getDebug("target") ? "pink " : "nocolor ";
+      var fillClass = context2.getDebug("target") ? "pink " : "nocolor ";
       var getTransform = svgPointTransform(projection2).geojson;
       var data = entities.map(function(midpoint) {
         return {
@@ -45642,8 +45642,8 @@ ${content}</tr>
     function drawMidpoints(selection2, graph, entities, filter2, extent) {
       var drawLayer = selection2.selectAll(".layer-osm.points .points-group.midpoints");
       var touchLayer = selection2.selectAll(".layer-touch.points");
-      var mode = context.mode();
-      if (mode && mode.id !== "select" || !context.map().withinEditableZoom()) {
+      var mode = context2.mode();
+      if (mode && mode.id !== "select" || !context2.map().withinEditableZoom()) {
         drawLayer.selectAll(".midpoint").remove();
         touchLayer.selectAll(".midpoint.target").remove();
         return;
@@ -45656,7 +45656,7 @@ ${content}</tr>
           continue;
         if (!filter2(entity))
           continue;
-        if (context.selectedIDs().indexOf(entity.id) < 0)
+        if (context2.selectedIDs().indexOf(entity.id) < 0)
           continue;
         var nodes = graph.childNodes(entity);
         for (var j2 = 0; j2 < nodes.length - 1; j2++) {
@@ -45728,7 +45728,7 @@ ${content}</tr>
 
   // modules/svg/points.js
   var import_fast_deep_equal7 = __toESM(require_fast_deep_equal());
-  function svgPoints(projection2, context) {
+  function svgPoints(projection2, context2) {
     function markerPath(selection2, klass) {
       selection2.attr("class", klass).attr("transform", "translate(-8, -23)").attr("d", "M 17,8 C 17,13 11,21 8.5,23.5 C 6,21 0,13 0,8 C 0,4 4,-0.5 8.5,-0.5 C 13,-0.5 17,4 17,8 z");
     }
@@ -45736,14 +45736,14 @@ ${content}</tr>
       return b.loc[1] - a.loc[1];
     }
     function fastEntityKey(d) {
-      var mode = context.mode();
+      var mode = context2.mode();
       var isMoving = mode && /^(add|draw|drag|move|rotate)/.test(mode.id);
       return isMoving ? d.id : osmEntity.key(d);
     }
     function drawTargets(selection2, graph, entities, filter2) {
-      var fillClass = context.getDebug("target") ? "pink " : "nocolor ";
+      var fillClass = context2.getDebug("target") ? "pink " : "nocolor ";
       var getTransform = svgPointTransform(projection2).geojson;
-      var activeID = context.activeID();
+      var activeID = context2.activeID();
       var data = [];
       entities.forEach(function(node) {
         if (activeID === node.id)
@@ -45769,9 +45769,9 @@ ${content}</tr>
       }).attr("transform", getTransform);
     }
     function drawPoints(selection2, graph, entities, filter2) {
-      var wireframe = context.surface().classed("fill-wireframe");
+      var wireframe = context2.surface().classed("fill-wireframe");
       var zoom = geoScaleToZoom(projection2.scale());
-      var base = context.history().base();
+      var base = context2.history().base();
       function renderAsPoint(entity) {
         return entity.geometry(graph) === "point" && !(zoom >= 18 && entity.directions(graph, projection2).length);
       }
@@ -45808,7 +45808,7 @@ ${content}</tr>
   }
 
   // modules/svg/turns.js
-  function svgTurns(projection2, context) {
+  function svgTurns(projection2, context2) {
     function icon2(turn) {
       var u = turn.u ? "-u" : "";
       if (turn.no)
@@ -45858,7 +45858,7 @@ ${content}</tr>
       groups.select("use").attr("xlink:href", icon2);
       groups.select("rect");
       groups.select("circle");
-      var fillClass = context.getDebug("target") ? "pink " : "nocolor ";
+      var fillClass = context2.getDebug("target") ? "pink " : "nocolor ";
       groups = touchLayer.selectAll("g.turn").data(turns, function(d) {
         return d.key;
       });
@@ -45884,7 +45884,7 @@ ${content}</tr>
 
   // modules/svg/vertices.js
   var import_fast_deep_equal8 = __toESM(require_fast_deep_equal());
-  function svgVertices(projection2, context) {
+  function svgVertices(projection2, context2) {
     var radiuses = {
       shadow: [6, 7.5, 7.5, 12],
       stroke: [2.5, 3.5, 3.5, 8],
@@ -45901,7 +45901,7 @@ ${content}</tr>
       return b.loc[1] - a.loc[1];
     }
     function fastEntityKey(d) {
-      var mode = context.mode();
+      var mode = context2.mode();
       var isMoving = mode && /^(add|draw|drag|move|rotate)/.test(mode.id);
       return isMoving ? d.id : osmEntity.key(d);
     }
@@ -45909,11 +45909,11 @@ ${content}</tr>
       sets2 = sets2 || { selected: {}, important: {}, hovered: {} };
       var icons = {};
       var directions = {};
-      var wireframe = context.surface().classed("fill-wireframe");
+      var wireframe = context2.surface().classed("fill-wireframe");
       var zoom = geoScaleToZoom(projection2.scale());
       var z = zoom < 17 ? 0 : zoom < 18 ? 1 : 2;
-      var activeID = context.activeID();
-      var base = context.history().base();
+      var activeID = context2.activeID();
+      var base = context2.history().base();
       function getIcon(d) {
         var entity = graph.entity(d.id);
         if (entity.id in icons)
@@ -45990,10 +45990,10 @@ ${content}</tr>
       });
     }
     function drawTargets(selection2, graph, entities, filter2) {
-      var targetClass = context.getDebug("target") ? "pink " : "nocolor ";
-      var nopeClass = context.getDebug("target") ? "red " : "nocolor ";
+      var targetClass = context2.getDebug("target") ? "pink " : "nocolor ";
+      var nopeClass = context2.getDebug("target") ? "red " : "nocolor ";
       var getTransform = svgPointTransform(projection2).geojson;
-      var activeID = context.activeID();
+      var activeID = context2.activeID();
       var data = { targets: [], nopes: [] };
       entities.forEach(function(node) {
         if (activeID === node.id)
@@ -46062,7 +46062,7 @@ ${content}</tr>
           return;
         seenIds[entity.id] = true;
         var geometry = entity.geometry(graph);
-        if (!context.features().isHiddenFeature(entity, graph, geometry)) {
+        if (!context2.features().isHiddenFeature(entity, graph, geometry)) {
           var i2;
           if (entity.type === "way") {
             for (i2 = 0; i2 < entity.nodes.length; i2++) {
@@ -46101,12 +46101,12 @@ ${content}</tr>
       return results;
     }
     function drawVertices(selection2, graph, entities, filter2, extent, fullRedraw) {
-      var wireframe = context.surface().classed("fill-wireframe");
-      var visualDiff = context.surface().classed("highlight-edited");
+      var wireframe = context2.surface().classed("fill-wireframe");
+      var visualDiff = context2.surface().classed("highlight-edited");
       var zoom = geoScaleToZoom(projection2.scale());
-      var mode = context.mode();
+      var mode = context2.mode();
       var isMoving = mode && /^(add|draw|drag|move|rotate)/.test(mode.id);
-      var base = context.history().base();
+      var base = context2.history().base();
       var drawLayer = selection2.selectAll(".layer-osm.points .points-group.vertices");
       var touchLayer = selection2.selectAll(".layer-touch.points");
       if (fullRedraw) {
@@ -46149,12 +46149,12 @@ ${content}</tr>
       }
     }
     drawVertices.drawSelected = function(selection2, graph, extent) {
-      var wireframe = context.surface().classed("fill-wireframe");
+      var wireframe = context2.surface().classed("fill-wireframe");
       var zoom = geoScaleToZoom(projection2.scale());
       _prevSelected = _currSelected || {};
-      if (context.map().isInWideSelection()) {
+      if (context2.map().isInWideSelection()) {
         _currSelected = {};
-        context.selectedIDs().forEach(function(id2) {
+        context2.selectedIDs().forEach(function(id2) {
           var entity = graph.hasEntity(id2);
           if (!entity)
             return;
@@ -46165,7 +46165,7 @@ ${content}</tr>
           }
         });
       } else {
-        _currSelected = getSiblingAndChildVertices(context.selectedIDs(), graph, wireframe, zoom);
+        _currSelected = getSiblingAndChildVertices(context2.selectedIDs(), graph, wireframe, zoom);
       }
       var filter2 = function(d) {
         return d.id in _prevSelected;
@@ -46175,7 +46175,7 @@ ${content}</tr>
     drawVertices.drawHover = function(selection2, graph, target, extent) {
       if (target === _currHoverTarget)
         return;
-      var wireframe = context.surface().classed("fill-wireframe");
+      var wireframe = context2.surface().classed("fill-wireframe");
       var zoom = geoScaleToZoom(projection2.scale());
       _prevHover = _currHover || {};
       _currHoverTarget = target;
@@ -46540,7 +46540,7 @@ ${content}</tr>
   function clamp(num, min3, max3) {
     return Math.max(min3, Math.min(num, max3));
   }
-  function rendererMap(context) {
+  function rendererMap(context2) {
     var dispatch10 = dispatch_default(
       "move",
       "drawn",
@@ -46549,8 +46549,8 @@ ${content}</tr>
       "changeHighlighting",
       "changeAreaFill"
     );
-    var projection2 = context.projection;
-    var curtainProjection = context.curtainProjection;
+    var projection2 = context2.projection;
+    var curtainProjection = context2.curtainProjection;
     var drawLayers;
     var drawPoints;
     var drawVertices;
@@ -46588,30 +46588,30 @@ ${content}</tr>
     }
     function map2(selection2) {
       _selection = selection2;
-      context.on("change.map", immediateRedraw);
-      var osm = context.connection();
+      context2.on("change.map", immediateRedraw);
+      var osm = context2.connection();
       if (osm) {
         osm.on("change.map", immediateRedraw);
       }
       function didUndoOrRedo(targetTransform) {
-        var mode = context.mode().id;
+        var mode = context2.mode().id;
         if (mode !== "browse" && mode !== "select")
           return;
         if (targetTransform) {
           map2.transformEase(targetTransform);
         }
       }
-      context.history().on("merge.map", function() {
+      context2.history().on("merge.map", function() {
         scheduleRedraw();
       }).on("change.map", immediateRedraw).on("undone.map", function(stack, fromStack) {
         didUndoOrRedo(fromStack.transform);
       }).on("redone.map", function(stack) {
         didUndoOrRedo(stack.transform);
       });
-      context.background().on("change.map", immediateRedraw);
-      context.features().on("redraw.map", immediateRedraw);
+      context2.background().on("change.map", immediateRedraw);
+      context2.features().on("redraw.map", immediateRedraw);
       drawLayers.on("change.map", function() {
-        context.background().updateImagery();
+        context2.background().updateImagery();
         immediateRedraw();
       });
       selection2.on("wheel.map mousewheel.map", function(d3_event) {
@@ -46635,13 +46635,13 @@ ${content}</tr>
       }).on(_pointerPrefix + "over.vertices", function(d3_event) {
         if (map2.editableDataEnabled() && !_isTransformed) {
           var hover = d3_event.target.__data__;
-          surface.call(drawVertices.drawHover, context.graph(), hover, map2.extent());
+          surface.call(drawVertices.drawHover, context2.graph(), hover, map2.extent());
           dispatch10.call("drawn", this, { full: false });
         }
       }).on(_pointerPrefix + "out.vertices", function(d3_event) {
         if (map2.editableDataEnabled() && !_isTransformed) {
           var hover = d3_event.relatedTarget && d3_event.relatedTarget.__data__;
-          surface.call(drawVertices.drawHover, context.graph(), hover, map2.extent());
+          surface.call(drawVertices.drawHover, context2.graph(), hover, map2.extent());
           dispatch10.call("drawn", this, { full: false });
         }
       });
@@ -46666,14 +46666,14 @@ ${content}</tr>
         t.y = p02[1] - p1[1] * t.k;
         map2.transformEase(t);
       });
-      context.on("enter.map", function() {
+      context2.on("enter.map", function() {
         if (!map2.editableDataEnabled(true))
           return;
         if (_isTransformed)
           return;
-        var graph = context.graph();
+        var graph = context2.graph();
         var selectedAndParents = {};
-        context.selectedIDs().forEach(function(id2) {
+        context2.selectedIDs().forEach(function(id2) {
           var entity = graph.hasEntity(id2);
           if (entity) {
             selectedAndParents[entity.id] = entity;
@@ -46688,7 +46688,7 @@ ${content}</tr>
         var filter2 = function(d) {
           return d.id in selectedAndParents;
         };
-        data = context.features().filter(data, graph);
+        data = context2.features().filter(data, graph);
         surface.call(drawVertices.drawSelected, graph, map2.extent()).call(drawLines, graph, data, filter2).call(drawAreas, graph, data, filter2).call(drawMidpoints, graph, data, filter2, map2.trimmedExtent());
         dispatch10.call("drawn", this, { full: false });
         scheduleRedraw();
@@ -46724,10 +46724,10 @@ ${content}</tr>
       return [_dimensions[0] / 2, _dimensions[1] / 2];
     }
     function drawEditable(difference, extent) {
-      var mode = context.mode();
-      var graph = context.graph();
-      var features2 = context.features();
-      var all = context.history().intersects(map2.extent());
+      var mode = context2.mode();
+      var graph = context2.graph();
+      var features2 = context2.features();
+      var all = context2.history().intersects(map2.extent());
       var fullRedraw = false;
       var data;
       var set3;
@@ -46735,8 +46735,8 @@ ${content}</tr>
       var applyFeatureLayerFilters = true;
       if (map2.isInWideSelection()) {
         data = [];
-        utilEntityAndDeepMemberIDs(mode.selectedIDs(), context.graph()).forEach(function(id2) {
-          var entity = context.hasEntity(id2);
+        utilEntityAndDeepMemberIDs(mode.selectedIDs(), context2.graph()).forEach(function(id2) {
+          var entity = context2.hasEntity(id2);
           if (entity)
             data.push(entity);
         });
@@ -46756,7 +46756,7 @@ ${content}</tr>
           extent = void 0;
         }
         if (extent) {
-          data = context.history().intersects(map2.extent().intersection(extent));
+          data = context2.history().intersects(map2.extent().intersection(extent));
           set3 = new Set(data.map(function(entity) {
             return entity.id;
           }));
@@ -46772,7 +46772,7 @@ ${content}</tr>
       if (applyFeatureLayerFilters) {
         data = features2.filter(data, graph);
       } else {
-        context.features().resetStats();
+        context2.features().resetStats();
       }
       if (mode && mode.id === "select") {
         surface.call(drawVertices.drawSelected, graph, map2.extent());
@@ -46781,16 +46781,16 @@ ${content}</tr>
       dispatch10.call("drawn", this, { full: true });
     }
     map2.init = function() {
-      drawLayers = svgLayers(projection2, context);
-      drawPoints = svgPoints(projection2, context);
-      drawVertices = svgVertices(projection2, context);
-      drawLines = svgLines(projection2, context);
-      drawAreas = svgAreas(projection2, context);
-      drawMidpoints = svgMidpoints(projection2, context);
-      drawLabels = svgLabels(projection2, context);
+      drawLayers = svgLayers(projection2, context2);
+      drawPoints = svgPoints(projection2, context2);
+      drawVertices = svgVertices(projection2, context2);
+      drawLines = svgLines(projection2, context2);
+      drawAreas = svgAreas(projection2, context2);
+      drawMidpoints = svgMidpoints(projection2, context2);
+      drawLabels = svgLabels(projection2, context2);
     };
     function editOff() {
-      context.features().resetStats();
+      context2.features().resetStats();
       surface.selectAll(".layer-osm *").remove();
       surface.selectAll(".layer-touch:not(.markers) *").remove();
       var allowed = {
@@ -46800,9 +46800,9 @@ ${content}</tr>
         "select-data": true,
         "select-error": true
       };
-      var mode = context.mode();
+      var mode = context2.mode();
       if (mode && !allowed[mode.id]) {
-        context.enter(modeBrowse(context));
+        context2.enter(modeBrowse(context2));
       }
       dispatch10.call("drawn", this, { full: true });
     }
@@ -46908,7 +46908,7 @@ ${content}</tr>
       if (geoScaleToZoom(k, TILESIZE) < _minzoom) {
         surface.interrupt();
         dispatch10.call("hitMinZoom", this, map2);
-        setCenterZoom(map2.center(), context.minEditableZoom(), 0, true);
+        setCenterZoom(map2.center(), context2.minEditableZoom(), 0, true);
         scheduleRedraw();
         dispatch10.call("move", this, map2);
         return;
@@ -46924,7 +46924,7 @@ ${content}</tr>
       var scale = k / _transformStart.k;
       var tX = (x / scale - _transformStart.x) * scale;
       var tY = (y / scale - _transformStart.y) * scale;
-      if (context.inIntro()) {
+      if (context2.inIntro()) {
         curtainProjection.transform({
           x: x - tX,
           y: y - tY,
@@ -46948,7 +46948,7 @@ ${content}</tr>
         return false;
       utilSetTransform(supersurface, 0, 0);
       _isTransformed = false;
-      if (context.inIntro()) {
+      if (context2.inIntro()) {
         curtainProjection.transform(projection2.transform());
       }
       return true;
@@ -46968,11 +46968,11 @@ ${content}</tr>
       var lowzoom = linear3().domain([-60, 0, 60]).range([17, 18.5, 17]).clamp(true);
       surface.classed("low-zoom", zoom <= lowzoom(lat));
       if (!difference) {
-        supersurface.call(context.background());
+        supersurface.call(context2.background());
         wrapper.call(drawLayers);
       }
       if (map2.editableDataEnabled() || map2.isInWideSelection()) {
-        context.loadTiles(projection2);
+        context2.loadTiles(projection2);
         drawEditable(difference, extent);
       } else {
         editOff();
@@ -47071,7 +47071,7 @@ ${content}</tr>
         return _dimensions;
       _dimensions = val;
       drawLayers.dimensions(_dimensions);
-      context.background().dimensions(_dimensions);
+      context2.background().dimensions(_dimensions);
       projection2.clipExtent([[0, 0], _dimensions]);
       _getMouseCoords = utilFastMouse(supersurface.node());
       scheduleRedraw();
@@ -47121,7 +47121,7 @@ ${content}</tr>
       map2.centerZoomEase(offsetLoc, zoom);
     };
     map2.unobscuredOffsetPx = function() {
-      var openPane = context.container().select(".map-panes .map-pane.shown");
+      var openPane = context2.container().select(".map-panes .map-pane.shown");
       if (!openPane.empty()) {
         return [openPane.node().offsetWidth / 2, 0];
       }
@@ -47134,7 +47134,7 @@ ${content}</tr>
       if (z2 < _minzoom) {
         surface.interrupt();
         dispatch10.call("hitMinZoom", this, map2);
-        z2 = context.minEditableZoom();
+        z2 = context2.minEditableZoom();
       }
       if (setCenterZoom(map2.center(), z2)) {
         dispatch10.call("move", this, map2);
@@ -47150,7 +47150,7 @@ ${content}</tr>
       return map2;
     };
     map2.zoomTo = function(entity) {
-      var extent = entity.extent(context.graph());
+      var extent = entity.extent(context2.graph());
       if (!isFinite(extent.area()))
         return map2;
       var z2 = clamp(map2.trimmedExtentZoom(extent), 0, 20);
@@ -47180,7 +47180,7 @@ ${content}</tr>
       var extent;
       if (Array.isArray(obj)) {
         obj.forEach(function(entity) {
-          var entityExtent = entity.extent(context.graph());
+          var entityExtent = entity.extent(context2.graph());
           if (!extent) {
             extent = entityExtent;
           } else {
@@ -47188,7 +47188,7 @@ ${content}</tr>
           }
         });
       } else {
-        extent = obj.extent(context.graph());
+        extent = obj.extent(context2.graph());
       }
       if (!isFinite(extent.area()))
         return map2;
@@ -47250,19 +47250,19 @@ ${content}</tr>
       return calcExtentZoom(geoExtent(val), trimmed);
     };
     map2.withinEditableZoom = function() {
-      return map2.zoom() >= context.minEditableZoom();
+      return map2.zoom() >= context2.minEditableZoom();
     };
     map2.isInWideSelection = function() {
-      return !map2.withinEditableZoom() && context.selectedIDs().length;
+      return !map2.withinEditableZoom() && context2.selectedIDs().length;
     };
     map2.editableDataEnabled = function(skipZoomCheck) {
-      var layer = context.layers().layer("osm");
+      var layer = context2.layers().layer("osm");
       if (!layer || !layer.enabled())
         return false;
       return skipZoomCheck || map2.withinEditableZoom();
     };
     map2.notesEditable = function() {
-      var layer = context.layers().layer("notes");
+      var layer = context2.layers().layer("notes");
       if (!layer || !layer.enabled())
         return false;
       return map2.withinEditableZoom();
@@ -47314,7 +47314,7 @@ ${content}</tr>
   }
 
   // modules/renderer/photos.js
-  function rendererPhotos(context) {
+  function rendererPhotos(context2) {
     var dispatch10 = dispatch_default("change");
     var _layerIDs = ["streetside", "mapillary", "mapillary-map-features", "mapillary-signs", "kartaview"];
     var _allPhotoTypes = ["flat", "panoramic"];
@@ -47329,7 +47329,7 @@ ${content}</tr>
       if (window.mocha)
         return;
       var hash = utilStringQs(window.location.hash);
-      var enabled = context.layers().all().filter(function(d) {
+      var enabled = context2.layers().all().filter(function(d) {
         return _layerIDs.indexOf(d.id) !== -1 && d.layer && d.layer.supported() && d.layer.enabled();
       }).map(function(d) {
         return d.id;
@@ -47416,7 +47416,7 @@ ${content}</tr>
       }
     }
     function showsLayer(id2) {
-      var layer = context.layers().layer(id2);
+      var layer = context2.layers().layer(id2);
       return layer && layer.supported() && layer.enabled();
     }
     photos.shouldFilterByDate = function() {
@@ -47473,7 +47473,7 @@ ${content}</tr>
         hashOverlayIDs.forEach(function(id2) {
           if (id2 === "openstreetcam")
             id2 = "kartaview";
-          var layer2 = _layerIDs.indexOf(id2) !== -1 && context.layers().layer(id2);
+          var layer2 = _layerIDs.indexOf(id2) !== -1 && context2.layers().layer(id2);
           if (layer2 && !layer2.enabled())
             layer2.enabled(true);
         });
@@ -47489,7 +47489,7 @@ ${content}</tr>
           var photoKey = results[2];
           var service = services[serviceId];
           if (service && service.ensureViewerLoaded) {
-            var layer = _layerIDs.indexOf(serviceId) !== -1 && context.layers().layer(serviceId);
+            var layer = _layerIDs.indexOf(serviceId) !== -1 && context2.layers().layer(serviceId);
             if (layer && !layer.enabled())
               layer.enabled(true);
             var baselineTime = Date.now();
@@ -47501,21 +47501,21 @@ ${content}</tr>
               if (!service.cachedImage(photoKey))
                 return;
               service.on("loadedImages.rendererPhotos", null);
-              service.ensureViewerLoaded(context).then(function() {
-                service.selectImage(context, photoKey).showViewer(context);
+              service.ensureViewerLoaded(context2).then(function() {
+                service.selectImage(context2, photoKey).showViewer(context2);
               });
             });
           }
         }
       }
-      context.layers().on("change.rendererPhotos", updateStorage);
+      context2.layers().on("change.rendererPhotos", updateStorage);
     };
     return utilRebind(photos, dispatch10, "on");
   }
 
   // modules/ui/account.js
-  function uiAccount(context) {
-    const osm = context.connection();
+  function uiAccount(context2) {
+    const osm = context2.connection();
     function updateUserDetails(selection2) {
       if (!osm)
         return;
@@ -47575,7 +47575,7 @@ ${content}</tr>
   }
 
   // modules/ui/attribution.js
-  function uiAttribution(context) {
+  function uiAttribution(context2) {
     let _selection = select_default2(null);
     function render(selection2, data, klass) {
       let div = selection2.selectAll(`.${klass}`).data([0]);
@@ -47602,7 +47602,7 @@ ${content}</tr>
         attribution.append("span").attr("class", "attribution-text").text(terms_text);
       }).merge(attributions);
       let copyright = attributions.selectAll(".copyright-notice").data((d) => {
-        let notice = d.copyrightNotices(context.map().zoom(), context.map().extent());
+        let notice = d.copyrightNotices(context2.map().zoom(), context2.map().extent());
         return notice ? [notice] : [];
       });
       copyright.exit().remove();
@@ -47610,29 +47610,29 @@ ${content}</tr>
       copyright.text(String);
     }
     function update() {
-      let baselayer = context.background().baseLayerSource();
+      let baselayer = context2.background().baseLayerSource();
       _selection.call(render, baselayer ? [baselayer] : [], "base-layer-attribution");
-      const z = context.map().zoom();
-      let overlays = context.background().overlayLayerSources() || [];
+      const z = context2.map().zoom();
+      let overlays = context2.background().overlayLayerSources() || [];
       _selection.call(render, overlays.filter((s) => s.validZoom(z)), "overlay-layer-attribution");
     }
     return function(selection2) {
       _selection = selection2;
-      context.background().on("change.attribution", update);
-      context.map().on("move.attribution", throttle_default(update, 400, { leading: false }));
+      context2.background().on("change.attribution", update);
+      context2.map().on("move.attribution", throttle_default(update, 400, { leading: false }));
       update();
     };
   }
 
   // modules/ui/contributors.js
-  function uiContributors(context) {
-    var osm = context.connection(), debouncedUpdate = debounce_default(function() {
+  function uiContributors(context2) {
+    var osm = context2.connection(), debouncedUpdate = debounce_default(function() {
       update();
     }, 1e3), limit = 4, hidden = false, wrap2 = select_default2(null);
     function update() {
       if (!osm)
         return;
-      var users = {}, entities = context.history().intersects(context.map().extent());
+      var users = {}, entities = context2.history().intersects(context2.map().extent());
       entities.forEach(function(entity) {
         if (entity && entity.user)
           users[entity.user] = true;
@@ -47647,7 +47647,7 @@ ${content}</tr>
         var count = select_default2(document.createElement("span"));
         var othersNum = u.length - limit + 1;
         count.append("a").attr("target", "_blank").attr("href", function() {
-          return osm.changesetsURL(context.map().center(), context.map().zoom());
+          return osm.changesetsURL(context2.map().center(), context2.map().zoom());
         }).text(othersNum);
         wrap2.append("span").html(_t.html("contributors.truncated_list", { n: othersNum, users: { html: userList.html() }, count: { html: count.html() } }));
       } else {
@@ -47666,7 +47666,7 @@ ${content}</tr>
       wrap2 = selection2;
       update();
       osm.on("loaded.contributors", debouncedUpdate);
-      context.map().on("move.contributors", debouncedUpdate);
+      context2.map().on("move.contributors", debouncedUpdate);
     };
   }
 
@@ -47989,7 +47989,7 @@ ${content}</tr>
   }
 
   // modules/ui/edit_menu.js
-  function uiEditMenu(context) {
+  function uiEditMenu(context2) {
     var dispatch10 = dispatch_default("toggled");
     var _menu = select_default2(null);
     var _operations = [];
@@ -48034,11 +48034,11 @@ ${content}</tr>
       }).on("mouseenter.highlight", function(d3_event, d) {
         if (!d.relatedEntityIds || select_default2(this).classed("disabled"))
           return;
-        utilHighlightEntities(d.relatedEntityIds(), true, context);
+        utilHighlightEntities(d.relatedEntityIds(), true, context2);
       }).on("mouseleave.highlight", function(d3_event, d) {
         if (!d.relatedEntityIds)
           return;
-        utilHighlightEntities(d.relatedEntityIds(), false, context);
+        utilHighlightEntities(d.relatedEntityIds(), false, context2);
       });
       buttonsEnter.each(function(d) {
         var tooltip = uiTooltip().heading(d.title).title(d.tooltip()).keys([d.keys[0]]);
@@ -48054,9 +48054,9 @@ ${content}</tr>
         return d.disabled();
       });
       updatePosition();
-      var initialScale = context.projection.scale();
-      context.map().on("move.edit-menu", function() {
-        if (initialScale !== context.projection.scale()) {
+      var initialScale = context2.projection.scale();
+      context2.map().on("move.edit-menu", function() {
+        if (initialScale !== context2.projection.scale()) {
           editMenu.close();
         }
       }).on("drawn.edit-menu", function(info) {
@@ -48070,15 +48070,15 @@ ${content}</tr>
       function click(d3_event, operation) {
         d3_event.stopPropagation();
         if (operation.relatedEntityIds) {
-          utilHighlightEntities(operation.relatedEntityIds(), false, context);
+          utilHighlightEntities(operation.relatedEntityIds(), false, context2);
         }
         if (operation.disabled()) {
           if (lastPointerUpType === "touch" || lastPointerUpType === "pen") {
-            context.ui().flash.duration(4e3).iconName("#iD-operation-" + operation.id).iconClass("operation disabled").label(operation.tooltip)();
+            context2.ui().flash.duration(4e3).iconName("#iD-operation-" + operation.id).iconClass("operation disabled").label(operation.tooltip)();
           }
         } else {
           if (lastPointerUpType === "touch" || lastPointerUpType === "pen") {
-            context.ui().flash.duration(2e3).iconName("#iD-operation-" + operation.id).iconClass("operation").label(operation.annotation() || operation.title)();
+            context2.ui().flash.duration(2e3).iconName("#iD-operation-" + operation.id).iconClass("operation").label(operation.annotation() || operation.title)();
           }
           operation();
           editMenu.close();
@@ -48090,8 +48090,8 @@ ${content}</tr>
     function updatePosition() {
       if (!_menu || _menu.empty())
         return;
-      var anchorLoc = context.projection(_anchorLocLonLat);
-      var viewport = context.surfaceRect();
+      var anchorLoc = context2.projection(_anchorLocLonLat);
+      var viewport = context2.surfaceRect();
       if (anchorLoc[0] < 0 || anchorLoc[0] > viewport.width || anchorLoc[1] < 0 || anchorLoc[1] > viewport.height) {
         editMenu.close();
         return;
@@ -48152,7 +48152,7 @@ ${content}</tr>
       }
     }
     editMenu.close = function() {
-      context.map().on("move.edit-menu", null).on("drawn.edit-menu", null);
+      context2.map().on("move.edit-menu", null).on("drawn.edit-menu", null);
       _menu.remove();
       _tooltips = [];
       dispatch10.call("toggled", this, false);
@@ -48161,7 +48161,7 @@ ${content}</tr>
       if (!arguments.length)
         return _anchorLoc;
       _anchorLoc = val;
-      _anchorLocLonLat = context.projection.invert(_anchorLoc);
+      _anchorLocLonLat = context2.projection.invert(_anchorLoc);
       return editMenu;
     };
     editMenu.triggerType = function(val) {
@@ -48180,9 +48180,9 @@ ${content}</tr>
   }
 
   // modules/ui/feature_info.js
-  function uiFeatureInfo(context) {
+  function uiFeatureInfo(context2) {
     function update(selection2) {
-      var features2 = context.features();
+      var features2 = context2.features();
       var stats = features2.stats();
       var count = 0;
       var hiddenList = features2.hidden().map(function(k) {
@@ -48200,21 +48200,21 @@ ${content}</tr>
         selection2.append("a").attr("class", "chip").attr("href", "#").call(_t.append("feature_info.hidden_warning", { count })).call(tooltipBehavior).on("click", function(d3_event) {
           tooltipBehavior.hide();
           d3_event.preventDefault();
-          context.ui().togglePanes(context.container().select(".map-panes .map-data-pane"));
+          context2.ui().togglePanes(context2.container().select(".map-panes .map-data-pane"));
         });
       }
       selection2.classed("hide", !hiddenList.length);
     }
     return function(selection2) {
       update(selection2);
-      context.features().on("change.feature_info", function() {
+      context2.features().on("change.feature_info", function() {
         update(selection2);
       });
     };
   }
 
   // modules/ui/flash.js
-  function uiFlash(context) {
+  function uiFlash(context2) {
     var _flashTimer;
     var _duration = 2e3;
     var _iconName = "#iD-icon-no";
@@ -48224,9 +48224,9 @@ ${content}</tr>
       if (_flashTimer) {
         _flashTimer.stop();
       }
-      context.container().select(".main-footer-wrap").classed("footer-hide", true).classed("footer-show", false);
-      context.container().select(".flash-wrap").classed("footer-hide", false).classed("footer-show", true);
-      var content = context.container().select(".flash-wrap").selectAll(".flash-content").data([0]);
+      context2.container().select(".main-footer-wrap").classed("footer-hide", true).classed("footer-show", false);
+      context2.container().select(".flash-wrap").classed("footer-hide", false).classed("footer-show", true);
+      var content = context2.container().select(".flash-wrap").selectAll(".flash-content").data([0]);
       var contentEnter = content.enter().append("div").attr("class", "flash-content");
       var iconEnter = contentEnter.append("svg").attr("class", "flash-icon icon").append("g").attr("transform", "translate(10,10)");
       iconEnter.append("circle").attr("r", 9);
@@ -48238,8 +48238,8 @@ ${content}</tr>
       content.selectAll(".flash-text").attr("class", "flash-text").html(_label);
       _flashTimer = timeout_default(function() {
         _flashTimer = null;
-        context.container().select(".main-footer-wrap").classed("footer-hide", false).classed("footer-show", true);
-        context.container().select(".flash-wrap").classed("footer-hide", true).classed("footer-show", false);
+        context2.container().select(".main-footer-wrap").classed("footer-hide", false).classed("footer-show", true);
+        context2.container().select(".flash-wrap").classed("footer-hide", true).classed("footer-show", false);
       }, _duration);
       return content;
     }
@@ -48271,8 +48271,8 @@ ${content}</tr>
   }
 
   // modules/ui/full_screen.js
-  function uiFullScreen(context) {
-    var element = context.container().node();
+  function uiFullScreen(context2) {
+    var element = context2.container().node();
     function getFullScreenFn() {
       if (element.requestFullscreen) {
         return element.requestFullscreen;
@@ -48314,28 +48314,28 @@ ${content}</tr>
         return;
       var detected = utilDetect();
       var keys = detected.os === "mac" ? [uiCmd("\u2303\u2318F"), "f11"] : ["f11"];
-      context.keybinding().on(keys, fullScreen);
+      context2.keybinding().on(keys, fullScreen);
     };
   }
 
   // modules/ui/geolocate.js
-  function uiGeolocate(context) {
+  function uiGeolocate(context2) {
     var _geolocationOptions = {
       enableHighAccuracy: false,
       timeout: 6e3
     };
-    var _locating = uiLoading(context).message(_t.html("geolocate.locating")).blocking(true);
-    var _layer = context.layers().layer("geolocate");
+    var _locating = uiLoading(context2).message(_t.html("geolocate.locating")).blocking(true);
+    var _layer = context2.layers().layer("geolocate");
     var _position;
     var _extent;
     var _timeoutID;
     var _button = select_default2(null);
     function click() {
-      if (context.inIntro())
+      if (context2.inIntro())
         return;
       if (!_layer.enabled() && !_locating.isShown()) {
         _timeoutID = setTimeout(error, 1e4);
-        context.container().call(_locating);
+        context2.container().call(_locating);
         navigator.geolocation.getCurrentPosition(success, error, _geolocationOptions);
       } else {
         _locating.close();
@@ -48344,8 +48344,8 @@ ${content}</tr>
       }
     }
     function zoomTo() {
-      context.enter(modeBrowse(context));
-      var map2 = context.map();
+      context2.enter(modeBrowse(context2));
+      var map2 = context2.map();
       _layer.enabled(_position, true);
       updateButtonState();
       map2.centerZoomEase(_extent.center(), Math.min(20, map2.extentZoom(_extent)));
@@ -48361,7 +48361,7 @@ ${content}</tr>
       if (_position) {
         zoomTo();
       } else {
-        context.ui().flash.label(_t.html("geolocate.location_unavailable")).iconName("#iD-icon-geolocate")();
+        context2.ui().flash.label(_t.html("geolocate.location_unavailable")).iconName("#iD-icon-geolocate")();
       }
       finish();
     }
@@ -48382,13 +48382,13 @@ ${content}</tr>
       _button = selection2.append("button").on("click", click).attr("aria-pressed", false).call(svgIcon("#iD-icon-geolocate", "light")).call(
         uiTooltip().placement(_mainLocalizer.textDirection() === "rtl" ? "right" : "left").title(_t.html("geolocate.title")).keys([_t("geolocate.key")])
       );
-      context.keybinding().on(_t("geolocate.key"), click);
+      context2.keybinding().on(_t("geolocate.key"), click);
     };
   }
 
   // modules/ui/panels/background.js
-  function uiPanelBackground(context) {
-    var background = context.background();
+  function uiPanelBackground(context2) {
+    var background = context2.background();
     var _currSourceName = null;
     var _metadata = {};
     var _metadataKeys = [
@@ -48419,42 +48419,42 @@ ${content}</tr>
         list.append("li").attr("class", "background-info-list-" + k).classed("hide", !_metadata[k]).call(_t.append("info_panels.background." + k, { suffix: ":" })).append("span").attr("class", "background-info-span-" + k).text(_metadata[k]);
       });
       debouncedGetMetadata(selection2);
-      var toggleTiles = context.getDebug("tile") ? "hide_tiles" : "show_tiles";
+      var toggleTiles = context2.getDebug("tile") ? "hide_tiles" : "show_tiles";
       selection2.append("a").call(_t.append("info_panels.background." + toggleTiles)).attr("href", "#").attr("class", "button button-toggle-tiles").on("click", function(d3_event) {
         d3_event.preventDefault();
-        context.setDebug("tile", !context.getDebug("tile"));
+        context2.setDebug("tile", !context2.getDebug("tile"));
         selection2.call(redraw);
       });
       if (isDG) {
         var key = source.id + "-vintage";
-        var sourceVintage = context.background().findSource(key);
-        var showsVintage = context.background().showsLayer(sourceVintage);
+        var sourceVintage = context2.background().findSource(key);
+        var showsVintage = context2.background().showsLayer(sourceVintage);
         var toggleVintage = showsVintage ? "hide_vintage" : "show_vintage";
         selection2.append("a").call(_t.append("info_panels.background." + toggleVintage)).attr("href", "#").attr("class", "button button-toggle-vintage").on("click", function(d3_event) {
           d3_event.preventDefault();
-          context.background().toggleOverlayLayer(sourceVintage);
+          context2.background().toggleOverlayLayer(sourceVintage);
           selection2.call(redraw);
         });
       }
       ["DigitalGlobe-Premium", "DigitalGlobe-Standard"].forEach(function(layerId) {
         if (source.id !== layerId) {
           var key2 = layerId + "-vintage";
-          var sourceVintage2 = context.background().findSource(key2);
-          if (context.background().showsLayer(sourceVintage2)) {
-            context.background().toggleOverlayLayer(sourceVintage2);
+          var sourceVintage2 = context2.background().findSource(key2);
+          if (context2.background().showsLayer(sourceVintage2)) {
+            context2.background().toggleOverlayLayer(sourceVintage2);
           }
         }
       });
     }
     var debouncedGetMetadata = debounce_default(getMetadata, 250);
     function getMetadata(selection2) {
-      var tile = context.container().select(".layer-background img.tile-center");
+      var tile = context2.container().select(".layer-background img.tile-center");
       if (tile.empty())
         return;
       var sourceName = _currSourceName;
       var d = tile.datum();
-      var zoom = d && d.length >= 3 && d[2] || Math.floor(context.map().zoom());
-      var center = context.map().center();
+      var zoom = d && d.length >= 3 && d[2] || Math.floor(context2.map().zoom());
+      var center = context2.map().center();
       _metadata.zoom = String(zoom);
       selection2.selectAll(".background-info-list-zoom").classed("hide", false).selectAll(".background-info-span-zoom").text(_metadata.zoom);
       if (!d || !d.length >= 3)
@@ -48476,14 +48476,14 @@ ${content}</tr>
     }
     var panel = function(selection2) {
       selection2.call(redraw);
-      context.map().on("drawn.info-background", function() {
+      context2.map().on("drawn.info-background", function() {
         selection2.call(debouncedRedraw);
       }).on("move.info-background", function() {
         selection2.call(debouncedGetMetadata);
       });
     };
     panel.off = function() {
-      context.map().on("drawn.info-background", null).on("move.info-background", null);
+      context2.map().on("drawn.info-background", null).on("move.info-background", null);
     };
     panel.id = "background";
     panel.label = _t.html("info_panels.background.title");
@@ -48492,7 +48492,7 @@ ${content}</tr>
   }
 
   // modules/ui/panels/history.js
-  function uiPanelHistory(context) {
+  function uiPanelHistory(context2) {
     var osm;
     function displayTimestamp(timestamp) {
       if (!timestamp)
@@ -48530,18 +48530,18 @@ ${content}</tr>
       selection2.append("span").attr("class", "changeset-id").text(changeset);
     }
     function redraw(selection2) {
-      var selectedNoteID = context.selectedNoteID();
-      osm = context.connection();
+      var selectedNoteID = context2.selectedNoteID();
+      osm = context2.connection();
       var selected, note, entity;
       if (selectedNoteID && osm) {
         selected = [_t.html("note.note") + " " + selectedNoteID];
         note = osm.getNote(selectedNoteID);
       } else {
-        selected = context.selectedIDs().filter(function(e) {
-          return context.hasEntity(e);
+        selected = context2.selectedIDs().filter(function(e) {
+          return context2.hasEntity(e);
         });
         if (selected.length) {
-          entity = context.entity(selected[0]);
+          entity = context2.entity(selected[0]);
         }
       }
       var singular = selected.length === 1 ? selected[0] : null;
@@ -48591,16 +48591,16 @@ ${content}</tr>
     }
     var panel = function(selection2) {
       selection2.call(redraw);
-      context.map().on("drawn.info-history", function() {
+      context2.map().on("drawn.info-history", function() {
         selection2.call(redraw);
       });
-      context.on("enter.info-history", function() {
+      context2.on("enter.info-history", function() {
         selection2.call(redraw);
       });
     };
     panel.off = function() {
-      context.map().on("drawn.info-history", null);
-      context.on("enter.info-history", null);
+      context2.map().on("drawn.info-history", null);
+      context2.on("enter.info-history", null);
     };
     panel.id = "history";
     panel.label = _t.html("info_panels.history.title");
@@ -48736,14 +48736,14 @@ ${content}</tr>
   }
 
   // modules/ui/panels/location.js
-  function uiPanelLocation(context) {
+  function uiPanelLocation(context2) {
     var currLocation = "";
     function redraw(selection2) {
       selection2.html("");
       var list = selection2.append("ul");
-      var coord2 = context.map().mouseCoordinates();
+      var coord2 = context2.map().mouseCoordinates();
       if (coord2.some(isNaN)) {
-        coord2 = context.map().center();
+        coord2 = context2.map().center();
       }
       list.append("li").text(dmsCoordinatePair(coord2)).append("li").text(decimalCoordinatePair(coord2));
       selection2.append("div").attr("class", "location-info").text(currLocation || " ");
@@ -48763,12 +48763,12 @@ ${content}</tr>
     }
     var panel = function(selection2) {
       selection2.call(redraw);
-      context.surface().on(("PointerEvent" in window ? "pointer" : "mouse") + "move.info-location", function() {
+      context2.surface().on(("PointerEvent" in window ? "pointer" : "mouse") + "move.info-location", function() {
         selection2.call(redraw);
       });
     };
     panel.off = function() {
-      context.surface().on(".info-location", null);
+      context2.surface().on(".info-location", null);
     };
     panel.id = "location";
     panel.label = _t.html("info_panels.location.title");
@@ -48777,7 +48777,7 @@ ${content}</tr>
   }
 
   // modules/ui/panels/measurement.js
-  function uiPanelMeasurement(context) {
+  function uiPanelMeasurement(context2) {
     function radiansToMeters(r) {
       return r * 63710071809e-4;
     }
@@ -48797,8 +48797,8 @@ ${content}</tr>
     }
     var _isImperial = !_mainLocalizer.usesMetric();
     function redraw(selection2) {
-      var graph = context.graph();
-      var selectedNoteID = context.selectedNoteID();
+      var graph = context2.graph();
+      var selectedNoteID = context2.selectedNoteID();
       var osm = services.osm;
       var localeCode = _mainLocalizer.localeCode();
       var heading;
@@ -48811,11 +48811,11 @@ ${content}</tr>
         location2 = note.loc;
         geometry = "note";
       } else {
-        var selectedIDs = context.selectedIDs().filter(function(id2) {
-          return context.hasEntity(id2);
+        var selectedIDs = context2.selectedIDs().filter(function(id2) {
+          return context2.hasEntity(id2);
         });
         var selected = selectedIDs.map(function(id2) {
-          return context.entity(id2);
+          return context2.entity(id2);
         });
         heading = selected.length === 1 ? selected[0].id : _t.html("info_panels.selected", { n: selected.length });
         if (selected.length) {
@@ -48828,8 +48828,8 @@ ${content}</tr>
               closed = entity.type === "relation" || entity.isClosed() && !entity.isDegenerate();
               var feature3 = entity.asGeoJSON(graph);
               length += radiansToMeters(length_default(toLineString(feature3)));
-              centroid = path_default(context.projection).centroid(entity.asGeoJSON(graph));
-              centroid = centroid && context.projection.invert(centroid);
+              centroid = path_default(context2.projection).centroid(entity.asGeoJSON(graph));
+              centroid = centroid && context2.projection.invert(centroid);
               if (!centroid || !isFinite(centroid[0]) || !isFinite(centroid[1])) {
                 centroid = entity.extent(graph).center();
               }
@@ -48849,7 +48849,7 @@ ${content}</tr>
           if (selected.length === 1 && selected[0].type === "node") {
             location2 = selected[0].loc;
           } else {
-            totalNodeCount = utilGetAllNodes(selectedIDs, context.graph()).length;
+            totalNodeCount = utilGetAllNodes(selectedIDs, context2.graph()).length;
           }
           if (!location2 && !centroid) {
             center = extent.center();
@@ -48905,16 +48905,16 @@ ${content}</tr>
     }
     var panel = function(selection2) {
       selection2.call(redraw);
-      context.map().on("drawn.info-measurement", function() {
+      context2.map().on("drawn.info-measurement", function() {
         selection2.call(redraw);
       });
-      context.on("enter.info-measurement", function() {
+      context2.on("enter.info-measurement", function() {
         selection2.call(redraw);
       });
     };
     panel.off = function() {
-      context.map().on("drawn.info-measurement", null);
-      context.on("enter.info-measurement", null);
+      context2.map().on("drawn.info-measurement", null);
+      context2.on("enter.info-measurement", null);
     };
     panel.id = "measurement";
     panel.label = _t.html("info_panels.measurement.title");
@@ -48931,14 +48931,14 @@ ${content}</tr>
   };
 
   // modules/ui/info.js
-  function uiInfo(context) {
+  function uiInfo(context2) {
     var ids = Object.keys(uiInfoPanels);
     var wasActive = ["measurement"];
     var panels = {};
     var active = {};
     ids.forEach(function(k) {
       if (!panels[k]) {
-        panels[k] = uiInfoPanels[k](context);
+        panels[k] = uiInfoPanels[k](context2);
         active[k] = false;
       }
     });
@@ -48982,7 +48982,7 @@ ${content}</tr>
           if (activeids.length === 1 && activeids[0] === which) {
             wasActive = [which];
           }
-          context.container().select("." + which + "-panel-toggle-item").classed("active", active[which]).select("input").property("checked", active[which]);
+          context2.container().select("." + which + "-panel-toggle-item").classed("active", active[which]).select("input").property("checked", active[which]);
         } else {
           if (activeids.length) {
             wasActive = activeids;
@@ -49000,7 +49000,7 @@ ${content}</tr>
       var infoPanels = selection2.selectAll(".info-panels").data([0]);
       infoPanels = infoPanels.enter().append("div").attr("class", "info-panels").merge(infoPanels);
       redraw();
-      context.keybinding().on(uiCmd("\u2318" + _t("info_panels.key")), function(d3_event) {
+      context2.keybinding().on(uiCmd("\u2318" + _t("info_panels.key")), function(d3_event) {
         d3_event.stopImmediatePropagation();
         d3_event.preventDefault();
         info.toggle();
@@ -49009,7 +49009,7 @@ ${content}</tr>
         var key = _t("info_panels." + k + ".key", { default: null });
         if (!key)
           return;
-        context.keybinding().on(uiCmd("\u2318\u21E7" + key), function(d3_event) {
+        context2.keybinding().on(uiCmd("\u2318\u21E7" + key), function(d3_event) {
           d3_event.stopImmediatePropagation();
           d3_event.preventDefault();
           info.toggle(k);
@@ -49020,9 +49020,9 @@ ${content}</tr>
   }
 
   // modules/ui/intro/helper.js
-  function pointBox(loc, context) {
-    var rect = context.surfaceRect();
-    var point = context.curtainProjection(loc);
+  function pointBox(loc, context2) {
+    var rect = context2.surfaceRect();
+    var point = context2.curtainProjection(loc);
     return {
       left: point[0] + rect.left - 40,
       top: point[1] + rect.top - 60,
@@ -49030,11 +49030,11 @@ ${content}</tr>
       height: 90
     };
   }
-  function pad(locOrBox, padding, context) {
+  function pad(locOrBox, padding, context2) {
     var box;
     if (locOrBox instanceof Array) {
-      var rect = context.surfaceRect();
-      var point = context.curtainProjection(locOrBox);
+      var rect = context2.surfaceRect();
+      var point = context2.curtainProjection(locOrBox);
       box = {
         left: point[0] + rect.left,
         top: point[1] + rect.top
@@ -49225,8 +49225,8 @@ ${content}</tr>
     }
     return true;
   }
-  function selectMenuItem(context, operation) {
-    return context.container().select(".edit-menu .edit-menu-item-" + operation);
+  function selectMenuItem(context2, operation) {
+    return context2.container().select(".edit-menu .edit-menu-item-" + operation);
   }
   function transitionTime(point1, point2) {
     var distance = geoSphericalDistance(point1, point2);
@@ -49417,13 +49417,13 @@ ${content}</tr>
   }
 
   // modules/ui/intro/welcome.js
-  function uiIntroWelcome(context, reveal) {
+  function uiIntroWelcome(context2, reveal) {
     var dispatch10 = dispatch_default("done");
     var chapter = {
       title: "intro.welcome.title"
     };
     function welcome() {
-      context.map().centerZoom([-85.63591, 41.94285], 19);
+      context2.map().centerZoom([-85.63591, 41.94285], 19);
       reveal(
         ".intro-nav-wrap .chapter-welcome",
         helpHtml("intro.welcome.welcome"),
@@ -49455,7 +49455,7 @@ ${content}</tr>
       welcome();
     };
     chapter.exit = function() {
-      context.container().select(".curtain-tooltip.intro-mouse").selectAll(".counter").remove();
+      context2.container().select(".curtain-tooltip.intro-mouse").selectAll(".counter").remove();
     };
     chapter.restart = function() {
       chapter.exit();
@@ -49465,7 +49465,7 @@ ${content}</tr>
   }
 
   // modules/ui/intro/navigation.js
-  function uiIntroNavigation(context, reveal) {
+  function uiIntroNavigation(context2, reveal) {
     var dispatch10 = dispatch_default("done");
     var timeouts = [];
     var hallId = "n2061";
@@ -49486,29 +49486,29 @@ ${content}</tr>
       d3_event.preventDefault();
     }
     function isTownHallSelected() {
-      var ids = context.selectedIDs();
+      var ids = context2.selectedIDs();
       return ids.length === 1 && ids[0] === hallId;
     }
     function dragMap() {
-      context.enter(modeBrowse(context));
-      context.history().reset("initial");
-      var msec = transitionTime(townHall, context.map().center());
+      context2.enter(modeBrowse(context2));
+      context2.history().reset("initial");
+      var msec = transitionTime(townHall, context2.map().center());
       if (msec) {
         reveal(null, null, { duration: 0 });
       }
-      context.map().centerZoomEase(townHall, 19, msec);
+      context2.map().centerZoomEase(townHall, 19, msec);
       timeout2(function() {
-        var centerStart = context.map().center();
-        var textId = context.lastPointerType() === "mouse" ? "drag" : "drag_touch";
+        var centerStart = context2.map().center();
+        var textId = context2.lastPointerType() === "mouse" ? "drag" : "drag_touch";
         var dragString = helpHtml("intro.navigation.map_info") + "{br}" + helpHtml("intro.navigation." + textId);
         reveal(".surface", dragString);
-        context.map().on("drawn.intro", function() {
+        context2.map().on("drawn.intro", function() {
           reveal(".surface", dragString, { duration: 0 });
         });
-        context.map().on("move.intro", function() {
-          var centerNow = context.map().center();
+        context2.map().on("move.intro", function() {
+          var centerNow = context2.map().center();
           if (centerStart[0] !== centerNow[0] || centerStart[1] !== centerNow[1]) {
-            context.map().on("move.intro", null);
+            context2.map().on("move.intro", null);
             timeout2(function() {
               continueTo(zoomMap);
             }, 3e3);
@@ -49516,28 +49516,28 @@ ${content}</tr>
         });
       }, msec + 100);
       function continueTo(nextStep) {
-        context.map().on("move.intro drawn.intro", null);
+        context2.map().on("move.intro drawn.intro", null);
         nextStep();
       }
     }
     function zoomMap() {
-      var zoomStart = context.map().zoom();
-      var textId = context.lastPointerType() === "mouse" ? "zoom" : "zoom_touch";
+      var zoomStart = context2.map().zoom();
+      var textId = context2.lastPointerType() === "mouse" ? "zoom" : "zoom_touch";
       var zoomString = helpHtml("intro.navigation." + textId);
       reveal(".surface", zoomString);
-      context.map().on("drawn.intro", function() {
+      context2.map().on("drawn.intro", function() {
         reveal(".surface", zoomString, { duration: 0 });
       });
-      context.map().on("move.intro", function() {
-        if (context.map().zoom() !== zoomStart) {
-          context.map().on("move.intro", null);
+      context2.map().on("move.intro", function() {
+        if (context2.map().zoom() !== zoomStart) {
+          context2.map().on("move.intro", null);
           timeout2(function() {
             continueTo(features2);
           }, 3e3);
         }
       });
       function continueTo(nextStep) {
-        context.map().on("move.intro drawn.intro", null);
+        context2.map().on("move.intro drawn.intro", null);
         nextStep();
       }
     }
@@ -49550,7 +49550,7 @@ ${content}</tr>
         helpHtml("intro.navigation.features"),
         { buttonText: _t.html("intro.ok"), buttonCallback: onClick }
       );
-      context.map().on("drawn.intro", function() {
+      context2.map().on("drawn.intro", function() {
         reveal(
           ".surface",
           helpHtml("intro.navigation.features"),
@@ -49558,7 +49558,7 @@ ${content}</tr>
         );
       });
       function continueTo(nextStep) {
-        context.map().on("drawn.intro", null);
+        context2.map().on("drawn.intro", null);
         nextStep();
       }
     }
@@ -49571,7 +49571,7 @@ ${content}</tr>
         helpHtml("intro.navigation.points_lines_areas"),
         { buttonText: _t.html("intro.ok"), buttonCallback: onClick }
       );
-      context.map().on("drawn.intro", function() {
+      context2.map().on("drawn.intro", function() {
         reveal(
           ".surface",
           helpHtml("intro.navigation.points_lines_areas"),
@@ -49579,7 +49579,7 @@ ${content}</tr>
         );
       });
       function continueTo(nextStep) {
-        context.map().on("drawn.intro", null);
+        context2.map().on("drawn.intro", null);
         nextStep();
       }
     }
@@ -49592,7 +49592,7 @@ ${content}</tr>
         helpHtml("intro.navigation.nodes_ways"),
         { buttonText: _t.html("intro.ok"), buttonCallback: onClick }
       );
-      context.map().on("drawn.intro", function() {
+      context2.map().on("drawn.intro", function() {
         reveal(
           ".surface",
           helpHtml("intro.navigation.nodes_ways"),
@@ -49600,56 +49600,56 @@ ${content}</tr>
         );
       });
       function continueTo(nextStep) {
-        context.map().on("drawn.intro", null);
+        context2.map().on("drawn.intro", null);
         nextStep();
       }
     }
     function clickTownHall() {
-      context.enter(modeBrowse(context));
-      context.history().reset("initial");
-      var entity = context.hasEntity(hallId);
+      context2.enter(modeBrowse(context2));
+      context2.history().reset("initial");
+      var entity = context2.hasEntity(hallId);
       if (!entity)
         return;
       reveal(null, null, { duration: 0 });
-      context.map().centerZoomEase(entity.loc, 19, 500);
+      context2.map().centerZoomEase(entity.loc, 19, 500);
       timeout2(function() {
-        var entity2 = context.hasEntity(hallId);
+        var entity2 = context2.hasEntity(hallId);
         if (!entity2)
           return;
-        var box = pointBox(entity2.loc, context);
-        var textId = context.lastPointerType() === "mouse" ? "click_townhall" : "tap_townhall";
+        var box = pointBox(entity2.loc, context2);
+        var textId = context2.lastPointerType() === "mouse" ? "click_townhall" : "tap_townhall";
         reveal(box, helpHtml("intro.navigation." + textId));
-        context.map().on("move.intro drawn.intro", function() {
-          var entity3 = context.hasEntity(hallId);
+        context2.map().on("move.intro drawn.intro", function() {
+          var entity3 = context2.hasEntity(hallId);
           if (!entity3)
             return;
-          var box2 = pointBox(entity3.loc, context);
+          var box2 = pointBox(entity3.loc, context2);
           reveal(box2, helpHtml("intro.navigation." + textId), { duration: 0 });
         });
-        context.on("enter.intro", function() {
+        context2.on("enter.intro", function() {
           if (isTownHallSelected())
             continueTo(selectedTownHall);
         });
       }, 550);
-      context.history().on("change.intro", function() {
-        if (!context.hasEntity(hallId)) {
+      context2.history().on("change.intro", function() {
+        if (!context2.hasEntity(hallId)) {
           continueTo(clickTownHall);
         }
       });
       function continueTo(nextStep) {
-        context.on("enter.intro", null);
-        context.map().on("move.intro drawn.intro", null);
-        context.history().on("change.intro", null);
+        context2.on("enter.intro", null);
+        context2.map().on("move.intro drawn.intro", null);
+        context2.history().on("change.intro", null);
         nextStep();
       }
     }
     function selectedTownHall() {
       if (!isTownHallSelected())
         return clickTownHall();
-      var entity = context.hasEntity(hallId);
+      var entity = context2.hasEntity(hallId);
       if (!entity)
         return clickTownHall();
-      var box = pointBox(entity.loc, context);
+      var box = pointBox(entity.loc, context2);
       var onClick = function() {
         continueTo(editorTownHall);
       };
@@ -49658,32 +49658,32 @@ ${content}</tr>
         helpHtml("intro.navigation.selected_townhall"),
         { buttonText: _t.html("intro.ok"), buttonCallback: onClick }
       );
-      context.map().on("move.intro drawn.intro", function() {
-        var entity2 = context.hasEntity(hallId);
+      context2.map().on("move.intro drawn.intro", function() {
+        var entity2 = context2.hasEntity(hallId);
         if (!entity2)
           return;
-        var box2 = pointBox(entity2.loc, context);
+        var box2 = pointBox(entity2.loc, context2);
         reveal(
           box2,
           helpHtml("intro.navigation.selected_townhall"),
           { duration: 0, buttonText: _t.html("intro.ok"), buttonCallback: onClick }
         );
       });
-      context.history().on("change.intro", function() {
-        if (!context.hasEntity(hallId)) {
+      context2.history().on("change.intro", function() {
+        if (!context2.hasEntity(hallId)) {
           continueTo(clickTownHall);
         }
       });
       function continueTo(nextStep) {
-        context.map().on("move.intro drawn.intro", null);
-        context.history().on("change.intro", null);
+        context2.map().on("move.intro drawn.intro", null);
+        context2.history().on("change.intro", null);
         nextStep();
       }
     }
     function editorTownHall() {
       if (!isTownHallSelected())
         return clickTownHall();
-      context.container().select(".inspector-wrap").on("wheel.intro", eventCancel);
+      context2.container().select(".inspector-wrap").on("wheel.intro", eventCancel);
       var onClick = function() {
         continueTo(presetTownHall);
       };
@@ -49692,28 +49692,28 @@ ${content}</tr>
         helpHtml("intro.navigation.editor_townhall"),
         { buttonText: _t.html("intro.ok"), buttonCallback: onClick }
       );
-      context.on("exit.intro", function() {
+      context2.on("exit.intro", function() {
         continueTo(clickTownHall);
       });
-      context.history().on("change.intro", function() {
-        if (!context.hasEntity(hallId)) {
+      context2.history().on("change.intro", function() {
+        if (!context2.hasEntity(hallId)) {
           continueTo(clickTownHall);
         }
       });
       function continueTo(nextStep) {
-        context.on("exit.intro", null);
-        context.history().on("change.intro", null);
-        context.container().select(".inspector-wrap").on("wheel.intro", null);
+        context2.on("exit.intro", null);
+        context2.history().on("change.intro", null);
+        context2.container().select(".inspector-wrap").on("wheel.intro", null);
         nextStep();
       }
     }
     function presetTownHall() {
       if (!isTownHallSelected())
         return clickTownHall();
-      context.container().select(".inspector-wrap .panewrap").style("right", "0%");
-      context.container().select(".inspector-wrap").on("wheel.intro", eventCancel);
-      var entity = context.entity(context.selectedIDs()[0]);
-      var preset = _mainPresetIndex.match(entity, context.graph());
+      context2.container().select(".inspector-wrap .panewrap").style("right", "0%");
+      context2.container().select(".inspector-wrap").on("wheel.intro", eventCancel);
+      var entity = context2.entity(context2.selectedIDs()[0]);
+      var preset = _mainPresetIndex.match(entity, context2.graph());
       var onClick = function() {
         continueTo(fieldsTownHall);
       };
@@ -49722,26 +49722,26 @@ ${content}</tr>
         helpHtml("intro.navigation.preset_townhall", { preset: preset.name() }),
         { buttonText: _t.html("intro.ok"), buttonCallback: onClick }
       );
-      context.on("exit.intro", function() {
+      context2.on("exit.intro", function() {
         continueTo(clickTownHall);
       });
-      context.history().on("change.intro", function() {
-        if (!context.hasEntity(hallId)) {
+      context2.history().on("change.intro", function() {
+        if (!context2.hasEntity(hallId)) {
           continueTo(clickTownHall);
         }
       });
       function continueTo(nextStep) {
-        context.on("exit.intro", null);
-        context.history().on("change.intro", null);
-        context.container().select(".inspector-wrap").on("wheel.intro", null);
+        context2.on("exit.intro", null);
+        context2.history().on("change.intro", null);
+        context2.container().select(".inspector-wrap").on("wheel.intro", null);
         nextStep();
       }
     }
     function fieldsTownHall() {
       if (!isTownHallSelected())
         return clickTownHall();
-      context.container().select(".inspector-wrap .panewrap").style("right", "0%");
-      context.container().select(".inspector-wrap").on("wheel.intro", eventCancel);
+      context2.container().select(".inspector-wrap .panewrap").style("right", "0%");
+      context2.container().select(".inspector-wrap").on("wheel.intro", eventCancel);
       var onClick = function() {
         continueTo(closeTownHall);
       };
@@ -49750,18 +49750,18 @@ ${content}</tr>
         helpHtml("intro.navigation.fields_townhall"),
         { buttonText: _t.html("intro.ok"), buttonCallback: onClick }
       );
-      context.on("exit.intro", function() {
+      context2.on("exit.intro", function() {
         continueTo(clickTownHall);
       });
-      context.history().on("change.intro", function() {
-        if (!context.hasEntity(hallId)) {
+      context2.history().on("change.intro", function() {
+        if (!context2.hasEntity(hallId)) {
           continueTo(clickTownHall);
         }
       });
       function continueTo(nextStep) {
-        context.on("exit.intro", null);
-        context.history().on("change.intro", null);
-        context.container().select(".inspector-wrap").on("wheel.intro", null);
+        context2.on("exit.intro", null);
+        context2.history().on("change.intro", null);
+        context2.container().select(".inspector-wrap").on("wheel.intro", null);
         nextStep();
       }
     }
@@ -49774,10 +49774,10 @@ ${content}</tr>
         ".entity-editor-pane",
         helpHtml("intro.navigation.close_townhall", { button: { html: icon(href, "inline") } })
       );
-      context.on("exit.intro", function() {
+      context2.on("exit.intro", function() {
         continueTo(searchStreet);
       });
-      context.history().on("change.intro", function() {
+      context2.history().on("change.intro", function() {
         var selector2 = ".entity-editor-pane button.close svg use";
         var href2 = select_default2(selector2).attr("href") || "#iD-icon-close";
         reveal(
@@ -49787,29 +49787,29 @@ ${content}</tr>
         );
       });
       function continueTo(nextStep) {
-        context.on("exit.intro", null);
-        context.history().on("change.intro", null);
+        context2.on("exit.intro", null);
+        context2.history().on("change.intro", null);
         nextStep();
       }
     }
     function searchStreet() {
-      context.enter(modeBrowse(context));
-      context.history().reset("initial");
-      var msec = transitionTime(springStreet, context.map().center());
+      context2.enter(modeBrowse(context2));
+      context2.history().reset("initial");
+      var msec = transitionTime(springStreet, context2.map().center());
       if (msec) {
         reveal(null, null, { duration: 0 });
       }
-      context.map().centerZoomEase(springStreet, 19, msec);
+      context2.map().centerZoomEase(springStreet, 19, msec);
       timeout2(function() {
         reveal(
           ".search-header input",
           helpHtml("intro.navigation.search_street", { name: _t("intro.graph.name.spring-street") })
         );
-        context.container().select(".search-header input").on("keyup.intro", checkSearchResult);
+        context2.container().select(".search-header input").on("keyup.intro", checkSearchResult);
       }, msec + 100);
     }
     function checkSearchResult() {
-      var first = context.container().select(".feature-list-item:nth-child(0n+2)");
+      var first = context2.container().select(".feature-list-item:nth-child(0n+2)");
       var firstName = first.select(".entity-name");
       var name = _t("intro.graph.name.spring-street");
       if (!firstName.empty() && firstName.html() === name) {
@@ -49818,26 +49818,26 @@ ${content}</tr>
           helpHtml("intro.navigation.choose_street", { name }),
           { duration: 300 }
         );
-        context.on("exit.intro", function() {
+        context2.on("exit.intro", function() {
           continueTo(selectedStreet);
         });
-        context.container().select(".search-header input").on("keydown.intro", eventCancel, true).on("keyup.intro", null);
+        context2.container().select(".search-header input").on("keydown.intro", eventCancel, true).on("keyup.intro", null);
       }
       function continueTo(nextStep) {
-        context.on("exit.intro", null);
-        context.container().select(".search-header input").on("keydown.intro", null).on("keyup.intro", null);
+        context2.on("exit.intro", null);
+        context2.container().select(".search-header input").on("keydown.intro", null).on("keyup.intro", null);
         nextStep();
       }
     }
     function selectedStreet() {
-      if (!context.hasEntity(springStreetEndId) || !context.hasEntity(springStreetId)) {
+      if (!context2.hasEntity(springStreetEndId) || !context2.hasEntity(springStreetId)) {
         return searchStreet();
       }
       var onClick = function() {
         continueTo(editorStreet);
       };
-      var entity = context.entity(springStreetEndId);
-      var box = pointBox(entity.loc, context);
+      var entity = context2.entity(springStreetEndId);
+      var box = pointBox(entity.loc, context2);
       box.height = 500;
       reveal(
         box,
@@ -49845,11 +49845,11 @@ ${content}</tr>
         { duration: 600, buttonText: _t.html("intro.ok"), buttonCallback: onClick }
       );
       timeout2(function() {
-        context.map().on("move.intro drawn.intro", function() {
-          var entity2 = context.hasEntity(springStreetEndId);
+        context2.map().on("move.intro drawn.intro", function() {
+          var entity2 = context2.hasEntity(springStreetEndId);
           if (!entity2)
             return;
-          var box2 = pointBox(entity2.loc, context);
+          var box2 = pointBox(entity2.loc, context2);
           box2.height = 500;
           reveal(
             box2,
@@ -49858,26 +49858,26 @@ ${content}</tr>
           );
         });
       }, 600);
-      context.on("enter.intro", function(mode) {
-        if (!context.hasEntity(springStreetId)) {
+      context2.on("enter.intro", function(mode) {
+        if (!context2.hasEntity(springStreetId)) {
           return continueTo(searchStreet);
         }
-        var ids = context.selectedIDs();
+        var ids = context2.selectedIDs();
         if (mode.id !== "select" || !ids.length || ids[0] !== springStreetId) {
-          context.enter(modeSelect(context, [springStreetId]));
+          context2.enter(modeSelect(context2, [springStreetId]));
         }
       });
-      context.history().on("change.intro", function() {
-        if (!context.hasEntity(springStreetEndId) || !context.hasEntity(springStreetId)) {
+      context2.history().on("change.intro", function() {
+        if (!context2.hasEntity(springStreetEndId) || !context2.hasEntity(springStreetId)) {
           timeout2(function() {
             continueTo(searchStreet);
           }, 300);
         }
       });
       function continueTo(nextStep) {
-        context.map().on("move.intro drawn.intro", null);
-        context.on("enter.intro", null);
-        context.history().on("change.intro", null);
+        context2.map().on("move.intro drawn.intro", null);
+        context2.on("enter.intro", null);
+        context2.history().on("change.intro", null);
         nextStep();
       }
     }
@@ -49889,10 +49889,10 @@ ${content}</tr>
         field1: { html: onewayField.label() },
         field2: { html: maxspeedField.label() }
       }));
-      context.on("exit.intro", function() {
+      context2.on("exit.intro", function() {
         continueTo(play);
       });
-      context.history().on("change.intro", function() {
+      context2.history().on("change.intro", function() {
         var selector2 = ".entity-editor-pane button.close svg use";
         var href2 = select_default2(selector2).attr("href") || "#iD-icon-close";
         reveal(
@@ -49906,8 +49906,8 @@ ${content}</tr>
         );
       });
       function continueTo(nextStep) {
-        context.on("exit.intro", null);
-        context.history().on("change.intro", null);
+        context2.on("exit.intro", null);
+        context2.history().on("change.intro", null);
         nextStep();
       }
     }
@@ -49930,11 +49930,11 @@ ${content}</tr>
     };
     chapter.exit = function() {
       timeouts.forEach(window.clearTimeout);
-      context.on("enter.intro exit.intro", null);
-      context.map().on("move.intro drawn.intro", null);
-      context.history().on("change.intro", null);
-      context.container().select(".inspector-wrap").on("wheel.intro", null);
-      context.container().select(".search-header input").on("keydown.intro keyup.intro", null);
+      context2.on("enter.intro exit.intro", null);
+      context2.map().on("move.intro drawn.intro", null);
+      context2.history().on("change.intro", null);
+      context2.container().select(".inspector-wrap").on("wheel.intro", null);
+      context2.container().select(".search-header input").on("keydown.intro keyup.intro", null);
     };
     chapter.restart = function() {
       chapter.exit();
@@ -49944,7 +49944,7 @@ ${content}</tr>
   }
 
   // modules/ui/intro/point.js
-  function uiIntroPoint(context, reveal) {
+  function uiIntroPoint(context2, reveal) {
     var dispatch10 = dispatch_default("done");
     var timeouts = [];
     var intersection = [-85.63279, 41.94394];
@@ -49962,13 +49962,13 @@ ${content}</tr>
       d3_event.preventDefault();
     }
     function addPoint() {
-      context.enter(modeBrowse(context));
-      context.history().reset("initial");
-      var msec = transitionTime(intersection, context.map().center());
+      context2.enter(modeBrowse(context2));
+      context2.history().reset("initial");
+      var msec = transitionTime(intersection, context2.map().center());
       if (msec) {
         reveal(null, null, { duration: 0 });
       }
-      context.map().centerZoomEase(intersection, 19, msec);
+      context2.map().centerZoomEase(intersection, 19, msec);
       timeout2(function() {
         var tooltip = reveal(
           "button.add-point",
@@ -49976,90 +49976,90 @@ ${content}</tr>
         );
         _pointID = null;
         tooltip.selectAll(".popover-inner").insert("svg", "span").attr("class", "tooltip-illustration").append("use").attr("xlink:href", "#iD-graphic-points");
-        context.on("enter.intro", function(mode) {
+        context2.on("enter.intro", function(mode) {
           if (mode.id !== "add-point")
             return;
           continueTo(placePoint);
         });
       }, msec + 100);
       function continueTo(nextStep) {
-        context.on("enter.intro", null);
+        context2.on("enter.intro", null);
         nextStep();
       }
     }
     function placePoint() {
-      if (context.mode().id !== "add-point") {
+      if (context2.mode().id !== "add-point") {
         return chapter.restart();
       }
-      var pointBox2 = pad(building, 150, context);
-      var textId = context.lastPointerType() === "mouse" ? "place_point" : "place_point_touch";
+      var pointBox2 = pad(building, 150, context2);
+      var textId = context2.lastPointerType() === "mouse" ? "place_point" : "place_point_touch";
       reveal(pointBox2, helpHtml("intro.points." + textId));
-      context.map().on("move.intro drawn.intro", function() {
-        pointBox2 = pad(building, 150, context);
+      context2.map().on("move.intro drawn.intro", function() {
+        pointBox2 = pad(building, 150, context2);
         reveal(pointBox2, helpHtml("intro.points." + textId), { duration: 0 });
       });
-      context.on("enter.intro", function(mode) {
+      context2.on("enter.intro", function(mode) {
         if (mode.id !== "select")
           return chapter.restart();
-        _pointID = context.mode().selectedIDs()[0];
+        _pointID = context2.mode().selectedIDs()[0];
         continueTo(searchPreset);
       });
       function continueTo(nextStep) {
-        context.map().on("move.intro drawn.intro", null);
-        context.on("enter.intro", null);
+        context2.map().on("move.intro drawn.intro", null);
+        context2.on("enter.intro", null);
         nextStep();
       }
     }
     function searchPreset() {
-      if (context.mode().id !== "select" || !_pointID || !context.hasEntity(_pointID)) {
+      if (context2.mode().id !== "select" || !_pointID || !context2.hasEntity(_pointID)) {
         return addPoint();
       }
-      context.container().select(".inspector-wrap").on("wheel.intro", eventCancel);
-      context.container().select(".preset-search-input").on("keydown.intro", null).on("keyup.intro", checkPresetSearch);
+      context2.container().select(".inspector-wrap").on("wheel.intro", eventCancel);
+      context2.container().select(".preset-search-input").on("keydown.intro", null).on("keyup.intro", checkPresetSearch);
       reveal(
         ".preset-search-input",
         helpHtml("intro.points.search_cafe", { preset: cafePreset.name() })
       );
-      context.on("enter.intro", function(mode) {
-        if (!_pointID || !context.hasEntity(_pointID)) {
+      context2.on("enter.intro", function(mode) {
+        if (!_pointID || !context2.hasEntity(_pointID)) {
           return continueTo(addPoint);
         }
-        var ids = context.selectedIDs();
+        var ids = context2.selectedIDs();
         if (mode.id !== "select" || !ids.length || ids[0] !== _pointID) {
-          context.enter(modeSelect(context, [_pointID]));
-          context.container().select(".inspector-wrap").on("wheel.intro", eventCancel);
-          context.container().select(".preset-search-input").on("keydown.intro", null).on("keyup.intro", checkPresetSearch);
+          context2.enter(modeSelect(context2, [_pointID]));
+          context2.container().select(".inspector-wrap").on("wheel.intro", eventCancel);
+          context2.container().select(".preset-search-input").on("keydown.intro", null).on("keyup.intro", checkPresetSearch);
           reveal(
             ".preset-search-input",
             helpHtml("intro.points.search_cafe", { preset: cafePreset.name() })
           );
-          context.history().on("change.intro", null);
+          context2.history().on("change.intro", null);
         }
       });
       function checkPresetSearch() {
-        var first = context.container().select(".preset-list-item:first-child");
+        var first = context2.container().select(".preset-list-item:first-child");
         if (first.classed("preset-amenity-cafe")) {
-          context.container().select(".preset-search-input").on("keydown.intro", eventCancel, true).on("keyup.intro", null);
+          context2.container().select(".preset-search-input").on("keydown.intro", eventCancel, true).on("keyup.intro", null);
           reveal(
             first.select(".preset-list-button").node(),
             helpHtml("intro.points.choose_cafe", { preset: cafePreset.name() }),
             { duration: 300 }
           );
-          context.history().on("change.intro", function() {
+          context2.history().on("change.intro", function() {
             continueTo(aboutFeatureEditor);
           });
         }
       }
       function continueTo(nextStep) {
-        context.on("enter.intro", null);
-        context.history().on("change.intro", null);
-        context.container().select(".inspector-wrap").on("wheel.intro", null);
-        context.container().select(".preset-search-input").on("keydown.intro keyup.intro", null);
+        context2.on("enter.intro", null);
+        context2.history().on("change.intro", null);
+        context2.container().select(".inspector-wrap").on("wheel.intro", null);
+        context2.container().select(".preset-search-input").on("keydown.intro keyup.intro", null);
         nextStep();
       }
     }
     function aboutFeatureEditor() {
-      if (context.mode().id !== "select" || !_pointID || !context.hasEntity(_pointID)) {
+      if (context2.mode().id !== "select" || !_pointID || !context2.hasEntity(_pointID)) {
         return addPoint();
       }
       timeout2(function() {
@@ -50071,22 +50071,22 @@ ${content}</tr>
           }
         });
       }, 400);
-      context.on("exit.intro", function() {
+      context2.on("exit.intro", function() {
         continueTo(reselectPoint);
       });
       function continueTo(nextStep) {
-        context.on("exit.intro", null);
+        context2.on("exit.intro", null);
         nextStep();
       }
     }
     function addName() {
-      if (context.mode().id !== "select" || !_pointID || !context.hasEntity(_pointID)) {
+      if (context2.mode().id !== "select" || !_pointID || !context2.hasEntity(_pointID)) {
         return addPoint();
       }
-      context.container().select(".inspector-wrap .panewrap").style("right", "0%");
+      context2.container().select(".inspector-wrap .panewrap").style("right", "0%");
       var addNameString = helpHtml("intro.points.fields_info") + "{br}" + helpHtml("intro.points.add_name");
       timeout2(function() {
-        var entity = context.entity(_pointID);
+        var entity = context2.entity(_pointID);
         if (entity.tags.name) {
           var tooltip = reveal(".entity-editor-pane", addNameString, {
             tooltipClass: "intro-points-describe",
@@ -50104,23 +50104,23 @@ ${content}</tr>
           );
         }
       }, 400);
-      context.history().on("change.intro", function() {
+      context2.history().on("change.intro", function() {
         continueTo(addCloseEditor);
       });
-      context.on("exit.intro", function() {
+      context2.on("exit.intro", function() {
         continueTo(reselectPoint);
       });
       function continueTo(nextStep) {
-        context.on("exit.intro", null);
-        context.history().on("change.intro", null);
+        context2.on("exit.intro", null);
+        context2.history().on("change.intro", null);
         nextStep();
       }
     }
     function addCloseEditor() {
-      context.container().select(".inspector-wrap .panewrap").style("right", "0%");
+      context2.container().select(".inspector-wrap .panewrap").style("right", "0%");
       var selector = ".entity-editor-pane button.close svg use";
       var href = select_default2(selector).attr("href") || "#iD-icon-close";
-      context.on("exit.intro", function() {
+      context2.on("exit.intro", function() {
         continueTo(reselectPoint);
       });
       reveal(
@@ -50128,57 +50128,57 @@ ${content}</tr>
         helpHtml("intro.points.add_close", { button: { html: icon(href, "inline") } })
       );
       function continueTo(nextStep) {
-        context.on("exit.intro", null);
+        context2.on("exit.intro", null);
         nextStep();
       }
     }
     function reselectPoint() {
       if (!_pointID)
         return chapter.restart();
-      var entity = context.hasEntity(_pointID);
+      var entity = context2.hasEntity(_pointID);
       if (!entity)
         return chapter.restart();
-      var oldPreset = _mainPresetIndex.match(entity, context.graph());
-      context.replace(actionChangePreset(_pointID, oldPreset, cafePreset));
-      context.enter(modeBrowse(context));
-      var msec = transitionTime(entity.loc, context.map().center());
+      var oldPreset = _mainPresetIndex.match(entity, context2.graph());
+      context2.replace(actionChangePreset(_pointID, oldPreset, cafePreset));
+      context2.enter(modeBrowse(context2));
+      var msec = transitionTime(entity.loc, context2.map().center());
       if (msec) {
         reveal(null, null, { duration: 0 });
       }
-      context.map().centerEase(entity.loc, msec);
+      context2.map().centerEase(entity.loc, msec);
       timeout2(function() {
-        var box = pointBox(entity.loc, context);
+        var box = pointBox(entity.loc, context2);
         reveal(box, helpHtml("intro.points.reselect"), { duration: 600 });
         timeout2(function() {
-          context.map().on("move.intro drawn.intro", function() {
-            var entity2 = context.hasEntity(_pointID);
+          context2.map().on("move.intro drawn.intro", function() {
+            var entity2 = context2.hasEntity(_pointID);
             if (!entity2)
               return chapter.restart();
-            var box2 = pointBox(entity2.loc, context);
+            var box2 = pointBox(entity2.loc, context2);
             reveal(box2, helpHtml("intro.points.reselect"), { duration: 0 });
           });
         }, 600);
-        context.on("enter.intro", function(mode) {
+        context2.on("enter.intro", function(mode) {
           if (mode.id !== "select")
             return;
           continueTo(updatePoint);
         });
       }, msec + 100);
       function continueTo(nextStep) {
-        context.map().on("move.intro drawn.intro", null);
-        context.on("enter.intro", null);
+        context2.map().on("move.intro drawn.intro", null);
+        context2.on("enter.intro", null);
         nextStep();
       }
     }
     function updatePoint() {
-      if (context.mode().id !== "select" || !_pointID || !context.hasEntity(_pointID)) {
+      if (context2.mode().id !== "select" || !_pointID || !context2.hasEntity(_pointID)) {
         return continueTo(reselectPoint);
       }
-      context.container().select(".inspector-wrap .panewrap").style("right", "0%");
-      context.on("exit.intro", function() {
+      context2.container().select(".inspector-wrap .panewrap").style("right", "0%");
+      context2.on("exit.intro", function() {
         continueTo(reselectPoint);
       });
-      context.history().on("change.intro", function() {
+      context2.history().on("change.intro", function() {
         continueTo(updateCloseEditor);
       });
       timeout2(function() {
@@ -50189,17 +50189,17 @@ ${content}</tr>
         );
       }, 400);
       function continueTo(nextStep) {
-        context.on("exit.intro", null);
-        context.history().on("change.intro", null);
+        context2.on("exit.intro", null);
+        context2.history().on("change.intro", null);
         nextStep();
       }
     }
     function updateCloseEditor() {
-      if (context.mode().id !== "select" || !_pointID || !context.hasEntity(_pointID)) {
+      if (context2.mode().id !== "select" || !_pointID || !context2.hasEntity(_pointID)) {
         return continueTo(reselectPoint);
       }
-      context.container().select(".inspector-wrap .panewrap").style("right", "0%");
-      context.on("exit.intro", function() {
+      context2.container().select(".inspector-wrap .panewrap").style("right", "0%");
+      context2.on("exit.intro", function() {
         continueTo(rightClickPoint);
       });
       timeout2(function() {
@@ -50209,55 +50209,55 @@ ${content}</tr>
         );
       }, 500);
       function continueTo(nextStep) {
-        context.on("exit.intro", null);
+        context2.on("exit.intro", null);
         nextStep();
       }
     }
     function rightClickPoint() {
       if (!_pointID)
         return chapter.restart();
-      var entity = context.hasEntity(_pointID);
+      var entity = context2.hasEntity(_pointID);
       if (!entity)
         return chapter.restart();
-      context.enter(modeBrowse(context));
-      var box = pointBox(entity.loc, context);
-      var textId = context.lastPointerType() === "mouse" ? "rightclick" : "edit_menu_touch";
+      context2.enter(modeBrowse(context2));
+      var box = pointBox(entity.loc, context2);
+      var textId = context2.lastPointerType() === "mouse" ? "rightclick" : "edit_menu_touch";
       reveal(box, helpHtml("intro.points." + textId), { duration: 600 });
       timeout2(function() {
-        context.map().on("move.intro", function() {
-          var entity2 = context.hasEntity(_pointID);
+        context2.map().on("move.intro", function() {
+          var entity2 = context2.hasEntity(_pointID);
           if (!entity2)
             return chapter.restart();
-          var box2 = pointBox(entity2.loc, context);
+          var box2 = pointBox(entity2.loc, context2);
           reveal(box2, helpHtml("intro.points." + textId), { duration: 0 });
         });
       }, 600);
-      context.on("enter.intro", function(mode) {
+      context2.on("enter.intro", function(mode) {
         if (mode.id !== "select")
           return;
-        var ids = context.selectedIDs();
+        var ids = context2.selectedIDs();
         if (ids.length !== 1 || ids[0] !== _pointID)
           return;
         timeout2(function() {
-          var node = selectMenuItem(context, "delete").node();
+          var node = selectMenuItem(context2, "delete").node();
           if (!node)
             return;
           continueTo(enterDelete);
         }, 50);
       });
       function continueTo(nextStep) {
-        context.on("enter.intro", null);
-        context.map().on("move.intro", null);
+        context2.on("enter.intro", null);
+        context2.map().on("move.intro", null);
         nextStep();
       }
     }
     function enterDelete() {
       if (!_pointID)
         return chapter.restart();
-      var entity = context.hasEntity(_pointID);
+      var entity = context2.hasEntity(_pointID);
       if (!entity)
         return chapter.restart();
-      var node = selectMenuItem(context, "delete").node();
+      var node = selectMenuItem(context2, "delete").node();
       if (!node) {
         return continueTo(rightClickPoint);
       }
@@ -50267,7 +50267,7 @@ ${content}</tr>
         { padding: 50 }
       );
       timeout2(function() {
-        context.map().on("move.intro", function() {
+        context2.map().on("move.intro", function() {
           reveal(
             ".edit-menu",
             helpHtml("intro.points.delete"),
@@ -50275,27 +50275,27 @@ ${content}</tr>
           );
         });
       }, 300);
-      context.on("exit.intro", function() {
+      context2.on("exit.intro", function() {
         if (!_pointID)
           return chapter.restart();
-        var entity2 = context.hasEntity(_pointID);
+        var entity2 = context2.hasEntity(_pointID);
         if (entity2)
           return continueTo(rightClickPoint);
       });
-      context.history().on("change.intro", function(changed) {
+      context2.history().on("change.intro", function(changed) {
         if (changed.deleted().length) {
           continueTo(undo);
         }
       });
       function continueTo(nextStep) {
-        context.map().on("move.intro", null);
-        context.history().on("change.intro", null);
-        context.on("exit.intro", null);
+        context2.map().on("move.intro", null);
+        context2.history().on("change.intro", null);
+        context2.on("exit.intro", null);
         nextStep();
       }
     }
     function undo() {
-      context.history().on("change.intro", function() {
+      context2.history().on("change.intro", function() {
         continueTo(play);
       });
       reveal(
@@ -50303,7 +50303,7 @@ ${content}</tr>
         helpHtml("intro.points.undo")
       );
       function continueTo(nextStep) {
-        context.history().on("change.intro", null);
+        context2.history().on("change.intro", null);
         nextStep();
       }
     }
@@ -50326,11 +50326,11 @@ ${content}</tr>
     };
     chapter.exit = function() {
       timeouts.forEach(window.clearTimeout);
-      context.on("enter.intro exit.intro", null);
-      context.map().on("move.intro drawn.intro", null);
-      context.history().on("change.intro", null);
-      context.container().select(".inspector-wrap").on("wheel.intro", eventCancel);
-      context.container().select(".preset-search-input").on("keydown.intro keyup.intro", null);
+      context2.on("enter.intro exit.intro", null);
+      context2.map().on("move.intro drawn.intro", null);
+      context2.history().on("change.intro", null);
+      context2.container().select(".inspector-wrap").on("wheel.intro", eventCancel);
+      context2.container().select(".preset-search-input").on("keydown.intro keyup.intro", null);
     };
     chapter.restart = function() {
       chapter.exit();
@@ -50340,7 +50340,7 @@ ${content}</tr>
   }
 
   // modules/ui/intro/area.js
-  function uiIntroArea(context, reveal) {
+  function uiIntroArea(context2, reveal) {
     var dispatch10 = dispatch_default("done");
     var playground = [-85.63552, 41.94159];
     var playgroundPreset = _mainPresetIndex.item("leisure/playground");
@@ -50359,44 +50359,44 @@ ${content}</tr>
       d3_event.preventDefault();
     }
     function revealPlayground(center, text2, options2) {
-      var padding = 180 * Math.pow(2, context.map().zoom() - 19.5);
-      var box = pad(center, padding, context);
+      var padding = 180 * Math.pow(2, context2.map().zoom() - 19.5);
+      var box = pad(center, padding, context2);
       reveal(box, text2, options2);
     }
     function addArea() {
-      context.enter(modeBrowse(context));
-      context.history().reset("initial");
+      context2.enter(modeBrowse(context2));
+      context2.history().reset("initial");
       _areaID = null;
-      var msec = transitionTime(playground, context.map().center());
+      var msec = transitionTime(playground, context2.map().center());
       if (msec) {
         reveal(null, null, { duration: 0 });
       }
-      context.map().centerZoomEase(playground, 19, msec);
+      context2.map().centerZoomEase(playground, 19, msec);
       timeout2(function() {
         var tooltip = reveal(
           "button.add-area",
           helpHtml("intro.areas.add_playground")
         );
         tooltip.selectAll(".popover-inner").insert("svg", "span").attr("class", "tooltip-illustration").append("use").attr("xlink:href", "#iD-graphic-areas");
-        context.on("enter.intro", function(mode) {
+        context2.on("enter.intro", function(mode) {
           if (mode.id !== "add-area")
             return;
           continueTo(startPlayground);
         });
       }, msec + 100);
       function continueTo(nextStep) {
-        context.on("enter.intro", null);
+        context2.on("enter.intro", null);
         nextStep();
       }
     }
     function startPlayground() {
-      if (context.mode().id !== "add-area") {
+      if (context2.mode().id !== "add-area") {
         return chapter.restart();
       }
       _areaID = null;
-      context.map().zoomEase(19.5, 500);
+      context2.map().zoomEase(19.5, 500);
       timeout2(function() {
-        var textId = context.lastPointerType() === "mouse" ? "starting_node_click" : "starting_node_tap";
+        var textId = context2.lastPointerType() === "mouse" ? "starting_node_click" : "starting_node_tap";
         var startDrawString = helpHtml("intro.areas.start_playground") + helpHtml("intro.areas." + textId);
         revealPlayground(
           playground,
@@ -50404,14 +50404,14 @@ ${content}</tr>
           { duration: 250 }
         );
         timeout2(function() {
-          context.map().on("move.intro drawn.intro", function() {
+          context2.map().on("move.intro drawn.intro", function() {
             revealPlayground(
               playground,
               startDrawString,
               { duration: 0 }
             );
           });
-          context.on("enter.intro", function(mode) {
+          context2.on("enter.intro", function(mode) {
             if (mode.id !== "draw-area")
               return chapter.restart();
             continueTo(continuePlayground);
@@ -50419,13 +50419,13 @@ ${content}</tr>
         }, 250);
       }, 550);
       function continueTo(nextStep) {
-        context.map().on("move.intro drawn.intro", null);
-        context.on("enter.intro", null);
+        context2.map().on("move.intro drawn.intro", null);
+        context2.on("enter.intro", null);
         nextStep();
       }
     }
     function continuePlayground() {
-      if (context.mode().id !== "draw-area") {
+      if (context2.mode().id !== "draw-area") {
         return chapter.restart();
       }
       _areaID = null;
@@ -50435,7 +50435,7 @@ ${content}</tr>
         { duration: 250 }
       );
       timeout2(function() {
-        context.map().on("move.intro drawn.intro", function() {
+        context2.map().on("move.intro drawn.intro", function() {
           revealPlayground(
             playground,
             helpHtml("intro.areas.continue_playground"),
@@ -50443,40 +50443,40 @@ ${content}</tr>
           );
         });
       }, 250);
-      context.on("enter.intro", function(mode) {
+      context2.on("enter.intro", function(mode) {
         if (mode.id === "draw-area") {
-          var entity = context.hasEntity(context.selectedIDs()[0]);
+          var entity = context2.hasEntity(context2.selectedIDs()[0]);
           if (entity && entity.nodes.length >= 6) {
             return continueTo(finishPlayground);
           } else {
             return;
           }
         } else if (mode.id === "select") {
-          _areaID = context.selectedIDs()[0];
+          _areaID = context2.selectedIDs()[0];
           return continueTo(searchPresets);
         } else {
           return chapter.restart();
         }
       });
       function continueTo(nextStep) {
-        context.map().on("move.intro drawn.intro", null);
-        context.on("enter.intro", null);
+        context2.map().on("move.intro drawn.intro", null);
+        context2.on("enter.intro", null);
         nextStep();
       }
     }
     function finishPlayground() {
-      if (context.mode().id !== "draw-area") {
+      if (context2.mode().id !== "draw-area") {
         return chapter.restart();
       }
       _areaID = null;
-      var finishString = helpHtml("intro.areas.finish_area_" + (context.lastPointerType() === "mouse" ? "click" : "tap")) + helpHtml("intro.areas.finish_playground");
+      var finishString = helpHtml("intro.areas.finish_area_" + (context2.lastPointerType() === "mouse" ? "click" : "tap")) + helpHtml("intro.areas.finish_playground");
       revealPlayground(
         playground,
         finishString,
         { duration: 250 }
       );
       timeout2(function() {
-        context.map().on("move.intro drawn.intro", function() {
+        context2.map().on("move.intro drawn.intro", function() {
           revealPlayground(
             playground,
             finishString,
@@ -50484,99 +50484,99 @@ ${content}</tr>
           );
         });
       }, 250);
-      context.on("enter.intro", function(mode) {
+      context2.on("enter.intro", function(mode) {
         if (mode.id === "draw-area") {
           return;
         } else if (mode.id === "select") {
-          _areaID = context.selectedIDs()[0];
+          _areaID = context2.selectedIDs()[0];
           return continueTo(searchPresets);
         } else {
           return chapter.restart();
         }
       });
       function continueTo(nextStep) {
-        context.map().on("move.intro drawn.intro", null);
-        context.on("enter.intro", null);
+        context2.map().on("move.intro drawn.intro", null);
+        context2.on("enter.intro", null);
         nextStep();
       }
     }
     function searchPresets() {
-      if (!_areaID || !context.hasEntity(_areaID)) {
+      if (!_areaID || !context2.hasEntity(_areaID)) {
         return addArea();
       }
-      var ids = context.selectedIDs();
-      if (context.mode().id !== "select" || !ids.length || ids[0] !== _areaID) {
-        context.enter(modeSelect(context, [_areaID]));
+      var ids = context2.selectedIDs();
+      if (context2.mode().id !== "select" || !ids.length || ids[0] !== _areaID) {
+        context2.enter(modeSelect(context2, [_areaID]));
       }
-      context.container().select(".inspector-wrap").on("wheel.intro", eventCancel);
+      context2.container().select(".inspector-wrap").on("wheel.intro", eventCancel);
       timeout2(function() {
-        context.container().select(".inspector-wrap .panewrap").style("right", "-100%");
-        context.container().select(".preset-search-input").on("keydown.intro", null).on("keyup.intro", checkPresetSearch);
+        context2.container().select(".inspector-wrap .panewrap").style("right", "-100%");
+        context2.container().select(".preset-search-input").on("keydown.intro", null).on("keyup.intro", checkPresetSearch);
         reveal(
           ".preset-search-input",
           helpHtml("intro.areas.search_playground", { preset: playgroundPreset.name() })
         );
       }, 400);
-      context.on("enter.intro", function(mode) {
-        if (!_areaID || !context.hasEntity(_areaID)) {
+      context2.on("enter.intro", function(mode) {
+        if (!_areaID || !context2.hasEntity(_areaID)) {
           return continueTo(addArea);
         }
-        var ids2 = context.selectedIDs();
+        var ids2 = context2.selectedIDs();
         if (mode.id !== "select" || !ids2.length || ids2[0] !== _areaID) {
-          context.enter(modeSelect(context, [_areaID]));
-          context.container().select(".inspector-wrap .panewrap").style("right", "-100%");
-          context.container().select(".inspector-wrap").on("wheel.intro", eventCancel);
-          context.container().select(".preset-search-input").on("keydown.intro", null).on("keyup.intro", checkPresetSearch);
+          context2.enter(modeSelect(context2, [_areaID]));
+          context2.container().select(".inspector-wrap .panewrap").style("right", "-100%");
+          context2.container().select(".inspector-wrap").on("wheel.intro", eventCancel);
+          context2.container().select(".preset-search-input").on("keydown.intro", null).on("keyup.intro", checkPresetSearch);
           reveal(
             ".preset-search-input",
             helpHtml("intro.areas.search_playground", { preset: playgroundPreset.name() })
           );
-          context.history().on("change.intro", null);
+          context2.history().on("change.intro", null);
         }
       });
       function checkPresetSearch() {
-        var first = context.container().select(".preset-list-item:first-child");
+        var first = context2.container().select(".preset-list-item:first-child");
         if (first.classed("preset-leisure-playground")) {
           reveal(
             first.select(".preset-list-button").node(),
             helpHtml("intro.areas.choose_playground", { preset: playgroundPreset.name() }),
             { duration: 300 }
           );
-          context.container().select(".preset-search-input").on("keydown.intro", eventCancel, true).on("keyup.intro", null);
-          context.history().on("change.intro", function() {
+          context2.container().select(".preset-search-input").on("keydown.intro", eventCancel, true).on("keyup.intro", null);
+          context2.history().on("change.intro", function() {
             continueTo(clickAddField);
           });
         }
       }
       function continueTo(nextStep) {
-        context.container().select(".inspector-wrap").on("wheel.intro", null);
-        context.on("enter.intro", null);
-        context.history().on("change.intro", null);
-        context.container().select(".preset-search-input").on("keydown.intro keyup.intro", null);
+        context2.container().select(".inspector-wrap").on("wheel.intro", null);
+        context2.on("enter.intro", null);
+        context2.history().on("change.intro", null);
+        context2.container().select(".preset-search-input").on("keydown.intro keyup.intro", null);
         nextStep();
       }
     }
     function clickAddField() {
-      if (!_areaID || !context.hasEntity(_areaID)) {
+      if (!_areaID || !context2.hasEntity(_areaID)) {
         return addArea();
       }
-      var ids = context.selectedIDs();
-      if (context.mode().id !== "select" || !ids.length || ids[0] !== _areaID) {
+      var ids = context2.selectedIDs();
+      if (context2.mode().id !== "select" || !ids.length || ids[0] !== _areaID) {
         return searchPresets();
       }
-      if (!context.container().select(".form-field-description").empty()) {
+      if (!context2.container().select(".form-field-description").empty()) {
         return continueTo(describePlayground);
       }
-      context.container().select(".inspector-wrap").on("wheel.intro", eventCancel);
+      context2.container().select(".inspector-wrap").on("wheel.intro", eventCancel);
       timeout2(function() {
-        context.container().select(".inspector-wrap .panewrap").style("right", "0%");
-        var entity = context.entity(_areaID);
+        context2.container().select(".inspector-wrap .panewrap").style("right", "0%");
+        var entity = context2.entity(_areaID);
         if (entity.tags.description) {
           return continueTo(play);
         }
-        var box = context.container().select(".more-fields").node().getBoundingClientRect();
+        var box = context2.container().select(".more-fields").node().getBoundingClientRect();
         if (box.top > 300) {
-          var pane = context.container().select(".entity-editor-pane .inspector-body");
+          var pane = context2.container().select(".entity-editor-pane .inspector-body");
           var start2 = pane.node().scrollTop;
           var end = start2 + (box.top - 300);
           pane.transition().duration(250).tween("scroll.inspector", function() {
@@ -50596,10 +50596,10 @@ ${content}</tr>
             }),
             { duration: 300 }
           );
-          context.container().select(".more-fields .combobox-input").on("click.intro", function() {
+          context2.container().select(".more-fields .combobox-input").on("click.intro", function() {
             var watcher;
             watcher = window.setInterval(function() {
-              if (!context.container().select("div.combobox").empty()) {
+              if (!context2.container().select("div.combobox").empty()) {
                 window.clearInterval(watcher);
                 continueTo(chooseDescriptionField);
               }
@@ -50607,36 +50607,36 @@ ${content}</tr>
           });
         }, 300);
       }, 400);
-      context.on("exit.intro", function() {
+      context2.on("exit.intro", function() {
         return continueTo(searchPresets);
       });
       function continueTo(nextStep) {
-        context.container().select(".inspector-wrap").on("wheel.intro", null);
-        context.container().select(".more-fields .combobox-input").on("click.intro", null);
-        context.on("exit.intro", null);
+        context2.container().select(".inspector-wrap").on("wheel.intro", null);
+        context2.container().select(".more-fields .combobox-input").on("click.intro", null);
+        context2.on("exit.intro", null);
         nextStep();
       }
     }
     function chooseDescriptionField() {
-      if (!_areaID || !context.hasEntity(_areaID)) {
+      if (!_areaID || !context2.hasEntity(_areaID)) {
         return addArea();
       }
-      var ids = context.selectedIDs();
-      if (context.mode().id !== "select" || !ids.length || ids[0] !== _areaID) {
+      var ids = context2.selectedIDs();
+      if (context2.mode().id !== "select" || !ids.length || ids[0] !== _areaID) {
         return searchPresets();
       }
-      if (!context.container().select(".form-field-description").empty()) {
+      if (!context2.container().select(".form-field-description").empty()) {
         return continueTo(describePlayground);
       }
-      if (context.container().select("div.combobox").empty()) {
+      if (context2.container().select("div.combobox").empty()) {
         return continueTo(clickAddField);
       }
       var watcher;
       watcher = window.setInterval(function() {
-        if (context.container().select("div.combobox").empty()) {
+        if (context2.container().select("div.combobox").empty()) {
           window.clearInterval(watcher);
           timeout2(function() {
-            if (context.container().select(".form-field-description").empty()) {
+            if (context2.container().select(".form-field-description").empty()) {
               continueTo(retryChooseDescription);
             } else {
               continueTo(describePlayground);
@@ -50649,29 +50649,29 @@ ${content}</tr>
         helpHtml("intro.areas.choose_field", { field: { html: descriptionField.label() } }),
         { duration: 300 }
       );
-      context.on("exit.intro", function() {
+      context2.on("exit.intro", function() {
         return continueTo(searchPresets);
       });
       function continueTo(nextStep) {
         if (watcher)
           window.clearInterval(watcher);
-        context.on("exit.intro", null);
+        context2.on("exit.intro", null);
         nextStep();
       }
     }
     function describePlayground() {
-      if (!_areaID || !context.hasEntity(_areaID)) {
+      if (!_areaID || !context2.hasEntity(_areaID)) {
         return addArea();
       }
-      var ids = context.selectedIDs();
-      if (context.mode().id !== "select" || !ids.length || ids[0] !== _areaID) {
+      var ids = context2.selectedIDs();
+      if (context2.mode().id !== "select" || !ids.length || ids[0] !== _areaID) {
         return searchPresets();
       }
-      context.container().select(".inspector-wrap .panewrap").style("right", "0%");
-      if (context.container().select(".form-field-description").empty()) {
+      context2.container().select(".inspector-wrap .panewrap").style("right", "0%");
+      if (context2.container().select(".form-field-description").empty()) {
         return continueTo(retryChooseDescription);
       }
-      context.on("exit.intro", function() {
+      context2.on("exit.intro", function() {
         continueTo(play);
       });
       reveal(
@@ -50680,19 +50680,19 @@ ${content}</tr>
         { duration: 300 }
       );
       function continueTo(nextStep) {
-        context.on("exit.intro", null);
+        context2.on("exit.intro", null);
         nextStep();
       }
     }
     function retryChooseDescription() {
-      if (!_areaID || !context.hasEntity(_areaID)) {
+      if (!_areaID || !context2.hasEntity(_areaID)) {
         return addArea();
       }
-      var ids = context.selectedIDs();
-      if (context.mode().id !== "select" || !ids.length || ids[0] !== _areaID) {
+      var ids = context2.selectedIDs();
+      if (context2.mode().id !== "select" || !ids.length || ids[0] !== _areaID) {
         return searchPresets();
       }
-      context.container().select(".inspector-wrap .panewrap").style("right", "0%");
+      context2.container().select(".inspector-wrap .panewrap").style("right", "0%");
       reveal(
         ".entity-editor-pane",
         helpHtml("intro.areas.retry_add_field", { field: { html: descriptionField.label() } }),
@@ -50703,11 +50703,11 @@ ${content}</tr>
           }
         }
       );
-      context.on("exit.intro", function() {
+      context2.on("exit.intro", function() {
         return continueTo(searchPresets);
       });
       function continueTo(nextStep) {
-        context.on("exit.intro", null);
+        context2.on("exit.intro", null);
         nextStep();
       }
     }
@@ -50730,12 +50730,12 @@ ${content}</tr>
     };
     chapter.exit = function() {
       timeouts.forEach(window.clearTimeout);
-      context.on("enter.intro exit.intro", null);
-      context.map().on("move.intro drawn.intro", null);
-      context.history().on("change.intro", null);
-      context.container().select(".inspector-wrap").on("wheel.intro", null);
-      context.container().select(".preset-search-input").on("keydown.intro keyup.intro", null);
-      context.container().select(".more-fields .combobox-input").on("click.intro", null);
+      context2.on("enter.intro exit.intro", null);
+      context2.map().on("move.intro drawn.intro", null);
+      context2.history().on("change.intro", null);
+      context2.container().select(".inspector-wrap").on("wheel.intro", null);
+      context2.container().select(".preset-search-input").on("keydown.intro keyup.intro", null);
+      context2.container().select(".more-fields .combobox-input").on("click.intro", null);
     };
     chapter.restart = function() {
       chapter.exit();
@@ -50745,7 +50745,7 @@ ${content}</tr>
   }
 
   // modules/ui/intro/line.js
-  function uiIntroLine(context, reveal) {
+  function uiIntroLine(context2, reveal) {
     var dispatch10 = dispatch_default("done");
     var timeouts = [];
     var _tulipRoadID = null;
@@ -50765,8 +50765,8 @@ ${content}</tr>
     var eleventhAvenueEndID = "n3550";
     var twelfthAvenueEndID = "n5";
     var _washingtonSegmentID = null;
-    var eleventhAvenueEnd = context.entity(eleventhAvenueEndID).loc;
-    var twelfthAvenueEnd = context.entity(twelfthAvenueEndID).loc;
+    var eleventhAvenueEnd = context2.entity(eleventhAvenueEndID).loc;
+    var twelfthAvenueEnd = context2.entity(twelfthAvenueEndID).loc;
     var deleteLinesLoc = [-85.6219395542764, 41.95228033922477];
     var twelfthAvenue = [-85.62219310052491, 41.952505413152956];
     var chapter = {
@@ -50780,73 +50780,73 @@ ${content}</tr>
       d3_event.preventDefault();
     }
     function addLine() {
-      context.enter(modeBrowse(context));
-      context.history().reset("initial");
-      var msec = transitionTime(tulipRoadStart, context.map().center());
+      context2.enter(modeBrowse(context2));
+      context2.history().reset("initial");
+      var msec = transitionTime(tulipRoadStart, context2.map().center());
       if (msec) {
         reveal(null, null, { duration: 0 });
       }
-      context.map().centerZoomEase(tulipRoadStart, 18.5, msec);
+      context2.map().centerZoomEase(tulipRoadStart, 18.5, msec);
       timeout2(function() {
         var tooltip = reveal(
           "button.add-line",
           helpHtml("intro.lines.add_line")
         );
         tooltip.selectAll(".popover-inner").insert("svg", "span").attr("class", "tooltip-illustration").append("use").attr("xlink:href", "#iD-graphic-lines");
-        context.on("enter.intro", function(mode) {
+        context2.on("enter.intro", function(mode) {
           if (mode.id !== "add-line")
             return;
           continueTo(startLine);
         });
       }, msec + 100);
       function continueTo(nextStep) {
-        context.on("enter.intro", null);
+        context2.on("enter.intro", null);
         nextStep();
       }
     }
     function startLine() {
-      if (context.mode().id !== "add-line")
+      if (context2.mode().id !== "add-line")
         return chapter.restart();
       _tulipRoadID = null;
-      var padding = 70 * Math.pow(2, context.map().zoom() - 18);
-      var box = pad(tulipRoadStart, padding, context);
+      var padding = 70 * Math.pow(2, context2.map().zoom() - 18);
+      var box = pad(tulipRoadStart, padding, context2);
       box.height = box.height + 100;
-      var textId = context.lastPointerType() === "mouse" ? "start_line" : "start_line_tap";
+      var textId = context2.lastPointerType() === "mouse" ? "start_line" : "start_line_tap";
       var startLineString = helpHtml("intro.lines.missing_road") + "{br}" + helpHtml("intro.lines.line_draw_info") + helpHtml("intro.lines." + textId);
       reveal(box, startLineString);
-      context.map().on("move.intro drawn.intro", function() {
-        padding = 70 * Math.pow(2, context.map().zoom() - 18);
-        box = pad(tulipRoadStart, padding, context);
+      context2.map().on("move.intro drawn.intro", function() {
+        padding = 70 * Math.pow(2, context2.map().zoom() - 18);
+        box = pad(tulipRoadStart, padding, context2);
         box.height = box.height + 100;
         reveal(box, startLineString, { duration: 0 });
       });
-      context.on("enter.intro", function(mode) {
+      context2.on("enter.intro", function(mode) {
         if (mode.id !== "draw-line")
           return chapter.restart();
         continueTo(drawLine);
       });
       function continueTo(nextStep) {
-        context.map().on("move.intro drawn.intro", null);
-        context.on("enter.intro", null);
+        context2.map().on("move.intro drawn.intro", null);
+        context2.on("enter.intro", null);
         nextStep();
       }
     }
     function drawLine() {
-      if (context.mode().id !== "draw-line")
+      if (context2.mode().id !== "draw-line")
         return chapter.restart();
-      _tulipRoadID = context.mode().selectedIDs()[0];
-      context.map().centerEase(tulipRoadMidpoint, 500);
+      _tulipRoadID = context2.mode().selectedIDs()[0];
+      context2.map().centerEase(tulipRoadMidpoint, 500);
       timeout2(function() {
-        var padding = 200 * Math.pow(2, context.map().zoom() - 18.5);
-        var box = pad(tulipRoadMidpoint, padding, context);
+        var padding = 200 * Math.pow(2, context2.map().zoom() - 18.5);
+        var box = pad(tulipRoadMidpoint, padding, context2);
         box.height = box.height * 2;
         reveal(
           box,
           helpHtml("intro.lines.intersect", { name: _t("intro.graph.name.flower-street") })
         );
-        context.map().on("move.intro drawn.intro", function() {
-          padding = 200 * Math.pow(2, context.map().zoom() - 18.5);
-          box = pad(tulipRoadMidpoint, padding, context);
+        context2.map().on("move.intro drawn.intro", function() {
+          padding = 200 * Math.pow(2, context2.map().zoom() - 18.5);
+          box = pad(tulipRoadMidpoint, padding, context2);
           box.height = box.height * 2;
           reveal(
             box,
@@ -50855,12 +50855,12 @@ ${content}</tr>
           );
         });
       }, 550);
-      context.history().on("change.intro", function() {
+      context2.history().on("change.intro", function() {
         if (isLineConnected()) {
           continueTo(continueLine);
         }
       });
-      context.on("enter.intro", function(mode) {
+      context2.on("enter.intro", function(mode) {
         if (mode.id === "draw-line") {
           return;
         } else if (mode.id === "select") {
@@ -50871,26 +50871,26 @@ ${content}</tr>
         }
       });
       function continueTo(nextStep) {
-        context.map().on("move.intro drawn.intro", null);
-        context.history().on("change.intro", null);
-        context.on("enter.intro", null);
+        context2.map().on("move.intro drawn.intro", null);
+        context2.history().on("change.intro", null);
+        context2.on("enter.intro", null);
         nextStep();
       }
     }
     function isLineConnected() {
-      var entity = _tulipRoadID && context.hasEntity(_tulipRoadID);
+      var entity = _tulipRoadID && context2.hasEntity(_tulipRoadID);
       if (!entity)
         return false;
-      var drawNodes = context.graph().childNodes(entity);
+      var drawNodes = context2.graph().childNodes(entity);
       return drawNodes.some(function(node) {
-        return context.graph().parentWays(node).some(function(parent) {
+        return context2.graph().parentWays(node).some(function(parent) {
           return parent.id === flowerRoadID;
         });
       });
     }
     function retryIntersect() {
       select_default2(window).on("pointerdown.intro mousedown.intro", eventCancel, true);
-      var box = pad(tulipRoadIntersection, 80, context);
+      var box = pad(tulipRoadIntersection, 80, context2);
       reveal(
         box,
         helpHtml("intro.lines.retry_intersect", { name: _t("intro.graph.name.flower-street") })
@@ -50898,15 +50898,15 @@ ${content}</tr>
       timeout2(chapter.restart, 3e3);
     }
     function continueLine() {
-      if (context.mode().id !== "draw-line")
+      if (context2.mode().id !== "draw-line")
         return chapter.restart();
-      var entity = _tulipRoadID && context.hasEntity(_tulipRoadID);
+      var entity = _tulipRoadID && context2.hasEntity(_tulipRoadID);
       if (!entity)
         return chapter.restart();
-      context.map().centerEase(tulipRoadIntersection, 500);
-      var continueLineText = helpHtml("intro.lines.continue_line") + "{br}" + helpHtml("intro.lines.finish_line_" + (context.lastPointerType() === "mouse" ? "click" : "tap")) + helpHtml("intro.lines.finish_road");
+      context2.map().centerEase(tulipRoadIntersection, 500);
+      var continueLineText = helpHtml("intro.lines.continue_line") + "{br}" + helpHtml("intro.lines.finish_line_" + (context2.lastPointerType() === "mouse" ? "click" : "tap")) + helpHtml("intro.lines.finish_road");
       reveal(".surface", continueLineText);
-      context.on("enter.intro", function(mode) {
+      context2.on("enter.intro", function(mode) {
         if (mode.id === "draw-line") {
           return;
         } else if (mode.id === "select") {
@@ -50916,22 +50916,22 @@ ${content}</tr>
         }
       });
       function continueTo(nextStep) {
-        context.on("enter.intro", null);
+        context2.on("enter.intro", null);
         nextStep();
       }
     }
     function chooseCategoryRoad() {
-      if (context.mode().id !== "select")
+      if (context2.mode().id !== "select")
         return chapter.restart();
-      context.on("exit.intro", function() {
+      context2.on("exit.intro", function() {
         return chapter.restart();
       });
-      var button = context.container().select(".preset-category-road_minor .preset-list-button");
+      var button = context2.container().select(".preset-category-road_minor .preset-list-button");
       if (button.empty())
         return chapter.restart();
-      context.container().select(".inspector-wrap").on("wheel.intro", eventCancel);
+      context2.container().select(".inspector-wrap").on("wheel.intro", eventCancel);
       timeout2(function() {
-        context.container().select(".inspector-wrap .panewrap").style("right", "-100%");
+        context2.container().select(".inspector-wrap .panewrap").style("right", "-100%");
         reveal(
           button.node(),
           helpHtml("intro.lines.choose_category_road", { category: roadCategory.name() })
@@ -50941,19 +50941,19 @@ ${content}</tr>
         });
       }, 400);
       function continueTo(nextStep) {
-        context.container().select(".inspector-wrap").on("wheel.intro", null);
-        context.container().select(".preset-list-button").on("click.intro", null);
-        context.on("exit.intro", null);
+        context2.container().select(".inspector-wrap").on("wheel.intro", null);
+        context2.container().select(".preset-list-button").on("click.intro", null);
+        context2.on("exit.intro", null);
         nextStep();
       }
     }
     function choosePresetResidential() {
-      if (context.mode().id !== "select")
+      if (context2.mode().id !== "select")
         return chapter.restart();
-      context.on("exit.intro", function() {
+      context2.on("exit.intro", function() {
         return chapter.restart();
       });
-      var subgrid = context.container().select(".preset-category-road_minor .subgrid");
+      var subgrid = context2.container().select(".preset-category-road_minor .subgrid");
       if (subgrid.empty())
         return chapter.restart();
       subgrid.selectAll(":not(.preset-highway-residential) .preset-list-button").on("click.intro", function() {
@@ -50970,20 +50970,20 @@ ${content}</tr>
         );
       }, 300);
       function continueTo(nextStep) {
-        context.container().select(".preset-list-button").on("click.intro", null);
-        context.on("exit.intro", null);
+        context2.container().select(".preset-list-button").on("click.intro", null);
+        context2.on("exit.intro", null);
         nextStep();
       }
     }
     function retryPresetResidential() {
-      if (context.mode().id !== "select")
+      if (context2.mode().id !== "select")
         return chapter.restart();
-      context.on("exit.intro", function() {
+      context2.on("exit.intro", function() {
         return chapter.restart();
       });
-      context.container().select(".inspector-wrap").on("wheel.intro", eventCancel);
+      context2.container().select(".inspector-wrap").on("wheel.intro", eventCancel);
       timeout2(function() {
-        var button = context.container().select(".entity-editor-pane .preset-list-button");
+        var button = context2.container().select(".entity-editor-pane .preset-list-button");
         reveal(
           button.node(),
           helpHtml("intro.lines.retry_preset_residential", { preset: residentialPreset.name() })
@@ -50993,14 +50993,14 @@ ${content}</tr>
         });
       }, 500);
       function continueTo(nextStep) {
-        context.container().select(".inspector-wrap").on("wheel.intro", null);
-        context.container().select(".preset-list-button").on("click.intro", null);
-        context.on("exit.intro", null);
+        context2.container().select(".inspector-wrap").on("wheel.intro", null);
+        context2.container().select(".preset-list-button").on("click.intro", null);
+        context2.on("exit.intro", null);
         nextStep();
       }
     }
     function nameRoad() {
-      context.on("exit.intro", function() {
+      context2.on("exit.intro", function() {
         continueTo(didNameRoad);
       });
       timeout2(function() {
@@ -51011,12 +51011,12 @@ ${content}</tr>
         );
       }, 500);
       function continueTo(nextStep) {
-        context.on("exit.intro", null);
+        context2.on("exit.intro", null);
         nextStep();
       }
     }
     function didNameRoad() {
-      context.history().checkpoint("doneAddLine");
+      context2.history().checkpoint("doneAddLine");
       timeout2(function() {
         reveal(".surface", helpHtml("intro.lines.did_name_road"), {
           buttonText: _t.html("intro.ok"),
@@ -51030,18 +51030,18 @@ ${content}</tr>
       }
     }
     function updateLine() {
-      context.history().reset("doneAddLine");
-      if (!context.hasEntity(woodRoadID) || !context.hasEntity(woodRoadEndID)) {
+      context2.history().reset("doneAddLine");
+      if (!context2.hasEntity(woodRoadID) || !context2.hasEntity(woodRoadEndID)) {
         return chapter.restart();
       }
-      var msec = transitionTime(woodRoadDragMidpoint, context.map().center());
+      var msec = transitionTime(woodRoadDragMidpoint, context2.map().center());
       if (msec) {
         reveal(null, null, { duration: 0 });
       }
-      context.map().centerZoomEase(woodRoadDragMidpoint, 19, msec);
+      context2.map().centerZoomEase(woodRoadDragMidpoint, 19, msec);
       timeout2(function() {
-        var padding = 250 * Math.pow(2, context.map().zoom() - 19);
-        var box = pad(woodRoadDragMidpoint, padding, context);
+        var padding = 250 * Math.pow(2, context2.map().zoom() - 19);
+        var box = pad(woodRoadDragMidpoint, padding, context2);
         var advance = function() {
           continueTo(addNode);
         };
@@ -51050,9 +51050,9 @@ ${content}</tr>
           helpHtml("intro.lines.update_line"),
           { buttonText: _t.html("intro.ok"), buttonCallback: advance }
         );
-        context.map().on("move.intro drawn.intro", function() {
-          var padding2 = 250 * Math.pow(2, context.map().zoom() - 19);
-          var box2 = pad(woodRoadDragMidpoint, padding2, context);
+        context2.map().on("move.intro drawn.intro", function() {
+          var padding2 = 250 * Math.pow(2, context2.map().zoom() - 19);
+          var box2 = pad(woodRoadDragMidpoint, padding2, context2);
           reveal(
             box2,
             helpHtml("intro.lines.update_line"),
@@ -51061,26 +51061,26 @@ ${content}</tr>
         });
       }, msec + 100);
       function continueTo(nextStep) {
-        context.map().on("move.intro drawn.intro", null);
+        context2.map().on("move.intro drawn.intro", null);
         nextStep();
       }
     }
     function addNode() {
-      context.history().reset("doneAddLine");
-      if (!context.hasEntity(woodRoadID) || !context.hasEntity(woodRoadEndID)) {
+      context2.history().reset("doneAddLine");
+      if (!context2.hasEntity(woodRoadID) || !context2.hasEntity(woodRoadEndID)) {
         return chapter.restart();
       }
-      var padding = 40 * Math.pow(2, context.map().zoom() - 19);
-      var box = pad(woodRoadAddNode, padding, context);
-      var addNodeString = helpHtml("intro.lines.add_node" + (context.lastPointerType() === "mouse" ? "" : "_touch"));
+      var padding = 40 * Math.pow(2, context2.map().zoom() - 19);
+      var box = pad(woodRoadAddNode, padding, context2);
+      var addNodeString = helpHtml("intro.lines.add_node" + (context2.lastPointerType() === "mouse" ? "" : "_touch"));
       reveal(box, addNodeString);
-      context.map().on("move.intro drawn.intro", function() {
-        var padding2 = 40 * Math.pow(2, context.map().zoom() - 19);
-        var box2 = pad(woodRoadAddNode, padding2, context);
+      context2.map().on("move.intro drawn.intro", function() {
+        var padding2 = 40 * Math.pow(2, context2.map().zoom() - 19);
+        var box2 = pad(woodRoadAddNode, padding2, context2);
         reveal(box2, addNodeString, { duration: 0 });
       });
-      context.history().on("change.intro", function(changed) {
-        if (!context.hasEntity(woodRoadID) || !context.hasEntity(woodRoadEndID)) {
+      context2.history().on("change.intro", function(changed) {
+        if (!context2.hasEntity(woodRoadID) || !context2.hasEntity(woodRoadEndID)) {
           return continueTo(updateLine);
         }
         if (changed.created().length === 1) {
@@ -51089,116 +51089,116 @@ ${content}</tr>
           }, 500);
         }
       });
-      context.on("enter.intro", function(mode) {
+      context2.on("enter.intro", function(mode) {
         if (mode.id !== "select") {
           continueTo(updateLine);
         }
       });
       function continueTo(nextStep) {
-        context.map().on("move.intro drawn.intro", null);
-        context.history().on("change.intro", null);
-        context.on("enter.intro", null);
+        context2.map().on("move.intro drawn.intro", null);
+        context2.history().on("change.intro", null);
+        context2.on("enter.intro", null);
         nextStep();
       }
     }
     function startDragEndpoint() {
-      if (!context.hasEntity(woodRoadID) || !context.hasEntity(woodRoadEndID)) {
+      if (!context2.hasEntity(woodRoadID) || !context2.hasEntity(woodRoadEndID)) {
         return continueTo(updateLine);
       }
-      var padding = 100 * Math.pow(2, context.map().zoom() - 19);
-      var box = pad(woodRoadDragEndpoint, padding, context);
-      var startDragString = helpHtml("intro.lines.start_drag_endpoint" + (context.lastPointerType() === "mouse" ? "" : "_touch")) + helpHtml("intro.lines.drag_to_intersection");
+      var padding = 100 * Math.pow(2, context2.map().zoom() - 19);
+      var box = pad(woodRoadDragEndpoint, padding, context2);
+      var startDragString = helpHtml("intro.lines.start_drag_endpoint" + (context2.lastPointerType() === "mouse" ? "" : "_touch")) + helpHtml("intro.lines.drag_to_intersection");
       reveal(box, startDragString);
-      context.map().on("move.intro drawn.intro", function() {
-        if (!context.hasEntity(woodRoadID) || !context.hasEntity(woodRoadEndID)) {
+      context2.map().on("move.intro drawn.intro", function() {
+        if (!context2.hasEntity(woodRoadID) || !context2.hasEntity(woodRoadEndID)) {
           return continueTo(updateLine);
         }
-        var padding2 = 100 * Math.pow(2, context.map().zoom() - 19);
-        var box2 = pad(woodRoadDragEndpoint, padding2, context);
+        var padding2 = 100 * Math.pow(2, context2.map().zoom() - 19);
+        var box2 = pad(woodRoadDragEndpoint, padding2, context2);
         reveal(box2, startDragString, { duration: 0 });
-        var entity = context.entity(woodRoadEndID);
+        var entity = context2.entity(woodRoadEndID);
         if (geoSphericalDistance(entity.loc, woodRoadDragEndpoint) <= 4) {
           continueTo(finishDragEndpoint);
         }
       });
       function continueTo(nextStep) {
-        context.map().on("move.intro drawn.intro", null);
+        context2.map().on("move.intro drawn.intro", null);
         nextStep();
       }
     }
     function finishDragEndpoint() {
-      if (!context.hasEntity(woodRoadID) || !context.hasEntity(woodRoadEndID)) {
+      if (!context2.hasEntity(woodRoadID) || !context2.hasEntity(woodRoadEndID)) {
         return continueTo(updateLine);
       }
-      var padding = 100 * Math.pow(2, context.map().zoom() - 19);
-      var box = pad(woodRoadDragEndpoint, padding, context);
-      var finishDragString = helpHtml("intro.lines.spot_looks_good") + helpHtml("intro.lines.finish_drag_endpoint" + (context.lastPointerType() === "mouse" ? "" : "_touch"));
+      var padding = 100 * Math.pow(2, context2.map().zoom() - 19);
+      var box = pad(woodRoadDragEndpoint, padding, context2);
+      var finishDragString = helpHtml("intro.lines.spot_looks_good") + helpHtml("intro.lines.finish_drag_endpoint" + (context2.lastPointerType() === "mouse" ? "" : "_touch"));
       reveal(box, finishDragString);
-      context.map().on("move.intro drawn.intro", function() {
-        if (!context.hasEntity(woodRoadID) || !context.hasEntity(woodRoadEndID)) {
+      context2.map().on("move.intro drawn.intro", function() {
+        if (!context2.hasEntity(woodRoadID) || !context2.hasEntity(woodRoadEndID)) {
           return continueTo(updateLine);
         }
-        var padding2 = 100 * Math.pow(2, context.map().zoom() - 19);
-        var box2 = pad(woodRoadDragEndpoint, padding2, context);
+        var padding2 = 100 * Math.pow(2, context2.map().zoom() - 19);
+        var box2 = pad(woodRoadDragEndpoint, padding2, context2);
         reveal(box2, finishDragString, { duration: 0 });
-        var entity = context.entity(woodRoadEndID);
+        var entity = context2.entity(woodRoadEndID);
         if (geoSphericalDistance(entity.loc, woodRoadDragEndpoint) > 4) {
           continueTo(startDragEndpoint);
         }
       });
-      context.on("enter.intro", function() {
+      context2.on("enter.intro", function() {
         continueTo(startDragMidpoint);
       });
       function continueTo(nextStep) {
-        context.map().on("move.intro drawn.intro", null);
-        context.on("enter.intro", null);
+        context2.map().on("move.intro drawn.intro", null);
+        context2.on("enter.intro", null);
         nextStep();
       }
     }
     function startDragMidpoint() {
-      if (!context.hasEntity(woodRoadID) || !context.hasEntity(woodRoadEndID)) {
+      if (!context2.hasEntity(woodRoadID) || !context2.hasEntity(woodRoadEndID)) {
         return continueTo(updateLine);
       }
-      if (context.selectedIDs().indexOf(woodRoadID) === -1) {
-        context.enter(modeSelect(context, [woodRoadID]));
+      if (context2.selectedIDs().indexOf(woodRoadID) === -1) {
+        context2.enter(modeSelect(context2, [woodRoadID]));
       }
-      var padding = 80 * Math.pow(2, context.map().zoom() - 19);
-      var box = pad(woodRoadDragMidpoint, padding, context);
+      var padding = 80 * Math.pow(2, context2.map().zoom() - 19);
+      var box = pad(woodRoadDragMidpoint, padding, context2);
       reveal(box, helpHtml("intro.lines.start_drag_midpoint"));
-      context.map().on("move.intro drawn.intro", function() {
-        if (!context.hasEntity(woodRoadID) || !context.hasEntity(woodRoadEndID)) {
+      context2.map().on("move.intro drawn.intro", function() {
+        if (!context2.hasEntity(woodRoadID) || !context2.hasEntity(woodRoadEndID)) {
           return continueTo(updateLine);
         }
-        var padding2 = 80 * Math.pow(2, context.map().zoom() - 19);
-        var box2 = pad(woodRoadDragMidpoint, padding2, context);
+        var padding2 = 80 * Math.pow(2, context2.map().zoom() - 19);
+        var box2 = pad(woodRoadDragMidpoint, padding2, context2);
         reveal(box2, helpHtml("intro.lines.start_drag_midpoint"), { duration: 0 });
       });
-      context.history().on("change.intro", function(changed) {
+      context2.history().on("change.intro", function(changed) {
         if (changed.created().length === 1) {
           continueTo(continueDragMidpoint);
         }
       });
-      context.on("enter.intro", function(mode) {
+      context2.on("enter.intro", function(mode) {
         if (mode.id !== "select") {
-          context.enter(modeSelect(context, [woodRoadID]));
+          context2.enter(modeSelect(context2, [woodRoadID]));
         }
       });
       function continueTo(nextStep) {
-        context.map().on("move.intro drawn.intro", null);
-        context.history().on("change.intro", null);
-        context.on("enter.intro", null);
+        context2.map().on("move.intro drawn.intro", null);
+        context2.history().on("change.intro", null);
+        context2.on("enter.intro", null);
         nextStep();
       }
     }
     function continueDragMidpoint() {
-      if (!context.hasEntity(woodRoadID) || !context.hasEntity(woodRoadEndID)) {
+      if (!context2.hasEntity(woodRoadID) || !context2.hasEntity(woodRoadEndID)) {
         return continueTo(updateLine);
       }
-      var padding = 100 * Math.pow(2, context.map().zoom() - 19);
-      var box = pad(woodRoadDragEndpoint, padding, context);
+      var padding = 100 * Math.pow(2, context2.map().zoom() - 19);
+      var box = pad(woodRoadDragEndpoint, padding, context2);
       box.height += 400;
       var advance = function() {
-        context.history().checkpoint("doneUpdateLine");
+        context2.history().checkpoint("doneUpdateLine");
         continueTo(deleteLines);
       };
       reveal(
@@ -51206,12 +51206,12 @@ ${content}</tr>
         helpHtml("intro.lines.continue_drag_midpoint"),
         { buttonText: _t.html("intro.ok"), buttonCallback: advance }
       );
-      context.map().on("move.intro drawn.intro", function() {
-        if (!context.hasEntity(woodRoadID) || !context.hasEntity(woodRoadEndID)) {
+      context2.map().on("move.intro drawn.intro", function() {
+        if (!context2.hasEntity(woodRoadID) || !context2.hasEntity(woodRoadEndID)) {
           return continueTo(updateLine);
         }
-        var padding2 = 100 * Math.pow(2, context.map().zoom() - 19);
-        var box2 = pad(woodRoadDragEndpoint, padding2, context);
+        var padding2 = 100 * Math.pow(2, context2.map().zoom() - 19);
+        var box2 = pad(woodRoadDragEndpoint, padding2, context2);
         box2.height += 400;
         reveal(
           box2,
@@ -51220,24 +51220,24 @@ ${content}</tr>
         );
       });
       function continueTo(nextStep) {
-        context.map().on("move.intro drawn.intro", null);
+        context2.map().on("move.intro drawn.intro", null);
         nextStep();
       }
     }
     function deleteLines() {
-      context.history().reset("doneUpdateLine");
-      context.enter(modeBrowse(context));
-      if (!context.hasEntity(washingtonStreetID) || !context.hasEntity(twelfthAvenueID) || !context.hasEntity(eleventhAvenueEndID)) {
+      context2.history().reset("doneUpdateLine");
+      context2.enter(modeBrowse(context2));
+      if (!context2.hasEntity(washingtonStreetID) || !context2.hasEntity(twelfthAvenueID) || !context2.hasEntity(eleventhAvenueEndID)) {
         return chapter.restart();
       }
-      var msec = transitionTime(deleteLinesLoc, context.map().center());
+      var msec = transitionTime(deleteLinesLoc, context2.map().center());
       if (msec) {
         reveal(null, null, { duration: 0 });
       }
-      context.map().centerZoomEase(deleteLinesLoc, 18, msec);
+      context2.map().centerZoomEase(deleteLinesLoc, 18, msec);
       timeout2(function() {
-        var padding = 200 * Math.pow(2, context.map().zoom() - 18);
-        var box = pad(deleteLinesLoc, padding, context);
+        var padding = 200 * Math.pow(2, context2.map().zoom() - 18);
+        var box = pad(deleteLinesLoc, padding, context2);
         box.top -= 200;
         box.height += 400;
         var advance = function() {
@@ -51248,9 +51248,9 @@ ${content}</tr>
           helpHtml("intro.lines.delete_lines", { street: _t("intro.graph.name.12th-avenue") }),
           { buttonText: _t.html("intro.ok"), buttonCallback: advance }
         );
-        context.map().on("move.intro drawn.intro", function() {
-          var padding2 = 200 * Math.pow(2, context.map().zoom() - 18);
-          var box2 = pad(deleteLinesLoc, padding2, context);
+        context2.map().on("move.intro drawn.intro", function() {
+          var padding2 = 200 * Math.pow(2, context2.map().zoom() - 18);
+          var box2 = pad(deleteLinesLoc, padding2, context2);
           box2.top -= 200;
           box2.height += 400;
           reveal(
@@ -51259,70 +51259,70 @@ ${content}</tr>
             { duration: 0, buttonText: _t.html("intro.ok"), buttonCallback: advance }
           );
         });
-        context.history().on("change.intro", function() {
+        context2.history().on("change.intro", function() {
           timeout2(function() {
             continueTo(deleteLines);
           }, 500);
         });
       }, msec + 100);
       function continueTo(nextStep) {
-        context.map().on("move.intro drawn.intro", null);
-        context.history().on("change.intro", null);
+        context2.map().on("move.intro drawn.intro", null);
+        context2.history().on("change.intro", null);
         nextStep();
       }
     }
     function rightClickIntersection() {
-      context.history().reset("doneUpdateLine");
-      context.enter(modeBrowse(context));
-      context.map().centerZoomEase(eleventhAvenueEnd, 18, 500);
+      context2.history().reset("doneUpdateLine");
+      context2.enter(modeBrowse(context2));
+      context2.map().centerZoomEase(eleventhAvenueEnd, 18, 500);
       var rightClickString = helpHtml("intro.lines.split_street", {
         street1: _t("intro.graph.name.11th-avenue"),
         street2: _t("intro.graph.name.washington-street")
-      }) + helpHtml("intro.lines." + (context.lastPointerType() === "mouse" ? "rightclick_intersection" : "edit_menu_intersection_touch"));
+      }) + helpHtml("intro.lines." + (context2.lastPointerType() === "mouse" ? "rightclick_intersection" : "edit_menu_intersection_touch"));
       timeout2(function() {
-        var padding = 60 * Math.pow(2, context.map().zoom() - 18);
-        var box = pad(eleventhAvenueEnd, padding, context);
+        var padding = 60 * Math.pow(2, context2.map().zoom() - 18);
+        var box = pad(eleventhAvenueEnd, padding, context2);
         reveal(box, rightClickString);
-        context.map().on("move.intro drawn.intro", function() {
-          var padding2 = 60 * Math.pow(2, context.map().zoom() - 18);
-          var box2 = pad(eleventhAvenueEnd, padding2, context);
+        context2.map().on("move.intro drawn.intro", function() {
+          var padding2 = 60 * Math.pow(2, context2.map().zoom() - 18);
+          var box2 = pad(eleventhAvenueEnd, padding2, context2);
           reveal(
             box2,
             rightClickString,
             { duration: 0 }
           );
         });
-        context.on("enter.intro", function(mode) {
+        context2.on("enter.intro", function(mode) {
           if (mode.id !== "select")
             return;
-          var ids = context.selectedIDs();
+          var ids = context2.selectedIDs();
           if (ids.length !== 1 || ids[0] !== eleventhAvenueEndID)
             return;
           timeout2(function() {
-            var node = selectMenuItem(context, "split").node();
+            var node = selectMenuItem(context2, "split").node();
             if (!node)
               return;
             continueTo(splitIntersection);
           }, 50);
         });
-        context.history().on("change.intro", function() {
+        context2.history().on("change.intro", function() {
           timeout2(function() {
             continueTo(deleteLines);
           }, 300);
         });
       }, 600);
       function continueTo(nextStep) {
-        context.map().on("move.intro drawn.intro", null);
-        context.on("enter.intro", null);
-        context.history().on("change.intro", null);
+        context2.map().on("move.intro drawn.intro", null);
+        context2.on("enter.intro", null);
+        context2.history().on("change.intro", null);
         nextStep();
       }
     }
     function splitIntersection() {
-      if (!context.hasEntity(washingtonStreetID) || !context.hasEntity(twelfthAvenueID) || !context.hasEntity(eleventhAvenueEndID)) {
+      if (!context2.hasEntity(washingtonStreetID) || !context2.hasEntity(twelfthAvenueID) || !context2.hasEntity(eleventhAvenueEndID)) {
         return continueTo(deleteLines);
       }
-      var node = selectMenuItem(context, "split").node();
+      var node = selectMenuItem(context2, "split").node();
       if (!node) {
         return continueTo(rightClickIntersection);
       }
@@ -51336,8 +51336,8 @@ ${content}</tr>
         ),
         { padding: 50 }
       );
-      context.map().on("move.intro drawn.intro", function() {
-        var node2 = selectMenuItem(context, "split").node();
+      context2.map().on("move.intro drawn.intro", function() {
+        var node2 = selectMenuItem(context2, "split").node();
         if (!wasChanged && !node2) {
           return continueTo(rightClickIntersection);
         }
@@ -51350,10 +51350,10 @@ ${content}</tr>
           { duration: 0, padding: 50 }
         );
       });
-      context.history().on("change.intro", function(changed) {
+      context2.history().on("change.intro", function(changed) {
         wasChanged = true;
         timeout2(function() {
-          if (context.history().undoAnnotation() === _t("operations.split.annotation.line", { n: 1 })) {
+          if (context2.history().undoAnnotation() === _t("operations.split.annotation.line", { n: 1 })) {
             _washingtonSegmentID = changed.created()[0].id;
             continueTo(didSplit);
           } else {
@@ -51363,27 +51363,27 @@ ${content}</tr>
         }, 300);
       });
       function continueTo(nextStep) {
-        context.map().on("move.intro drawn.intro", null);
-        context.history().on("change.intro", null);
+        context2.map().on("move.intro drawn.intro", null);
+        context2.history().on("change.intro", null);
         nextStep();
       }
     }
     function retrySplit() {
-      context.enter(modeBrowse(context));
-      context.map().centerZoomEase(eleventhAvenueEnd, 18, 500);
+      context2.enter(modeBrowse(context2));
+      context2.map().centerZoomEase(eleventhAvenueEnd, 18, 500);
       var advance = function() {
         continueTo(rightClickIntersection);
       };
-      var padding = 60 * Math.pow(2, context.map().zoom() - 18);
-      var box = pad(eleventhAvenueEnd, padding, context);
+      var padding = 60 * Math.pow(2, context2.map().zoom() - 18);
+      var box = pad(eleventhAvenueEnd, padding, context2);
       reveal(
         box,
         helpHtml("intro.lines.retry_split"),
         { buttonText: _t.html("intro.ok"), buttonCallback: advance }
       );
-      context.map().on("move.intro drawn.intro", function() {
-        var padding2 = 60 * Math.pow(2, context.map().zoom() - 18);
-        var box2 = pad(eleventhAvenueEnd, padding2, context);
+      context2.map().on("move.intro drawn.intro", function() {
+        var padding2 = 60 * Math.pow(2, context2.map().zoom() - 18);
+        var box2 = pad(eleventhAvenueEnd, padding2, context2);
         reveal(
           box2,
           helpHtml("intro.lines.retry_split"),
@@ -51391,19 +51391,19 @@ ${content}</tr>
         );
       });
       function continueTo(nextStep) {
-        context.map().on("move.intro drawn.intro", null);
+        context2.map().on("move.intro drawn.intro", null);
         nextStep();
       }
     }
     function didSplit() {
-      if (!_washingtonSegmentID || !context.hasEntity(_washingtonSegmentID) || !context.hasEntity(washingtonStreetID) || !context.hasEntity(twelfthAvenueID) || !context.hasEntity(eleventhAvenueEndID)) {
+      if (!_washingtonSegmentID || !context2.hasEntity(_washingtonSegmentID) || !context2.hasEntity(washingtonStreetID) || !context2.hasEntity(twelfthAvenueID) || !context2.hasEntity(eleventhAvenueEndID)) {
         return continueTo(rightClickIntersection);
       }
-      var ids = context.selectedIDs();
+      var ids = context2.selectedIDs();
       var string = "intro.lines.did_split_" + (ids.length > 1 ? "multi" : "single");
       var street = _t("intro.graph.name.washington-street");
-      var padding = 200 * Math.pow(2, context.map().zoom() - 18);
-      var box = pad(twelfthAvenue, padding, context);
+      var padding = 200 * Math.pow(2, context2.map().zoom() - 18);
+      var box = pad(twelfthAvenue, padding, context2);
       box.width = box.width / 2;
       reveal(
         box,
@@ -51411,10 +51411,10 @@ ${content}</tr>
         { duration: 500 }
       );
       timeout2(function() {
-        context.map().centerZoomEase(twelfthAvenue, 18, 500);
-        context.map().on("move.intro drawn.intro", function() {
-          var padding2 = 200 * Math.pow(2, context.map().zoom() - 18);
-          var box2 = pad(twelfthAvenue, padding2, context);
+        context2.map().centerZoomEase(twelfthAvenue, 18, 500);
+        context2.map().on("move.intro drawn.intro", function() {
+          var padding2 = 200 * Math.pow(2, context2.map().zoom() - 18);
+          var box2 = pad(twelfthAvenue, padding2, context2);
           box2.width = box2.width / 2;
           reveal(
             box2,
@@ -51423,29 +51423,29 @@ ${content}</tr>
           );
         });
       }, 600);
-      context.on("enter.intro", function() {
-        var ids2 = context.selectedIDs();
+      context2.on("enter.intro", function() {
+        var ids2 = context2.selectedIDs();
         if (ids2.length === 1 && ids2[0] === _washingtonSegmentID) {
           continueTo(multiSelect);
         }
       });
-      context.history().on("change.intro", function() {
-        if (!_washingtonSegmentID || !context.hasEntity(_washingtonSegmentID) || !context.hasEntity(washingtonStreetID) || !context.hasEntity(twelfthAvenueID) || !context.hasEntity(eleventhAvenueEndID)) {
+      context2.history().on("change.intro", function() {
+        if (!_washingtonSegmentID || !context2.hasEntity(_washingtonSegmentID) || !context2.hasEntity(washingtonStreetID) || !context2.hasEntity(twelfthAvenueID) || !context2.hasEntity(eleventhAvenueEndID)) {
           return continueTo(rightClickIntersection);
         }
       });
       function continueTo(nextStep) {
-        context.map().on("move.intro drawn.intro", null);
-        context.on("enter.intro", null);
-        context.history().on("change.intro", null);
+        context2.map().on("move.intro drawn.intro", null);
+        context2.on("enter.intro", null);
+        context2.history().on("change.intro", null);
         nextStep();
       }
     }
     function multiSelect() {
-      if (!_washingtonSegmentID || !context.hasEntity(_washingtonSegmentID) || !context.hasEntity(washingtonStreetID) || !context.hasEntity(twelfthAvenueID) || !context.hasEntity(eleventhAvenueEndID)) {
+      if (!_washingtonSegmentID || !context2.hasEntity(_washingtonSegmentID) || !context2.hasEntity(washingtonStreetID) || !context2.hasEntity(twelfthAvenueID) || !context2.hasEntity(eleventhAvenueEndID)) {
         return continueTo(rightClickIntersection);
       }
-      var ids = context.selectedIDs();
+      var ids = context2.selectedIDs();
       var hasWashington = ids.indexOf(_washingtonSegmentID) !== -1;
       var hasTwelfth = ids.indexOf(twelfthAvenueID) !== -1;
       if (hasWashington && hasTwelfth) {
@@ -51453,20 +51453,20 @@ ${content}</tr>
       } else if (!hasWashington && !hasTwelfth) {
         return continueTo(didSplit);
       }
-      context.map().centerZoomEase(twelfthAvenue, 18, 500);
+      context2.map().centerZoomEase(twelfthAvenue, 18, 500);
       timeout2(function() {
         var selected, other, padding, box;
         if (hasWashington) {
           selected = _t("intro.graph.name.washington-street");
           other = _t("intro.graph.name.12th-avenue");
-          padding = 60 * Math.pow(2, context.map().zoom() - 18);
-          box = pad(twelfthAvenueEnd, padding, context);
+          padding = 60 * Math.pow(2, context2.map().zoom() - 18);
+          box = pad(twelfthAvenueEnd, padding, context2);
           box.width *= 3;
         } else {
           selected = _t("intro.graph.name.12th-avenue");
           other = _t("intro.graph.name.washington-street");
-          padding = 200 * Math.pow(2, context.map().zoom() - 18);
-          box = pad(twelfthAvenue, padding, context);
+          padding = 200 * Math.pow(2, context2.map().zoom() - 18);
+          box = pad(twelfthAvenue, padding, context2);
           box.width /= 2;
         }
         reveal(
@@ -51475,22 +51475,22 @@ ${content}</tr>
             "intro.lines.multi_select",
             { selected, other1: other }
           ) + " " + helpHtml(
-            "intro.lines.add_to_selection_" + (context.lastPointerType() === "mouse" ? "click" : "touch"),
+            "intro.lines.add_to_selection_" + (context2.lastPointerType() === "mouse" ? "click" : "touch"),
             { selected, other2: other }
           )
         );
-        context.map().on("move.intro drawn.intro", function() {
+        context2.map().on("move.intro drawn.intro", function() {
           if (hasWashington) {
             selected = _t("intro.graph.name.washington-street");
             other = _t("intro.graph.name.12th-avenue");
-            padding = 60 * Math.pow(2, context.map().zoom() - 18);
-            box = pad(twelfthAvenueEnd, padding, context);
+            padding = 60 * Math.pow(2, context2.map().zoom() - 18);
+            box = pad(twelfthAvenueEnd, padding, context2);
             box.width *= 3;
           } else {
             selected = _t("intro.graph.name.12th-avenue");
             other = _t("intro.graph.name.washington-street");
-            padding = 200 * Math.pow(2, context.map().zoom() - 18);
-            box = pad(twelfthAvenue, padding, context);
+            padding = 200 * Math.pow(2, context2.map().zoom() - 18);
+            box = pad(twelfthAvenue, padding, context2);
             box.width /= 2;
           }
           reveal(
@@ -51499,48 +51499,48 @@ ${content}</tr>
               "intro.lines.multi_select",
               { selected, other1: other }
             ) + " " + helpHtml(
-              "intro.lines.add_to_selection_" + (context.lastPointerType() === "mouse" ? "click" : "touch"),
+              "intro.lines.add_to_selection_" + (context2.lastPointerType() === "mouse" ? "click" : "touch"),
               { selected, other2: other }
             ),
             { duration: 0 }
           );
         });
-        context.on("enter.intro", function() {
+        context2.on("enter.intro", function() {
           continueTo(multiSelect);
         });
-        context.history().on("change.intro", function() {
-          if (!_washingtonSegmentID || !context.hasEntity(_washingtonSegmentID) || !context.hasEntity(washingtonStreetID) || !context.hasEntity(twelfthAvenueID) || !context.hasEntity(eleventhAvenueEndID)) {
+        context2.history().on("change.intro", function() {
+          if (!_washingtonSegmentID || !context2.hasEntity(_washingtonSegmentID) || !context2.hasEntity(washingtonStreetID) || !context2.hasEntity(twelfthAvenueID) || !context2.hasEntity(eleventhAvenueEndID)) {
             return continueTo(rightClickIntersection);
           }
         });
       }, 600);
       function continueTo(nextStep) {
-        context.map().on("move.intro drawn.intro", null);
-        context.on("enter.intro", null);
-        context.history().on("change.intro", null);
+        context2.map().on("move.intro drawn.intro", null);
+        context2.on("enter.intro", null);
+        context2.history().on("change.intro", null);
         nextStep();
       }
     }
     function multiRightClick() {
-      if (!_washingtonSegmentID || !context.hasEntity(_washingtonSegmentID) || !context.hasEntity(washingtonStreetID) || !context.hasEntity(twelfthAvenueID) || !context.hasEntity(eleventhAvenueEndID)) {
+      if (!_washingtonSegmentID || !context2.hasEntity(_washingtonSegmentID) || !context2.hasEntity(washingtonStreetID) || !context2.hasEntity(twelfthAvenueID) || !context2.hasEntity(eleventhAvenueEndID)) {
         return continueTo(rightClickIntersection);
       }
-      var padding = 200 * Math.pow(2, context.map().zoom() - 18);
-      var box = pad(twelfthAvenue, padding, context);
-      var rightClickString = helpHtml("intro.lines.multi_select_success") + helpHtml("intro.lines.multi_" + (context.lastPointerType() === "mouse" ? "rightclick" : "edit_menu_touch"));
+      var padding = 200 * Math.pow(2, context2.map().zoom() - 18);
+      var box = pad(twelfthAvenue, padding, context2);
+      var rightClickString = helpHtml("intro.lines.multi_select_success") + helpHtml("intro.lines.multi_" + (context2.lastPointerType() === "mouse" ? "rightclick" : "edit_menu_touch"));
       reveal(box, rightClickString);
-      context.map().on("move.intro drawn.intro", function() {
-        var padding2 = 200 * Math.pow(2, context.map().zoom() - 18);
-        var box2 = pad(twelfthAvenue, padding2, context);
+      context2.map().on("move.intro drawn.intro", function() {
+        var padding2 = 200 * Math.pow(2, context2.map().zoom() - 18);
+        var box2 = pad(twelfthAvenue, padding2, context2);
         reveal(box2, rightClickString, { duration: 0 });
       });
-      context.ui().editMenu().on("toggled.intro", function(open) {
+      context2.ui().editMenu().on("toggled.intro", function(open) {
         if (!open)
           return;
         timeout2(function() {
-          var ids = context.selectedIDs();
+          var ids = context2.selectedIDs();
           if (ids.length === 2 && ids.indexOf(twelfthAvenueID) !== -1 && ids.indexOf(_washingtonSegmentID) !== -1) {
-            var node = selectMenuItem(context, "delete").node();
+            var node = selectMenuItem(context2, "delete").node();
             if (!node)
               return;
             continueTo(multiDelete);
@@ -51551,23 +51551,23 @@ ${content}</tr>
           }
         }, 300);
       });
-      context.history().on("change.intro", function() {
-        if (!_washingtonSegmentID || !context.hasEntity(_washingtonSegmentID) || !context.hasEntity(washingtonStreetID) || !context.hasEntity(twelfthAvenueID) || !context.hasEntity(eleventhAvenueEndID)) {
+      context2.history().on("change.intro", function() {
+        if (!_washingtonSegmentID || !context2.hasEntity(_washingtonSegmentID) || !context2.hasEntity(washingtonStreetID) || !context2.hasEntity(twelfthAvenueID) || !context2.hasEntity(eleventhAvenueEndID)) {
           return continueTo(rightClickIntersection);
         }
       });
       function continueTo(nextStep) {
-        context.map().on("move.intro drawn.intro", null);
-        context.ui().editMenu().on("toggled.intro", null);
-        context.history().on("change.intro", null);
+        context2.map().on("move.intro drawn.intro", null);
+        context2.ui().editMenu().on("toggled.intro", null);
+        context2.history().on("change.intro", null);
         nextStep();
       }
     }
     function multiDelete() {
-      if (!_washingtonSegmentID || !context.hasEntity(_washingtonSegmentID) || !context.hasEntity(washingtonStreetID) || !context.hasEntity(twelfthAvenueID) || !context.hasEntity(eleventhAvenueEndID)) {
+      if (!_washingtonSegmentID || !context2.hasEntity(_washingtonSegmentID) || !context2.hasEntity(washingtonStreetID) || !context2.hasEntity(twelfthAvenueID) || !context2.hasEntity(eleventhAvenueEndID)) {
         return continueTo(rightClickIntersection);
       }
-      var node = selectMenuItem(context, "delete").node();
+      var node = selectMenuItem(context2, "delete").node();
       if (!node)
         return continueTo(multiRightClick);
       reveal(
@@ -51575,36 +51575,36 @@ ${content}</tr>
         helpHtml("intro.lines.multi_delete"),
         { padding: 50 }
       );
-      context.map().on("move.intro drawn.intro", function() {
+      context2.map().on("move.intro drawn.intro", function() {
         reveal(
           ".edit-menu",
           helpHtml("intro.lines.multi_delete"),
           { duration: 0, padding: 50 }
         );
       });
-      context.on("exit.intro", function() {
-        if (context.hasEntity(_washingtonSegmentID) || context.hasEntity(twelfthAvenueID)) {
+      context2.on("exit.intro", function() {
+        if (context2.hasEntity(_washingtonSegmentID) || context2.hasEntity(twelfthAvenueID)) {
           return continueTo(multiSelect);
         }
       });
-      context.history().on("change.intro", function() {
-        if (context.hasEntity(_washingtonSegmentID) || context.hasEntity(twelfthAvenueID)) {
+      context2.history().on("change.intro", function() {
+        if (context2.hasEntity(_washingtonSegmentID) || context2.hasEntity(twelfthAvenueID)) {
           continueTo(retryDelete);
         } else {
           continueTo(play);
         }
       });
       function continueTo(nextStep) {
-        context.map().on("move.intro drawn.intro", null);
-        context.on("exit.intro", null);
-        context.history().on("change.intro", null);
+        context2.map().on("move.intro drawn.intro", null);
+        context2.on("exit.intro", null);
+        context2.history().on("change.intro", null);
         nextStep();
       }
     }
     function retryDelete() {
-      context.enter(modeBrowse(context));
-      var padding = 200 * Math.pow(2, context.map().zoom() - 18);
-      var box = pad(twelfthAvenue, padding, context);
+      context2.enter(modeBrowse(context2));
+      var padding = 200 * Math.pow(2, context2.map().zoom() - 18);
+      var box = pad(twelfthAvenue, padding, context2);
       reveal(box, helpHtml("intro.lines.retry_delete"), {
         buttonText: _t.html("intro.ok"),
         buttonCallback: function() {
@@ -51635,11 +51635,11 @@ ${content}</tr>
     chapter.exit = function() {
       timeouts.forEach(window.clearTimeout);
       select_default2(window).on("pointerdown.intro mousedown.intro", null, true);
-      context.on("enter.intro exit.intro", null);
-      context.map().on("move.intro drawn.intro", null);
-      context.history().on("change.intro", null);
-      context.container().select(".inspector-wrap").on("wheel.intro", null);
-      context.container().select(".preset-list-button").on("click.intro", null);
+      context2.on("enter.intro exit.intro", null);
+      context2.map().on("move.intro drawn.intro", null);
+      context2.history().on("change.intro", null);
+      context2.container().select(".inspector-wrap").on("wheel.intro", null);
+      context2.container().select(".preset-list-button").on("click.intro", null);
     };
     chapter.restart = function() {
       chapter.exit();
@@ -51649,7 +51649,7 @@ ${content}</tr>
   }
 
   // modules/ui/intro/building.js
-  function uiIntroBuilding(context, reveal) {
+  function uiIntroBuilding(context2, reveal) {
     var dispatch10 = dispatch_default("done");
     var house = [-85.62815, 41.95638];
     var tank = [-85.62732, 41.95347];
@@ -51670,84 +51670,84 @@ ${content}</tr>
       d3_event.preventDefault();
     }
     function revealHouse(center, text2, options2) {
-      var padding = 160 * Math.pow(2, context.map().zoom() - 20);
-      var box = pad(center, padding, context);
+      var padding = 160 * Math.pow(2, context2.map().zoom() - 20);
+      var box = pad(center, padding, context2);
       reveal(box, text2, options2);
     }
     function revealTank(center, text2, options2) {
-      var padding = 190 * Math.pow(2, context.map().zoom() - 19.5);
-      var box = pad(center, padding, context);
+      var padding = 190 * Math.pow(2, context2.map().zoom() - 19.5);
+      var box = pad(center, padding, context2);
       reveal(box, text2, options2);
     }
     function addHouse() {
-      context.enter(modeBrowse(context));
-      context.history().reset("initial");
+      context2.enter(modeBrowse(context2));
+      context2.history().reset("initial");
       _houseID = null;
-      var msec = transitionTime(house, context.map().center());
+      var msec = transitionTime(house, context2.map().center());
       if (msec) {
         reveal(null, null, { duration: 0 });
       }
-      context.map().centerZoomEase(house, 19, msec);
+      context2.map().centerZoomEase(house, 19, msec);
       timeout2(function() {
         var tooltip = reveal(
           "button.add-area",
           helpHtml("intro.buildings.add_building")
         );
         tooltip.selectAll(".popover-inner").insert("svg", "span").attr("class", "tooltip-illustration").append("use").attr("xlink:href", "#iD-graphic-buildings");
-        context.on("enter.intro", function(mode) {
+        context2.on("enter.intro", function(mode) {
           if (mode.id !== "add-area")
             return;
           continueTo(startHouse);
         });
       }, msec + 100);
       function continueTo(nextStep) {
-        context.on("enter.intro", null);
+        context2.on("enter.intro", null);
         nextStep();
       }
     }
     function startHouse() {
-      if (context.mode().id !== "add-area") {
+      if (context2.mode().id !== "add-area") {
         return continueTo(addHouse);
       }
       _houseID = null;
-      context.map().zoomEase(20, 500);
+      context2.map().zoomEase(20, 500);
       timeout2(function() {
-        var startString = helpHtml("intro.buildings.start_building") + helpHtml("intro.buildings.building_corner_" + (context.lastPointerType() === "mouse" ? "click" : "tap"));
+        var startString = helpHtml("intro.buildings.start_building") + helpHtml("intro.buildings.building_corner_" + (context2.lastPointerType() === "mouse" ? "click" : "tap"));
         revealHouse(house, startString);
-        context.map().on("move.intro drawn.intro", function() {
+        context2.map().on("move.intro drawn.intro", function() {
           revealHouse(house, startString, { duration: 0 });
         });
-        context.on("enter.intro", function(mode) {
+        context2.on("enter.intro", function(mode) {
           if (mode.id !== "draw-area")
             return chapter.restart();
           continueTo(continueHouse);
         });
       }, 550);
       function continueTo(nextStep) {
-        context.map().on("move.intro drawn.intro", null);
-        context.on("enter.intro", null);
+        context2.map().on("move.intro drawn.intro", null);
+        context2.on("enter.intro", null);
         nextStep();
       }
     }
     function continueHouse() {
-      if (context.mode().id !== "draw-area") {
+      if (context2.mode().id !== "draw-area") {
         return continueTo(addHouse);
       }
       _houseID = null;
-      var continueString = helpHtml("intro.buildings.continue_building") + "{br}" + helpHtml("intro.areas.finish_area_" + (context.lastPointerType() === "mouse" ? "click" : "tap")) + helpHtml("intro.buildings.finish_building");
+      var continueString = helpHtml("intro.buildings.continue_building") + "{br}" + helpHtml("intro.areas.finish_area_" + (context2.lastPointerType() === "mouse" ? "click" : "tap")) + helpHtml("intro.buildings.finish_building");
       revealHouse(house, continueString);
-      context.map().on("move.intro drawn.intro", function() {
+      context2.map().on("move.intro drawn.intro", function() {
         revealHouse(house, continueString, { duration: 0 });
       });
-      context.on("enter.intro", function(mode) {
+      context2.on("enter.intro", function(mode) {
         if (mode.id === "draw-area") {
           return;
         } else if (mode.id === "select") {
-          var graph = context.graph();
-          var way = context.entity(context.selectedIDs()[0]);
+          var graph = context2.graph();
+          var way = context2.entity(context2.selectedIDs()[0]);
           var nodes = graph.childNodes(way);
           var points = utilArrayUniq(nodes).map(function(n2) {
-            return context.projection(n2.loc);
+            return context2.projection(n2.loc);
           });
           if (isMostlySquare(points)) {
             _houseID = way.id;
@@ -51760,8 +51760,8 @@ ${content}</tr>
         }
       });
       function continueTo(nextStep) {
-        context.map().on("move.intro drawn.intro", null);
-        context.on("enter.intro", null);
+        context2.map().on("move.intro drawn.intro", null);
+        context2.on("enter.intro", null);
         nextStep();
       }
     }
@@ -51774,7 +51774,7 @@ ${content}</tr>
         helpHtml("intro.buildings.retry_building"),
         { buttonText: _t.html("intro.ok"), buttonCallback: onClick }
       );
-      context.map().on("move.intro drawn.intro", function() {
+      context2.map().on("move.intro drawn.intro", function() {
         revealHouse(
           house,
           helpHtml("intro.buildings.retry_building"),
@@ -51782,22 +51782,22 @@ ${content}</tr>
         );
       });
       function continueTo(nextStep) {
-        context.map().on("move.intro drawn.intro", null);
+        context2.map().on("move.intro drawn.intro", null);
         nextStep();
       }
     }
     function chooseCategoryBuilding() {
-      if (!_houseID || !context.hasEntity(_houseID)) {
+      if (!_houseID || !context2.hasEntity(_houseID)) {
         return addHouse();
       }
-      var ids = context.selectedIDs();
-      if (context.mode().id !== "select" || !ids.length || ids[0] !== _houseID) {
-        context.enter(modeSelect(context, [_houseID]));
+      var ids = context2.selectedIDs();
+      if (context2.mode().id !== "select" || !ids.length || ids[0] !== _houseID) {
+        context2.enter(modeSelect(context2, [_houseID]));
       }
-      context.container().select(".inspector-wrap").on("wheel.intro", eventCancel);
+      context2.container().select(".inspector-wrap").on("wheel.intro", eventCancel);
       timeout2(function() {
-        context.container().select(".inspector-wrap .panewrap").style("right", "-100%");
-        var button = context.container().select(".preset-category-building .preset-list-button");
+        context2.container().select(".inspector-wrap .panewrap").style("right", "-100%");
+        var button = context2.container().select(".preset-category-building .preset-list-button");
         reveal(
           button.node(),
           helpHtml("intro.buildings.choose_category_building", { category: buildingCatetory.name() })
@@ -51807,34 +51807,34 @@ ${content}</tr>
           continueTo(choosePresetHouse);
         });
       }, 400);
-      context.on("enter.intro", function(mode) {
-        if (!_houseID || !context.hasEntity(_houseID)) {
+      context2.on("enter.intro", function(mode) {
+        if (!_houseID || !context2.hasEntity(_houseID)) {
           return continueTo(addHouse);
         }
-        var ids2 = context.selectedIDs();
+        var ids2 = context2.selectedIDs();
         if (mode.id !== "select" || !ids2.length || ids2[0] !== _houseID) {
           return continueTo(chooseCategoryBuilding);
         }
       });
       function continueTo(nextStep) {
-        context.container().select(".inspector-wrap").on("wheel.intro", null);
-        context.container().select(".preset-list-button").on("click.intro", null);
-        context.on("enter.intro", null);
+        context2.container().select(".inspector-wrap").on("wheel.intro", null);
+        context2.container().select(".preset-list-button").on("click.intro", null);
+        context2.on("enter.intro", null);
         nextStep();
       }
     }
     function choosePresetHouse() {
-      if (!_houseID || !context.hasEntity(_houseID)) {
+      if (!_houseID || !context2.hasEntity(_houseID)) {
         return addHouse();
       }
-      var ids = context.selectedIDs();
-      if (context.mode().id !== "select" || !ids.length || ids[0] !== _houseID) {
-        context.enter(modeSelect(context, [_houseID]));
+      var ids = context2.selectedIDs();
+      if (context2.mode().id !== "select" || !ids.length || ids[0] !== _houseID) {
+        context2.enter(modeSelect(context2, [_houseID]));
       }
-      context.container().select(".inspector-wrap").on("wheel.intro", eventCancel);
+      context2.container().select(".inspector-wrap").on("wheel.intro", eventCancel);
       timeout2(function() {
-        context.container().select(".inspector-wrap .panewrap").style("right", "-100%");
-        var button = context.container().select(".preset-building-house .preset-list-button");
+        context2.container().select(".inspector-wrap .panewrap").style("right", "-100%");
+        var button = context2.container().select(".preset-building-house .preset-list-button");
         reveal(
           button.node(),
           helpHtml("intro.buildings.choose_preset_house", { preset: housePreset.name() }),
@@ -51845,32 +51845,32 @@ ${content}</tr>
           continueTo(closeEditorHouse);
         });
       }, 400);
-      context.on("enter.intro", function(mode) {
-        if (!_houseID || !context.hasEntity(_houseID)) {
+      context2.on("enter.intro", function(mode) {
+        if (!_houseID || !context2.hasEntity(_houseID)) {
           return continueTo(addHouse);
         }
-        var ids2 = context.selectedIDs();
+        var ids2 = context2.selectedIDs();
         if (mode.id !== "select" || !ids2.length || ids2[0] !== _houseID) {
           return continueTo(chooseCategoryBuilding);
         }
       });
       function continueTo(nextStep) {
-        context.container().select(".inspector-wrap").on("wheel.intro", null);
-        context.container().select(".preset-list-button").on("click.intro", null);
-        context.on("enter.intro", null);
+        context2.container().select(".inspector-wrap").on("wheel.intro", null);
+        context2.container().select(".preset-list-button").on("click.intro", null);
+        context2.on("enter.intro", null);
         nextStep();
       }
     }
     function closeEditorHouse() {
-      if (!_houseID || !context.hasEntity(_houseID)) {
+      if (!_houseID || !context2.hasEntity(_houseID)) {
         return addHouse();
       }
-      var ids = context.selectedIDs();
-      if (context.mode().id !== "select" || !ids.length || ids[0] !== _houseID) {
-        context.enter(modeSelect(context, [_houseID]));
+      var ids = context2.selectedIDs();
+      if (context2.mode().id !== "select" || !ids.length || ids[0] !== _houseID) {
+        context2.enter(modeSelect(context2, [_houseID]));
       }
-      context.history().checkpoint("hasHouse");
-      context.on("exit.intro", function() {
+      context2.history().checkpoint("hasHouse");
+      context2.on("exit.intro", function() {
         continueTo(rightClickHouse);
       });
       timeout2(function() {
@@ -51880,54 +51880,54 @@ ${content}</tr>
         );
       }, 500);
       function continueTo(nextStep) {
-        context.on("exit.intro", null);
+        context2.on("exit.intro", null);
         nextStep();
       }
     }
     function rightClickHouse() {
       if (!_houseID)
         return chapter.restart();
-      context.enter(modeBrowse(context));
-      context.history().reset("hasHouse");
-      var zoom = context.map().zoom();
+      context2.enter(modeBrowse(context2));
+      context2.history().reset("hasHouse");
+      var zoom = context2.map().zoom();
       if (zoom < 20) {
         zoom = 20;
       }
-      context.map().centerZoomEase(house, zoom, 500);
-      context.on("enter.intro", function(mode) {
+      context2.map().centerZoomEase(house, zoom, 500);
+      context2.on("enter.intro", function(mode) {
         if (mode.id !== "select")
           return;
-        var ids = context.selectedIDs();
+        var ids = context2.selectedIDs();
         if (ids.length !== 1 || ids[0] !== _houseID)
           return;
         timeout2(function() {
-          var node = selectMenuItem(context, "orthogonalize").node();
+          var node = selectMenuItem(context2, "orthogonalize").node();
           if (!node)
             return;
           continueTo(clickSquare);
         }, 50);
       });
-      context.map().on("move.intro drawn.intro", function() {
-        var rightclickString = helpHtml("intro.buildings." + (context.lastPointerType() === "mouse" ? "rightclick_building" : "edit_menu_building_touch"));
+      context2.map().on("move.intro drawn.intro", function() {
+        var rightclickString = helpHtml("intro.buildings." + (context2.lastPointerType() === "mouse" ? "rightclick_building" : "edit_menu_building_touch"));
         revealHouse(house, rightclickString, { duration: 0 });
       });
-      context.history().on("change.intro", function() {
+      context2.history().on("change.intro", function() {
         continueTo(rightClickHouse);
       });
       function continueTo(nextStep) {
-        context.on("enter.intro", null);
-        context.map().on("move.intro drawn.intro", null);
-        context.history().on("change.intro", null);
+        context2.on("enter.intro", null);
+        context2.map().on("move.intro drawn.intro", null);
+        context2.history().on("change.intro", null);
         nextStep();
       }
     }
     function clickSquare() {
       if (!_houseID)
         return chapter.restart();
-      var entity = context.hasEntity(_houseID);
+      var entity = context2.hasEntity(_houseID);
       if (!entity)
         return continueTo(rightClickHouse);
-      var node = selectMenuItem(context, "orthogonalize").node();
+      var node = selectMenuItem(context2, "orthogonalize").node();
       if (!node) {
         return continueTo(rightClickHouse);
       }
@@ -51937,15 +51937,15 @@ ${content}</tr>
         helpHtml("intro.buildings.square_building"),
         { padding: 50 }
       );
-      context.on("enter.intro", function(mode) {
+      context2.on("enter.intro", function(mode) {
         if (mode.id === "browse") {
           continueTo(rightClickHouse);
         } else if (mode.id === "move" || mode.id === "rotate") {
           continueTo(retryClickSquare);
         }
       });
-      context.map().on("move.intro", function() {
-        var node2 = selectMenuItem(context, "orthogonalize").node();
+      context2.map().on("move.intro", function() {
+        var node2 = selectMenuItem(context2, "orthogonalize").node();
         if (!wasChanged && !node2) {
           return continueTo(rightClickHouse);
         }
@@ -51955,11 +51955,11 @@ ${content}</tr>
           { duration: 0, padding: 50 }
         );
       });
-      context.history().on("change.intro", function() {
+      context2.history().on("change.intro", function() {
         wasChanged = true;
-        context.history().on("change.intro", null);
+        context2.history().on("change.intro", null);
         timeout2(function() {
-          if (context.history().undoAnnotation() === _t("operations.orthogonalize.annotation.feature", { n: 1 })) {
+          if (context2.history().undoAnnotation() === _t("operations.orthogonalize.annotation.feature", { n: 1 })) {
             continueTo(doneSquare);
           } else {
             continueTo(retryClickSquare);
@@ -51967,14 +51967,14 @@ ${content}</tr>
         }, 500);
       });
       function continueTo(nextStep) {
-        context.on("enter.intro", null);
-        context.map().on("move.intro", null);
-        context.history().on("change.intro", null);
+        context2.on("enter.intro", null);
+        context2.map().on("move.intro", null);
+        context2.history().on("change.intro", null);
         nextStep();
       }
     }
     function retryClickSquare() {
-      context.enter(modeBrowse(context));
+      context2.enter(modeBrowse(context2));
       revealHouse(house, helpHtml("intro.buildings.retry_square"), {
         buttonText: _t.html("intro.ok"),
         buttonCallback: function() {
@@ -51986,7 +51986,7 @@ ${content}</tr>
       }
     }
     function doneSquare() {
-      context.history().checkpoint("doneSquare");
+      context2.history().checkpoint("doneSquare");
       revealHouse(house, helpHtml("intro.buildings.done_square"), {
         buttonText: _t.html("intro.ok"),
         buttonCallback: function() {
@@ -51998,145 +51998,145 @@ ${content}</tr>
       }
     }
     function addTank() {
-      context.enter(modeBrowse(context));
-      context.history().reset("doneSquare");
+      context2.enter(modeBrowse(context2));
+      context2.history().reset("doneSquare");
       _tankID = null;
-      var msec = transitionTime(tank, context.map().center());
+      var msec = transitionTime(tank, context2.map().center());
       if (msec) {
         reveal(null, null, { duration: 0 });
       }
-      context.map().centerZoomEase(tank, 19.5, msec);
+      context2.map().centerZoomEase(tank, 19.5, msec);
       timeout2(function() {
         reveal(
           "button.add-area",
           helpHtml("intro.buildings.add_tank")
         );
-        context.on("enter.intro", function(mode) {
+        context2.on("enter.intro", function(mode) {
           if (mode.id !== "add-area")
             return;
           continueTo(startTank);
         });
       }, msec + 100);
       function continueTo(nextStep) {
-        context.on("enter.intro", null);
+        context2.on("enter.intro", null);
         nextStep();
       }
     }
     function startTank() {
-      if (context.mode().id !== "add-area") {
+      if (context2.mode().id !== "add-area") {
         return continueTo(addTank);
       }
       _tankID = null;
       timeout2(function() {
-        var startString = helpHtml("intro.buildings.start_tank") + helpHtml("intro.buildings.tank_edge_" + (context.lastPointerType() === "mouse" ? "click" : "tap"));
+        var startString = helpHtml("intro.buildings.start_tank") + helpHtml("intro.buildings.tank_edge_" + (context2.lastPointerType() === "mouse" ? "click" : "tap"));
         revealTank(tank, startString);
-        context.map().on("move.intro drawn.intro", function() {
+        context2.map().on("move.intro drawn.intro", function() {
           revealTank(tank, startString, { duration: 0 });
         });
-        context.on("enter.intro", function(mode) {
+        context2.on("enter.intro", function(mode) {
           if (mode.id !== "draw-area")
             return chapter.restart();
           continueTo(continueTank);
         });
       }, 550);
       function continueTo(nextStep) {
-        context.map().on("move.intro drawn.intro", null);
-        context.on("enter.intro", null);
+        context2.map().on("move.intro drawn.intro", null);
+        context2.on("enter.intro", null);
         nextStep();
       }
     }
     function continueTank() {
-      if (context.mode().id !== "draw-area") {
+      if (context2.mode().id !== "draw-area") {
         return continueTo(addTank);
       }
       _tankID = null;
-      var continueString = helpHtml("intro.buildings.continue_tank") + "{br}" + helpHtml("intro.areas.finish_area_" + (context.lastPointerType() === "mouse" ? "click" : "tap")) + helpHtml("intro.buildings.finish_tank");
+      var continueString = helpHtml("intro.buildings.continue_tank") + "{br}" + helpHtml("intro.areas.finish_area_" + (context2.lastPointerType() === "mouse" ? "click" : "tap")) + helpHtml("intro.buildings.finish_tank");
       revealTank(tank, continueString);
-      context.map().on("move.intro drawn.intro", function() {
+      context2.map().on("move.intro drawn.intro", function() {
         revealTank(tank, continueString, { duration: 0 });
       });
-      context.on("enter.intro", function(mode) {
+      context2.on("enter.intro", function(mode) {
         if (mode.id === "draw-area") {
           return;
         } else if (mode.id === "select") {
-          _tankID = context.selectedIDs()[0];
+          _tankID = context2.selectedIDs()[0];
           return continueTo(searchPresetTank);
         } else {
           return continueTo(addTank);
         }
       });
       function continueTo(nextStep) {
-        context.map().on("move.intro drawn.intro", null);
-        context.on("enter.intro", null);
+        context2.map().on("move.intro drawn.intro", null);
+        context2.on("enter.intro", null);
         nextStep();
       }
     }
     function searchPresetTank() {
-      if (!_tankID || !context.hasEntity(_tankID)) {
+      if (!_tankID || !context2.hasEntity(_tankID)) {
         return addTank();
       }
-      var ids = context.selectedIDs();
-      if (context.mode().id !== "select" || !ids.length || ids[0] !== _tankID) {
-        context.enter(modeSelect(context, [_tankID]));
+      var ids = context2.selectedIDs();
+      if (context2.mode().id !== "select" || !ids.length || ids[0] !== _tankID) {
+        context2.enter(modeSelect(context2, [_tankID]));
       }
-      context.container().select(".inspector-wrap").on("wheel.intro", eventCancel);
+      context2.container().select(".inspector-wrap").on("wheel.intro", eventCancel);
       timeout2(function() {
-        context.container().select(".inspector-wrap .panewrap").style("right", "-100%");
-        context.container().select(".preset-search-input").on("keydown.intro", null).on("keyup.intro", checkPresetSearch);
+        context2.container().select(".inspector-wrap .panewrap").style("right", "-100%");
+        context2.container().select(".preset-search-input").on("keydown.intro", null).on("keyup.intro", checkPresetSearch);
         reveal(
           ".preset-search-input",
           helpHtml("intro.buildings.search_tank", { preset: tankPreset.name() })
         );
       }, 400);
-      context.on("enter.intro", function(mode) {
-        if (!_tankID || !context.hasEntity(_tankID)) {
+      context2.on("enter.intro", function(mode) {
+        if (!_tankID || !context2.hasEntity(_tankID)) {
           return continueTo(addTank);
         }
-        var ids2 = context.selectedIDs();
+        var ids2 = context2.selectedIDs();
         if (mode.id !== "select" || !ids2.length || ids2[0] !== _tankID) {
-          context.enter(modeSelect(context, [_tankID]));
-          context.container().select(".inspector-wrap .panewrap").style("right", "-100%");
-          context.container().select(".inspector-wrap").on("wheel.intro", eventCancel);
-          context.container().select(".preset-search-input").on("keydown.intro", null).on("keyup.intro", checkPresetSearch);
+          context2.enter(modeSelect(context2, [_tankID]));
+          context2.container().select(".inspector-wrap .panewrap").style("right", "-100%");
+          context2.container().select(".inspector-wrap").on("wheel.intro", eventCancel);
+          context2.container().select(".preset-search-input").on("keydown.intro", null).on("keyup.intro", checkPresetSearch);
           reveal(
             ".preset-search-input",
             helpHtml("intro.buildings.search_tank", { preset: tankPreset.name() })
           );
-          context.history().on("change.intro", null);
+          context2.history().on("change.intro", null);
         }
       });
       function checkPresetSearch() {
-        var first = context.container().select(".preset-list-item:first-child");
+        var first = context2.container().select(".preset-list-item:first-child");
         if (first.classed("preset-man_made-storage_tank")) {
           reveal(
             first.select(".preset-list-button").node(),
             helpHtml("intro.buildings.choose_tank", { preset: tankPreset.name() }),
             { duration: 300 }
           );
-          context.container().select(".preset-search-input").on("keydown.intro", eventCancel, true).on("keyup.intro", null);
-          context.history().on("change.intro", function() {
+          context2.container().select(".preset-search-input").on("keydown.intro", eventCancel, true).on("keyup.intro", null);
+          context2.history().on("change.intro", function() {
             continueTo(closeEditorTank);
           });
         }
       }
       function continueTo(nextStep) {
-        context.container().select(".inspector-wrap").on("wheel.intro", null);
-        context.on("enter.intro", null);
-        context.history().on("change.intro", null);
-        context.container().select(".preset-search-input").on("keydown.intro keyup.intro", null);
+        context2.container().select(".inspector-wrap").on("wheel.intro", null);
+        context2.on("enter.intro", null);
+        context2.history().on("change.intro", null);
+        context2.container().select(".preset-search-input").on("keydown.intro keyup.intro", null);
         nextStep();
       }
     }
     function closeEditorTank() {
-      if (!_tankID || !context.hasEntity(_tankID)) {
+      if (!_tankID || !context2.hasEntity(_tankID)) {
         return addTank();
       }
-      var ids = context.selectedIDs();
-      if (context.mode().id !== "select" || !ids.length || ids[0] !== _tankID) {
-        context.enter(modeSelect(context, [_tankID]));
+      var ids = context2.selectedIDs();
+      if (context2.mode().id !== "select" || !ids.length || ids[0] !== _tankID) {
+        context2.enter(modeSelect(context2, [_tankID]));
       }
-      context.history().checkpoint("hasTank");
-      context.on("exit.intro", function() {
+      context2.history().checkpoint("hasTank");
+      context2.on("exit.intro", function() {
         continueTo(rightClickTank);
       });
       timeout2(function() {
@@ -52146,53 +52146,53 @@ ${content}</tr>
         );
       }, 500);
       function continueTo(nextStep) {
-        context.on("exit.intro", null);
+        context2.on("exit.intro", null);
         nextStep();
       }
     }
     function rightClickTank() {
       if (!_tankID)
         return continueTo(addTank);
-      context.enter(modeBrowse(context));
-      context.history().reset("hasTank");
-      context.map().centerEase(tank, 500);
+      context2.enter(modeBrowse(context2));
+      context2.history().reset("hasTank");
+      context2.map().centerEase(tank, 500);
       timeout2(function() {
-        context.on("enter.intro", function(mode) {
+        context2.on("enter.intro", function(mode) {
           if (mode.id !== "select")
             return;
-          var ids = context.selectedIDs();
+          var ids = context2.selectedIDs();
           if (ids.length !== 1 || ids[0] !== _tankID)
             return;
           timeout2(function() {
-            var node = selectMenuItem(context, "circularize").node();
+            var node = selectMenuItem(context2, "circularize").node();
             if (!node)
               return;
             continueTo(clickCircle);
           }, 50);
         });
-        var rightclickString = helpHtml("intro.buildings." + (context.lastPointerType() === "mouse" ? "rightclick_tank" : "edit_menu_tank_touch"));
+        var rightclickString = helpHtml("intro.buildings." + (context2.lastPointerType() === "mouse" ? "rightclick_tank" : "edit_menu_tank_touch"));
         revealTank(tank, rightclickString);
-        context.map().on("move.intro drawn.intro", function() {
+        context2.map().on("move.intro drawn.intro", function() {
           revealTank(tank, rightclickString, { duration: 0 });
         });
-        context.history().on("change.intro", function() {
+        context2.history().on("change.intro", function() {
           continueTo(rightClickTank);
         });
       }, 600);
       function continueTo(nextStep) {
-        context.on("enter.intro", null);
-        context.map().on("move.intro drawn.intro", null);
-        context.history().on("change.intro", null);
+        context2.on("enter.intro", null);
+        context2.map().on("move.intro drawn.intro", null);
+        context2.history().on("change.intro", null);
         nextStep();
       }
     }
     function clickCircle() {
       if (!_tankID)
         return chapter.restart();
-      var entity = context.hasEntity(_tankID);
+      var entity = context2.hasEntity(_tankID);
       if (!entity)
         return continueTo(rightClickTank);
-      var node = selectMenuItem(context, "circularize").node();
+      var node = selectMenuItem(context2, "circularize").node();
       if (!node) {
         return continueTo(rightClickTank);
       }
@@ -52202,15 +52202,15 @@ ${content}</tr>
         helpHtml("intro.buildings.circle_tank"),
         { padding: 50 }
       );
-      context.on("enter.intro", function(mode) {
+      context2.on("enter.intro", function(mode) {
         if (mode.id === "browse") {
           continueTo(rightClickTank);
         } else if (mode.id === "move" || mode.id === "rotate") {
           continueTo(retryClickCircle);
         }
       });
-      context.map().on("move.intro", function() {
-        var node2 = selectMenuItem(context, "circularize").node();
+      context2.map().on("move.intro", function() {
+        var node2 = selectMenuItem(context2, "circularize").node();
         if (!wasChanged && !node2) {
           return continueTo(rightClickTank);
         }
@@ -52220,11 +52220,11 @@ ${content}</tr>
           { duration: 0, padding: 50 }
         );
       });
-      context.history().on("change.intro", function() {
+      context2.history().on("change.intro", function() {
         wasChanged = true;
-        context.history().on("change.intro", null);
+        context2.history().on("change.intro", null);
         timeout2(function() {
-          if (context.history().undoAnnotation() === _t("operations.circularize.annotation.feature", { n: 1 })) {
+          if (context2.history().undoAnnotation() === _t("operations.circularize.annotation.feature", { n: 1 })) {
             continueTo(play);
           } else {
             continueTo(retryClickCircle);
@@ -52232,14 +52232,14 @@ ${content}</tr>
         }, 500);
       });
       function continueTo(nextStep) {
-        context.on("enter.intro", null);
-        context.map().on("move.intro", null);
-        context.history().on("change.intro", null);
+        context2.on("enter.intro", null);
+        context2.map().on("move.intro", null);
+        context2.history().on("change.intro", null);
         nextStep();
       }
     }
     function retryClickCircle() {
-      context.enter(modeBrowse(context));
+      context2.enter(modeBrowse(context2));
       revealTank(tank, helpHtml("intro.buildings.retry_circle"), {
         buttonText: _t.html("intro.ok"),
         buttonCallback: function() {
@@ -52269,12 +52269,12 @@ ${content}</tr>
     };
     chapter.exit = function() {
       timeouts.forEach(window.clearTimeout);
-      context.on("enter.intro exit.intro", null);
-      context.map().on("move.intro drawn.intro", null);
-      context.history().on("change.intro", null);
-      context.container().select(".inspector-wrap").on("wheel.intro", null);
-      context.container().select(".preset-search-input").on("keydown.intro keyup.intro", null);
-      context.container().select(".more-fields .combobox-input").on("click.intro", null);
+      context2.on("enter.intro exit.intro", null);
+      context2.map().on("move.intro drawn.intro", null);
+      context2.history().on("change.intro", null);
+      context2.container().select(".inspector-wrap").on("wheel.intro", null);
+      context2.container().select(".preset-search-input").on("keydown.intro keyup.intro", null);
+      context2.container().select(".more-fields .combobox-input").on("click.intro", null);
     };
     chapter.restart = function() {
       chapter.exit();
@@ -52284,7 +52284,7 @@ ${content}</tr>
   }
 
   // modules/ui/intro/start_editing.js
-  function uiIntroStartEditing(context, reveal) {
+  function uiIntroStartEditing(context2, reveal) {
     var dispatch10 = dispatch_default("done", "startEditing");
     var modalSelection = select_default2(null);
     var chapter = {
@@ -52315,7 +52315,7 @@ ${content}</tr>
       );
     }
     function showSave() {
-      context.container().selectAll(".shaded").remove();
+      context2.container().selectAll(".shaded").remove();
       reveal(
         ".top-toolbar button.save",
         helpHtml("intro.startediting.save"),
@@ -52328,8 +52328,8 @@ ${content}</tr>
       );
     }
     function showStart() {
-      context.container().selectAll(".shaded").remove();
-      modalSelection = uiModal(context.container());
+      context2.container().selectAll(".shaded").remove();
+      modalSelection = uiModal(context2.container());
       modalSelection.select(".modal").attr("class", "modal-splash modal");
       modalSelection.selectAll(".close").remove();
       var startbutton = modalSelection.select(".content").attr("class", "fillL").append("button").attr("class", "modal-section huge-modal-button").on("click", function() {
@@ -52344,7 +52344,7 @@ ${content}</tr>
     };
     chapter.exit = function() {
       modalSelection.remove();
-      context.container().selectAll(".shaded").remove();
+      context2.container().selectAll(".shaded").remove();
     };
     return utilRebind(chapter, dispatch10, "on");
   }
@@ -52368,7 +52368,7 @@ ${content}</tr>
     "building",
     "startEditing"
   ];
-  function uiIntro(context) {
+  function uiIntro(context2) {
     const INTRO_IMAGERY = "pd-USGS-Orthoimagery";
     let _introGraph = {};
     let _currChapter;
@@ -52384,51 +52384,51 @@ ${content}</tr>
       });
     }
     function startIntro(selection2) {
-      context.enter(modeBrowse(context));
-      let osm = context.connection();
-      let history = context.history().toJSON();
+      context2.enter(modeBrowse(context2));
+      let osm = context2.connection();
+      let history = context2.history().toJSON();
       let hash = window.location.hash;
-      let center = context.map().center();
-      let zoom = context.map().zoom();
-      let background = context.background().baseLayerSource();
-      let overlays = context.background().overlayLayerSources();
-      let opacity = context.container().selectAll(".main-map .layer-background").style("opacity");
+      let center = context2.map().center();
+      let zoom = context2.map().zoom();
+      let background = context2.background().baseLayerSource();
+      let overlays = context2.background().overlayLayerSources();
+      let opacity = context2.container().selectAll(".main-map .layer-background").style("opacity");
       let caches = osm && osm.caches();
-      let baseEntities = context.history().graph().base().entities;
-      context.ui().sidebar.expand();
-      context.container().selectAll("button.sidebar-toggle").classed("disabled", true);
-      context.inIntro(true);
+      let baseEntities = context2.history().graph().base().entities;
+      context2.ui().sidebar.expand();
+      context2.container().selectAll("button.sidebar-toggle").classed("disabled", true);
+      context2.inIntro(true);
       if (osm) {
         osm.toggle(false).reset();
       }
-      context.history().reset();
-      context.history().merge(Object.values(coreGraph().load(_introGraph).entities));
-      context.history().checkpoint("initial");
-      let imagery = context.background().findSource(INTRO_IMAGERY);
+      context2.history().reset();
+      context2.history().merge(Object.values(coreGraph().load(_introGraph).entities));
+      context2.history().checkpoint("initial");
+      let imagery = context2.background().findSource(INTRO_IMAGERY);
       if (imagery) {
-        context.background().baseLayerSource(imagery);
+        context2.background().baseLayerSource(imagery);
       } else {
-        context.background().bing();
+        context2.background().bing();
       }
-      overlays.forEach((d) => context.background().toggleOverlayLayer(d));
-      let layers = context.layers();
+      overlays.forEach((d) => context2.background().toggleOverlayLayer(d));
+      let layers = context2.layers();
       layers.all().forEach((item) => {
         if (typeof item.layer.enabled === "function") {
           item.layer.enabled(item.id === "osm");
         }
       });
-      context.container().selectAll(".main-map .layer-background").style("opacity", 1);
-      let curtain = uiCurtain(context.container().node());
+      context2.container().selectAll(".main-map .layer-background").style("opacity", 1);
+      let curtain = uiCurtain(context2.container().node());
       selection2.call(curtain);
       corePreferences("walkthrough_started", "yes");
       let storedProgress = corePreferences("walkthrough_progress") || "";
       let progress = storedProgress.split(";").filter(Boolean);
       let chapters = chapterFlow.map((chapter, i2) => {
-        let s = chapterUi[chapter](context, curtain.reveal).on("done", () => {
+        let s = chapterUi[chapter](context2, curtain.reveal).on("done", () => {
           buttons.filter((d) => d.title === s.title).classed("finished", true);
           if (i2 < chapterFlow.length - 1) {
             const next = chapterFlow[i2 + 1];
-            context.container().select(`button.chapter-${next}`).classed("next", true);
+            context2.container().select(`button.chapter-${next}`).classed("next", true);
           }
           progress.push(chapter);
           corePreferences("walkthrough_progress", utilArrayUniq(progress).join(";"));
@@ -52444,20 +52444,20 @@ ${content}</tr>
         }
         curtain.remove();
         navwrap.remove();
-        context.container().selectAll(".main-map .layer-background").style("opacity", opacity);
-        context.container().selectAll("button.sidebar-toggle").classed("disabled", false);
+        context2.container().selectAll(".main-map .layer-background").style("opacity", opacity);
+        context2.container().selectAll("button.sidebar-toggle").classed("disabled", false);
         if (osm) {
           osm.toggle(true).reset().caches(caches);
         }
-        context.history().reset().merge(Object.values(baseEntities));
-        context.background().baseLayerSource(background);
-        overlays.forEach((d) => context.background().toggleOverlayLayer(d));
+        context2.history().reset().merge(Object.values(baseEntities));
+        context2.background().baseLayerSource(background);
+        overlays.forEach((d) => context2.background().toggleOverlayLayer(d));
         if (history) {
-          context.history().fromJSON(history, false);
+          context2.history().fromJSON(history, false);
         }
-        context.map().centerZoom(center, zoom);
+        context2.map().centerZoom(center, zoom);
         window.location.replace(hash);
-        context.inIntro(false);
+        context2.inIntro(false);
       });
       let navwrap = selection2.append("div").attr("class", "intro-nav-wrap fillD");
       navwrap.append("svg").attr("class", "intro-nav-wrap-logo").append("use").attr("xlink:href", "#iD-logo-walkthrough");
@@ -52470,7 +52470,7 @@ ${content}</tr>
         if (_currChapter) {
           _currChapter.exit();
         }
-        context.enter(modeBrowse(context));
+        context2.enter(modeBrowse(context2));
         _currChapter = newChapter;
         _currChapter.enter();
         buttons.classed("next", false).classed("active", (d) => d.title === _currChapter.title);
@@ -52480,7 +52480,7 @@ ${content}</tr>
   }
 
   // modules/ui/issues_info.js
-  function uiIssuesInfo(context) {
+  function uiIssuesInfo(context2) {
     var warningsItem = {
       id: "warnings",
       count: 0,
@@ -52495,7 +52495,7 @@ ${content}</tr>
     };
     function update(selection2) {
       var shownItems = [];
-      var liveIssues = context.validator().getIssues({
+      var liveIssues = context2.validator().getIssues({
         what: corePreferences("validate-what") || "edited",
         where: corePreferences("validate-where") || "all"
       });
@@ -52504,7 +52504,7 @@ ${content}</tr>
         shownItems.push(warningsItem);
       }
       if (corePreferences("validate-what") === "all") {
-        var resolvedIssues = context.validator().getResolvedIssues();
+        var resolvedIssues = context2.validator().getResolvedIssues();
         if (resolvedIssues.length) {
           resolvedItem.count = resolvedIssues.length;
           shownItems.push(resolvedItem);
@@ -52522,7 +52522,7 @@ ${content}</tr>
         chipSelection.call(tooltipBehavior).on("click", function(d3_event) {
           d3_event.preventDefault();
           tooltipBehavior.hide(select_default2(this));
-          context.ui().togglePanes(context.container().select(".map-panes .issues-pane"));
+          context2.ui().togglePanes(context2.container().select(".map-panes .issues-pane"));
         });
         chipSelection.call(svgIcon("#" + d.iconID));
       });
@@ -52533,20 +52533,20 @@ ${content}</tr>
     }
     return function(selection2) {
       update(selection2);
-      context.validator().on("validated.infobox", function() {
+      context2.validator().on("validated.infobox", function() {
         update(selection2);
       });
     };
   }
 
   // modules/ui/map_in_map.js
-  function uiMapInMap(context) {
+  function uiMapInMap(context2) {
     function mapInMap(selection2) {
-      var backgroundLayer = rendererTileLayer(context);
+      var backgroundLayer = rendererTileLayer(context2);
       var overlayLayers = {};
       var projection2 = geoRawMercator();
-      var dataLayer = svgData(projection2, context).showLabels(false);
-      var debugLayer = svgDebug(projection2, context);
+      var dataLayer = svgData(projection2, context2).showLabels(false);
+      var debugLayer = svgDebug(projection2, context2);
       var zoom = zoom_default2().scaleExtent([geoZoomToScale(0.5), geoZoomToScale(24)]).on("start", zoomStarted).on("zoom", zoomed).on("end", zoomEnded);
       var wrap2 = select_default2(null);
       var tiles = select_default2(null);
@@ -52597,7 +52597,7 @@ ${content}</tr>
         utilSetTransform(viewport, 0, 0, scale);
         _isTransformed = true;
         _tCurr = identity2.translate(x, y).scale(k);
-        var zMain = geoScaleToZoom(context.projection.scale());
+        var zMain = geoScaleToZoom(context2.projection.scale());
         var zMini = geoScaleToZoom(k);
         _zDiff = zMain - zMini;
         queueRedraw();
@@ -52609,11 +52609,11 @@ ${content}</tr>
           return;
         updateProjection();
         _gesture = null;
-        context.map().center(projection2.invert(_cMini));
+        context2.map().center(projection2.invert(_cMini));
       }
       function updateProjection() {
-        var loc = context.map().center();
-        var tMain = context.projection.transform();
+        var loc = context2.map().center();
+        var tMain = context2.projection.transform();
         var zMain = geoScaleToZoom(tMain.k);
         var zMini = Math.max(zMain - _zDiff, 0.5);
         var kMini = geoZoomToScale(zMini);
@@ -52642,15 +52642,15 @@ ${content}</tr>
         var zMini = geoScaleToZoom(projection2.scale());
         tiles = wrap2.selectAll(".map-in-map-tiles").data([0]);
         tiles = tiles.enter().append("div").attr("class", "map-in-map-tiles").merge(tiles);
-        backgroundLayer.source(context.background().baseLayerSource()).projection(projection2).dimensions(_dMini);
+        backgroundLayer.source(context2.background().baseLayerSource()).projection(projection2).dimensions(_dMini);
         var background = tiles.selectAll(".map-in-map-background").data([0]);
         background.enter().append("div").attr("class", "map-in-map-background").merge(background).call(backgroundLayer);
-        var overlaySources = context.background().overlayLayerSources();
+        var overlaySources = context2.background().overlayLayerSources();
         var activeOverlayLayers = [];
         for (var i2 = 0; i2 < overlaySources.length; i2++) {
           if (overlaySources[i2].validZoom(zMini)) {
             if (!overlayLayers[i2])
-              overlayLayers[i2] = rendererTileLayer(context);
+              overlayLayers[i2] = rendererTileLayer(context2);
             activeOverlayLayers.push(overlayLayers[i2].source(overlaySources[i2]).projection(projection2).dimensions(_dMini));
           }
         }
@@ -52668,7 +52668,7 @@ ${content}</tr>
         dataLayers = dataLayers.enter().append("svg").attr("class", "map-in-map-data").merge(dataLayers).call(dataLayer).call(debugLayer);
         if (_gesture !== "pan") {
           var getPath = path_default(projection2);
-          var bbox = { type: "Polygon", coordinates: [context.map().extent().polygon()] };
+          var bbox = { type: "Polygon", coordinates: [context2.map().extent().polygon()] };
           viewport = wrap2.selectAll(".map-in-map-viewport").data([0]);
           viewport = viewport.enter().append("svg").attr("class", "map-in-map-viewport").merge(viewport);
           var path = viewport.selectAll(".map-in-map-bbox").data([bbox]);
@@ -52687,7 +52687,7 @@ ${content}</tr>
         if (d3_event)
           d3_event.preventDefault();
         _isHidden = !_isHidden;
-        context.container().select(".minimap-toggle-item").classed("active", !_isHidden).select("input").property("checked", !_isHidden);
+        context2.container().select(".minimap-toggle-item").classed("active", !_isHidden).select("input").property("checked", !_isHidden);
         if (_isHidden) {
           wrap2.style("display", "block").style("opacity", "1").transition().duration(200).style("opacity", "0").on("end", function() {
             selection2.selectAll(".map-in-map").style("display", "none");
@@ -52703,51 +52703,51 @@ ${content}</tr>
       wrap2 = wrap2.enter().append("div").attr("class", "map-in-map").style("display", _isHidden ? "none" : "block").call(zoom).on("dblclick.zoom", null).merge(wrap2);
       _dMini = [200, 150];
       _cMini = geoVecScale(_dMini, 0.5);
-      context.map().on("drawn.map-in-map", function(drawn) {
+      context2.map().on("drawn.map-in-map", function(drawn) {
         if (drawn.full === true) {
           redraw();
         }
       });
       redraw();
-      context.keybinding().on(_t("background.minimap.key"), toggle);
+      context2.keybinding().on(_t("background.minimap.key"), toggle);
     }
     return mapInMap;
   }
 
   // modules/ui/notice.js
-  function uiNotice(context) {
+  function uiNotice(context2) {
     return function(selection2) {
       var div = selection2.append("div").attr("class", "notice");
       var button = div.append("button").attr("class", "zoom-to notice fillD").on("click", function() {
-        context.map().zoomEase(context.minEditableZoom());
+        context2.map().zoomEase(context2.minEditableZoom());
       }).on("wheel", function(d3_event) {
         var e22 = new WheelEvent(d3_event.type, d3_event);
-        context.surface().node().dispatchEvent(e22);
+        context2.surface().node().dispatchEvent(e22);
       });
       button.call(svgIcon("#iD-icon-plus", "pre-text")).append("span").attr("class", "label").call(_t.append("zoom_in_edit"));
       function disableTooHigh() {
-        var canEdit = context.map().zoom() >= context.minEditableZoom();
+        var canEdit = context2.map().zoom() >= context2.minEditableZoom();
         div.style("display", canEdit ? "none" : "block");
       }
-      context.map().on("move.notice", debounce_default(disableTooHigh, 500));
+      context2.map().on("move.notice", debounce_default(disableTooHigh, 500));
       disableTooHigh();
     };
   }
 
   // modules/ui/photoviewer.js
-  function uiPhotoviewer(context) {
+  function uiPhotoviewer(context2) {
     var dispatch10 = dispatch_default("resize");
     var _pointerPrefix = "PointerEvent" in window ? "pointer" : "mouse";
     function photoviewer(selection2) {
       selection2.append("button").attr("class", "thumb-hide").attr("title", _t("icons.close")).on("click", function() {
         if (services.streetside) {
-          services.streetside.hideViewer(context);
+          services.streetside.hideViewer(context2);
         }
         if (services.mapillary) {
-          services.mapillary.hideViewer(context);
+          services.mapillary.hideViewer(context2);
         }
         if (services.kartaview) {
-          services.kartaview.hideViewer(context);
+          services.kartaview.hideViewer(context2);
         }
       }).append("div").call(svgIcon("#iD-icon-close"));
       function preventDefault(d3_event) {
@@ -52780,7 +52780,7 @@ ${content}</tr>
             return;
           d3_event.preventDefault();
           d3_event.stopPropagation();
-          var mapSize = context.map().dimensions();
+          var mapSize = context2.map().dimensions();
           if (resizeOnX) {
             var maxWidth = mapSize[0];
             var newWidth = clamp3(startWidth + d3_event.clientX - startX, minWidth, maxWidth);
@@ -52820,8 +52820,8 @@ ${content}</tr>
       }
     }
     photoviewer.onMapResize = function() {
-      var photoviewer2 = context.container().select(".photoviewer");
-      var content = context.container().select(".main-content");
+      var photoviewer2 = context2.container().select(".photoviewer");
+      var content = context2.container().select(".main-content");
       var mapDimensions = utilGetDimensions(content, true);
       var photoDimensions = utilGetDimensions(photoviewer2, true);
       if (photoDimensions[0] > mapDimensions[0] || photoDimensions[1] > mapDimensions[1] - 90) {
@@ -52837,9 +52837,9 @@ ${content}</tr>
   }
 
   // modules/ui/restore.js
-  function uiRestore(context) {
+  function uiRestore(context2) {
     return function(selection2) {
-      if (!context.history().hasRestorableChanges())
+      if (!context2.history().hasRestorableChanges())
         return;
       let modalSelection = uiModal(selection2, true);
       modalSelection.select(".modal").attr("class", "modal fillL");
@@ -52848,13 +52848,13 @@ ${content}</tr>
       introModal.append("div").attr("class", "modal-section").append("p").call(_t.append("restore.description"));
       let buttonWrap = introModal.append("div").attr("class", "modal-actions");
       let restore = buttonWrap.append("button").attr("class", "restore").on("click", () => {
-        context.history().restore();
+        context2.history().restore();
         modalSelection.remove();
       });
       restore.append("svg").attr("class", "logo logo-restore").append("use").attr("xlink:href", "#iD-logo-restore");
       restore.append("div").call(_t.append("restore.restore"));
       let reset = buttonWrap.append("button").attr("class", "reset").on("click", () => {
-        context.history().clearSaved();
+        context2.history().clearSaved();
         modalSelection.remove();
       });
       reset.append("svg").attr("class", "logo logo-reset").append("use").attr("xlink:href", "#iD-logo-reset");
@@ -52864,8 +52864,8 @@ ${content}</tr>
   }
 
   // modules/ui/scale.js
-  function uiScale(context) {
-    var projection2 = context.projection, isImperial = !_mainLocalizer.usesMetric(), maxLength = 180, tickHeight = 8;
+  function uiScale(context2) {
+    var projection2 = context2.projection, isImperial = !_mainLocalizer.usesMetric(), maxLength = 180, tickHeight = 8;
     function scaleDefs(loc1, loc2) {
       var lat = (loc2[1] + loc1[1]) / 2, conversion = isImperial ? 3.28084 : 1, dist = geoLonToMeters(loc2[0] - loc1[0], lat) * conversion, scale = { dist: 0, px: 0, text: "" }, buckets, i2, val, dLon;
       if (isImperial) {
@@ -52888,7 +52888,7 @@ ${content}</tr>
       return scale;
     }
     function update(selection2) {
-      var dims = context.map().dimensions(), loc1 = projection2.invert([0, dims[1]]), loc2 = projection2.invert([maxLength, dims[1]]), scale = scaleDefs(loc1, loc2);
+      var dims = context2.map().dimensions(), loc1 = projection2.invert([0, dims[1]]), loc2 = projection2.invert([maxLength, dims[1]]), scale = scaleDefs(loc1, loc2);
       selection2.select(".scale-path").attr("d", "M0.5,0.5v" + tickHeight + "h" + scale.px + "v-" + tickHeight);
       selection2.select(".scale-text").style(_mainLocalizer.textDirection() === "ltr" ? "left" : "right", scale.px + 16 + "px").text(scale.text);
     }
@@ -52901,14 +52901,14 @@ ${content}</tr>
       scalegroup.append("path").attr("class", "scale-path");
       selection2.append("div").attr("class", "scale-text");
       selection2.call(update);
-      context.map().on("move.scale", function() {
+      context2.map().on("move.scale", function() {
         update(selection2);
       });
     };
   }
 
   // modules/ui/shortcuts.js
-  function uiShortcuts(context) {
+  function uiShortcuts(context2) {
     var detected = utilDetect();
     var _activeTab = 0;
     var _modalSelection;
@@ -53043,8 +53043,8 @@ ${content}</tr>
         _modalSelection = uiModal(selection2);
         _modalSelection.call(shortcutsModal);
       } else {
-        context.keybinding().on([_t("shortcuts.toggle.key"), "?"], function() {
-          if (context.container().selectAll(".modal-shortcuts").size()) {
+        context2.keybinding().on([_t("shortcuts.toggle.key"), "?"], function() {
+          if (context2.container().selectAll(".modal-shortcuts").size()) {
             if (_modalSelection) {
               _modalSelection.close();
               _modalSelection = null;
@@ -53085,9 +53085,9 @@ ${content}</tr>
 
   // modules/ui/combobox.js
   var _comboHideTimerID;
-  function uiCombobox(context, klass) {
+  function uiCombobox(context2, klass) {
     var dispatch10 = dispatch_default("accept", "cancel");
-    var container = context.container();
+    var container = context2.container();
     var _suggestions = [];
     var _data = [];
     var _fetched = {};
@@ -53442,13 +53442,13 @@ ${content}</tr>
     };
     return utilRebind(combobox, dispatch10, "on");
   }
-  uiCombobox.off = function(input, context) {
+  uiCombobox.off = function(input, context2) {
     input.on("focus.combo-input", null).on("blur.combo-input", null).on("keydown.combo-input", null).on("keyup.combo-input", null).on("input.combo-input", null).on("mousedown.combo-input", null).on("mouseup.combo-input", null);
-    context.container().on("scroll.combo-scroll", null);
+    context2.container().on("scroll.combo-scroll", null);
   };
 
   // modules/ui/disclosure.js
-  function uiDisclosure(context, key, expandedDefault) {
+  function uiDisclosure(context2, key, expandedDefault) {
     var dispatch10 = dispatch_default("toggled");
     var _expanded;
     var _label = utilFunctor("");
@@ -53521,7 +53521,7 @@ ${content}</tr>
   }
 
   // modules/ui/section.js
-  function uiSection(id2, context) {
+  function uiSection(id2, context2) {
     var _classes = utilFunctor("");
     var _shouldDisplay;
     var _content;
@@ -53602,7 +53602,7 @@ ${content}</tr>
       }
       if (_disclosureContent) {
         if (!_disclosure) {
-          _disclosure = uiDisclosure(context, id2.replace(/-/g, "_"), _expandedByDefault()).label(_label || "").content(_disclosureContent);
+          _disclosure = uiDisclosure(context2, id2.replace(/-/g, "_"), _expandedByDefault()).label(_label || "").content(_disclosureContent);
         }
         if (_disclosureExpanded !== void 0) {
           _disclosure.expanded(_disclosureExpanded);
@@ -53724,7 +53724,7 @@ ${content}</tr>
   }
 
   // modules/ui/field_help.js
-  function uiFieldHelp(context, fieldName) {
+  function uiFieldHelp(context2, fieldName) {
     var fieldHelp = {};
     var _inspector = select_default2(null);
     var _wrap = select_default2(null);
@@ -53808,9 +53808,9 @@ ${content}</tr>
         return tkeys[i2];
       });
       if (d.key === "help.field.restrictions.inspecting") {
-        content.insert("img", "p.from_shadow").attr("class", "field-help-image cf").attr("src", context.imagePath("tr_inspect.gif"));
+        content.insert("img", "p.from_shadow").attr("class", "field-help-image cf").attr("src", context2.imagePath("tr_inspect.gif"));
       } else if (d.key === "help.field.restrictions.modifying") {
-        content.insert("img", "p.allow_turn").attr("class", "field-help-image cf").attr("src", context.imagePath("tr_modify.gif"));
+        content.insert("img", "p.allow_turn").attr("class", "field-help-image cf").attr("src", context2.imagePath("tr_modify.gif"));
       }
     }
     fieldHelp.button = function(selection2) {
@@ -53838,7 +53838,7 @@ ${content}</tr>
       _wrap = selection2.selectAll(".form-field-input-wrap");
       if (_wrap.empty())
         return;
-      _inspector = context.container().select(".sidebar .entity-editor-pane .inspector-body");
+      _inspector = context2.container().select(".sidebar .entity-editor-pane .inspector-body");
       if (_inspector.empty())
         return;
       _body = _inspector.selectAll(".field-help-body").data([0]);
@@ -53869,7 +53869,7 @@ ${content}</tr>
   }
 
   // modules/ui/fields/check.js
-  function uiFieldCheck(field, context) {
+  function uiFieldCheck(field, context2) {
     var dispatch10 = dispatch_default("change");
     var options2 = field.options;
     var values = [];
@@ -53899,7 +53899,7 @@ ${content}</tr>
     function checkImpliedYes() {
       _impliedYes = field.id === "oneway_yes";
       if (field.id === "oneway") {
-        var entity = context.entity(_entityIDs[0]);
+        var entity = context2.entity(_entityIDs[0]);
         for (var key in entity.tags) {
           if (key in osmOneWayTags && entity.tags[key] in osmOneWayTags[key]) {
             _impliedYes = true;
@@ -53910,12 +53910,12 @@ ${content}</tr>
       }
     }
     function reverserHidden() {
-      if (!context.container().select("div.inspector-hover").empty())
+      if (!context2.container().select("div.inspector-hover").empty())
         return true;
       return !(_value === "yes" || _impliedYes && !_value);
     }
     function reverserSetText(selection2) {
-      var entity = _entityIDs.length && context.hasEntity(_entityIDs[0]);
+      var entity = _entityIDs.length && context2.hasEntity(_entityIDs[0]);
       if (reverserHidden() || !entity)
         return selection2;
       var first = entity.first();
@@ -53959,7 +53959,7 @@ ${content}</tr>
         reverser.call(reverserSetText).on("click", function(d3_event) {
           d3_event.preventDefault();
           d3_event.stopPropagation();
-          context.perform(
+          context2.perform(
             function(graph) {
               for (var i3 in _entityIDs) {
                 graph = actionReverse(_entityIDs[i3])(graph);
@@ -53968,7 +53968,7 @@ ${content}</tr>
             },
             _t("operations.reverse.annotation.line", { n: 1 })
           );
-          context.validator().validate();
+          context2.validator().validate();
           select_default2(this).call(reverserSetText);
         });
       }
@@ -54010,7 +54010,7 @@ ${content}</tr>
   }
 
   // modules/ui/fields/combo.js
-  function uiFieldCombo(field, context) {
+  function uiFieldCombo(field, context2) {
     var dispatch10 = dispatch_default("change");
     var _isMulti = field.type === "multiCombo" || field.type === "manyCombo";
     var _isNetwork = field.type === "networkCombo";
@@ -54019,7 +54019,7 @@ ${content}</tr>
     var _showTagInfoSuggestions = field.type !== "manyCombo" && field.autoSuggestions !== false;
     var _allowCustomValues = field.type !== "manyCombo" && field.customValues !== false;
     var _snake_case = field.snake_case || field.snake_case === void 0;
-    var _combobox = uiCombobox(context, "combo-" + field.safeid).caseSensitive(field.caseSensitive).minItems(_isMulti || _isSemi ? 1 : 2);
+    var _combobox = uiCombobox(context2, "combo-" + field.safeid).caseSensitive(field.caseSensitive).minItems(_isMulti || _isSemi ? 1 : 2);
     var _container = select_default2(null);
     var _inputWrap = select_default2(null);
     var _input = select_default2(null);
@@ -54115,7 +54115,7 @@ ${content}</tr>
         query
       };
       if (_entityIDs.length) {
-        params.geometry = context.graph().geometry(_entityIDs[0]);
+        params.geometry = context2.graph().geometry(_entityIDs[0]);
       }
       services.taginfo[fn](params, function(err, data) {
         if (err)
@@ -54199,7 +54199,7 @@ ${content}</tr>
               if (typeof old === "string" && old.toLowerCase() !== "no")
                 return;
             }
-            key = context.cleanTagKey(key);
+            key = context2.cleanTagKey(key);
             field.keys.push(key);
             t[key] = "yes";
           });
@@ -54208,7 +54208,7 @@ ${content}</tr>
             return d.key;
           });
           arr = arr.concat(vals);
-          t[field.key] = context.cleanTagValue(utilArrayUniq(arr).filter(Boolean).join(";"));
+          t[field.key] = context2.cleanTagValue(utilArrayUniq(arr).filter(Boolean).join(";"));
         }
         window.setTimeout(function() {
           _input.node().focus();
@@ -54217,7 +54217,7 @@ ${content}</tr>
         var rawValue = utilGetSetValue(_input);
         if (!rawValue && Array.isArray(_tags[field.key]))
           return;
-        val = context.cleanTagValue(tagValue(rawValue));
+        val = context2.cleanTagValue(tagValue(rawValue));
         t[field.key] = val || void 0;
       }
       dispatch10.call("change", this, t);
@@ -54308,9 +54308,9 @@ ${content}</tr>
             field.keys = _multiData.map(function(d) {
               return d.key;
             });
-            maxLength = context.maxCharsForTagKey() - utilUnicodeCharsCount(field.key);
+            maxLength = context2.maxCharsForTagKey() - utilUnicodeCharsCount(field.key);
           } else {
-            maxLength = context.maxCharsForTagKey();
+            maxLength = context2.maxCharsForTagKey();
           }
         } else if (_isSemi) {
           var allValues = [];
@@ -54338,7 +54338,7 @@ ${content}</tr>
             };
           });
           var currLength = utilUnicodeCharsCount(commonValues.join(";"));
-          maxLength = context.maxCharsForTagValue() - currLength;
+          maxLength = context2.maxCharsForTagValue() - currLength;
           if (currLength > 0) {
             maxLength -= 1;
           }
@@ -54485,13 +54485,13 @@ ${content}</tr>
       return combo;
     };
     function combinedEntityExtent() {
-      return _entityIDs && _entityIDs.length && utilTotalExtent(_entityIDs, context.graph());
+      return _entityIDs && _entityIDs.length && utilTotalExtent(_entityIDs, context2.graph());
     }
     return utilRebind(combo, dispatch10, "on");
   }
 
   // modules/ui/fields/input.js
-  function uiFieldText(field, context) {
+  function uiFieldText(field, context2) {
     var dispatch10 = dispatch_default("change");
     var input = select_default2(null);
     var outlinkButton = select_default2(null);
@@ -54508,12 +54508,12 @@ ${content}</tr>
     }
     function calcLocked() {
       var isLocked = (field.id === "brand" || field.id === "network" || field.id === "operator" || field.id === "flag") && _entityIDs.length && _entityIDs.some(function(entityID) {
-        var entity = context.graph().hasEntity(entityID);
+        var entity = context2.graph().hasEntity(entityID);
         if (!entity)
           return false;
         if (entity.tags.wikidata)
           return true;
-        var preset = _mainPresetIndex.match(entity, context.graph());
+        var preset = _mainPresetIndex.match(entity, context2.graph());
         var isSuggestion = preset && preset.suggestion;
         var which = field.id;
         return isSuggestion && !!entity.tags[which] && !!entity.tags[which + ":wikidata"];
@@ -54651,7 +54651,7 @@ ${content}</tr>
         var t = {};
         var val = utilGetSetValue(input);
         if (!onInput)
-          val = context.cleanTagValue(val);
+          val = context2.cleanTagValue(val);
         if (!val && Array.isArray(_tags[field.key]))
           return;
         if (!onInput) {
@@ -54692,13 +54692,13 @@ ${content}</tr>
         node.focus();
     };
     function combinedEntityExtent() {
-      return _entityIDs && _entityIDs.length && utilTotalExtent(_entityIDs, context.graph());
+      return _entityIDs && _entityIDs.length && utilTotalExtent(_entityIDs, context2.graph());
     }
     return utilRebind(i2, dispatch10, "on");
   }
 
   // modules/ui/fields/access.js
-  function uiFieldAccess(field, context) {
+  function uiFieldAccess(field, context2) {
     var dispatch10 = dispatch_default("change");
     var items = select_default2(null);
     var _tags;
@@ -54720,7 +54720,7 @@ ${content}</tr>
         return "preset-input-access preset-input-access-" + d;
       }).call(utilNoAuto).each(function(d) {
         select_default2(this).call(
-          uiCombobox(context, "access-" + d).data(access.options(d))
+          uiCombobox(context2, "access-" + d).data(access.options(d))
         );
       });
       items = items.merge(enter);
@@ -54728,7 +54728,7 @@ ${content}</tr>
     }
     function change(d3_event, d) {
       var tag = {};
-      var value = context.cleanTagValue(utilGetSetValue(select_default2(this)));
+      var value = context2.cleanTagValue(utilGetSetValue(select_default2(this)));
       if (!value && typeof _tags[d] !== "string")
         return;
       tag[d] = value || void 0;
@@ -54911,7 +54911,7 @@ ${content}</tr>
   }
 
   // modules/ui/fields/address.js
-  function uiFieldAddress(field, context) {
+  function uiFieldAddress(field, context2) {
     var dispatch10 = dispatch_default("change");
     var _selection = select_default2(null);
     var _wrap = select_default2(null);
@@ -54936,12 +54936,12 @@ ${content}</tr>
       var extent = combinedEntityExtent();
       var l = extent.center();
       var box = geoExtent(l).padByMeters(200);
-      var streets = context.history().intersects(box).filter(isAddressable).map(function(d) {
-        var loc = context.projection([
+      var streets = context2.history().intersects(box).filter(isAddressable).map(function(d) {
+        var loc = context2.projection([
           (extent[0][0] + extent[1][0]) / 2,
           (extent[0][1] + extent[1][1]) / 2
         ]);
-        var choice = geoChooseEdge(context.graph().childNodes(d), loc, context.projection);
+        var choice = geoChooseEdge(context2.graph().childNodes(d), loc, context2.projection);
         return {
           title: d.tags.name,
           value: d.tags.name,
@@ -54959,11 +54959,11 @@ ${content}</tr>
       var extent = combinedEntityExtent();
       var l = extent.center();
       var box = geoExtent(l).padByMeters(200);
-      var cities = context.history().intersects(box).filter(isAddressable).map(function(d) {
+      var cities = context2.history().intersects(box).filter(isAddressable).map(function(d) {
         return {
           title: d.tags["addr:city"] || d.tags.name,
           value: d.tags["addr:city"] || d.tags.name,
-          dist: geoSphericalDistance(d.extent(context.graph()).center(), l)
+          dist: geoSphericalDistance(d.extent(context2.graph()).center(), l)
         };
       }).sort(function(a, b) {
         return a.dist - b.dist;
@@ -54987,13 +54987,13 @@ ${content}</tr>
       var extent = combinedEntityExtent();
       var l = extent.center();
       var box = geoExtent(l).padByMeters(200);
-      var results = context.history().intersects(box).filter(function hasTag(d) {
+      var results = context2.history().intersects(box).filter(function hasTag(d) {
         return _entityIDs.indexOf(d.id) === -1 && d.tags[key];
       }).map(function(d) {
         return {
           title: d.tags[key],
           value: d.tags[key],
-          dist: geoSphericalDistance(d.extent(context.graph()).center(), l)
+          dist: geoSphericalDistance(d.extent(context2.graph()).center(), l)
         };
       }).sort(function(a, b) {
         return a.dist - b.dist;
@@ -55061,7 +55061,7 @@ ${content}</tr>
           return;
         var nearValues = d.id === "street" ? getNearStreets : d.id === "city" ? getNearCities : getNearValues;
         select_default2(this).call(
-          uiCombobox(context, "address-" + d.id).minItems(1).caseSensitive(true).fetcher(function(value, callback) {
+          uiCombobox(context2, "address-" + d.id).minItems(1).caseSensitive(true).fetcher(function(value, callback) {
             callback(nearValues("addr:" + d.id));
           })
         );
@@ -55078,7 +55078,7 @@ ${content}</tr>
       var extent = combinedEntityExtent();
       if (extent) {
         var countryCode;
-        if (context.inIntro()) {
+        if (context2.inIntro()) {
           countryCode = _t("intro.graph.countrycode");
         } else {
           var center = extent.center();
@@ -55097,7 +55097,7 @@ ${content}</tr>
           var key = field.key + ":" + subfield.id;
           var value = this.value;
           if (!onInput)
-            value = context.cleanTagValue(value);
+            value = context2.cleanTagValue(value);
           if (Array.isArray(_tags[key]) && !value)
             return;
           tags[key] = value || void 0;
@@ -55129,7 +55129,7 @@ ${content}</tr>
       }).call(updatePlaceholder);
     }
     function combinedEntityExtent() {
-      return _entityIDs && _entityIDs.length && utilTotalExtent(_entityIDs, context.graph());
+      return _entityIDs && _entityIDs.length && utilTotalExtent(_entityIDs, context2.graph());
     }
     address.entityIDs = function(val) {
       if (!arguments.length)
@@ -55150,7 +55150,7 @@ ${content}</tr>
   }
 
   // modules/ui/fields/cycleway.js
-  function uiFieldCycleway(field, context) {
+  function uiFieldCycleway(field, context2) {
     var dispatch10 = dispatch_default("change");
     var items = select_default2(null);
     var wrap2 = select_default2(null);
@@ -55177,14 +55177,14 @@ ${content}</tr>
         return "preset-input-cycleway preset-input-" + stripcolon(d);
       }).call(utilNoAuto).each(function(d) {
         select_default2(this).call(
-          uiCombobox(context, "cycleway-" + stripcolon(d)).data(cycleway.options(d))
+          uiCombobox(context2, "cycleway-" + stripcolon(d)).data(cycleway.options(d))
         );
       });
       items = items.merge(enter);
       wrap2.selectAll(".preset-input-cycleway").on("change", change).on("blur", change);
     }
     function change(d3_event, key) {
-      var newValue = context.cleanTagValue(utilGetSetValue(select_default2(this)));
+      var newValue = context2.cleanTagValue(utilGetSetValue(select_default2(this)));
       if (!newValue && (Array.isArray(_tags.cycleway) || Array.isArray(_tags[key])))
         return;
       if (newValue === "none" || newValue === "") {
@@ -55259,14 +55259,14 @@ ${content}</tr>
   }
 
   // modules/ui/fields/lanes.js
-  function uiFieldLanes(field, context) {
+  function uiFieldLanes(field, context2) {
     var dispatch10 = dispatch_default("change");
     var LANE_WIDTH = 40;
     var LANE_HEIGHT = 200;
     var _entityIDs = [];
     function lanes(selection2) {
-      var lanesData = context.entity(_entityIDs[0]).lanes();
-      if (!context.container().select(".inspector-wrap.inspector-hidden").empty() || !selection2.node().parentNode) {
+      var lanesData = context2.entity(_entityIDs[0]).lanes();
+      if (!context2.container().select(".inspector-wrap.inspector-hidden").empty() || !selection2.node().parentNode) {
         selection2.call(lanes.off);
         return;
       }
@@ -55317,7 +55317,7 @@ ${content}</tr>
 
   // modules/ui/fields/localized.js
   var _languagesArray = [];
-  function uiFieldLocalized(field, context) {
+  function uiFieldLocalized(field, context2) {
     var dispatch10 = dispatch_default("change", "input");
     var wikipedia = services.wikipedia;
     var input = select_default2(null);
@@ -55331,7 +55331,7 @@ ${content}</tr>
       _territoryLanguages = d;
     }).catch(function() {
     });
-    var langCombo = uiCombobox(context, "localized-lang").fetcher(fetchLanguages).minItems(0);
+    var langCombo = uiCombobox(context2, "localized-lang").fetcher(fetchLanguages).minItems(0);
     var _selection = select_default2(null);
     var _multilingual = [];
     var _buttonTip = uiTooltip().title(_t.html("translate.translate")).placement("left");
@@ -55360,14 +55360,14 @@ ${content}</tr>
     }
     function calcLocked() {
       var isLocked = field.id === "name" && _entityIDs.length && _entityIDs.some(function(entityID) {
-        var entity = context.graph().hasEntity(entityID);
+        var entity = context2.graph().hasEntity(entityID);
         if (!entity)
           return false;
         if (entity.tags.wikidata)
           return true;
         if (entity.tags["name:etymology:wikidata"])
           return true;
-        var preset = _mainPresetIndex.match(entity, context.graph());
+        var preset = _mainPresetIndex.match(entity, context2.graph());
         if (preset) {
           var isSuggestion = preset.suggestion;
           var fields = preset.fields();
@@ -55457,7 +55457,7 @@ ${content}</tr>
           }
           var val = utilGetSetValue(select_default2(this));
           if (!onInput)
-            val = context.cleanTagValue(val);
+            val = context2.cleanTagValue(val);
           if (!val && Array.isArray(_tags[field.key]))
             return;
           var t = {};
@@ -55480,7 +55480,7 @@ ${content}</tr>
       if (d.lang && d.lang !== lang) {
         tags[key(d.lang)] = void 0;
       }
-      var newKey = lang && context.cleanTagKey(key(lang));
+      var newKey = lang && context2.cleanTagKey(key(lang));
       var value = utilGetSetValue(select_default2(this.parentNode).selectAll(".localized-value"));
       if (newKey && value) {
         tags[newKey] = value;
@@ -55493,7 +55493,7 @@ ${content}</tr>
     function changeValue(d3_event, d) {
       if (!d.lang)
         return;
-      var value = context.cleanTagValue(utilGetSetValue(select_default2(this))) || void 0;
+      var value = context2.cleanTagValue(utilGetSetValue(select_default2(this))) || void 0;
       if (!value && Array.isArray(d.value))
         return;
       var t = {};
@@ -55611,13 +55611,13 @@ ${content}</tr>
       _countryCode = countryCode && countryCode.toLowerCase();
     }
     function combinedEntityExtent() {
-      return _entityIDs && _entityIDs.length && utilTotalExtent(_entityIDs, context.graph());
+      return _entityIDs && _entityIDs.length && utilTotalExtent(_entityIDs, context2.graph());
     }
     return utilRebind(localized, dispatch10, "on");
   }
 
   // modules/ui/fields/roadheight.js
-  function uiFieldRoadheight(field, context) {
+  function uiFieldRoadheight(field, context2) {
     var dispatch10 = dispatch_default("change");
     var primaryUnitInput = select_default2(null);
     var primaryInput = select_default2(null);
@@ -55636,7 +55636,7 @@ ${content}</tr>
         title: _t("inspector.roadheight.foot")
       }
     ];
-    var unitCombo = uiCombobox(context, "roadheight-unit").data(primaryUnits);
+    var unitCombo = uiCombobox(context2, "roadheight-unit").data(primaryUnits);
     function roadheight(selection2) {
       var wrap2 = selection2.selectAll(".form-field-input-wrap").data([0]);
       wrap2 = wrap2.enter().append("div").attr("class", "form-field-input-wrap form-field-input-" + field.type).merge(wrap2);
@@ -55672,13 +55672,13 @@ ${content}</tr>
       if (!primaryValue && !secondaryValue) {
         tag[field.key] = void 0;
       } else if (isNaN(primaryValue) || isNaN(secondaryValue) || !_isImperial) {
-        tag[field.key] = context.cleanTagValue(primaryValue);
+        tag[field.key] = context2.cleanTagValue(primaryValue);
       } else {
         if (primaryValue !== "") {
-          primaryValue = context.cleanTagValue(primaryValue + "'");
+          primaryValue = context2.cleanTagValue(primaryValue + "'");
         }
         if (secondaryValue !== "") {
-          secondaryValue = context.cleanTagValue(secondaryValue + '"');
+          secondaryValue = context2.cleanTagValue(secondaryValue + '"');
         }
         tag[field.key] = primaryValue + secondaryValue;
       }
@@ -55716,21 +55716,21 @@ ${content}</tr>
       _entityIDs = val;
     };
     function combinedEntityExtent() {
-      return _entityIDs && _entityIDs.length && utilTotalExtent(_entityIDs, context.graph());
+      return _entityIDs && _entityIDs.length && utilTotalExtent(_entityIDs, context2.graph());
     }
     return utilRebind(roadheight, dispatch10, "on");
   }
 
   // modules/ui/fields/roadspeed.js
-  function uiFieldRoadspeed(field, context) {
+  function uiFieldRoadspeed(field, context2) {
     var dispatch10 = dispatch_default("change");
     var unitInput = select_default2(null);
     var input = select_default2(null);
     var _entityIDs = [];
     var _tags;
     var _isImperial;
-    var speedCombo = uiCombobox(context, "roadspeed");
-    var unitCombo = uiCombobox(context, "roadspeed-unit").data(["km/h", "mph"].map(comboValues));
+    var speedCombo = uiCombobox(context2, "roadspeed");
+    var unitCombo = uiCombobox(context2, "roadspeed-unit").data(["km/h", "mph"].map(comboValues));
     var metricValues = [20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120];
     var imperialValues = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80];
     function roadspeed(selection2) {
@@ -55769,9 +55769,9 @@ ${content}</tr>
       if (!value) {
         tag[field.key] = void 0;
       } else if (isNaN(value) || !_isImperial) {
-        tag[field.key] = context.cleanTagValue(value);
+        tag[field.key] = context2.cleanTagValue(value);
       } else {
-        tag[field.key] = context.cleanTagValue(value + " mph");
+        tag[field.key] = context2.cleanTagValue(value + " mph");
       }
       dispatch10.call("change", this, tag);
     }
@@ -55797,13 +55797,13 @@ ${content}</tr>
       _entityIDs = val;
     };
     function combinedEntityExtent() {
-      return _entityIDs && _entityIDs.length && utilTotalExtent(_entityIDs, context.graph());
+      return _entityIDs && _entityIDs.length && utilTotalExtent(_entityIDs, context2.graph());
     }
     return utilRebind(roadspeed, dispatch10, "on");
   }
 
   // modules/ui/fields/radio.js
-  function uiFieldRadio(field, context) {
+  function uiFieldRadio(field, context2) {
     var dispatch10 = dispatch_default("change");
     var placeholder = select_default2(null);
     var wrap2 = select_default2(null);
@@ -55848,7 +55848,7 @@ ${content}</tr>
       list = list.enter().append("ul").attr("class", "rows").merge(list);
       if (type3) {
         if (!typeField || typeField.id !== selected) {
-          typeField = uiField(context, type3, _entityIDs, { wrap: false }).on("change", changeType);
+          typeField = uiField(context2, type3, _entityIDs, { wrap: false }).on("change", changeType);
         }
         typeField.tags(tags);
       } else {
@@ -55867,7 +55867,7 @@ ${content}</tr>
       }
       if (layer && showLayer) {
         if (!layerField) {
-          layerField = uiField(context, layer, _entityIDs, { wrap: false }).on("change", changeLayer);
+          layerField = uiField(context2, layer, _entityIDs, { wrap: false }).on("change", changeLayer);
         }
         layerField.tags(tags);
         field.keys = utilArrayUnion(field.keys, ["layer"]);
@@ -56003,9 +56003,9 @@ ${content}</tr>
   }
 
   // modules/ui/fields/restrictions.js
-  function uiFieldRestrictions(field, context) {
+  function uiFieldRestrictions(field, context2) {
     var dispatch10 = dispatch_default("change");
-    var breathe = behaviorBreathe(context);
+    var breathe = behaviorBreathe(context2);
     corePreferences("turn-restriction-via-way", null);
     var storedViaWay = corePreferences("turn-restriction-via-way0");
     var storedDistance = corePreferences("turn-restriction-distance");
@@ -56022,8 +56022,8 @@ ${content}</tr>
     var _lastXPos;
     function restrictions(selection2) {
       _parent = selection2;
-      if (_vertexID && (context.graph() !== _graph || !_intersection)) {
-        _graph = context.graph();
+      if (_vertexID && (context2.graph() !== _graph || !_intersection)) {
+        _graph = context2.graph();
         _intersection = osmIntersection(_graph, _vertexID, _maxDistance);
       }
       var isOK = _intersection && _intersection.vertices.length && _intersection.vertices.filter(function(vertex) {
@@ -56032,7 +56032,7 @@ ${content}</tr>
         return way.__to;
       }).length > 1;
       select_default2(selection2.node().parentNode).classed("hide", !isOK);
-      if (!isOK || !context.container().select(".inspector-wrap.inspector-hidden").empty() || !selection2.node().parentNode || !selection2.node().parentNode.parentNode) {
+      if (!isOK || !context2.container().select(".inspector-wrap.inspector-hidden").empty() || !selection2.node().parentNode || !selection2.node().parentNode.parentNode) {
         selection2.call(restrictions.off);
         return;
       }
@@ -56082,7 +56082,7 @@ ${content}</tr>
       var vgraph = _intersection.graph;
       var filter2 = utilFunctor(true);
       var projection2 = geoRawMercator();
-      var sdims = utilGetDimensions(context.container().select(".sidebar"));
+      var sdims = utilGetDimensions(context2.container().select(".sidebar"));
       var d = [sdims[0] - 50, 370];
       var c = geoVecScale(d, 0.5);
       var z = 22;
@@ -56107,10 +56107,10 @@ ${content}</tr>
       var extentCenter = projection2(extent.center());
       extentCenter[1] = extentCenter[1] - padTop / 2;
       projection2.translate(geoVecSubtract(c, extentCenter)).clipExtent([[0, 0], d]);
-      var drawLayers = svgLayers(projection2, context).only(["osm", "touch"]).dimensions(d);
-      var drawVertices = svgVertices(projection2, context);
-      var drawLines = svgLines(projection2, context);
-      var drawTurns = svgTurns(projection2, context);
+      var drawLayers = svgLayers(projection2, context2).only(["osm", "touch"]).dimensions(d);
+      var drawVertices = svgVertices(projection2, context2);
+      var drawLines = svgLines(projection2, context2);
+      var drawTurns = svgTurns(projection2, context2);
       var firstTime = selection2.selectAll(".surface").empty();
       selection2.call(drawLayers);
       var surface = selection2.selectAll(".surface").classed("tr", true);
@@ -56194,7 +56194,7 @@ ${content}</tr>
               _t("operations.restriction.annotation.create")
             ]);
           }
-          context.perform.apply(context, actions);
+          context2.perform.apply(context2, actions);
           var s = surface.selectAll("." + datum2.key);
           datum2 = s.empty() ? null : s.datum();
           updateHints(datum2);
@@ -56212,10 +56212,10 @@ ${content}</tr>
       function redraw(minChange) {
         var xPos = -1;
         if (minChange) {
-          xPos = utilGetDimensions(context.container().select(".sidebar"))[0];
+          xPos = utilGetDimensions(context2.container().select(".sidebar"))[0];
         }
         if (!minChange || minChange && Math.abs(xPos - _lastXPos) >= minChange) {
-          if (context.hasEntity(_vertexID)) {
+          if (context2.hasEntity(_vertexID)) {
             _lastXPos = xPos;
             _container.call(renderViewer);
           }
@@ -56379,7 +56379,7 @@ ${content}</tr>
   uiFieldRestrictions.supportsMultiselection = false;
 
   // modules/ui/fields/textarea.js
-  function uiFieldTextarea(field, context) {
+  function uiFieldTextarea(field, context2) {
     var dispatch10 = dispatch_default("change");
     var input = select_default2(null);
     var _tags;
@@ -56393,7 +56393,7 @@ ${content}</tr>
       return function() {
         var val = utilGetSetValue(input);
         if (!onInput)
-          val = context.cleanTagValue(val);
+          val = context2.cleanTagValue(val);
         if (!val && Array.isArray(_tags[field.key]))
           return;
         var t = {};
@@ -56413,7 +56413,7 @@ ${content}</tr>
   }
 
   // modules/ui/fields/wikidata.js
-  function uiFieldWikidata(field, context) {
+  function uiFieldWikidata(field, context2) {
     var wikidata = services.wikidata;
     var dispatch10 = dispatch_default("change");
     var _selection = select_default2(null);
@@ -56425,7 +56425,7 @@ ${content}</tr>
     var _wikipediaKey = field.keys && field.keys.find(function(key) {
       return key.includes("wikipedia");
     }), _hintKey = field.key === "wikidata" ? "name" : field.key.split(":")[0];
-    var combobox = uiCombobox(context, "combo-" + field.safeid).caseSensitive(true).minItems(1);
+    var combobox = uiCombobox(context2, "combo-" + field.safeid).caseSensitive(true).minItems(1);
     function wiki(selection2) {
       _selection = selection2;
       var wrap2 = selection2.selectAll(".form-field-input-wrap").data([0]);
@@ -56473,7 +56473,7 @@ ${content}</tr>
     function fetchWikidataItems(q, callback) {
       if (!q && _hintKey) {
         for (var i2 in _entityIDs) {
-          var entity = context.hasEntity(_entityIDs[i2]);
+          var entity = context2.hasEntity(_entityIDs[i2]);
           if (entity.tags[_hintKey]) {
             q = entity.tags[_hintKey];
             break;
@@ -56495,12 +56495,12 @@ ${content}</tr>
       var syncTags = {};
       syncTags[field.key] = _qid;
       dispatch10.call("change", this, syncTags);
-      var initGraph = context.graph();
+      var initGraph = context2.graph();
       var initEntityIDs = _entityIDs;
       wikidata.entityByQID(_qid, function(err, entity) {
         if (err)
           return;
-        if (context.graph() !== initGraph)
+        if (context2.graph() !== initGraph)
           return;
         if (!entity.sitelinks)
           return;
@@ -56542,12 +56542,12 @@ ${content}</tr>
           }
         }
         if (newWikipediaValue) {
-          newWikipediaValue = context.cleanTagValue(newWikipediaValue);
+          newWikipediaValue = context2.cleanTagValue(newWikipediaValue);
         }
         if (typeof newWikipediaValue === "undefined")
           return;
         var actions = initEntityIDs.map(function(entityID) {
-          var entity2 = context.hasEntity(entityID);
+          var entity2 = context2.hasEntity(entityID);
           if (!entity2)
             return null;
           var currTags = Object.assign({}, entity2.tags);
@@ -56562,14 +56562,14 @@ ${content}</tr>
         }).filter(Boolean);
         if (!actions.length)
           return;
-        context.overwrite(
+        context2.overwrite(
           function actionUpdateWikipediaTags(graph) {
             actions.forEach(function(action) {
               graph = action(graph);
             });
             return graph;
           },
-          context.history().undoAnnotation()
+          context2.history().undoAnnotation()
         );
       });
     }
@@ -56650,7 +56650,7 @@ ${content}</tr>
   }
 
   // modules/ui/fields/wikipedia.js
-  function uiFieldWikipedia(field, context) {
+  function uiFieldWikipedia(field, context2) {
     const dispatch10 = dispatch_default("change");
     const wikipedia = services.wikipedia;
     const wikidata = services.wikidata;
@@ -56666,7 +56666,7 @@ ${content}</tr>
         updateForTags(_tags);
     }).catch(() => {
     });
-    const langCombo = uiCombobox(context, "wikipedia-lang").fetcher((value, callback) => {
+    const langCombo = uiCombobox(context2, "wikipedia-lang").fetcher((value, callback) => {
       const v = value.toLowerCase();
       callback(
         _dataWikipedia.filter((d) => {
@@ -56674,11 +56674,11 @@ ${content}</tr>
         }).map((d) => ({ value: d[1] }))
       );
     });
-    const titleCombo = uiCombobox(context, "wikipedia-title").fetcher((value, callback) => {
+    const titleCombo = uiCombobox(context2, "wikipedia-title").fetcher((value, callback) => {
       if (!value) {
         value = "";
         for (let i2 in _entityIDs) {
-          let entity = context.hasEntity(_entityIDs[i2]);
+          let entity = context2.hasEntity(_entityIDs[i2]);
           if (entity.tags.name) {
             value = entity.tags.name;
             break;
@@ -56755,24 +56755,24 @@ ${content}</tr>
         utilGetSetValue(_titleInput, value);
       }
       if (value) {
-        syncTags.wikipedia = context.cleanTagValue(language()[2] + ":" + value);
+        syncTags.wikipedia = context2.cleanTagValue(language()[2] + ":" + value);
       } else {
         syncTags.wikipedia = void 0;
       }
       dispatch10.call("change", this, syncTags);
       if (skipWikidata || !value || !language()[2])
         return;
-      const initGraph = context.graph();
+      const initGraph = context2.graph();
       const initEntityIDs = _entityIDs;
       wikidata.itemsByTitle(language()[2], value, (err, data) => {
         if (err || !data || !Object.keys(data).length)
           return;
-        if (context.graph() !== initGraph)
+        if (context2.graph() !== initGraph)
           return;
         const qids = Object.keys(data);
         const value2 = qids && qids.find((id2) => id2.match(/^Q\d+$/));
         let actions = initEntityIDs.map((entityID) => {
-          let entity = context.entity(entityID).tags;
+          let entity = context2.entity(entityID).tags;
           let currTags = Object.assign({}, entity);
           if (currTags.wikidata !== value2) {
             currTags.wikidata = value2;
@@ -56782,14 +56782,14 @@ ${content}</tr>
         }).filter(Boolean);
         if (!actions.length)
           return;
-        context.overwrite(
+        context2.overwrite(
           function actionUpdateWikidataTags(graph) {
             actions.forEach(function(action) {
               graph = action(graph);
             });
             return graph;
           },
-          context.history().undoAnnotation()
+          context2.history().undoAnnotation()
         );
       });
     }
@@ -56875,7 +56875,7 @@ ${content}</tr>
   };
 
   // modules/ui/field.js
-  function uiField(context, presetField2, entityIDs, options2) {
+  function uiField(context2, presetField2, entityIDs, options2) {
     options2 = Object.assign({
       show: true,
       wrap: true,
@@ -56892,8 +56892,8 @@ ${content}</tr>
     var _entityExtent;
     if (entityIDs && entityIDs.length) {
       _entityExtent = entityIDs.reduce(function(extent, entityID) {
-        var entity = context.graph().entity(entityID);
-        return extent.extend(entity.extent(context.graph()));
+        var entity = context2.graph().entity(entityID);
+        return extent.extend(entity.extent(context2.graph()));
       }, geoExtent());
     }
     var _locked = false;
@@ -56903,7 +56903,7 @@ ${content}</tr>
       createField();
     }
     function createField() {
-      field.impl = uiFields[field.type](field, context).on("change", function(t, onInput) {
+      field.impl = uiFields[field.type](field, context2).on("change", function(t, onInput) {
         dispatch10.call("change", field, t, onInput);
       });
       if (entityIDs) {
@@ -56917,8 +56917,8 @@ ${content}</tr>
       if (!entityIDs || !entityIDs.length)
         return false;
       return entityIDs.some(function(entityID) {
-        var original = context.graph().base().entities[entityID];
-        var latest = context.graph().entity(entityID);
+        var original = context2.graph().base().entities[entityID];
+        var latest = context2.graph().entity(entityID);
         return field.keys.some(function(key) {
           return original ? latest.tags[key] !== original.tags[key] : latest.tags[key];
         });
@@ -56986,14 +56986,14 @@ ${content}</tr>
         }
         var reference, help;
         if (options2.wrap && field.type === "restrictions") {
-          help = uiFieldHelp(context, "restrictions");
+          help = uiFieldHelp(context2, "restrictions");
         }
         if (options2.wrap && options2.info) {
           var referenceKey = d.key || "";
           if (d.type === "multiCombo") {
             referenceKey = referenceKey.replace(/:$/, "");
           }
-          reference = uiTagReference(d.reference || { key: referenceKey }, context);
+          reference = uiTagReference(d.reference || { key: referenceKey }, context2);
           if (_state === "hover") {
             reference.showing(false);
           }
@@ -57056,7 +57056,7 @@ ${content}</tr>
       if (entityIDs && entityIDs.length > 1 && uiFields[field.type].supportsMultiselection === false)
         return false;
       if (field.geometry && !entityIDs.every(function(entityID) {
-        return field.matchGeometry(context.graph().geometry(entityID));
+        return field.matchGeometry(context2.graph().geometry(entityID));
       }))
         return false;
       if (entityIDs && _entityExtent && field.locationSetID) {
@@ -57067,7 +57067,7 @@ ${content}</tr>
       var prerequisiteTag = field.prerequisiteTag;
       if (entityIDs && !tagsContainFieldKey() && prerequisiteTag) {
         if (!entityIDs.every(function(entityID) {
-          var entity = context.graph().entity(entityID);
+          var entity = context2.graph().entity(entityID);
           if (prerequisiteTag.key) {
             var value = entity.tags[prerequisiteTag.key];
             if (!value)
@@ -57097,8 +57097,8 @@ ${content}</tr>
   }
 
   // modules/ui/form_fields.js
-  function uiFormFields(context) {
-    var moreCombo = uiCombobox(context, "more-fields").minItems(1);
+  function uiFormFields(context2) {
+    var moreCombo = uiCombobox(context2, "more-fields").minItems(1);
     var _fieldsArr = [];
     var _lastPlaceholder = "";
     var _state = "";
@@ -57189,10 +57189,10 @@ ${content}</tr>
   }
 
   // modules/ui/changeset_editor.js
-  function uiChangesetEditor(context) {
+  function uiChangesetEditor(context2) {
     var dispatch10 = dispatch_default("change");
-    var formFields = uiFormFields(context);
-    var commentCombo = uiCombobox(context, "comment").caseSensitive(true);
+    var formFields = uiFormFields(context2);
+    var commentCombo = uiCombobox(context2, "comment").caseSensitive(true);
     var _fieldsArr;
     var _tags;
     var _changesetID;
@@ -57205,9 +57205,9 @@ ${content}</tr>
         initial = true;
         var presets = _mainPresetIndex;
         _fieldsArr = [
-          uiField(context, presets.field("comment"), null, { show: true, revert: false }),
-          uiField(context, presets.field("source"), null, { show: false, revert: false }),
-          uiField(context, presets.field("hashtags"), null, { show: false, revert: false })
+          uiField(context2, presets.field("comment"), null, { show: true, revert: false }),
+          uiField(context2, presets.field("source"), null, { show: false, revert: false }),
+          uiField(context2, presets.field("hashtags"), null, { show: false, revert: false })
         ];
         _fieldsArr.forEach(function(field) {
           field.on("change", function(t, onInput) {
@@ -57227,7 +57227,7 @@ ${content}</tr>
           commentNode.select();
         }
         utilTriggerEvent(commentField, "blur");
-        var osm = context.connection();
+        var osm = context2.connection();
         if (osm) {
           osm.userChangesets(function(err, changesets) {
             if (err)
@@ -57410,19 +57410,19 @@ ${content}</tr>
   }();
 
   // modules/ui/sections/changes.js
-  function uiSectionChanges(context) {
+  function uiSectionChanges(context2) {
     var _discardTags = {};
     _mainFileFetcher.get("discarded").then(function(d) {
       _discardTags = d;
     }).catch(function() {
     });
-    var section = uiSection("changes-list", context).label(function() {
-      var history = context.history();
+    var section = uiSection("changes-list", context2).label(function() {
+      var history = context2.history();
       var summary = history.difference().summary();
       return _t.html("inspector.title_count", { title: { html: _t.html("commit.changes") }, count: summary.length });
     }).disclosureContent(renderDisclosureContent);
     function renderDisclosureContent(selection2) {
-      var history = context.history();
+      var history = context2.history();
       var summary = history.difference().summary();
       var container = selection2.selectAll(".commit-section").data([0]);
       var containerEnter = container.enter().append("div").attr("class", "commit-section");
@@ -57460,19 +57460,19 @@ ${content}</tr>
       linkEnter.call(svgIcon("#iD-icon-load", "inline")).append("span").call(_t.append("commit.download_changes"));
       function mouseover(d) {
         if (d.entity) {
-          context.surface().selectAll(
-            utilEntityOrMemberSelector([d.entity.id], context.graph())
+          context2.surface().selectAll(
+            utilEntityOrMemberSelector([d.entity.id], context2.graph())
           ).classed("hover", true);
         }
       }
       function mouseout() {
-        context.surface().selectAll(".hover").classed("hover", false);
+        context2.surface().selectAll(".hover").classed("hover", false);
       }
       function click(d3_event, change) {
         if (change.changeType !== "deleted") {
           var entity = change.entity;
-          context.map().zoomToEase(entity);
-          context.surface().selectAll(utilEntityOrMemberSelector([entity.id], context.graph())).classed("hover", true);
+          context2.map().zoomToEase(entity);
+          context2.surface().selectAll(utilEntityOrMemberSelector([entity.id], context2.graph())).classed("hover", true);
         }
       }
     }
@@ -57480,9 +57480,9 @@ ${content}</tr>
   }
 
   // modules/ui/commit_warnings.js
-  function uiCommitWarnings(context) {
+  function uiCommitWarnings(context2) {
     function commitWarnings(selection2) {
-      var issuesBySeverity = context.validator().getIssuesBySeverity({ what: "edited", where: "all", includeDisabledRules: true });
+      var issuesBySeverity = context2.validator().getIssuesBySeverity({ what: "edited", where: "all", includeDisabledRules: true });
       for (var severity in issuesBySeverity) {
         var issues = issuesBySeverity[severity];
         if (severity !== "error") {
@@ -57505,17 +57505,17 @@ ${content}</tr>
         var itemsEnter = items.enter().append("li").attr("class", issueItem);
         var buttons = itemsEnter.append("button").on("mouseover", function(d3_event, d) {
           if (d.entityIds) {
-            context.surface().selectAll(
+            context2.surface().selectAll(
               utilEntityOrMemberSelector(
                 d.entityIds,
-                context.graph()
+                context2.graph()
               )
             ).classed("hover", true);
           }
         }).on("mouseout", function() {
-          context.surface().selectAll(".hover").classed("hover", false);
+          context2.surface().selectAll(".hover").classed("hover", false);
         }).on("click", function(d3_event, d) {
-          context.validator().focusIssue(d);
+          context2.validator().focusIssue(d);
         });
         buttons.call(svgIcon("#iD-icon-alert", "pre-text"));
         buttons.append("strong").attr("class", "issue-message");
@@ -57528,7 +57528,7 @@ ${content}</tr>
         );
         items = itemsEnter.merge(items);
         items.selectAll(".issue-message").html(function(d) {
-          return d.message(context);
+          return d.message(context2);
         });
       }
     }
@@ -57551,17 +57551,17 @@ ${content}</tr>
     /^closed:osmose:/
   ];
   var hashtagRegex = /(#[^\u2000-\u206F\u2E00-\u2E7F\s\\'!"#$%()*,.\/:;<=>?@\[\]^`{|}~]+)/g;
-  function uiCommit(context) {
+  function uiCommit(context2) {
     var dispatch10 = dispatch_default("cancel");
     var _userDetails2;
     var _selection;
-    var changesetEditor = uiChangesetEditor(context).on("change", changeTags);
-    var rawTagEditor = uiSectionRawTagEditor("changeset-tag-editor", context).on("change", changeTags).readOnlyTags(readOnlyTags);
-    var commitChanges = uiSectionChanges(context);
-    var commitWarnings = uiCommitWarnings(context);
+    var changesetEditor = uiChangesetEditor(context2).on("change", changeTags);
+    var rawTagEditor = uiSectionRawTagEditor("changeset-tag-editor", context2).on("change", changeTags).readOnlyTags(readOnlyTags);
+    var commitChanges = uiSectionChanges(context2);
+    var commitWarnings = uiCommitWarnings(context2);
     function commit(selection2) {
       _selection = selection2;
-      if (!context.changeset)
+      if (!context2.changeset)
         initChangeset();
       loadDerivedChangesetTags();
       selection2.call(render);
@@ -57575,24 +57575,24 @@ ${content}</tr>
         corePreferences("hashtags", null);
         corePreferences("source", null);
       }
-      if (context.defaultChangesetComment()) {
-        corePreferences("comment", context.defaultChangesetComment());
+      if (context2.defaultChangesetComment()) {
+        corePreferences("comment", context2.defaultChangesetComment());
         corePreferences("commentDate", Date.now());
       }
-      if (context.defaultChangesetSource()) {
-        corePreferences("source", context.defaultChangesetSource());
+      if (context2.defaultChangesetSource()) {
+        corePreferences("source", context2.defaultChangesetSource());
         corePreferences("commentDate", Date.now());
       }
-      if (context.defaultChangesetHashtags()) {
-        corePreferences("hashtags", context.defaultChangesetHashtags());
+      if (context2.defaultChangesetHashtags()) {
+        corePreferences("hashtags", context2.defaultChangesetHashtags());
         corePreferences("commentDate", Date.now());
       }
       var detected = utilDetect();
       var tags = {
         comment: corePreferences("comment") || "",
-        created_by: context.cleanTagValue("iD " + context.version),
-        host: context.cleanTagValue(detected.host),
-        locale: context.cleanTagValue(_mainLocalizer.localeCode())
+        created_by: context2.cleanTagValue("iD " + context2.version),
+        host: context2.cleanTagValue(detected.host),
+        locale: context2.cleanTagValue(_mainLocalizer.localeCode())
       };
       findHashtags(tags, true);
       var hashtags = corePreferences("hashtags");
@@ -57603,7 +57603,7 @@ ${content}</tr>
       if (source) {
         tags.source = source;
       }
-      var photoOverlaysUsed = context.history().photoOverlaysUsed();
+      var photoOverlaysUsed = context2.history().photoOverlaysUsed();
       if (photoOverlaysUsed.length) {
         var sources = (tags.source || "").split(";");
         if (sources.indexOf("streetlevel imagery") === -1) {
@@ -57614,38 +57614,38 @@ ${content}</tr>
             sources.push(photoOverlay);
           }
         });
-        tags.source = context.cleanTagValue(sources.join(";"));
+        tags.source = context2.cleanTagValue(sources.join(";"));
       }
-      context.changeset = new osmChangeset({ tags });
+      context2.changeset = new osmChangeset({ tags });
     }
     function loadDerivedChangesetTags() {
-      var osm = context.connection();
+      var osm = context2.connection();
       if (!osm)
         return;
-      var tags = Object.assign({}, context.changeset.tags);
-      var imageryUsed = context.cleanTagValue(context.history().imageryUsed().join(";"));
+      var tags = Object.assign({}, context2.changeset.tags);
+      var imageryUsed = context2.cleanTagValue(context2.history().imageryUsed().join(";"));
       tags.imagery_used = imageryUsed || "None";
       var osmClosed = osm.getClosedIDs();
       var itemType;
       if (osmClosed.length) {
-        tags["closed:note"] = context.cleanTagValue(osmClosed.join(";"));
+        tags["closed:note"] = context2.cleanTagValue(osmClosed.join(";"));
       }
       if (services.keepRight) {
         var krClosed = services.keepRight.getClosedIDs();
         if (krClosed.length) {
-          tags["closed:keepright"] = context.cleanTagValue(krClosed.join(";"));
+          tags["closed:keepright"] = context2.cleanTagValue(krClosed.join(";"));
         }
       }
       if (services.improveOSM) {
         var iOsmClosed = services.improveOSM.getClosedCounts();
         for (itemType in iOsmClosed) {
-          tags["closed:improveosm:" + itemType] = context.cleanTagValue(iOsmClosed[itemType].toString());
+          tags["closed:improveosm:" + itemType] = context2.cleanTagValue(iOsmClosed[itemType].toString());
         }
       }
       if (services.osmose) {
         var osmoseClosed = services.osmose.getClosedCounts();
         for (itemType in osmoseClosed) {
-          tags["closed:osmose:" + itemType] = context.cleanTagValue(osmoseClosed[itemType].toString());
+          tags["closed:osmose:" + itemType] = context2.cleanTagValue(osmoseClosed[itemType].toString());
         }
       }
       for (var key in tags) {
@@ -57661,23 +57661,23 @@ ${content}</tr>
             var issuesBySubtype = utilArrayGroupBy(issuesOfType, "subtype");
             for (var issueSubtype in issuesBySubtype) {
               var issuesOfSubtype = issuesBySubtype[issueSubtype];
-              tags[prefix + ":" + issueType + ":" + issueSubtype] = context.cleanTagValue(issuesOfSubtype.length.toString());
+              tags[prefix + ":" + issueType + ":" + issueSubtype] = context2.cleanTagValue(issuesOfSubtype.length.toString());
             }
           } else {
-            tags[prefix + ":" + issueType] = context.cleanTagValue(issuesOfType.length.toString());
+            tags[prefix + ":" + issueType] = context2.cleanTagValue(issuesOfType.length.toString());
           }
         }
       }
-      var warnings = context.validator().getIssuesBySeverity({ what: "edited", where: "all", includeIgnored: true, includeDisabledRules: true }).warning.filter(function(issue) {
+      var warnings = context2.validator().getIssuesBySeverity({ what: "edited", where: "all", includeIgnored: true, includeDisabledRules: true }).warning.filter(function(issue) {
         return issue.type !== "help_request";
       });
       addIssueCounts(warnings, "warnings");
-      var resolvedIssues = context.validator().getResolvedIssues();
+      var resolvedIssues = context2.validator().getResolvedIssues();
       addIssueCounts(resolvedIssues, "resolved");
-      context.changeset = context.changeset.update({ tags });
+      context2.changeset = context2.changeset.update({ tags });
     }
     function render(selection2) {
-      var osm = context.connection();
+      var osm = context2.connection();
       if (!osm)
         return;
       var header = selection2.selectAll(".header").data([0]);
@@ -57691,7 +57691,7 @@ ${content}</tr>
       var changesetSection = body.selectAll(".changeset-editor").data([0]);
       changesetSection = changesetSection.enter().append("div").attr("class", "modal-section changeset-editor").merge(changesetSection);
       changesetSection.call(
-        changesetEditor.changesetID(context.changeset.id).tags(context.changeset.tags)
+        changesetEditor.changesetID(context2.changeset.id).tags(context2.changeset.tags)
       );
       body.call(commitWarnings);
       var saveSection = body.selectAll(".save-section").data([0]);
@@ -57724,7 +57724,7 @@ ${content}</tr>
       labelEnter.append("input").attr("type", "checkbox").attr("id", requestReviewDomId);
       labelEnter.append("span").call(_t.append("commit.request_review"));
       requestReview = requestReview.merge(requestReviewEnter);
-      var requestReviewInput = requestReview.selectAll("input").property("checked", isReviewRequested(context.changeset.tags)).on("change", toggleRequestReview);
+      var requestReviewInput = requestReview.selectAll("input").property("checked", isReviewRequested(context2.changeset.tags)).on("change", toggleRequestReview);
       var buttonSection = saveSection.selectAll(".buttons").data([0]);
       var buttonEnter = buttonSection.enter().append("div").attr("class", "buttons fillL");
       buttonEnter.append("button").attr("class", "secondary-action button cancel-button").append("span").attr("class", "label").call(_t.append("commit.cancel"));
@@ -57738,11 +57738,11 @@ ${content}</tr>
       buttonSection.selectAll(".save-button").classed("disabled", uploadBlockerTooltipText !== null).on("click.save", function() {
         if (!select_default2(this).classed("disabled")) {
           this.blur();
-          for (var key in context.changeset.tags) {
+          for (var key in context2.changeset.tags) {
             if (!key)
-              delete context.changeset.tags[key];
+              delete context2.changeset.tags[key];
           }
-          context.uploader().save(context.changeset);
+          context2.uploader().save(context2.changeset);
         }
       });
       uiTooltip().destroyAny(buttonSection.selectAll(".save-button"));
@@ -57752,7 +57752,7 @@ ${content}</tr>
       var tagSection = body.selectAll(".tag-section.raw-tag-editor").data([0]);
       tagSection = tagSection.enter().append("div").attr("class", "modal-section tag-section raw-tag-editor").merge(tagSection);
       tagSection.call(
-        rawTagEditor.tags(Object.assign({}, context.changeset.tags)).render
+        rawTagEditor.tags(Object.assign({}, context2.changeset.tags)).render
       );
       var changesSection = body.selectAll(".commit-changes-section").data([0]);
       changesSection = changesSection.enter().append("div").attr("class", "modal-section commit-changes-section").merge(changesSection);
@@ -57761,16 +57761,16 @@ ${content}</tr>
         var rr = requestReviewInput.property("checked");
         updateChangeset({ review_requested: rr ? "yes" : void 0 });
         tagSection.call(
-          rawTagEditor.tags(Object.assign({}, context.changeset.tags)).render
+          rawTagEditor.tags(Object.assign({}, context2.changeset.tags)).render
         );
       }
     }
     function getUploadBlockerMessage() {
-      var errors = context.validator().getIssuesBySeverity({ what: "edited", where: "all" }).error;
+      var errors = context2.validator().getIssuesBySeverity({ what: "edited", where: "all" }).error;
       if (errors.length) {
         return _t("commit.outstanding_errors_message", { count: errors.length });
       } else {
-        var hasChangesetComment = context.changeset && context.changeset.tags.comment && context.changeset.tags.comment.trim().length;
+        var hasChangesetComment = context2.changeset && context2.changeset.tags.comment && context2.changeset.tags.comment.trim().length;
         if (!hasChangesetComment) {
           return _t("commit.comment_needed_message");
         }
@@ -57840,10 +57840,10 @@ ${content}</tr>
       return !(rr === "" || rr === "no");
     }
     function updateChangeset(changed, onInput) {
-      var tags = Object.assign({}, context.changeset.tags);
+      var tags = Object.assign({}, context2.changeset.tags);
       Object.keys(changed).forEach(function(k) {
         var v = changed[k];
-        k = context.cleanTagKey(k);
+        k = context2.cleanTagKey(k);
         if (readOnlyTags.indexOf(k) !== -1)
           return;
         if (v === void 0) {
@@ -57851,14 +57851,14 @@ ${content}</tr>
         } else if (onInput) {
           tags[k] = v;
         } else {
-          tags[k] = context.cleanTagValue(v);
+          tags[k] = context2.cleanTagValue(v);
         }
       });
       if (!onInput) {
         var commentOnly = changed.hasOwnProperty("comment") && changed.comment !== "";
         var arr = findHashtags(tags, commentOnly);
         if (arr.length) {
-          tags.hashtags = context.cleanTagValue(arr.join(";"));
+          tags.hashtags = context2.cleanTagValue(arr.join(";"));
           corePreferences("hashtags", tags.hashtags);
         } else {
           delete tags.hashtags;
@@ -57886,12 +57886,12 @@ ${content}</tr>
       } else {
         delete tags.changesets_count;
       }
-      if (!(0, import_fast_deep_equal9.default)(context.changeset.tags, tags)) {
-        context.changeset = context.changeset.update({ tags });
+      if (!(0, import_fast_deep_equal9.default)(context2.changeset.tags, tags)) {
+        context2.changeset = context2.changeset.update({ tags });
       }
     }
     commit.reset = function() {
-      context.changeset = null;
+      context2.changeset = null;
     };
     return utilRebind(commit, dispatch10, "on");
   }
@@ -57914,7 +57914,7 @@ ${content}</tr>
   }
 
   // modules/ui/conflicts.js
-  function uiConflicts(context) {
+  function uiConflicts(context2) {
     var dispatch10 = dispatch_default("cancel", "save");
     var keybinding = utilKeybinding("conflicts");
     var _origChanges;
@@ -58027,25 +58027,25 @@ ${content}</tr>
       });
       var extent = geoExtent();
       var entity;
-      entity = context.graph().hasEntity(datum2.id);
+      entity = context2.graph().hasEntity(datum2.id);
       if (entity)
-        extent._extend(entity.extent(context.graph()));
+        extent._extend(entity.extent(context2.graph()));
       datum2.action();
-      entity = context.graph().hasEntity(datum2.id);
+      entity = context2.graph().hasEntity(datum2.id);
       if (entity)
-        extent._extend(entity.extent(context.graph()));
+        extent._extend(entity.extent(context2.graph()));
       zoomToEntity(datum2.id, extent);
     }
     function zoomToEntity(id2, extent) {
-      context.surface().selectAll(".hover").classed("hover", false);
-      var entity = context.graph().hasEntity(id2);
+      context2.surface().selectAll(".hover").classed("hover", false);
+      var entity = context2.graph().hasEntity(id2);
       if (entity) {
         if (extent) {
-          context.map().trimmedExtent(extent);
+          context2.map().trimmedExtent(extent);
         } else {
-          context.map().zoomToEase(entity);
+          context2.map().zoomToEase(entity);
         }
-        context.surface().selectAll(utilEntityOrMemberSelector([entity.id], context.graph())).classed("hover", true);
+        context2.surface().selectAll(utilEntityOrMemberSelector([entity.id], context2.graph())).classed("hover", true);
       }
     }
     conflicts.conflictList = function(_) {
@@ -58073,25 +58073,25 @@ ${content}</tr>
   var import_fast_deep_equal10 = __toESM(require_fast_deep_equal());
 
   // modules/ui/sections/entity_issues.js
-  function uiSectionEntityIssues(context) {
+  function uiSectionEntityIssues(context2) {
     var preference = corePreferences("entity-issues.reference.expanded");
     var _expanded = preference === null ? true : preference === "true";
     var _entityIDs = [];
     var _issues = [];
     var _activeIssueID;
-    var section = uiSection("entity-issues", context).shouldDisplay(function() {
+    var section = uiSection("entity-issues", context2).shouldDisplay(function() {
       return _issues.length > 0;
     }).label(function() {
       return _t.html("inspector.title_count", { title: { html: _t.html("issues.list_title") }, count: _issues.length });
     }).disclosureContent(renderDisclosureContent);
-    context.validator().on("validated.entity_issues", function() {
+    context2.validator().on("validated.entity_issues", function() {
       reloadIssues();
       section.reRender();
     }).on("focusedIssue.entity_issues", function(issue) {
       makeActiveIssue(issue.id);
     });
     function reloadIssues() {
-      _issues = context.validator().getSharedEntityIssues(_entityIDs, { includeDisabledRules: true });
+      _issues = context2.validator().getSharedEntityIssues(_entityIDs, { includeDisabledRules: true });
     }
     function makeActiveIssue(issueID) {
       _activeIssueID = issueID;
@@ -58113,20 +58113,20 @@ ${content}</tr>
         var ids = d.entityIds.filter(function(e) {
           return _entityIDs.indexOf(e) === -1;
         });
-        utilHighlightEntities(ids, true, context);
+        utilHighlightEntities(ids, true, context2);
       }).on("mouseout.highlight", function(d3_event, d) {
         var ids = d.entityIds.filter(function(e) {
           return _entityIDs.indexOf(e) === -1;
         });
-        utilHighlightEntities(ids, false, context);
+        utilHighlightEntities(ids, false, context2);
       });
       var labelsEnter = itemsEnter.append("div").attr("class", "issue-label");
       var textEnter = labelsEnter.append("button").attr("class", "issue-text").on("click", function(d3_event, d) {
         makeActiveIssue(d.id);
-        var extent = d.extent(context.graph());
+        var extent = d.extent(context2.graph());
         if (extent) {
-          var setZoom = Math.max(context.map().zoom(), 19);
-          context.map().unobscuredCenterZoomEase(extent.center(), setZoom);
+          var setZoom = Math.max(context2.map().zoom(), 19);
+          context2.map().unobscuredCenterZoomEase(extent.center(), setZoom);
         }
       });
       textEnter.each(function(d) {
@@ -58166,11 +58166,11 @@ ${content}</tr>
         return d.id === _activeIssueID;
       });
       containers.selectAll(".issue-message").html(function(d) {
-        return d.message(context);
+        return d.message(context2);
       });
       var fixLists = containers.selectAll(".issue-fix-list");
       var fixes = fixLists.selectAll(".issue-fix-item").data(function(d) {
-        return d.fixes ? d.fixes(context) : [];
+        return d.fixes ? d.fixes(context2) : [];
       }, function(fix) {
         return fix.id;
       });
@@ -58182,19 +58182,19 @@ ${content}</tr>
         if (d.issue.dateLastRanFix && new Date() - d.issue.dateLastRanFix < 1e3)
           return;
         d.issue.dateLastRanFix = new Date();
-        utilHighlightEntities(d.issue.entityIds.concat(d.entityIds), false, context);
+        utilHighlightEntities(d.issue.entityIds.concat(d.entityIds), false, context2);
         new Promise(function(resolve, reject) {
-          d.onClick(context, resolve, reject);
+          d.onClick(context2, resolve, reject);
           if (d.onClick.length <= 1) {
             resolve();
           }
         }).then(function() {
-          context.validator().validate();
+          context2.validator().validate();
         });
       }).on("mouseover.highlight", function(d3_event, d) {
-        utilHighlightEntities(d.entityIds, true, context);
+        utilHighlightEntities(d.entityIds, true, context2);
       }).on("mouseout.highlight", function(d3_event, d) {
-        utilHighlightEntities(d.entityIds, false, context);
+        utilHighlightEntities(d.entityIds, false, context2);
       });
       buttons.each(function(d) {
         var iconName = d.icon || "iD-icon-wrench";
@@ -58454,12 +58454,12 @@ ${content}</tr>
   }
 
   // modules/ui/sections/feature_type.js
-  function uiSectionFeatureType(context) {
+  function uiSectionFeatureType(context2) {
     var dispatch10 = dispatch_default("choose");
     var _entityIDs = [];
     var _presets = [];
     var _tagReference;
-    var section = uiSection("feature-type", context).label(_t.html("inspector.feature_type")).disclosureContent(renderDisclosureContent);
+    var section = uiSection("feature-type", context2).label(_t.html("inspector.feature_type")).disclosureContent(renderDisclosureContent);
     function renderDisclosureContent(selection2) {
       selection2.classed("preset-list-item", true);
       selection2.classed("mixed-types", _presets.length > 1);
@@ -58511,7 +58511,7 @@ ${content}</tr>
       if (!utilArrayIdentical(val, _presets)) {
         _presets = val;
         if (_presets.length === 1) {
-          _tagReference = uiTagReference(_presets[0].reference(), context).showing(false);
+          _tagReference = uiTagReference(_presets[0].reference(), context2).showing(false);
         }
       }
       return section;
@@ -58519,7 +58519,7 @@ ${content}</tr>
     function entityGeometries() {
       var counts = {};
       for (var i2 in _entityIDs) {
-        var geometry = context.graph().geometry(_entityIDs[i2]);
+        var geometry = context2.graph().geometry(_entityIDs[i2]);
         if (!counts[geometry])
           counts[geometry] = 0;
         counts[geometry] += 1;
@@ -58532,10 +58532,10 @@ ${content}</tr>
   }
 
   // modules/ui/sections/preset_fields.js
-  function uiSectionPresetFields(context) {
-    var section = uiSection("preset-fields", context).label(_t.html("inspector.fields")).disclosureContent(renderDisclosureContent);
+  function uiSectionPresetFields(context2) {
+    var section = uiSection("preset-fields", context2).label(_t.html("inspector.fields")).disclosureContent(renderDisclosureContent);
     var dispatch10 = dispatch_default("change", "revert");
-    var formFields = uiFormFields(context);
+    var formFields = uiFormFields(context2);
     var _state;
     var _fieldsArr;
     var _presets = [];
@@ -58543,7 +58543,7 @@ ${content}</tr>
     var _entityIDs;
     function renderDisclosureContent(selection2) {
       if (!_fieldsArr) {
-        var graph = context.graph();
+        var graph = context2.graph();
         var geometries = Object.keys(_entityIDs.reduce(function(geoms, entityID) {
           geoms[graph.entity(entityID).geometry(graph)] = true;
           return geoms;
@@ -58575,14 +58575,14 @@ ${content}</tr>
         sharedFields.forEach(function(field) {
           if (field.matchAllGeometry(geometries)) {
             _fieldsArr.push(
-              uiField(context, field, _entityIDs)
+              uiField(context2, field, _entityIDs)
             );
           }
         });
         var singularEntity = _entityIDs.length === 1 && graph.hasEntity(_entityIDs[0]);
         if (singularEntity && singularEntity.isHighwayIntersection(graph) && presetsManager.field("restrictions")) {
           _fieldsArr.push(
-            uiField(context, presetsManager.field("restrictions"), _entityIDs)
+            uiField(context2, presetsManager.field("restrictions"), _entityIDs)
           );
         }
         var additionalFields = utilArrayUnion(sharedMoreFields, presetsManager.universal());
@@ -58592,7 +58592,7 @@ ${content}</tr>
         additionalFields.forEach(function(field) {
           if (sharedFields.indexOf(field) === -1 && field.matchAllGeometry(geometries)) {
             _fieldsArr.push(
-              uiField(context, field, _entityIDs, { show: false })
+              uiField(context2, field, _entityIDs, { show: false })
             );
           }
         });
@@ -58611,8 +58611,8 @@ ${content}</tr>
         formFields.fieldsArr(_fieldsArr).state(_state).klass("grouped-items-area")
       );
       selection2.selectAll(".wrap-form-field input").on("keydown", function(d3_event) {
-        if (d3_event.keyCode === 13 && context.container().select(".combobox").empty()) {
-          context.enter(modeBrowse(context));
+        if (d3_event.keyCode === 13 && context2.container().select(".combobox").empty()) {
+          context2.enter(modeBrowse(context2));
         }
       });
     }
@@ -58650,14 +58650,14 @@ ${content}</tr>
   }
 
   // modules/ui/sections/raw_member_editor.js
-  function uiSectionRawMemberEditor(context) {
-    var section = uiSection("raw-member-editor", context).shouldDisplay(function() {
+  function uiSectionRawMemberEditor(context2) {
+    var section = uiSection("raw-member-editor", context2).shouldDisplay(function() {
       if (!_entityIDs || _entityIDs.length !== 1)
         return false;
-      var entity = context.hasEntity(_entityIDs[0]);
+      var entity = context2.hasEntity(_entityIDs[0]);
       return entity && entity.type === "relation";
     }).label(function() {
-      var entity = context.hasEntity(_entityIDs[0]);
+      var entity = context2.hasEntity(_entityIDs[0]);
       if (!entity)
         return "";
       var gt = entity.members.length > _maxMembers ? ">" : "";
@@ -58670,58 +58670,58 @@ ${content}</tr>
     function downloadMember(d3_event, d) {
       d3_event.preventDefault();
       select_default2(this.parentNode).classed("tag-reference-loading", true);
-      context.loadEntity(d.id, function() {
+      context2.loadEntity(d.id, function() {
         section.reRender();
       });
     }
     function zoomToMember(d3_event, d) {
       d3_event.preventDefault();
-      var entity = context.entity(d.id);
-      context.map().zoomToEase(entity);
-      utilHighlightEntities([d.id], true, context);
+      var entity = context2.entity(d.id);
+      context2.map().zoomToEase(entity);
+      utilHighlightEntities([d.id], true, context2);
     }
     function selectMember(d3_event, d) {
       d3_event.preventDefault();
-      utilHighlightEntities([d.id], false, context);
-      var entity = context.entity(d.id);
-      var mapExtent = context.map().extent();
-      if (!entity.intersects(mapExtent, context.graph())) {
-        context.map().zoomToEase(entity);
+      utilHighlightEntities([d.id], false, context2);
+      var entity = context2.entity(d.id);
+      var mapExtent = context2.map().extent();
+      if (!entity.intersects(mapExtent, context2.graph())) {
+        context2.map().zoomToEase(entity);
       }
-      context.enter(modeSelect(context, [d.id]));
+      context2.enter(modeSelect(context2, [d.id]));
     }
     function changeRole(d3_event, d) {
       var oldRole = d.role;
-      var newRole = context.cleanRelationRole(select_default2(this).property("value"));
+      var newRole = context2.cleanRelationRole(select_default2(this).property("value"));
       if (oldRole !== newRole) {
         var member = { id: d.id, type: d.type, role: newRole };
-        context.perform(
+        context2.perform(
           actionChangeMember(d.relation.id, member, d.index),
           _t("operations.change_role.annotation", {
             n: 1
           })
         );
-        context.validator().validate();
+        context2.validator().validate();
       }
     }
     function deleteMember(d3_event, d) {
-      utilHighlightEntities([d.id], false, context);
-      context.perform(
+      utilHighlightEntities([d.id], false, context2);
+      context2.perform(
         actionDeleteMember(d.relation.id, d.index),
         _t("operations.delete_member.annotation", {
           n: 1
         })
       );
-      if (!context.hasEntity(d.relation.id)) {
-        context.enter(modeBrowse(context));
+      if (!context2.hasEntity(d.relation.id)) {
+        context2.enter(modeBrowse(context2));
       } else {
-        context.validator().validate();
+        context2.validator().validate();
       }
     }
     function renderDisclosureContent(selection2) {
       var entityID = _entityIDs[0];
       var memberships = [];
-      var entity = context.entity(entityID);
+      var entity = context2.entity(entityID);
       entity.members.slice(0, _maxMembers).forEach(function(member, index) {
         memberships.push({
           index,
@@ -58729,7 +58729,7 @@ ${content}</tr>
           type: member.type,
           role: member.role,
           relation: entity,
-          member: context.hasEntity(member.id),
+          member: context2.hasEntity(member.id),
           domId: utilUniqueDomId(entityID + "-member-" + index)
         });
       });
@@ -58747,13 +58747,13 @@ ${content}</tr>
         var label = item.append("label").attr("class", "field-label").attr("for", d.domId);
         if (d.member) {
           item.on("mouseover", function() {
-            utilHighlightEntities([d.id], true, context);
+            utilHighlightEntities([d.id], true, context2);
           }).on("mouseout", function() {
-            utilHighlightEntities([d.id], false, context);
+            utilHighlightEntities([d.id], false, context2);
           });
           var labelLink = label.append("span").attr("class", "label-text").append("a").attr("href", "#").on("click", selectMember);
           labelLink.append("span").attr("class", "member-entity-type").text(function(d2) {
-            var matched = _mainPresetIndex.match(d2.member, context.graph());
+            var matched = _mainPresetIndex.match(d2.member, context2.graph());
             return matched && matched.name() || utilDisplayType(d2.member.id);
           });
           labelLink.append("span").attr("class", "member-entity-name").text(function(d2) {
@@ -58819,11 +58819,11 @@ ${content}</tr>
           select_default2(this).classed("dragging", false);
           selection2.selectAll("li.member-row").style("transform", null);
           if (targetIndex !== null) {
-            context.perform(
+            context2.perform(
               actionMoveMember(d.relation.id, index, targetIndex),
               _t("operations.reorder_members.annotation")
             );
-            context.validator().validate();
+            context2.validator().validate();
           }
         })
       );
@@ -58844,10 +58844,10 @@ ${content}</tr>
           return sameletter.concat(other);
         }
         role.call(
-          uiCombobox(context, "member-role").fetcher(function(role2, callback) {
+          uiCombobox(context2, "member-role").fetcher(function(role2, callback) {
             var geometry;
             if (d.member) {
-              geometry = context.graph().geometry(d.member.id);
+              geometry = context2.graph().geometry(d.member.id);
             } else if (d.type === "relation") {
               geometry = "relation";
             } else if (d.type === "way") {
@@ -58872,7 +58872,7 @@ ${content}</tr>
       }
       function unbind() {
         var row = select_default2(this);
-        row.selectAll("input.member-role").call(uiCombobox.off, context);
+        row.selectAll("input.member-role").call(uiCombobox.off, context2);
       }
     }
     section.entityIDs = function(val) {
@@ -58896,8 +58896,8 @@ ${content}</tr>
   }
 
   // modules/ui/sections/raw_membership_editor.js
-  function uiSectionRawMembershipEditor(context) {
-    var section = uiSection("raw-membership-editor", context).shouldDisplay(function() {
+  function uiSectionRawMembershipEditor(context2) {
+    var section = uiSection("raw-membership-editor", context2).shouldDisplay(function() {
       return _entityIDs && _entityIDs.length;
     }).label(function() {
       var parents = getSharedParentRelations();
@@ -58906,12 +58906,12 @@ ${content}</tr>
       return _t.html("inspector.title_count", { title: { html: _t.html("inspector.relations") }, count });
     }).disclosureContent(renderDisclosureContent);
     var taginfo = services.taginfo;
-    var nearbyCombo = uiCombobox(context, "parent-relation").minItems(1).fetcher(fetchNearbyRelations).itemsMouseEnter(function(d3_event, d) {
+    var nearbyCombo = uiCombobox(context2, "parent-relation").minItems(1).fetcher(fetchNearbyRelations).itemsMouseEnter(function(d3_event, d) {
       if (d.relation)
-        utilHighlightEntities([d.relation.id], true, context);
+        utilHighlightEntities([d.relation.id], true, context2);
     }).itemsMouseLeave(function(d3_event, d) {
       if (d.relation)
-        utilHighlightEntities([d.relation.id], false, context);
+        utilHighlightEntities([d.relation.id], false, context2);
     });
     var _inChange = false;
     var _entityIDs = [];
@@ -58920,13 +58920,13 @@ ${content}</tr>
     function getSharedParentRelations() {
       var parents = [];
       for (var i2 = 0; i2 < _entityIDs.length; i2++) {
-        var entity = context.graph().hasEntity(_entityIDs[i2]);
+        var entity = context2.graph().hasEntity(_entityIDs[i2]);
         if (!entity)
           continue;
         if (i2 === 0) {
-          parents = context.graph().parentRelations(entity);
+          parents = context2.graph().parentRelations(entity);
         } else {
-          parents = utilArrayIntersection(parents, context.graph().parentRelations(entity));
+          parents = utilArrayIntersection(parents, context2.graph().parentRelations(entity));
         }
         if (!parents.length)
           break;
@@ -58977,21 +58977,21 @@ ${content}</tr>
     }
     function selectRelation(d3_event, d) {
       d3_event.preventDefault();
-      utilHighlightEntities([d.relation.id], false, context);
-      context.enter(modeSelect(context, [d.relation.id]));
+      utilHighlightEntities([d.relation.id], false, context2);
+      context2.enter(modeSelect(context2, [d.relation.id]));
     }
     function zoomToRelation(d3_event, d) {
       d3_event.preventDefault();
-      var entity = context.entity(d.relation.id);
-      context.map().zoomToEase(entity);
-      utilHighlightEntities([d.relation.id], true, context);
+      var entity = context2.entity(d.relation.id);
+      context2.map().zoomToEase(entity);
+      utilHighlightEntities([d.relation.id], true, context2);
     }
     function changeRole(d3_event, d) {
       if (d === 0)
         return;
       if (_inChange)
         return;
-      var newRole = context.cleanRelationRole(select_default2(this).property("value"));
+      var newRole = context2.cleanRelationRole(select_default2(this).property("value"));
       if (!newRole.trim() && typeof d.role !== "string")
         return;
       var membersToUpdate = d.members.filter(function(member) {
@@ -58999,7 +58999,7 @@ ${content}</tr>
       });
       if (membersToUpdate.length) {
         _inChange = true;
-        context.perform(
+        context2.perform(
           function actionChangeMemberRoles(graph) {
             membersToUpdate.forEach(function(member) {
               var newMember = Object.assign({}, member, { role: newRole });
@@ -59012,7 +59012,7 @@ ${content}</tr>
             n: membersToUpdate.length
           })
         );
-        context.validator().validate();
+        context2.validator().validate();
       }
       _inChange = false;
     }
@@ -59029,38 +59029,38 @@ ${content}</tr>
         };
       }
       if (d.relation) {
-        context.perform(
+        context2.perform(
           actionAddMembers(d.relation.id, _entityIDs, role),
           _t("operations.add_member.annotation", {
             n: _entityIDs.length
           })
         );
-        context.validator().validate();
+        context2.validator().validate();
       } else {
         var relation = osmRelation();
-        context.perform(
+        context2.perform(
           actionAddEntity(relation),
           actionAddMembers(relation.id, _entityIDs, role),
           _t("operations.add.annotation.relation")
         );
-        context.enter(modeSelect(context, [relation.id]).newFeature(true));
+        context2.enter(modeSelect(context2, [relation.id]).newFeature(true));
       }
     }
     function deleteMembership(d3_event, d) {
       this.blur();
       if (d === 0)
         return;
-      utilHighlightEntities([d.relation.id], false, context);
+      utilHighlightEntities([d.relation.id], false, context2);
       var indexes = d.members.map(function(member) {
         return member.index;
       });
-      context.perform(
+      context2.perform(
         actionDeleteMembers(d.relation.id, indexes),
         _t("operations.delete_member.annotation", {
           n: _entityIDs.length
         })
       );
-      context.validator().validate();
+      context2.validator().validate();
     }
     function fetchNearbyRelations(q, callback) {
       var newRelation = {
@@ -59070,21 +59070,21 @@ ${content}</tr>
       };
       var entityID = _entityIDs[0];
       var result = [];
-      var graph = context.graph();
+      var graph = context2.graph();
       function baseDisplayLabel(entity) {
         var matched = _mainPresetIndex.match(entity, graph);
         var presetName = matched && matched.name() || _t("inspector.relation");
         var entityName = utilDisplayName(entity) || "";
         return presetName + " " + entityName;
       }
-      var explicitRelation = q && context.hasEntity(q.toLowerCase());
+      var explicitRelation = q && context2.hasEntity(q.toLowerCase());
       if (explicitRelation && explicitRelation.type === "relation" && explicitRelation.id !== entityID) {
         result.push({
           relation: explicitRelation,
           value: baseDisplayLabel(explicitRelation) + " " + explicitRelation.id
         });
       } else {
-        context.history().intersects(context.map().extent()).forEach(function(entity) {
+        context2.history().intersects(context2.map().extent()).forEach(function(entity) {
           if (entity.type !== "relation" || entity.id === entityID)
             return;
           var value = baseDisplayLabel(entity);
@@ -59120,16 +59120,16 @@ ${content}</tr>
       items.exit().each(unbind).remove();
       var itemsEnter = items.enter().append("li").attr("class", "member-row member-row-normal form-field");
       itemsEnter.on("mouseover", function(d3_event, d) {
-        utilHighlightEntities([d.relation.id], true, context);
+        utilHighlightEntities([d.relation.id], true, context2);
       }).on("mouseout", function(d3_event, d) {
-        utilHighlightEntities([d.relation.id], false, context);
+        utilHighlightEntities([d.relation.id], false, context2);
       });
       var labelEnter = itemsEnter.append("label").attr("class", "field-label").attr("for", function(d) {
         return d.domId;
       });
       var labelLink = labelEnter.append("span").attr("class", "label-text").append("a").attr("href", "#").on("click", selectRelation);
       labelLink.append("span").attr("class", "member-entity-type").text(function(d) {
-        var matched = _mainPresetIndex.match(d.relation, context.graph());
+        var matched = _mainPresetIndex.match(d.relation, context2.graph());
         return matched && matched.name() || _t.html("inspector.relation");
       });
       labelLink.append("span").attr("class", "member-entity-name").text(function(d) {
@@ -59185,14 +59185,14 @@ ${content}</tr>
           return;
         }
         if (d.relation)
-          utilHighlightEntities([d.relation.id], false, context);
-        var role = context.cleanRelationRole(list.selectAll(".member-row-new .member-role").property("value"));
+          utilHighlightEntities([d.relation.id], false, context2);
+        var role = context2.cleanRelationRole(list.selectAll(".member-row-new .member-role").property("value"));
         addMembership(d, role);
       }
       function cancelEntity() {
         var input = newMembership.selectAll(".member-entity-input");
         input.property("value", "");
-        context.surface().selectAll(".highlighted").classed("highlighted", false);
+        context2.surface().selectAll(".highlighted").classed("highlighted", false);
       }
       function bindTypeahead(d) {
         var row = select_default2(this);
@@ -59211,12 +59211,12 @@ ${content}</tr>
           return sameletter.concat(other);
         }
         role.call(
-          uiCombobox(context, "member-role").fetcher(function(role2, callback) {
+          uiCombobox(context2, "member-role").fetcher(function(role2, callback) {
             var rtype = d.relation.tags.type;
             taginfo.roles({
               debounce: true,
               rtype: rtype || "",
-              geometry: context.graph().geometry(_entityIDs[0]),
+              geometry: context2.graph().geometry(_entityIDs[0]),
               query: role2
             }, function(err, data) {
               if (!err)
@@ -59229,7 +59229,7 @@ ${content}</tr>
       }
       function unbind() {
         var row = select_default2(this);
-        row.selectAll("input.member-role").call(uiCombobox.off, context);
+        row.selectAll("input.member-role").call(uiCombobox.off, context2);
       }
     }
     section.entityIDs = function(val) {
@@ -59243,14 +59243,14 @@ ${content}</tr>
   }
 
   // modules/ui/sections/selection_list.js
-  function uiSectionSelectionList(context) {
+  function uiSectionSelectionList(context2) {
     var _selectedIDs = [];
-    var section = uiSection("selected-features", context).shouldDisplay(function() {
+    var section = uiSection("selected-features", context2).shouldDisplay(function() {
       return _selectedIDs.length > 1;
     }).label(function() {
       return _t.html("inspector.title_count", { title: { html: _t.html("inspector.features") }, count: _selectedIDs.length });
     }).disclosureContent(renderDisclosureContent);
-    context.history().on("change.selectionList", function(difference) {
+    context2.history().on("change.selectionList", function(difference) {
       if (difference) {
         section.reRender();
       }
@@ -59262,29 +59262,29 @@ ${content}</tr>
       return section;
     };
     function selectEntity(d3_event, entity) {
-      context.enter(modeSelect(context, [entity.id]));
+      context2.enter(modeSelect(context2, [entity.id]));
     }
     function deselectEntity(d3_event, entity) {
       var selectedIDs = _selectedIDs.slice();
       var index = selectedIDs.indexOf(entity.id);
       if (index > -1) {
         selectedIDs.splice(index, 1);
-        context.enter(modeSelect(context, selectedIDs));
+        context2.enter(modeSelect(context2, selectedIDs));
       }
     }
     function renderDisclosureContent(selection2) {
       var list = selection2.selectAll(".feature-list").data([0]);
       list = list.enter().append("ul").attr("class", "feature-list").merge(list);
       var entities = _selectedIDs.map(function(id2) {
-        return context.hasEntity(id2);
+        return context2.hasEntity(id2);
       }).filter(Boolean);
       var items = list.selectAll(".feature-list-item").data(entities, osmEntity.key);
       items.exit().remove();
       var enter = items.enter().append("li").attr("class", "feature-list-item").each(function(d) {
         select_default2(this).on("mouseover", function() {
-          utilHighlightEntities([d.id], true, context);
+          utilHighlightEntities([d.id], true, context2);
         }).on("mouseout", function() {
-          utilHighlightEntities([d.id], false, context);
+          utilHighlightEntities([d.id], false, context2);
         });
       });
       var label = enter.append("button").attr("class", "label").on("click", selectEntity);
@@ -59295,13 +59295,13 @@ ${content}</tr>
       items = items.merge(enter);
       items.selectAll(".entity-geom-icon use").attr("href", function() {
         var entity = this.parentNode.parentNode.__data__;
-        return "#iD-icon-" + entity.geometry(context.graph());
+        return "#iD-icon-" + entity.geometry(context2.graph());
       });
       items.selectAll(".entity-type").text(function(entity) {
-        return _mainPresetIndex.match(entity, context.graph()).name();
+        return _mainPresetIndex.match(entity, context2.graph()).name();
       });
       items.selectAll(".entity-name").text(function(d) {
-        var entity = context.entity(d.id);
+        var entity = context2.entity(d.id);
         return utilDisplayName(entity);
       });
     }
@@ -59309,7 +59309,7 @@ ${content}</tr>
   }
 
   // modules/ui/entity_editor.js
-  function uiEntityEditor(context) {
+  function uiEntityEditor(context2) {
     var dispatch10 = dispatch_default("choose");
     var _state = "select";
     var _coalesceChanges = false;
@@ -59320,13 +59320,13 @@ ${content}</tr>
     var _newFeature;
     var _sections;
     function entityEditor(selection2) {
-      var combinedTags = utilCombinedTags(_entityIDs, context.graph());
+      var combinedTags = utilCombinedTags(_entityIDs, context2.graph());
       var header = selection2.selectAll(".header").data([0]);
       var headerEnter = header.enter().append("div").attr("class", "header fillL");
       var direction = _mainLocalizer.textDirection() === "rtl" ? "forward" : "backward";
       headerEnter.append("button").attr("class", "preset-reset preset-choose").attr("title", _t(`icons.${direction}`)).call(svgIcon(`#iD-icon-${direction}`));
       headerEnter.append("button").attr("class", "close").attr("title", _t("icons.close")).on("click", function() {
-        context.enter(modeBrowse(context));
+        context2.enter(modeBrowse(context2));
       }).call(svgIcon(_modified ? "#iD-icon-apply" : "#iD-icon-close"));
       headerEnter.append("h2");
       header = header.merge(headerEnter);
@@ -59339,15 +59339,15 @@ ${content}</tr>
       body = body.merge(bodyEnter);
       if (!_sections) {
         _sections = [
-          uiSectionSelectionList(context),
-          uiSectionFeatureType(context).on("choose", function(presets) {
+          uiSectionSelectionList(context2),
+          uiSectionFeatureType(context2).on("choose", function(presets) {
             dispatch10.call("choose", this, presets);
           }),
-          uiSectionEntityIssues(context),
-          uiSectionPresetFields(context).on("change", changeTags).on("revert", revertTags),
-          uiSectionRawTagEditor("raw-tag-editor", context).on("change", changeTags),
-          uiSectionRawMemberEditor(context),
-          uiSectionRawMembershipEditor(context)
+          uiSectionEntityIssues(context2),
+          uiSectionPresetFields(context2).on("change", changeTags).on("revert", revertTags),
+          uiSectionRawTagEditor("raw-tag-editor", context2).on("change", changeTags),
+          uiSectionRawMemberEditor(context2),
+          uiSectionRawMembershipEditor(context2)
         ];
       }
       _sections.forEach(function(section) {
@@ -59365,7 +59365,7 @@ ${content}</tr>
         }
         body.call(section.render);
       });
-      context.history().on("change.entity-editor", historyChanged);
+      context2.history().on("change.entity-editor", historyChanged);
       function historyChanged(difference) {
         if (selection2.selectAll(".entity-editor").empty())
           return;
@@ -59374,16 +59374,16 @@ ${content}</tr>
         var significant = !difference || difference.didChange.properties || difference.didChange.addition || difference.didChange.deletion;
         if (!significant)
           return;
-        _entityIDs = _entityIDs.filter(context.hasEntity);
+        _entityIDs = _entityIDs.filter(context2.hasEntity);
         if (!_entityIDs.length)
           return;
         var priorActivePreset = _activePresets.length === 1 && _activePresets[0];
         loadActivePresets();
-        var graph = context.graph();
+        var graph = context2.graph();
         entityEditor.modified(_base !== graph);
         entityEditor(selection2);
         if (priorActivePreset && _activePresets.length === 1 && priorActivePreset !== _activePresets[0]) {
-          context.container().selectAll(".entity-editor button.preset-reset .label").style("background-color", "#fff").transition().duration(750).style("background-color", null);
+          context2.container().selectAll(".entity-editor button.preset-reset .label").style("background-color", "#fff").transition().duration(750).style("background-color", null);
         }
       }
     }
@@ -59391,7 +59391,7 @@ ${content}</tr>
       var actions = [];
       for (var i2 in entityIDs) {
         var entityID = entityIDs[i2];
-        var entity = context.entity(entityID);
+        var entity = context2.entity(entityID);
         var tags = Object.assign({}, entity.tags);
         for (var k in changed) {
           if (!k)
@@ -59419,27 +59419,27 @@ ${content}</tr>
         };
         var annotation = _t("operations.change_tags.annotation");
         if (_coalesceChanges) {
-          context.overwrite(combinedAction, annotation);
+          context2.overwrite(combinedAction, annotation);
         } else {
-          context.perform(combinedAction, annotation);
+          context2.perform(combinedAction, annotation);
           _coalesceChanges = !!onInput;
         }
       }
       if (!onInput) {
-        context.validator().validate();
+        context2.validator().validate();
       }
     }
     function revertTags(keys) {
       var actions = [];
       for (var i2 in _entityIDs) {
         var entityID = _entityIDs[i2];
-        var original = context.graph().base().entities[entityID];
+        var original = context2.graph().base().entities[entityID];
         var changed = {};
         for (var j2 in keys) {
           var key = keys[j2];
           changed[key] = original ? original.tags[key] : void 0;
         }
-        var entity = context.entity(entityID);
+        var entity = context2.entity(entityID);
         var tags = Object.assign({}, entity.tags);
         for (var k in changed) {
           if (!k)
@@ -59463,13 +59463,13 @@ ${content}</tr>
         };
         var annotation = _t("operations.change_tags.annotation");
         if (_coalesceChanges) {
-          context.overwrite(combinedAction, annotation);
+          context2.overwrite(combinedAction, annotation);
         } else {
-          context.perform(combinedAction, annotation);
+          context2.perform(combinedAction, annotation);
           _coalesceChanges = false;
         }
       }
-      context.validator().validate();
+      context2.validator().validate();
     }
     entityEditor.modified = function(val) {
       if (!arguments.length)
@@ -59486,7 +59486,7 @@ ${content}</tr>
     entityEditor.entityIDs = function(val) {
       if (!arguments.length)
         return _entityIDs;
-      _base = context.graph();
+      _base = context2.graph();
       _coalesceChanges = false;
       if (val && _entityIDs && utilArrayIdentical(_entityIDs, val))
         return entityEditor;
@@ -59501,7 +59501,7 @@ ${content}</tr>
       return entityEditor;
     };
     function loadActivePresets(isForNewSelection) {
-      var graph = context.graph();
+      var graph = context2.graph();
       var counts = {};
       for (var i2 in _entityIDs) {
         var entity = graph.hasEntity(_entityIDs[i2]);
@@ -59537,7 +59537,7 @@ ${content}</tr>
 
   // modules/ui/feature_list.js
   var sexagesimal = __toESM(require_sexagesimal());
-  function uiFeatureList(context) {
+  function uiFeatureList(context2) {
     var _geocodeResults;
     function featureList(selection2) {
       var header = selection2.append("div").attr("class", "header fillL");
@@ -59547,11 +59547,11 @@ ${content}</tr>
       var search = searchWrap.append("input").attr("placeholder", _t("inspector.search")).attr("type", "search").call(utilNoAuto).on("keypress", keypress).on("keydown", keydown).on("input", inputevent);
       var listWrap = selection2.append("div").attr("class", "inspector-body");
       var list = listWrap.append("div").attr("class", "feature-list");
-      context.on("exit.feature-list", clearSearch);
-      context.map().on("drawn.feature-list", mapDrawn);
-      context.keybinding().on(uiCmd("\u2318F"), focusSearch);
+      context2.on("exit.feature-list", clearSearch);
+      context2.map().on("drawn.feature-list", mapDrawn);
+      context2.keybinding().on(uiCmd("\u2318F"), focusSearch);
       function focusSearch(d3_event) {
-        var mode = context.mode() && context.mode().id;
+        var mode = context2.mode() && context2.mode().id;
         if (mode !== "browse")
           return;
         d3_event.preventDefault();
@@ -59583,8 +59583,8 @@ ${content}</tr>
       }
       function features2() {
         var result = [];
-        var graph = context.graph();
-        var visibleCenter = context.map().extent().center();
+        var graph = context2.graph();
+        var visibleCenter = context2.map().extent().center();
         var q = search.property("value").toLowerCase();
         if (!q)
           return result;
@@ -59719,23 +59719,23 @@ ${content}</tr>
       function mouseover(d3_event, d) {
         if (d.id === -1)
           return;
-        utilHighlightEntities([d.id], true, context);
+        utilHighlightEntities([d.id], true, context2);
       }
       function mouseout(d3_event, d) {
         if (d.id === -1)
           return;
-        utilHighlightEntities([d.id], false, context);
+        utilHighlightEntities([d.id], false, context2);
       }
       function click(d3_event, d) {
         d3_event.preventDefault();
         if (d.location) {
-          context.map().centerZoomEase([d.location[1], d.location[0]], 19);
+          context2.map().centerZoomEase([d.location[1], d.location[0]], 19);
         } else if (d.entity) {
-          utilHighlightEntities([d.id], false, context);
-          context.enter(modeSelect(context, [d.entity.id]));
-          context.map().zoomToEase(d.entity);
+          utilHighlightEntities([d.id], false, context2);
+          context2.enter(modeSelect(context2, [d.entity.id]));
+          context2.map().zoomToEase(d.entity);
         } else {
-          context.map().trimmedExtent(d.extent);
+          context2.map().trimmedExtent(d.extent);
         }
       }
       function geocoderSearch() {
@@ -59794,7 +59794,7 @@ ${content}</tr>
   }
 
   // modules/ui/improveOSM_details.js
-  function uiImproveOsmDetails(context) {
+  function uiImproveOsmDetails(context2) {
     let _qaItem;
     function issueDetail(d) {
       if (d.desc)
@@ -59819,36 +59819,36 @@ ${content}</tr>
         const link2 = select_default2(this);
         const isObjectLink = link2.classed("error_object_link");
         const entityID = isObjectLink ? utilEntityRoot(_qaItem.objectType) + _qaItem.objectId : this.textContent;
-        const entity = context.hasEntity(entityID);
+        const entity = context2.hasEntity(entityID);
         relatedEntities.push(entityID);
         link2.on("mouseenter", () => {
-          utilHighlightEntities([entityID], true, context);
+          utilHighlightEntities([entityID], true, context2);
         }).on("mouseleave", () => {
-          utilHighlightEntities([entityID], false, context);
+          utilHighlightEntities([entityID], false, context2);
         }).on("click", (d3_event) => {
           d3_event.preventDefault();
-          utilHighlightEntities([entityID], false, context);
-          const osmlayer = context.layers().layer("osm");
+          utilHighlightEntities([entityID], false, context2);
+          const osmlayer = context2.layers().layer("osm");
           if (!osmlayer.enabled()) {
             osmlayer.enabled(true);
           }
-          context.map().centerZoom(_qaItem.loc, 20);
+          context2.map().centerZoom(_qaItem.loc, 20);
           if (entity) {
-            context.enter(modeSelect(context, [entityID]));
+            context2.enter(modeSelect(context2, [entityID]));
           } else {
-            context.loadEntity(entityID, (err, result) => {
+            context2.loadEntity(entityID, (err, result) => {
               if (err)
                 return;
               const entity2 = result.data.find((e) => e.id === entityID);
               if (entity2)
-                context.enter(modeSelect(context, [entityID]));
+                context2.enter(modeSelect(context2, [entityID]));
             });
           }
         });
         if (entity) {
           let name = utilDisplayName(entity);
           if (!name && !isObjectLink) {
-            const preset = _mainPresetIndex.match(entity, context.graph());
+            const preset = _mainPresetIndex.match(entity, context2.graph());
             name = preset && !preset.isFallback() && preset.name();
           }
           if (name) {
@@ -59856,8 +59856,8 @@ ${content}</tr>
           }
         }
       });
-      context.features().forceVisible(relatedEntities);
-      context.map().pan([0, 0]);
+      context2.features().forceVisible(relatedEntities);
+      context2.map().pan([0, 0]);
     }
     improveOsmDetails.issue = function(val) {
       if (!arguments.length)
@@ -59899,15 +59899,15 @@ ${content}</tr>
   }
 
   // modules/ui/improveOSM_editor.js
-  function uiImproveOsmEditor(context) {
+  function uiImproveOsmEditor(context2) {
     const dispatch10 = dispatch_default("change");
-    const qaDetails = uiImproveOsmDetails(context);
-    const qaComments = uiImproveOsmComments(context);
-    const qaHeader = uiImproveOsmHeader(context);
+    const qaDetails = uiImproveOsmDetails(context2);
+    const qaComments = uiImproveOsmComments(context2);
+    const qaHeader = uiImproveOsmHeader(context2);
     let _qaItem;
     function improveOsmEditor(selection2) {
       const headerEnter = selection2.selectAll(".header").data([0]).enter().append("div").attr("class", "header fillL");
-      headerEnter.append("button").attr("class", "close").attr("title", _t("icons.close")).on("click", () => context.enter(modeBrowse(context))).call(svgIcon("#iD-icon-close"));
+      headerEnter.append("button").attr("class", "close").attr("title", _t("icons.close")).on("click", () => context2.enter(modeBrowse(context2))).call(svgIcon("#iD-icon-close"));
       headerEnter.append("h2").call(_t.append("QA.improveOSM.title"));
       let body = selection2.selectAll(".body").data([0]);
       body = body.enter().append("div").attr("class", "body").merge(body);
@@ -59915,7 +59915,7 @@ ${content}</tr>
       editor.enter().append("div").attr("class", "modal-section qa-editor").merge(editor).call(qaHeader.issue(_qaItem)).call(qaDetails.issue(_qaItem)).call(qaComments.issue(_qaItem)).call(improveOsmSaveSection);
     }
     function improveOsmSaveSection(selection2) {
-      const isSelected = _qaItem && _qaItem.id === context.selectedErrorID();
+      const isSelected = _qaItem && _qaItem.id === context2.selectedErrorID();
       const isShown = _qaItem && (isSelected || _qaItem.newComment || _qaItem.comment);
       let saveSection = selection2.selectAll(".qa-save").data(
         isShown ? [_qaItem] : [],
@@ -59941,7 +59941,7 @@ ${content}</tr>
       }
     }
     function qaSaveButtons(selection2) {
-      const isSelected = _qaItem && _qaItem.id === context.selectedErrorID();
+      const isSelected = _qaItem && _qaItem.id === context2.selectedErrorID();
       let buttonSection = selection2.selectAll(".buttons").data(isSelected ? [_qaItem] : [], (d) => d.status + d.id);
       buttonSection.exit().remove();
       const buttonEnter = buttonSection.enter().append("div").attr("class", "buttons");
@@ -59989,7 +59989,7 @@ ${content}</tr>
   }
 
   // modules/ui/preset_list.js
-  function uiPresetList(context) {
+  function uiPresetList(context2) {
     var dispatch10 = dispatch_default("cancel", "choose");
     var _entityIDs;
     var _currLoc;
@@ -60010,11 +60010,11 @@ ${content}</tr>
         if (search.property("value").length === 0 && (d3_event.keyCode === utilKeybinding.keyCodes["\u232B"] || d3_event.keyCode === utilKeybinding.keyCodes["\u2326"])) {
           d3_event.preventDefault();
           d3_event.stopPropagation();
-          operationDelete(context, _entityIDs)();
+          operationDelete(context2, _entityIDs)();
         } else if (search.property("value").length === 0 && (d3_event.ctrlKey || d3_event.metaKey) && d3_event.keyCode === utilKeybinding.keyCodes.z) {
           d3_event.preventDefault();
           d3_event.stopPropagation();
-          context.undo();
+          context2.undo();
         } else if (!d3_event.ctrlKey && !d3_event.metaKey) {
           select_default2(this).on("keydown", keydown);
           keydown.call(this, d3_event);
@@ -60048,7 +60048,7 @@ ${content}</tr>
             search: value
           });
         } else {
-          results = _mainPresetIndex.defaults(entityGeometries()[0], 36, !context.inIntro(), _currLoc);
+          results = _mainPresetIndex.defaults(entityGeometries()[0], 36, !context2.inIntro(), _currLoc);
           messageText = _t.html("inspector.choose");
         }
         list.call(drawList, results);
@@ -60064,8 +60064,8 @@ ${content}</tr>
         }, 0);
       }
       var listWrap = selection2.append("div").attr("class", "inspector-body");
-      var list = listWrap.append("div").attr("class", "preset-list").call(drawList, _mainPresetIndex.defaults(entityGeometries()[0], 36, !context.inIntro(), _currLoc));
-      context.features().on("change.preset-list", updateForFeatureHiddenState);
+      var list = listWrap.append("div").attr("class", "preset-list").call(drawList, _mainPresetIndex.defaults(entityGeometries()[0], 36, !context2.inIntro(), _currLoc));
+      context2.features().on("change.preset-list", updateForFeatureHiddenState);
     }
     function drawList(list, presets) {
       presets = presets.matchAllGeometry(entityGeometries());
@@ -60215,10 +60215,10 @@ ${content}</tr>
       item.choose = function() {
         if (select_default2(this).classed("disabled"))
           return;
-        if (!context.inIntro()) {
+        if (!context2.inIntro()) {
           _mainPresetIndex.setMostRecent(preset, entityGeometries()[0]);
         }
-        context.perform(
+        context2.perform(
           function(graph) {
             for (var i2 in _entityIDs) {
               var entityID = _entityIDs[i2];
@@ -60229,7 +60229,7 @@ ${content}</tr>
           },
           _t("operations.change_tags.annotation")
         );
-        context.validator().validate();
+        context2.validator().validate();
         dispatch10.call("choose", this, preset);
       };
       item.help = function(d3_event) {
@@ -60237,26 +60237,26 @@ ${content}</tr>
         item.reference.toggle();
       };
       item.preset = preset;
-      item.reference = uiTagReference(preset.reference(), context);
+      item.reference = uiTagReference(preset.reference(), context2);
       return item;
     }
     function updateForFeatureHiddenState() {
-      if (!_entityIDs.every(context.hasEntity))
+      if (!_entityIDs.every(context2.hasEntity))
         return;
       var geometries = entityGeometries();
-      var button = context.container().selectAll(".preset-list .preset-list-button");
+      var button = context2.container().selectAll(".preset-list .preset-list-button");
       button.call(uiTooltip().destroyAny);
       button.each(function(item, index) {
         var hiddenPresetFeaturesId;
         for (var i2 in geometries) {
-          hiddenPresetFeaturesId = context.features().isHiddenPreset(item.preset, geometries[i2]);
+          hiddenPresetFeaturesId = context2.features().isHiddenPreset(item.preset, geometries[i2]);
           if (hiddenPresetFeaturesId)
             break;
         }
-        var isHiddenPreset = !context.inIntro() && !!hiddenPresetFeaturesId && (_currentPresets.length !== 1 || item.preset !== _currentPresets[0]);
+        var isHiddenPreset = !context2.inIntro() && !!hiddenPresetFeaturesId && (_currentPresets.length !== 1 || item.preset !== _currentPresets[0]);
         select_default2(this).classed("disabled", isHiddenPreset);
         if (isHiddenPreset) {
-          var isAutoHidden = context.features().autoHidden(hiddenPresetFeaturesId);
+          var isAutoHidden = context2.features().autoHidden(hiddenPresetFeaturesId);
           select_default2(this).call(
             uiTooltip().title(_t.html("inspector.hidden_preset." + (isAutoHidden ? "zoom" : "manual"), {
               features: { html: _t.html("feature." + hiddenPresetFeaturesId + ".description") }
@@ -60278,12 +60278,12 @@ ${content}</tr>
       _currLoc = null;
       if (_entityIDs && _entityIDs.length) {
         const extent = _entityIDs.reduce(function(extent2, entityID) {
-          var entity = context.graph().entity(entityID);
-          return extent2.extend(entity.extent(context.graph()));
+          var entity = context2.graph().entity(entityID);
+          return extent2.extend(entity.extent(context2.graph()));
         }, geoExtent());
         _currLoc = extent.center();
         var presets = _entityIDs.map(function(entityID) {
-          return _mainPresetIndex.match(context.entity(entityID), context.graph());
+          return _mainPresetIndex.match(context2.entity(entityID), context2.graph());
         });
         presetList.presets(presets);
       }
@@ -60299,9 +60299,9 @@ ${content}</tr>
       var counts = {};
       for (var i2 in _entityIDs) {
         var entityID = _entityIDs[i2];
-        var entity = context.entity(entityID);
-        var geometry = entity.geometry(context.graph());
-        if (geometry === "vertex" && entity.isOnAddressLine(context.graph())) {
+        var entity = context2.entity(entityID);
+        var geometry = entity.geometry(context2.graph());
+        if (geometry === "vertex" && entity.isOnAddressLine(context2.graph())) {
           geometry = "point";
         }
         if (!counts[geometry])
@@ -60316,14 +60316,14 @@ ${content}</tr>
   }
 
   // modules/ui/view_on_osm.js
-  function uiViewOnOSM(context) {
+  function uiViewOnOSM(context2) {
     var _what;
     function viewOnOSM(selection2) {
       var url;
       if (_what instanceof osmEntity) {
         url = "https://history.publicdomainmap.org/#/" + _what.type + "/" + _what.osmId();
       } else if (_what instanceof osmNote) {
-        url = context.connection().noteURL(_what);
+        url = context2.connection().noteURL(_what);
       }
       var data = !_what || _what.isNew() ? [] : [_what];
       var link2 = selection2.selectAll(".view-on-osm").data(data, function(d) {
@@ -60343,9 +60343,9 @@ ${content}</tr>
   }
 
   // modules/ui/inspector.js
-  function uiInspector(context) {
-    var presetList = uiPresetList(context);
-    var entityEditor = uiEntityEditor(context);
+  function uiInspector(context2) {
+    var presetList = uiPresetList(context2);
+    var entityEditor = uiEntityEditor(context2);
     var wrap2 = select_default2(null), presetPane = select_default2(null), editorPane = select_default2(null);
     var _state = "select";
     var _entityIDs;
@@ -60368,20 +60368,20 @@ ${content}</tr>
         if (_entityIDs.length !== 1)
           return false;
         var entityID = _entityIDs[0];
-        var entity = context.hasEntity(entityID);
+        var entity = context2.hasEntity(entityID);
         if (!entity)
           return false;
         if (entity.hasNonGeometryTags())
           return false;
         if (_newFeature)
           return true;
-        if (entity.geometry(context.graph()) !== "vertex")
+        if (entity.geometry(context2.graph()) !== "vertex")
           return false;
-        if (context.graph().parentRelations(entity).length)
+        if (context2.graph().parentRelations(entity).length)
           return false;
-        if (context.validator().getEntityIssues(entityID).length)
+        if (context2.validator().getEntityIssues(entityID).length)
           return false;
-        if (entity.isHighwayIntersection(context.graph()))
+        if (entity.isHighwayIntersection(context2.graph()))
           return false;
         return true;
       }
@@ -60397,7 +60397,7 @@ ${content}</tr>
       var footer = selection2.selectAll(".footer").data([0]);
       footer = footer.enter().append("div").attr("class", "footer").merge(footer);
       footer.call(
-        uiViewOnOSM(context).what(context.hasEntity(_entityIDs.length === 1 && _entityIDs[0]))
+        uiViewOnOSM(context2).what(context2.hasEntity(_entityIDs.length === 1 && _entityIDs[0]))
       );
     }
     inspector.showList = function(presets) {
@@ -60433,7 +60433,7 @@ ${content}</tr>
         return _state;
       _state = val;
       entityEditor.state(_state);
-      context.container().selectAll(".field-help-body").remove();
+      context2.container().selectAll(".field-help-body").remove();
       return inspector;
     };
     inspector.entityIDs = function(val) {
@@ -60452,7 +60452,7 @@ ${content}</tr>
   }
 
   // modules/ui/keepRight_details.js
-  function uiKeepRightDetails(context) {
+  function uiKeepRightDetails(context2) {
     let _qaItem;
     function issueDetail(d) {
       const { itemType, parentIssueType } = d;
@@ -60480,36 +60480,36 @@ ${content}</tr>
         const link2 = select_default2(this);
         const isObjectLink = link2.classed("error_object_link");
         const entityID = isObjectLink ? utilEntityRoot(_qaItem.objectType) + _qaItem.objectId : this.textContent;
-        const entity = context.hasEntity(entityID);
+        const entity = context2.hasEntity(entityID);
         relatedEntities.push(entityID);
         link2.on("mouseenter", () => {
-          utilHighlightEntities([entityID], true, context);
+          utilHighlightEntities([entityID], true, context2);
         }).on("mouseleave", () => {
-          utilHighlightEntities([entityID], false, context);
+          utilHighlightEntities([entityID], false, context2);
         }).on("click", (d3_event) => {
           d3_event.preventDefault();
-          utilHighlightEntities([entityID], false, context);
-          const osmlayer = context.layers().layer("osm");
+          utilHighlightEntities([entityID], false, context2);
+          const osmlayer = context2.layers().layer("osm");
           if (!osmlayer.enabled()) {
             osmlayer.enabled(true);
           }
-          context.map().centerZoomEase(_qaItem.loc, 20);
+          context2.map().centerZoomEase(_qaItem.loc, 20);
           if (entity) {
-            context.enter(modeSelect(context, [entityID]));
+            context2.enter(modeSelect(context2, [entityID]));
           } else {
-            context.loadEntity(entityID, (err, result) => {
+            context2.loadEntity(entityID, (err, result) => {
               if (err)
                 return;
               const entity2 = result.data.find((e) => e.id === entityID);
               if (entity2)
-                context.enter(modeSelect(context, [entityID]));
+                context2.enter(modeSelect(context2, [entityID]));
             });
           }
         });
         if (entity) {
           let name = utilDisplayName(entity);
           if (!name && !isObjectLink) {
-            const preset = _mainPresetIndex.match(entity, context.graph());
+            const preset = _mainPresetIndex.match(entity, context2.graph());
             name = preset && !preset.isFallback() && preset.name();
           }
           if (name) {
@@ -60517,8 +60517,8 @@ ${content}</tr>
           }
         }
       });
-      context.features().forceVisible(relatedEntities);
-      context.map().pan([0, 0]);
+      context2.features().forceVisible(relatedEntities);
+      context2.map().pan([0, 0]);
     }
     keepRightDetails.issue = function(val) {
       if (!arguments.length)
@@ -60586,24 +60586,24 @@ ${content}</tr>
   }
 
   // modules/ui/keepRight_editor.js
-  function uiKeepRightEditor(context) {
+  function uiKeepRightEditor(context2) {
     const dispatch10 = dispatch_default("change");
-    const qaDetails = uiKeepRightDetails(context);
-    const qaHeader = uiKeepRightHeader(context);
+    const qaDetails = uiKeepRightDetails(context2);
+    const qaHeader = uiKeepRightHeader(context2);
     let _qaItem;
     function keepRightEditor(selection2) {
       const headerEnter = selection2.selectAll(".header").data([0]).enter().append("div").attr("class", "header fillL");
-      headerEnter.append("button").attr("class", "close").attr("title", _t("icons.close")).on("click", () => context.enter(modeBrowse(context))).call(svgIcon("#iD-icon-close"));
+      headerEnter.append("button").attr("class", "close").attr("title", _t("icons.close")).on("click", () => context2.enter(modeBrowse(context2))).call(svgIcon("#iD-icon-close"));
       headerEnter.append("h2").call(_t.append("QA.keepRight.title"));
       let body = selection2.selectAll(".body").data([0]);
       body = body.enter().append("div").attr("class", "body").merge(body);
       const editor = body.selectAll(".qa-editor").data([0]);
       editor.enter().append("div").attr("class", "modal-section qa-editor").merge(editor).call(qaHeader.issue(_qaItem)).call(qaDetails.issue(_qaItem)).call(keepRightSaveSection);
       const footer = selection2.selectAll(".footer").data([0]);
-      footer.enter().append("div").attr("class", "footer").merge(footer).call(uiViewOnKeepRight(context).what(_qaItem));
+      footer.enter().append("div").attr("class", "footer").merge(footer).call(uiViewOnKeepRight(context2).what(_qaItem));
     }
     function keepRightSaveSection(selection2) {
-      const isSelected = _qaItem && _qaItem.id === context.selectedErrorID();
+      const isSelected = _qaItem && _qaItem.id === context2.selectedErrorID();
       const isShown = _qaItem && (isSelected || _qaItem.newComment || _qaItem.comment);
       let saveSection = selection2.selectAll(".qa-save").data(
         isShown ? [_qaItem] : [],
@@ -60629,7 +60629,7 @@ ${content}</tr>
       }
     }
     function qaSaveButtons(selection2) {
-      const isSelected = _qaItem && _qaItem.id === context.selectedErrorID();
+      const isSelected = _qaItem && _qaItem.id === context2.selectedErrorID();
       let buttonSection = selection2.selectAll(".buttons").data(isSelected ? [_qaItem] : [], (d) => d.status + d.id);
       buttonSection.exit().remove();
       const buttonEnter = buttonSection.enter().append("div").attr("class", "buttons");
@@ -60677,11 +60677,11 @@ ${content}</tr>
   }
 
   // modules/ui/lasso.js
-  function uiLasso(context) {
+  function uiLasso(context2) {
     var group, polygon2;
     lasso.coordinates = [];
     function lasso(selection2) {
-      context.container().classed("lasso", true);
+      context2.container().classed("lasso", true);
       group = selection2.append("g").attr("class", "lasso hide");
       polygon2 = group.append("path").attr("class", "lasso-path");
       group.call(uiToggle(true));
@@ -60711,7 +60711,7 @@ ${content}</tr>
           select_default2(this).remove();
         }));
       }
-      context.container().classed("lasso", false);
+      context2.container().classed("lasso", false);
     };
     return lasso;
   }
@@ -60857,9 +60857,9 @@ ${content}</tr>
   }
 
   // modules/ui/note_editor.js
-  function uiNoteEditor(context) {
+  function uiNoteEditor(context2) {
     var dispatch10 = dispatch_default("change");
-    var noteComments = uiNoteComments(context);
+    var noteComments = uiNoteComments(context2);
     var noteHeader = uiNoteHeader();
     var _note;
     var _newNote;
@@ -60867,7 +60867,7 @@ ${content}</tr>
       var header = selection2.selectAll(".header").data([0]);
       var headerEnter = header.enter().append("div").attr("class", "header fillL");
       headerEnter.append("button").attr("class", "close").attr("title", _t("icons.close")).on("click", function() {
-        context.enter(modeBrowse(context));
+        context2.enter(modeBrowse(context2));
       }).call(svgIcon("#iD-icon-close"));
       headerEnter.append("h2").call(_t.append("note.title"));
       var body = selection2.selectAll(".body").data([0]);
@@ -60875,7 +60875,7 @@ ${content}</tr>
       var editor = body.selectAll(".note-editor").data([0]);
       editor.enter().append("div").attr("class", "modal-section note-editor").merge(editor).call(noteHeader.note(_note)).call(noteComments.note(_note)).call(noteSaveSection);
       var footer = selection2.selectAll(".footer").data([0]);
-      footer.enter().append("div").attr("class", "footer").merge(footer).call(uiViewOnOSM(context).what(_note)).call(uiNoteReport(context).note(_note));
+      footer.enter().append("div").attr("class", "footer").merge(footer).call(uiViewOnOSM(context2).what(_note)).call(uiNoteReport(context2).note(_note));
       var osm = services.osm;
       if (osm) {
         osm.on("change.note-save", function() {
@@ -60884,7 +60884,7 @@ ${content}</tr>
       }
     }
     function noteSaveSection(selection2) {
-      var isSelected = _note && _note.id === context.selectedNoteID();
+      var isSelected = _note && _note.id === context2.selectedNoteID();
       var noteSave = selection2.selectAll(".note-save").data(isSelected ? [_note] : [], function(d) {
         return d.status + d.id;
       });
@@ -60968,7 +60968,7 @@ ${content}</tr>
     function noteSaveButtons(selection2) {
       var osm = services.osm;
       var hasAuth = osm && osm.authenticated();
-      var isSelected = _note && _note.id === context.selectedNoteID();
+      var isSelected = _note && _note.id === context2.selectedNoteID();
       var buttonSection = selection2.selectAll(".buttons").data(isSelected ? [_note] : [], function(d) {
         return d.status + d.id;
       });
@@ -61000,7 +61000,7 @@ ${content}</tr>
       if (osm) {
         osm.removeNote(d);
       }
-      context.enter(modeBrowse(context));
+      context2.enter(modeBrowse(context2));
       dispatch10.call("change");
     }
     function clickSave(d3_event, d) {
@@ -61047,22 +61047,22 @@ ${content}</tr>
   }
 
   // modules/ui/source_switch.js
-  function uiSourceSwitch(context) {
+  function uiSourceSwitch(context2) {
     var keys;
     function click(d3_event) {
       d3_event.preventDefault();
-      var osm = context.connection();
+      var osm = context2.connection();
       if (!osm)
         return;
-      if (context.inIntro())
+      if (context2.inIntro())
         return;
-      if (context.history().hasChanges() && !window.confirm(_t("source_switch.lose_changes")))
+      if (context2.history().hasChanges() && !window.confirm(_t("source_switch.lose_changes")))
         return;
       var isLive = select_default2(this).classed("live");
       isLive = !isLive;
-      context.enter(modeBrowse(context));
-      context.history().clearSaved();
-      context.flush();
+      context2.enter(modeBrowse(context2));
+      context2.history().clearSaved();
+      context2.flush();
       select_default2(this).html(isLive ? _t.html("source_switch.live") : _t.html("source_switch.dev")).classed("live", isLive).classed("chip", isLive);
       osm.switch(isLive ? keys[0] : keys[1]);
     }
@@ -61079,10 +61079,10 @@ ${content}</tr>
   }
 
   // modules/ui/spinner.js
-  function uiSpinner(context) {
-    var osm = context.connection();
+  function uiSpinner(context2) {
+    var osm = context2.connection();
     return function(selection2) {
-      var img = selection2.append("img").attr("src", context.imagePath("loader-black.gif")).style("opacity", 0);
+      var img = selection2.append("img").attr("src", context2.imagePath("loader-black.gif")).style("opacity", 0);
       if (osm) {
         osm.on("loading.spinner", function() {
           img.transition().style("opacity", 1);
@@ -61094,8 +61094,8 @@ ${content}</tr>
   }
 
   // modules/ui/sections/privacy.js
-  function uiSectionPrivacy(context) {
-    let section = uiSection("preferences-third-party", context).label(_t.html("preferences.privacy.title")).disclosureContent(renderDisclosureContent);
+  function uiSectionPrivacy(context2) {
+    let section = uiSection("preferences-third-party", context2).label(_t.html("preferences.privacy.title")).disclosureContent(renderDisclosureContent);
     function renderDisclosureContent(selection2) {
       selection2.selectAll(".privacy-options-list").data([0]).enter().append("ul").attr("class", "layer-list privacy-options-list");
       let thirdPartyIconsEnter = selection2.select(".privacy-options-list").selectAll(".privacy-third-party-icons-item").data([corePreferences("preferences.privacy.thirdpartyicons") || "true"]).enter().append("li").attr("class", "privacy-third-party-icons-item").append("label").call(
@@ -61114,21 +61114,21 @@ ${content}</tr>
   }
 
   // modules/ui/splash.js
-  function uiSplash(context) {
+  function uiSplash(context2) {
     return (selection2) => {
-      if (context.history().hasRestorableChanges())
+      if (context2.history().hasRestorableChanges())
         return;
       let updateMessage = "";
       const sawPrivacyVersion = corePreferences("sawPrivacyVersion");
       let showSplash = !corePreferences("sawSplash");
-      if (sawPrivacyVersion !== context.privacyVersion) {
+      if (sawPrivacyVersion !== context2.privacyVersion) {
         updateMessage = _t("splash.privacy_update");
         showSplash = true;
       }
       if (!showSplash)
         return;
       corePreferences("sawSplash", true);
-      corePreferences("sawPrivacyVersion", context.privacyVersion);
+      corePreferences("sawPrivacyVersion", context2.privacyVersion);
       _mainFileFetcher.get("intro_graph");
       let modalSelection = uiModal(selection2);
       modalSelection.select(".modal").attr("class", "modal-splash modal");
@@ -61136,7 +61136,7 @@ ${content}</tr>
       introModal.append("div").attr("class", "modal-section").append("h3").call(_t.append("splash.welcome"));
       let modalSection = introModal.append("div").attr("class", "modal-section");
       modalSection.append("p").html(_t.html("splash.text", {
-        version: context.version,
+        version: context2.version,
         website: { html: '<a target="_blank" href="https://github.com/openstreetmap/iD/blob/develop/CHANGELOG.md#whats-new">' + _t.html("splash.changelog") + "</a>" },
         github: { html: '<a target="_blank" href="https://github.com/openstreetmap/iD/issues">github.com</a>' }
       }));
@@ -61144,10 +61144,10 @@ ${content}</tr>
         updateMessage,
         privacyLink: { html: '<a target="_blank" href="https://github.com/openstreetmap/iD/blob/release/PRIVACY.md">' + _t("splash.privacy_policy") + "</a>" }
       }));
-      uiSectionPrivacy(context).label(_t.html("splash.privacy_settings")).render(modalSection);
+      uiSectionPrivacy(context2).label(_t.html("splash.privacy_settings")).render(modalSection);
       let buttonWrap = introModal.append("div").attr("class", "modal-actions");
       let walkthrough = buttonWrap.append("button").attr("class", "walkthrough").on("click", () => {
-        context.container().call(uiIntro(context));
+        context2.container().call(uiIntro(context2));
         modalSelection.close();
       });
       walkthrough.append("svg").attr("class", "logo logo-walkthrough").append("use").attr("xlink:href", "#iD-logo-walkthrough");
@@ -61160,8 +61160,8 @@ ${content}</tr>
   }
 
   // modules/ui/status.js
-  function uiStatus(context) {
-    var osm = context.connection();
+  function uiStatus(context2) {
+    var osm = context2.connection();
     return function(selection2) {
       if (!osm)
         return;
@@ -61177,7 +61177,7 @@ ${content}</tr>
             });
           } else {
             var throttledRetry = throttle_default(function() {
-              context.loadTiles(context.projection);
+              context2.loadTiles(context2.projection);
               osm.reloadApiStatus();
             }, 2e3);
             selection2.call(_t.append("osm_api_status.message.error", { suffix: " " })).append("a").attr("href", "#").call(_t.append("osm_api_status.retry")).on("click.retry", function(d3_event) {
@@ -61193,7 +61193,7 @@ ${content}</tr>
         selection2.attr("class", "api-status " + (err ? "error" : apiStatus));
       }
       osm.on("apiStatusChange.uiStatus", update);
-      context.history().on("storage_error", () => {
+      context2.history().on("storage_error", () => {
         selection2.selectAll("span.local-storage-full").remove();
         selection2.append("span").attr("class", "local-storage-full").call(_t.append("osm_api_status.message.local_storage_full"));
         selection2.classed("error", true);
@@ -61209,7 +61209,7 @@ ${content}</tr>
   var import_diacritics3 = __toESM(require_diacritics(), 1);
 
   // modules/ui/success.js
-  function uiSuccess(context) {
+  function uiSuccess(context2) {
     const MAXEVENTS = 2;
     const dispatch10 = dispatch_default("cancel");
     let _changeset2;
@@ -61241,8 +61241,8 @@ ${content}</tr>
   var sawVersion = null;
   var isNewVersion = false;
   var isNewUser = false;
-  function uiVersion(context) {
-    var currVersion = context.version;
+  function uiVersion(context2) {
+    var currVersion = context2.version;
     var matchedVersion = currVersion.match(/\d+\.\d+\.\d+.*/);
     if (sawVersion === null && matchedVersion !== null) {
       if (corePreferences("sawVersion")) {
@@ -61261,14 +61261,14 @@ ${content}</tr>
   }
 
   // modules/ui/zoom.js
-  function uiZoom(context) {
+  function uiZoom(context2) {
     var zooms = [{
       id: "zoom-in",
       icon: "iD-icon-plus",
       title: _t.html("zoom.in"),
       action: zoomIn,
       disabled: function() {
-        return !context.map().canZoomIn();
+        return !context2.map().canZoomIn();
       },
       disabledTitle: _t.html("zoom.disabled.in"),
       key: "+"
@@ -61278,7 +61278,7 @@ ${content}</tr>
       title: _t.html("zoom.out"),
       action: zoomOut,
       disabled: function() {
-        return !context.map().canZoomOut();
+        return !context2.map().canZoomOut();
       },
       disabledTitle: _t.html("zoom.disabled.out"),
       key: "-"
@@ -61287,25 +61287,25 @@ ${content}</tr>
       if (d3_event.shiftKey)
         return;
       d3_event.preventDefault();
-      context.map().zoomIn();
+      context2.map().zoomIn();
     }
     function zoomOut(d3_event) {
       if (d3_event.shiftKey)
         return;
       d3_event.preventDefault();
-      context.map().zoomOut();
+      context2.map().zoomOut();
     }
     function zoomInFurther(d3_event) {
       if (d3_event.shiftKey)
         return;
       d3_event.preventDefault();
-      context.map().zoomInFurther();
+      context2.map().zoomInFurther();
     }
     function zoomOutFurther(d3_event) {
       if (d3_event.shiftKey)
         return;
       d3_event.preventDefault();
-      context.map().zoomOutFurther();
+      context2.map().zoomOutFurther();
     }
     return function(selection2) {
       var tooltipBehavior = uiTooltip().placement(_mainLocalizer.textDirection() === "rtl" ? "right" : "left").title(function(d) {
@@ -61325,7 +61325,7 @@ ${content}</tr>
         if (!d.disabled()) {
           d.action(d3_event);
         } else if (lastPointerUpType === "touch" || lastPointerUpType === "pen") {
-          context.ui().flash.duration(2e3).iconName("#" + d.icon).iconClass("disabled").label(d.disabledTitle)();
+          context2.ui().flash.duration(2e3).iconName("#" + d.icon).iconClass("disabled").label(d.disabledTitle)();
         }
         lastPointerUpType = null;
       }).call(tooltipBehavior);
@@ -61333,12 +61333,12 @@ ${content}</tr>
         select_default2(this).call(svgIcon("#" + d.icon, "light"));
       });
       utilKeybinding.plusKeys.forEach(function(key) {
-        context.keybinding().on([key], zoomIn);
-        context.keybinding().on([uiCmd("\u2325" + key)], zoomInFurther);
+        context2.keybinding().on([key], zoomIn);
+        context2.keybinding().on([uiCmd("\u2325" + key)], zoomInFurther);
       });
       utilKeybinding.minusKeys.forEach(function(key) {
-        context.keybinding().on([key], zoomOut);
-        context.keybinding().on([uiCmd("\u2325" + key)], zoomOutFurther);
+        context2.keybinding().on([key], zoomOut);
+        context2.keybinding().on([uiCmd("\u2325" + key)], zoomOutFurther);
       });
       function updateButtonStates() {
         buttons.classed("disabled", function(d) {
@@ -61351,13 +61351,13 @@ ${content}</tr>
         });
       }
       updateButtonStates();
-      context.map().on("move.uiZoom", updateButtonStates);
+      context2.map().on("move.uiZoom", updateButtonStates);
     };
   }
 
   // modules/ui/sections/raw_tag_editor.js
-  function uiSectionRawTagEditor(id2, context) {
-    var section = uiSection(id2, context).classes("raw-tag-editor").label(function() {
+  function uiSectionRawTagEditor(id2, context2) {
+    var section = uiSection(id2, context2).classes("raw-tag-editor").label(function() {
       var count = Object.keys(_tags).filter(function(d) {
         return d;
       }).length;
@@ -61456,7 +61456,7 @@ ${content}</tr>
         if (typeof d.value === "string") {
           referenceOptions.value = d.value;
         }
-        var reference = uiTagReference(referenceOptions, context);
+        var reference = uiTagReference(referenceOptions, context2);
         if (_state === "hover") {
           reference.showing(false);
         }
@@ -61536,8 +61536,8 @@ ${content}</tr>
       newText.split("\n").forEach(function(row) {
         var m = row.match(/^\s*([^=]+)=(.*)$/);
         if (m !== null) {
-          var k = context.cleanTagKey(unstringify(m[1].trim()));
-          var v = context.cleanTagValue(unstringify(m[2].trim()));
+          var k = context2.cleanTagKey(unstringify(m[1].trim()));
+          var v = context2.cleanTagValue(unstringify(m[2].trim()));
           newTags[k] = v;
         }
       });
@@ -61571,7 +61571,7 @@ ${content}</tr>
       if (isReadOnly(key.datum()))
         return;
       if (Array.isArray(value.datum().value)) {
-        value.call(uiCombobox(context, "tag-value").minItems(1).fetcher(function(value2, callback) {
+        value.call(uiCombobox(context2, "tag-value").minItems(1).fetcher(function(value2, callback) {
           var keyString = utilGetSetValue(key);
           if (!_tags[keyString])
             return;
@@ -61585,8 +61585,8 @@ ${content}</tr>
         }));
         return;
       }
-      var geometry = context.graph().geometry(_entityIDs[0]);
-      key.call(uiCombobox(context, "tag-key").fetcher(function(value2, callback) {
+      var geometry = context2.graph().geometry(_entityIDs[0]);
+      key.call(uiCombobox(context2, "tag-key").fetcher(function(value2, callback) {
         taginfo.keys({
           debounce: true,
           geometry,
@@ -61600,7 +61600,7 @@ ${content}</tr>
           }
         });
       }));
-      value.call(uiCombobox(context, "tag-value").fetcher(function(value2, callback) {
+      value.call(uiCombobox(context2, "tag-value").fetcher(function(value2, callback) {
         taginfo.values({
           debounce: true,
           key: utilGetSetValue(key),
@@ -61626,8 +61626,8 @@ ${content}</tr>
     }
     function unbind() {
       var row = select_default2(this);
-      row.selectAll("input.key").call(uiCombobox.off, context);
-      row.selectAll("input.value").call(uiCombobox.off, context);
+      row.selectAll("input.key").call(uiCombobox.off, context2);
+      row.selectAll("input.value").call(uiCombobox.off, context2);
     }
     function keyChange(d3_event, d) {
       if (select_default2(this).attr("readonly"))
@@ -61635,7 +61635,7 @@ ${content}</tr>
       var kOld = d.key;
       if (_pendingChange && _pendingChange.hasOwnProperty(kOld) && _pendingChange[kOld] === void 0)
         return;
-      var kNew = context.cleanTagKey(this.value.trim());
+      var kNew = context2.cleanTagKey(this.value.trim());
       if (isReadOnly({ key: kNew })) {
         this.value = kOld;
         return;
@@ -61660,7 +61660,7 @@ ${content}</tr>
       } else {
         let row = this.parentNode.parentNode;
         let inputVal = select_default2(row).selectAll("input.value");
-        let vNew = context.cleanTagValue(utilGetSetValue(inputVal));
+        let vNew = context2.cleanTagValue(utilGetSetValue(inputVal));
         _pendingChange[kNew] = vNew;
         utilGetSetValue(inputVal, vNew);
       }
@@ -61679,7 +61679,7 @@ ${content}</tr>
       if (_pendingChange && _pendingChange.hasOwnProperty(d.key) && _pendingChange[d.key] === void 0)
         return;
       _pendingChange = _pendingChange || {};
-      _pendingChange[d.key] = context.cleanTagValue(this.value);
+      _pendingChange[d.key] = context2.cleanTagValue(this.value);
       scheduleChange();
     }
     function removeTag(d3_event, d) {
@@ -61758,15 +61758,15 @@ ${content}</tr>
   }
 
   // modules/ui/data_editor.js
-  function uiDataEditor(context) {
+  function uiDataEditor(context2) {
     var dataHeader = uiDataHeader();
-    var rawTagEditor = uiSectionRawTagEditor("custom-data-tag-editor", context).expandedByDefault(true).readOnlyTags([/./]);
+    var rawTagEditor = uiSectionRawTagEditor("custom-data-tag-editor", context2).expandedByDefault(true).readOnlyTags([/./]);
     var _datum;
     function dataEditor(selection2) {
       var header = selection2.selectAll(".header").data([0]);
       var headerEnter = header.enter().append("div").attr("class", "header fillL");
       headerEnter.append("button").attr("class", "close").attr("title", _t("icons.close")).on("click", function() {
-        context.enter(modeBrowse(context));
+        context2.enter(modeBrowse(context2));
       }).call(svgIcon("#iD-icon-close"));
       headerEnter.append("h2").call(_t.append("map_data.title"));
       var body = selection2.selectAll(".body").data([0]);
@@ -61788,7 +61788,7 @@ ${content}</tr>
   }
 
   // modules/ui/osmose_details.js
-  function uiOsmoseDetails(context) {
+  function uiOsmoseDetails(context2) {
     let _qaItem;
     function issueString(d, type3) {
       if (!d)
@@ -61824,7 +61824,7 @@ ${content}</tr>
       services.osmose.loadIssueDetail(_qaItem).then((d) => {
         if (!d.elems || d.elems.length === 0)
           return;
-        if (context.selectedErrorID() !== thisItem.id && context.container().selectAll(`.qaItem.osmose.hover.itemId-${thisItem.id}`).empty())
+        if (context2.selectedErrorID() !== thisItem.id && context2.container().selectAll(`.qaItem.osmose.hover.itemId-${thisItem.id}`).empty())
           return;
         if (d.detail) {
           detailsDiv.append("h4").call(_t.append("QA.osmose.detail_title"));
@@ -61834,35 +61834,35 @@ ${content}</tr>
         elemsDiv.append("ul").selectAll("li").data(d.elems).enter().append("li").append("a").attr("href", "#").attr("class", "error_entity_link").text((d2) => d2).each(function() {
           const link2 = select_default2(this);
           const entityID = this.textContent;
-          const entity = context.hasEntity(entityID);
+          const entity = context2.hasEntity(entityID);
           link2.on("mouseenter", () => {
-            utilHighlightEntities([entityID], true, context);
+            utilHighlightEntities([entityID], true, context2);
           }).on("mouseleave", () => {
-            utilHighlightEntities([entityID], false, context);
+            utilHighlightEntities([entityID], false, context2);
           }).on("click", (d3_event) => {
             d3_event.preventDefault();
-            utilHighlightEntities([entityID], false, context);
-            const osmlayer = context.layers().layer("osm");
+            utilHighlightEntities([entityID], false, context2);
+            const osmlayer = context2.layers().layer("osm");
             if (!osmlayer.enabled()) {
               osmlayer.enabled(true);
             }
-            context.map().centerZoom(d.loc, 20);
+            context2.map().centerZoom(d.loc, 20);
             if (entity) {
-              context.enter(modeSelect(context, [entityID]));
+              context2.enter(modeSelect(context2, [entityID]));
             } else {
-              context.loadEntity(entityID, (err, result) => {
+              context2.loadEntity(entityID, (err, result) => {
                 if (err)
                   return;
                 const entity2 = result.data.find((e) => e.id === entityID);
                 if (entity2)
-                  context.enter(modeSelect(context, [entityID]));
+                  context2.enter(modeSelect(context2, [entityID]));
               });
             }
           });
           if (entity) {
             let name = utilDisplayName(entity);
             if (!name) {
-              const preset = _mainPresetIndex.match(entity, context.graph());
+              const preset = _mainPresetIndex.match(entity, context2.graph());
               name = preset && !preset.isFallback() && preset.name();
             }
             if (name) {
@@ -61870,8 +61870,8 @@ ${content}</tr>
             }
           }
         });
-        context.features().forceVisible(d.elems);
-        context.map().pan([0, 0]);
+        context2.features().forceVisible(d.elems);
+        context2.map().pan([0, 0]);
       }).catch((err) => {
         console.log(err);
       });
@@ -61939,25 +61939,25 @@ ${content}</tr>
   }
 
   // modules/ui/osmose_editor.js
-  function uiOsmoseEditor(context) {
+  function uiOsmoseEditor(context2) {
     const dispatch10 = dispatch_default("change");
-    const qaDetails = uiOsmoseDetails(context);
-    const qaHeader = uiOsmoseHeader(context);
+    const qaDetails = uiOsmoseDetails(context2);
+    const qaHeader = uiOsmoseHeader(context2);
     let _qaItem;
     function osmoseEditor(selection2) {
       const header = selection2.selectAll(".header").data([0]);
       const headerEnter = header.enter().append("div").attr("class", "header fillL");
-      headerEnter.append("button").attr("class", "close").attr("title", _t("icons.close")).on("click", () => context.enter(modeBrowse(context))).call(svgIcon("#iD-icon-close"));
+      headerEnter.append("button").attr("class", "close").attr("title", _t("icons.close")).on("click", () => context2.enter(modeBrowse(context2))).call(svgIcon("#iD-icon-close"));
       headerEnter.append("h2").call(_t.append("QA.osmose.title"));
       let body = selection2.selectAll(".body").data([0]);
       body = body.enter().append("div").attr("class", "body").merge(body);
       let editor = body.selectAll(".qa-editor").data([0]);
       editor.enter().append("div").attr("class", "modal-section qa-editor").merge(editor).call(qaHeader.issue(_qaItem)).call(qaDetails.issue(_qaItem)).call(osmoseSaveSection);
       const footer = selection2.selectAll(".footer").data([0]);
-      footer.enter().append("div").attr("class", "footer").merge(footer).call(uiViewOnOsmose(context).what(_qaItem));
+      footer.enter().append("div").attr("class", "footer").merge(footer).call(uiViewOnOsmose(context2).what(_qaItem));
     }
     function osmoseSaveSection(selection2) {
-      const isSelected = _qaItem && _qaItem.id === context.selectedErrorID();
+      const isSelected = _qaItem && _qaItem.id === context2.selectedErrorID();
       const isShown = _qaItem && isSelected;
       let saveSection = selection2.selectAll(".qa-save").data(
         isShown ? [_qaItem] : [],
@@ -61968,7 +61968,7 @@ ${content}</tr>
       saveSection = saveSectionEnter.merge(saveSection).call(qaSaveButtons);
     }
     function qaSaveButtons(selection2) {
-      const isSelected = _qaItem && _qaItem.id === context.selectedErrorID();
+      const isSelected = _qaItem && _qaItem.id === context2.selectedErrorID();
       let buttonSection = selection2.selectAll(".buttons").data(isSelected ? [_qaItem] : [], (d) => d.status + d.id);
       buttonSection.exit().remove();
       const buttonEnter = buttonSection.enter().append("div").attr("class", "buttons");
@@ -62002,20 +62002,20 @@ ${content}</tr>
   }
 
   // modules/ui/sidebar.js
-  function uiSidebar(context) {
-    var inspector = uiInspector(context);
-    var dataEditor = uiDataEditor(context);
-    var noteEditor = uiNoteEditor(context);
-    var improveOsmEditor = uiImproveOsmEditor(context);
-    var keepRightEditor = uiKeepRightEditor(context);
-    var osmoseEditor = uiOsmoseEditor(context);
+  function uiSidebar(context2) {
+    var inspector = uiInspector(context2);
+    var dataEditor = uiDataEditor(context2);
+    var noteEditor = uiNoteEditor(context2);
+    var improveOsmEditor = uiImproveOsmEditor(context2);
+    var keepRightEditor = uiKeepRightEditor(context2);
+    var osmoseEditor = uiOsmoseEditor(context2);
     var _current;
     var _wasData = false;
     var _wasNote = false;
     var _wasQaItem = false;
     var _pointerPrefix = "PointerEvent" in window ? "pointer" : "mouse";
     function sidebar(selection2) {
-      var container = context.container();
+      var container = context2.container();
       var minWidth = 240;
       var sidebarWidth;
       var containerWidth;
@@ -62058,15 +62058,15 @@ ${content}</tr>
         if (shouldCollapse) {
           if (!isCollapsed) {
             selection2.style(xMarginProperty, "-400px").style("width", "400px");
-            context.ui().onResize([(sidebarWidth - dx) * scaleX, 0]);
+            context2.ui().onResize([(sidebarWidth - dx) * scaleX, 0]);
           }
         } else {
           var widthPct = sidebarWidth / containerWidth * 100;
           selection2.style(xMarginProperty, null).style("width", widthPct + "%");
           if (isCollapsed) {
-            context.ui().onResize([-sidebarWidth * scaleX, 0]);
+            context2.ui().onResize([-sidebarWidth * scaleX, 0]);
           } else {
-            context.ui().onResize([-dx * scaleX, 0]);
+            context2.ui().onResize([-dx * scaleX, 0]);
           }
         }
       }
@@ -62077,12 +62077,12 @@ ${content}</tr>
         resizer.classed("dragging", false);
         select_default2(window).on("touchmove.sidebar-resizer", null).on(_pointerPrefix + "move.sidebar-resizer", null).on(_pointerPrefix + "up.sidebar-resizer pointercancel.sidebar-resizer", null);
       }
-      var featureListWrap = selection2.append("div").attr("class", "feature-list-pane").call(uiFeatureList(context));
+      var featureListWrap = selection2.append("div").attr("class", "feature-list-pane").call(uiFeatureList(context2));
       var inspectorWrap = selection2.append("div").attr("class", "inspector-hidden inspector-wrap");
       var hoverModeSelect = function(targets) {
-        context.container().selectAll(".feature-list-item button").classed("hover", false);
-        if (context.selectedIDs().length > 1 && targets && targets.length) {
-          var elements = context.container().selectAll(".feature-list-item button").filter(function(node) {
+        context2.container().selectAll(".feature-list-item button").classed("hover", false);
+        if (context2.selectedIDs().length > 1 && targets && targets.length) {
+          var elements = context2.container().selectAll(".feature-list-item button").filter(function(node) {
             return targets.indexOf(node) !== -1;
           });
           if (!elements.empty()) {
@@ -62098,7 +62098,7 @@ ${content}</tr>
           sidebar.show(dataEditor.datum(datum2));
           selection2.selectAll(".sidebar-component").classed("inspector-hover", true);
         } else if (datum2 instanceof osmNote) {
-          if (context.mode().id === "drag-note")
+          if (context2.mode().id === "drag-note")
             return;
           _wasNote = true;
           var osm = services.osm;
@@ -62121,7 +62121,7 @@ ${content}</tr>
           } else {
             errEditor = improveOsmEditor;
           }
-          context.container().selectAll(".qaItem." + datum2.service).classed("hover", function(d) {
+          context2.container().selectAll(".qaItem." + datum2.service).classed("hover", function(d) {
             return d.id === datum2.id;
           });
           sidebar.show(errEditor.error(datum2));
@@ -62141,8 +62141,8 @@ ${content}</tr>
           _wasNote = false;
           _wasData = false;
           _wasQaItem = false;
-          context.container().selectAll(".note").classed("hover", false);
-          context.container().selectAll(".qaItem").classed("hover", false);
+          context2.container().selectAll(".note").classed("hover", false);
+          context2.container().selectAll(".qaItem").classed("hover", false);
           sidebar.hide();
         }
       }
@@ -62150,16 +62150,16 @@ ${content}</tr>
       sidebar.intersects = function(extent) {
         var rect = selection2.node().getBoundingClientRect();
         return extent.intersects([
-          context.projection.invert([0, rect.height]),
-          context.projection.invert([rect.width, 0])
+          context2.projection.invert([0, rect.height]),
+          context2.projection.invert([rect.width, 0])
         ]);
       };
       sidebar.select = function(ids, newFeature) {
         sidebar.hide();
         if (ids && ids.length) {
-          var entity = ids.length === 1 && context.entity(ids[0]);
+          var entity = ids.length === 1 && context2.entity(ids[0]);
           if (entity && newFeature && selection2.classed("collapsed")) {
-            var extent = entity.extent(context.graph());
+            var extent = entity.extent(context2.graph());
             sidebar.expand(sidebar.intersects(extent));
           }
           featureListWrap.classed("inspector-hidden", true);
@@ -62198,7 +62198,7 @@ ${content}</tr>
         }
       };
       sidebar.toggle = function(moveMap) {
-        if (context.inIntro())
+        if (context2.inIntro())
           return;
         var isCollapsed = selection2.classed("collapsed");
         var isCollapsing = !isCollapsed;
@@ -62223,7 +62223,7 @@ ${content}</tr>
           return function(t) {
             var dx = lastMargin - Math.round(i2(t));
             lastMargin = lastMargin - dx;
-            context.ui().onResize(moveMap ? void 0 : [dx * scaleX, 0]);
+            context2.ui().onResize(moveMap ? void 0 : [dx * scaleX, 0]);
           };
         }).on("end", function() {
           if (isCollapsing) {
@@ -62243,7 +62243,7 @@ ${content}</tr>
         }
         sidebar.toggle();
       });
-      context.map().on("crossEditableZoom.sidebar", function(within) {
+      context2.map().on("crossEditableZoom.sidebar", function(within) {
         if (!within && !selection2.select(".inspector-hover").empty()) {
           hover([]);
         }
@@ -62273,20 +62273,20 @@ ${content}</tr>
   }
 
   // modules/modes/draw_area.js
-  function modeDrawArea(context, wayID, startGraph, button) {
+  function modeDrawArea(context2, wayID, startGraph, button) {
     var mode = {
       button,
       id: "draw-area"
     };
-    var behavior = behaviorDrawWay(context, wayID, mode, startGraph).on("rejectedSelfIntersection.modeDrawArea", function() {
-      context.ui().flash.iconName("#iD-icon-no").label(_t.html("self_intersection.error.areas"))();
+    var behavior = behaviorDrawWay(context2, wayID, mode, startGraph).on("rejectedSelfIntersection.modeDrawArea", function() {
+      context2.ui().flash.iconName("#iD-icon-no").label(_t.html("self_intersection.error.areas"))();
     });
     mode.wayID = wayID;
     mode.enter = function() {
-      context.install(behavior);
+      context2.install(behavior);
     };
     mode.exit = function() {
-      context.uninstall(behavior);
+      context2.uninstall(behavior);
     };
     mode.selectedIDs = function() {
       return [wayID];
@@ -62298,9 +62298,9 @@ ${content}</tr>
   }
 
   // modules/modes/add_area.js
-  function modeAddArea(context, mode) {
+  function modeAddArea(context2, mode) {
     mode.id = "add-area";
-    var behavior = behaviorAddWay(context).on("start", start2).on("startFromWay", startFromWay).on("startFromNode", startFromNode);
+    var behavior = behaviorAddWay(context2).on("start", start2).on("startFromWay", startFromWay).on("startFromNode", startFromNode);
     var defaultTags = { area: "yes" };
     if (mode.preset)
       defaultTags = mode.preset.setTags(defaultTags, "area");
@@ -62310,107 +62310,107 @@ ${content}</tr>
       };
     }
     function start2(loc) {
-      var startGraph = context.graph();
+      var startGraph = context2.graph();
       var node = osmNode({ loc });
       var way = osmWay({ tags: defaultTags });
-      context.perform(
+      context2.perform(
         actionAddEntity(node),
         actionAddEntity(way),
         actionAddVertex(way.id, node.id),
         actionClose(way.id)
       );
-      context.enter(modeDrawArea(context, way.id, startGraph, mode.button));
+      context2.enter(modeDrawArea(context2, way.id, startGraph, mode.button));
     }
     function startFromWay(loc, edge) {
-      var startGraph = context.graph();
+      var startGraph = context2.graph();
       var node = osmNode({ loc });
       var way = osmWay({ tags: defaultTags });
-      context.perform(
+      context2.perform(
         actionAddEntity(node),
         actionAddEntity(way),
         actionAddVertex(way.id, node.id),
         actionClose(way.id),
         actionAddMidpoint({ loc, edge }, node)
       );
-      context.enter(modeDrawArea(context, way.id, startGraph, mode.button));
+      context2.enter(modeDrawArea(context2, way.id, startGraph, mode.button));
     }
     function startFromNode(node) {
-      var startGraph = context.graph();
+      var startGraph = context2.graph();
       var way = osmWay({ tags: defaultTags });
-      context.perform(
+      context2.perform(
         actionAddEntity(way),
         actionAddVertex(way.id, node.id),
         actionClose(way.id)
       );
-      context.enter(modeDrawArea(context, way.id, startGraph, mode.button));
+      context2.enter(modeDrawArea(context2, way.id, startGraph, mode.button));
     }
     mode.enter = function() {
-      context.install(behavior);
+      context2.install(behavior);
     };
     mode.exit = function() {
-      context.uninstall(behavior);
+      context2.uninstall(behavior);
     };
     return mode;
   }
 
   // modules/modes/add_line.js
-  function modeAddLine(context, mode) {
+  function modeAddLine(context2, mode) {
     mode.id = "add-line";
-    var behavior = behaviorAddWay(context).on("start", start2).on("startFromWay", startFromWay).on("startFromNode", startFromNode);
+    var behavior = behaviorAddWay(context2).on("start", start2).on("startFromWay", startFromWay).on("startFromNode", startFromNode);
     var defaultTags = {};
     if (mode.preset)
       defaultTags = mode.preset.setTags(defaultTags, "line");
     function start2(loc) {
-      var startGraph = context.graph();
+      var startGraph = context2.graph();
       var node = osmNode({ loc });
       var way = osmWay({ tags: defaultTags });
-      context.perform(
+      context2.perform(
         actionAddEntity(node),
         actionAddEntity(way),
         actionAddVertex(way.id, node.id)
       );
-      context.enter(modeDrawLine(context, way.id, startGraph, mode.button));
+      context2.enter(modeDrawLine(context2, way.id, startGraph, mode.button));
     }
     function startFromWay(loc, edge) {
-      var startGraph = context.graph();
+      var startGraph = context2.graph();
       var node = osmNode({ loc });
       var way = osmWay({ tags: defaultTags });
-      context.perform(
+      context2.perform(
         actionAddEntity(node),
         actionAddEntity(way),
         actionAddVertex(way.id, node.id),
         actionAddMidpoint({ loc, edge }, node)
       );
-      context.enter(modeDrawLine(context, way.id, startGraph, mode.button));
+      context2.enter(modeDrawLine(context2, way.id, startGraph, mode.button));
     }
     function startFromNode(node) {
-      var startGraph = context.graph();
+      var startGraph = context2.graph();
       var way = osmWay({ tags: defaultTags });
-      context.perform(
+      context2.perform(
         actionAddEntity(way),
         actionAddVertex(way.id, node.id)
       );
-      context.enter(modeDrawLine(context, way.id, startGraph, mode.button));
+      context2.enter(modeDrawLine(context2, way.id, startGraph, mode.button));
     }
     mode.enter = function() {
-      context.install(behavior);
+      context2.install(behavior);
     };
     mode.exit = function() {
-      context.uninstall(behavior);
+      context2.uninstall(behavior);
     };
     return mode;
   }
 
   // modules/modes/add_point.js
-  function modeAddPoint(context, mode) {
+  function modeAddPoint(context2, mode) {
     mode.id = "add-point";
-    var behavior = behaviorDraw(context).on("click", add).on("clickWay", addWay).on("clickNode", addNode).on("cancel", cancel).on("finish", cancel);
+    var behavior = behaviorDraw(context2).on("click", add).on("clickWay", addWay).on("clickNode", addNode).on("cancel", cancel).on("finish", cancel);
     var defaultTags = {};
     if (mode.preset)
       defaultTags = mode.preset.setTags(defaultTags, "point");
     function add(loc) {
       var node = osmNode({ loc, tags: defaultTags });
-      context.perform(
+      context2.perform(
         actionAddEntity(node),
         _t("operations.add.annotation.point")
       );
@@ -62418,15 +62418,15 @@ ${content}</tr>
     }
     function addWay(loc, edge) {
       var node = osmNode({ tags: defaultTags });
-      context.perform(
+      context2.perform(
         actionAddMidpoint({ loc, edge }, node),
         _t("operations.add.annotation.vertex")
       );
       enterSelectMode(node);
     }
     function enterSelectMode(node) {
-      context.enter(
-        modeSelect(context, [node.id]).newFeature(true)
+      context2.enter(
+        modeSelect(context2, [node.id]).newFeature(true)
       );
     }
     function addNode(node) {
@@ -62438,45 +62438,45 @@ ${content}</tr>
       for (var key in defaultTags) {
         tags[key] = defaultTags[key];
       }
-      context.perform(
+      context2.perform(
         actionChangeTags(node.id, tags),
         _t("operations.add.annotation.point")
       );
       enterSelectMode(node);
     }
     function cancel() {
-      context.enter(modeBrowse(context));
+      context2.enter(modeBrowse(context2));
     }
     mode.enter = function() {
-      context.install(behavior);
+      context2.install(behavior);
     };
     mode.exit = function() {
-      context.uninstall(behavior);
+      context2.uninstall(behavior);
     };
     return mode;
   }
 
   // modules/modes/select_note.js
-  function modeSelectNote(context, selectedNoteID) {
+  function modeSelectNote(context2, selectedNoteID) {
     var mode = {
       id: "select-note",
       button: "browse"
     };
     var _keybinding = utilKeybinding("select-note");
-    var _noteEditor = uiNoteEditor(context).on("change", function() {
-      context.map().pan([0, 0]);
+    var _noteEditor = uiNoteEditor(context2).on("change", function() {
+      context2.map().pan([0, 0]);
       var note = checkSelectedID();
       if (!note)
         return;
-      context.ui().sidebar.show(_noteEditor.note(note));
+      context2.ui().sidebar.show(_noteEditor.note(note));
     });
     var _behaviors = [
-      behaviorBreathe(context),
-      behaviorHover(context),
-      behaviorSelect(context),
-      behaviorLasso(context),
-      modeDragNode(context).behavior,
-      modeDragNote(context).behavior
+      behaviorBreathe(context2),
+      behaviorHover(context2),
+      behaviorSelect(context2),
+      behaviorLasso(context2),
+      modeDragNode(context2).behavior,
+      modeDragNote(context2).behavior
     ];
     var _newFeature = false;
     function checkSelectedID() {
@@ -62484,35 +62484,35 @@ ${content}</tr>
         return;
       var note = services.osm.getNote(selectedNoteID);
       if (!note) {
-        context.enter(modeBrowse(context));
+        context2.enter(modeBrowse(context2));
       }
       return note;
     }
     function selectNote(d3_event, drawn) {
       if (!checkSelectedID())
         return;
-      var selection2 = context.surface().selectAll(".layer-notes .note-" + selectedNoteID);
+      var selection2 = context2.surface().selectAll(".layer-notes .note-" + selectedNoteID);
       if (selection2.empty()) {
         var source = d3_event && d3_event.type === "zoom" && d3_event.sourceEvent;
         if (drawn && source && (source.type === "pointermove" || source.type === "mousemove" || source.type === "touchmove")) {
-          context.enter(modeBrowse(context));
+          context2.enter(modeBrowse(context2));
         }
       } else {
         selection2.classed("selected", true);
-        context.selectedNoteID(selectedNoteID);
+        context2.selectedNoteID(selectedNoteID);
       }
     }
     function esc() {
-      if (context.container().select(".combobox").size())
+      if (context2.container().select(".combobox").size())
         return;
-      context.enter(modeBrowse(context));
+      context2.enter(modeBrowse(context2));
     }
     mode.zoomToSelected = function() {
       if (!services.osm)
         return;
       var note = services.osm.getNote(selectedNoteID);
       if (note) {
-        context.map().centerZoomEase(note.loc, 20);
+        context2.map().centerZoomEase(note.loc, 20);
       }
     };
     mode.newFeature = function(val) {
@@ -62525,87 +62525,87 @@ ${content}</tr>
       var note = checkSelectedID();
       if (!note)
         return;
-      _behaviors.forEach(context.install);
+      _behaviors.forEach(context2.install);
       _keybinding.on(_t("inspector.zoom_to.key"), mode.zoomToSelected).on("\u238B", esc, true);
       select_default2(document).call(_keybinding);
       selectNote();
-      var sidebar = context.ui().sidebar;
+      var sidebar = context2.ui().sidebar;
       sidebar.show(_noteEditor.note(note).newNote(_newFeature));
       sidebar.expand(sidebar.intersects(note.extent()));
-      context.map().on("drawn.select", selectNote);
+      context2.map().on("drawn.select", selectNote);
     };
     mode.exit = function() {
-      _behaviors.forEach(context.uninstall);
+      _behaviors.forEach(context2.uninstall);
       select_default2(document).call(_keybinding.unbind);
-      context.surface().selectAll(".layer-notes .selected").classed("selected hover", false);
-      context.map().on("drawn.select", null);
-      context.ui().sidebar.hide();
-      context.selectedNoteID(null);
+      context2.surface().selectAll(".layer-notes .selected").classed("selected hover", false);
+      context2.map().on("drawn.select", null);
+      context2.ui().sidebar.hide();
+      context2.selectedNoteID(null);
     };
     return mode;
   }
 
   // modules/modes/add_note.js
-  function modeAddNote(context) {
+  function modeAddNote(context2) {
     var mode = {
       id: "add-note",
       button: "note",
       description: _t.html("modes.add_note.description"),
       key: _t("modes.add_note.key")
     };
-    var behavior = behaviorDraw(context).on("click", add).on("cancel", cancel).on("finish", cancel);
+    var behavior = behaviorDraw(context2).on("click", add).on("cancel", cancel).on("finish", cancel);
     function add(loc) {
       var osm = services.osm;
       if (!osm)
         return;
       var note = osmNote({ loc, status: "open", comments: [] });
       osm.replaceNote(note);
-      context.map().pan([0, 0]);
-      context.selectedNoteID(note.id).enter(modeSelectNote(context, note.id).newFeature(true));
+      context2.map().pan([0, 0]);
+      context2.selectedNoteID(note.id).enter(modeSelectNote(context2, note.id).newFeature(true));
     }
     function cancel() {
-      context.enter(modeBrowse(context));
+      context2.enter(modeBrowse(context2));
     }
     mode.enter = function() {
-      context.install(behavior);
+      context2.install(behavior);
     };
     mode.exit = function() {
-      context.uninstall(behavior);
+      context2.uninstall(behavior);
     };
     return mode;
   }
 
   // modules/modes/save.js
-  function modeSave(context) {
+  function modeSave(context2) {
     var mode = { id: "save" };
     var keybinding = utilKeybinding("modeSave");
-    var commit = uiCommit(context).on("cancel", cancel);
+    var commit = uiCommit(context2).on("cancel", cancel);
     var _conflictsUi;
     var _location;
     var _success;
-    var uploader = context.uploader().on("saveStarted.modeSave", function() {
+    var uploader = context2.uploader().on("saveStarted.modeSave", function() {
       keybindingOff();
     }).on("willAttemptUpload.modeSave", prepareForSuccess).on("progressChanged.modeSave", showProgress).on("resultNoChanges.modeSave", function() {
       cancel();
     }).on("resultErrors.modeSave", showErrors).on("resultConflicts.modeSave", showConflicts).on("resultSuccess.modeSave", showSuccess);
     function cancel() {
-      context.enter(modeBrowse(context));
+      context2.enter(modeBrowse(context2));
     }
     function showProgress(num, total) {
-      var modal = context.container().select(".loading-modal .modal-section");
+      var modal = context2.container().select(".loading-modal .modal-section");
       var progress = modal.selectAll(".progress").data([0]);
       progress.enter().append("div").attr("class", "progress").merge(progress).text(_t("save.conflict_progress", { num, total }));
     }
     function showConflicts(changeset, conflicts, origChanges) {
-      var selection2 = context.container().select(".sidebar").append("div").attr("class", "sidebar-component");
-      context.container().selectAll(".main-content").classed("active", true).classed("inactive", false);
-      _conflictsUi = uiConflicts(context).conflictList(conflicts).origChanges(origChanges).on("cancel", function() {
-        context.container().selectAll(".main-content").classed("active", false).classed("inactive", true);
+      var selection2 = context2.container().select(".sidebar").append("div").attr("class", "sidebar-component");
+      context2.container().selectAll(".main-content").classed("active", true).classed("inactive", false);
+      _conflictsUi = uiConflicts(context2).conflictList(conflicts).origChanges(origChanges).on("cancel", function() {
+        context2.container().selectAll(".main-content").classed("active", false).classed("inactive", true);
         selection2.remove();
         keybindingOn();
         uploader.cancelConflictResolution();
       }).on("save", function() {
-        context.container().selectAll(".main-content").classed("active", false).classed("inactive", true);
+        context2.container().selectAll(".main-content").classed("active", false).classed("inactive", true);
         selection2.remove();
         uploader.processResolvedConflicts(changeset);
       });
@@ -62613,7 +62613,7 @@ ${content}</tr>
     }
     function showErrors(errors) {
       keybindingOn();
-      var selection2 = uiConfirm(context.container());
+      var selection2 = uiConfirm(context2.container());
       selection2.select(".modal-section.header").append("h3").text(_t("save.error"));
       addErrors(selection2, errors);
       selection2.okButton();
@@ -62643,9 +62643,9 @@ ${content}</tr>
     function showSuccess(changeset) {
       commit.reset();
       var ui = _success.changeset(changeset).location(_location).on("cancel", function() {
-        context.ui().sidebar.hide();
+        context2.ui().sidebar.hide();
       });
-      context.enter(modeBrowse(context).sidebar(ui));
+      context2.enter(modeBrowse(context2).sidebar(ui));
     }
     function keybindingOn() {
       select_default2(document).call(keybinding.on("\u238B", cancel, true));
@@ -62654,11 +62654,11 @@ ${content}</tr>
       select_default2(document).call(keybinding.unbind);
     }
     function prepareForSuccess() {
-      _success = uiSuccess(context);
+      _success = uiSuccess(context2);
       _location = null;
       if (!services.geocoder)
         return;
-      services.geocoder.reverse(context.map().center(), function(err, result) {
+      services.geocoder.reverse(context2.map().center(), function(err, result) {
         if (err || !result || !result.address)
           return;
         var addr = result.address;
@@ -62675,13 +62675,13 @@ ${content}</tr>
       return _conflictsUi ? _conflictsUi.shownEntityIds() : [];
     };
     mode.enter = function() {
-      context.ui().sidebar.expand();
+      context2.ui().sidebar.expand();
       function done() {
-        context.ui().sidebar.show(commit);
+        context2.ui().sidebar.show(commit);
       }
       keybindingOn();
-      context.container().selectAll(".main-content").classed("active", false).classed("inactive", true);
-      var osm = context.connection();
+      context2.container().selectAll(".main-content").classed("active", false).classed("inactive", true);
+      var osm = context2.connection();
       if (!osm) {
         cancel();
         return;
@@ -62700,14 +62700,14 @@ ${content}</tr>
     };
     mode.exit = function() {
       keybindingOff();
-      context.container().selectAll(".main-content").classed("active", true).classed("inactive", false);
-      context.ui().sidebar.hide();
+      context2.container().selectAll(".main-content").classed("active", true).classed("inactive", false);
+      context2.ui().sidebar.hide();
     };
     return mode;
   }
 
   // modules/modes/select_error.js
-  function modeSelectError(context, selectedErrorID, selectedErrorService) {
+  function modeSelectError(context2, selectedErrorID, selectedErrorService) {
     var mode = {
       id: "select-error",
       button: "browse"
@@ -62717,47 +62717,47 @@ ${content}</tr>
     var errorEditor;
     switch (selectedErrorService) {
       case "improveOSM":
-        errorEditor = uiImproveOsmEditor(context).on("change", function() {
-          context.map().pan([0, 0]);
+        errorEditor = uiImproveOsmEditor(context2).on("change", function() {
+          context2.map().pan([0, 0]);
           var error = checkSelectedID();
           if (!error)
             return;
-          context.ui().sidebar.show(errorEditor.error(error));
+          context2.ui().sidebar.show(errorEditor.error(error));
         });
         break;
       case "keepRight":
-        errorEditor = uiKeepRightEditor(context).on("change", function() {
-          context.map().pan([0, 0]);
+        errorEditor = uiKeepRightEditor(context2).on("change", function() {
+          context2.map().pan([0, 0]);
           var error = checkSelectedID();
           if (!error)
             return;
-          context.ui().sidebar.show(errorEditor.error(error));
+          context2.ui().sidebar.show(errorEditor.error(error));
         });
         break;
       case "osmose":
-        errorEditor = uiOsmoseEditor(context).on("change", function() {
-          context.map().pan([0, 0]);
+        errorEditor = uiOsmoseEditor(context2).on("change", function() {
+          context2.map().pan([0, 0]);
           var error = checkSelectedID();
           if (!error)
             return;
-          context.ui().sidebar.show(errorEditor.error(error));
+          context2.ui().sidebar.show(errorEditor.error(error));
         });
         break;
     }
     var behaviors = [
-      behaviorBreathe(context),
-      behaviorHover(context),
-      behaviorSelect(context),
-      behaviorLasso(context),
-      modeDragNode(context).behavior,
-      modeDragNote(context).behavior
+      behaviorBreathe(context2),
+      behaviorHover(context2),
+      behaviorSelect(context2),
+      behaviorLasso(context2),
+      modeDragNode(context2).behavior,
+      modeDragNote(context2).behavior
     ];
     function checkSelectedID() {
       if (!errorService)
         return;
       var error = errorService.getError(selectedErrorID);
       if (!error) {
-        context.enter(modeBrowse(context));
+        context2.enter(modeBrowse(context2));
       }
       return error;
     }
@@ -62766,74 +62766,74 @@ ${content}</tr>
         return;
       var error = errorService.getError(selectedErrorID);
       if (error) {
-        context.map().centerZoomEase(error.loc, 20);
+        context2.map().centerZoomEase(error.loc, 20);
       }
     };
     mode.enter = function() {
       var error = checkSelectedID();
       if (!error)
         return;
-      behaviors.forEach(context.install);
+      behaviors.forEach(context2.install);
       keybinding.on(_t("inspector.zoom_to.key"), mode.zoomToSelected).on("\u238B", esc, true);
       select_default2(document).call(keybinding);
       selectError();
-      var sidebar = context.ui().sidebar;
+      var sidebar = context2.ui().sidebar;
       sidebar.show(errorEditor.error(error));
-      context.map().on("drawn.select-error", selectError);
+      context2.map().on("drawn.select-error", selectError);
       function selectError(d3_event, drawn) {
         if (!checkSelectedID())
           return;
-        var selection2 = context.surface().selectAll(".itemId-" + selectedErrorID + "." + selectedErrorService);
+        var selection2 = context2.surface().selectAll(".itemId-" + selectedErrorID + "." + selectedErrorService);
         if (selection2.empty()) {
           var source = d3_event && d3_event.type === "zoom" && d3_event.sourceEvent;
           if (drawn && source && (source.type === "pointermove" || source.type === "mousemove" || source.type === "touchmove")) {
-            context.enter(modeBrowse(context));
+            context2.enter(modeBrowse(context2));
           }
         } else {
           selection2.classed("selected", true);
-          context.selectedErrorID(selectedErrorID);
+          context2.selectedErrorID(selectedErrorID);
         }
       }
       function esc() {
-        if (context.container().select(".combobox").size())
+        if (context2.container().select(".combobox").size())
           return;
-        context.enter(modeBrowse(context));
+        context2.enter(modeBrowse(context2));
       }
     };
     mode.exit = function() {
-      behaviors.forEach(context.uninstall);
+      behaviors.forEach(context2.uninstall);
       select_default2(document).call(keybinding.unbind);
-      context.surface().selectAll(".qaItem.selected").classed("selected hover", false);
-      context.map().on("drawn.select-error", null);
-      context.ui().sidebar.hide();
-      context.selectedErrorID(null);
-      context.features().forceVisible([]);
+      context2.surface().selectAll(".qaItem.selected").classed("selected hover", false);
+      context2.map().on("drawn.select-error", null);
+      context2.ui().sidebar.hide();
+      context2.selectedErrorID(null);
+      context2.features().forceVisible([]);
     };
     return mode;
   }
 
   // modules/ui/tools/modes.js
-  function uiToolDrawModes(context) {
+  function uiToolDrawModes(context2) {
     var tool = {
       id: "old_modes",
       label: _t.html("toolbar.add_feature")
     };
     var modes = [
-      modeAddPoint(context, {
+      modeAddPoint(context2, {
         title: _t.html("modes.add_point.title"),
         button: "point",
         description: _t.html("modes.add_point.description"),
         preset: _mainPresetIndex.item("point"),
         key: "1"
       }),
-      modeAddLine(context, {
+      modeAddLine(context2, {
         title: _t.html("modes.add_line.title"),
         button: "line",
         description: _t.html("modes.add_line.description"),
         preset: _mainPresetIndex.item("line"),
         key: "2"
       }),
-      modeAddArea(context, {
+      modeAddArea(context2, {
         title: _t.html("modes.add_area.title"),
         button: "area",
         description: _t.html("modes.add_area.description"),
@@ -62845,24 +62845,24 @@ ${content}</tr>
       return osmEditable();
     }
     function osmEditable() {
-      return context.editable();
+      return context2.editable();
     }
     modes.forEach(function(mode) {
-      context.keybinding().on(mode.key, function() {
+      context2.keybinding().on(mode.key, function() {
         if (!enabled(mode))
           return;
-        if (mode.id === context.mode().id) {
-          context.enter(modeBrowse(context));
+        if (mode.id === context2.mode().id) {
+          context2.enter(modeBrowse(context2));
         } else {
-          context.enter(mode);
+          context2.enter(mode);
         }
       });
     });
     tool.render = function(selection2) {
       var wrap2 = selection2.append("div").attr("class", "joined").style("display", "flex");
       var debouncedUpdate = debounce_default(update, 500, { leading: true, trailing: true });
-      context.map().on("move.modes", debouncedUpdate).on("drawn.modes", debouncedUpdate);
-      context.on("enter.modes", update);
+      context2.map().on("move.modes", debouncedUpdate).on("drawn.modes", debouncedUpdate);
+      context2.on("enter.modes", update);
       update();
       function update() {
         var buttons = wrap2.selectAll("button.add-button").data(modes, function(d) {
@@ -62874,20 +62874,20 @@ ${content}</tr>
         }).on("click.mode-buttons", function(d3_event, d) {
           if (!enabled(d))
             return;
-          var currMode = context.mode().id;
+          var currMode = context2.mode().id;
           if (/^draw/.test(currMode))
             return;
           if (d.id === currMode) {
-            context.enter(modeBrowse(context));
+            context2.enter(modeBrowse(context2));
           } else {
-            context.enter(d);
+            context2.enter(d);
           }
         }).call(
           uiTooltip().placement("bottom").title(function(d) {
             return d.description;
           }).keys(function(d) {
             return [d.key];
-          }).scrollContainer(context.container().select(".top-toolbar"))
+          }).scrollContainer(context2.container().select(".top-toolbar"))
         );
         buttonsEnter.each(function(d) {
           select_default2(this).call(svgIcon("#iD-icon-" + d.button));
@@ -62896,16 +62896,16 @@ ${content}</tr>
           return mode.title;
         });
         if (buttons.enter().size() || buttons.exit().size()) {
-          context.ui().checkOverflow(".top-toolbar", true);
+          context2.ui().checkOverflow(".top-toolbar", true);
         }
         buttons = buttons.merge(buttonsEnter).attr("aria-disabled", function(d) {
           return !enabled(d);
         }).classed("disabled", function(d) {
           return !enabled(d);
         }).attr("aria-pressed", function(d) {
-          return context.mode() && context.mode().button === d.button;
+          return context2.mode() && context2.mode().button === d.button;
         }).classed("active", function(d) {
-          return context.mode() && context.mode().button === d.button;
+          return context2.mode() && context2.mode().button === d.button;
         });
       }
     };
@@ -62913,36 +62913,36 @@ ${content}</tr>
   }
 
   // modules/ui/tools/notes.js
-  function uiToolNotes(context) {
+  function uiToolNotes(context2) {
     var tool = {
       id: "notes",
       label: _t.html("modes.add_note.label")
     };
-    var mode = modeAddNote(context);
+    var mode = modeAddNote(context2);
     function enabled() {
       return notesEnabled() && notesEditable();
     }
     function notesEnabled() {
-      var noteLayer = context.layers().layer("notes");
+      var noteLayer = context2.layers().layer("notes");
       return noteLayer && noteLayer.enabled();
     }
     function notesEditable() {
-      var mode2 = context.mode();
-      return context.map().notesEditable() && mode2 && mode2.id !== "save";
+      var mode2 = context2.mode();
+      return context2.map().notesEditable() && mode2 && mode2.id !== "save";
     }
-    context.keybinding().on(mode.key, function() {
+    context2.keybinding().on(mode.key, function() {
       if (!enabled())
         return;
-      if (mode.id === context.mode().id) {
-        context.enter(modeBrowse(context));
+      if (mode.id === context2.mode().id) {
+        context2.enter(modeBrowse(context2));
       } else {
-        context.enter(mode);
+        context2.enter(mode);
       }
     });
     tool.render = function(selection2) {
       var debouncedUpdate = debounce_default(update, 500, { leading: true, trailing: true });
-      context.map().on("move.notes", debouncedUpdate).on("drawn.notes", debouncedUpdate);
-      context.on("enter.notes", update);
+      context2.map().on("move.notes", debouncedUpdate).on("drawn.notes", debouncedUpdate);
+      context2.on("enter.notes", update);
       update();
       function update() {
         var showNotes = notesEnabled();
@@ -62956,58 +62956,58 @@ ${content}</tr>
         }).on("click.notes", function(d3_event, d) {
           if (!enabled())
             return;
-          var currMode = context.mode().id;
+          var currMode = context2.mode().id;
           if (/^draw/.test(currMode))
             return;
           if (d.id === currMode) {
-            context.enter(modeBrowse(context));
+            context2.enter(modeBrowse(context2));
           } else {
-            context.enter(d);
+            context2.enter(d);
           }
         }).call(
           uiTooltip().placement("bottom").title(function(d) {
             return d.description;
           }).keys(function(d) {
             return [d.key];
-          }).scrollContainer(context.container().select(".top-toolbar"))
+          }).scrollContainer(context2.container().select(".top-toolbar"))
         );
         buttonsEnter.each(function(d) {
           select_default2(this).call(svgIcon(d.icon || "#iD-icon-" + d.button));
         });
         if (buttons.enter().size() || buttons.exit().size()) {
-          context.ui().checkOverflow(".top-toolbar", true);
+          context2.ui().checkOverflow(".top-toolbar", true);
         }
         buttons = buttons.merge(buttonsEnter).classed("disabled", function() {
           return !enabled();
         }).attr("aria-disabled", function() {
           return !enabled();
         }).classed("active", function(d) {
-          return context.mode() && context.mode().button === d.button;
+          return context2.mode() && context2.mode().button === d.button;
         }).attr("aria-pressed", function(d) {
-          return context.mode() && context.mode().button === d.button;
+          return context2.mode() && context2.mode().button === d.button;
         });
       }
     };
     tool.uninstall = function() {
-      context.on("enter.editor.notes", null).on("exit.editor.notes", null).on("enter.notes", null);
-      context.map().on("move.notes", null).on("drawn.notes", null);
+      context2.on("enter.editor.notes", null).on("exit.editor.notes", null).on("enter.notes", null);
+      context2.map().on("move.notes", null).on("drawn.notes", null);
     };
     return tool;
   }
 
   // modules/ui/tools/save.js
-  function uiToolSave(context) {
+  function uiToolSave(context2) {
     var tool = {
       id: "save",
       label: _t.html("save.title")
     };
     var button = null;
     var tooltipBehavior = null;
-    var history = context.history();
+    var history = context2.history();
     var key = uiCmd("\u2318S");
     var _numChanges = 0;
     function isSaving() {
-      var mode = context.mode();
+      var mode = context2.mode();
       return mode && mode.id === "save";
     }
     function isDisabled() {
@@ -63015,8 +63015,8 @@ ${content}</tr>
     }
     function save(d3_event) {
       d3_event.preventDefault();
-      if (!context.inIntro() && !isSaving() && history.hasChanges()) {
-        context.enter(modeSave(context));
+      if (!context2.inIntro() && !isSaving() && history.hasChanges()) {
+        context2.enter(modeSave(context2));
       }
     }
     function bgColor(numChanges) {
@@ -63045,23 +63045,23 @@ ${content}</tr>
       }
     }
     tool.render = function(selection2) {
-      tooltipBehavior = uiTooltip().placement("bottom").title(_t.html("save.no_changes")).keys([key]).scrollContainer(context.container().select(".top-toolbar"));
+      tooltipBehavior = uiTooltip().placement("bottom").title(_t.html("save.no_changes")).keys([key]).scrollContainer(context2.container().select(".top-toolbar"));
       var lastPointerUpType;
       button = selection2.append("button").attr("class", "save disabled bar-button").on("pointerup", function(d3_event) {
         lastPointerUpType = d3_event.pointerType;
       }).on("click", function(d3_event) {
         save(d3_event);
         if (_numChanges === 0 && (lastPointerUpType === "touch" || lastPointerUpType === "pen")) {
-          context.ui().flash.duration(2e3).iconName("#iD-icon-save").iconClass("disabled").label(_t.html("save.no_changes"))();
+          context2.ui().flash.duration(2e3).iconName("#iD-icon-save").iconClass("disabled").label(_t.html("save.no_changes"))();
         }
         lastPointerUpType = null;
       }).call(tooltipBehavior);
       button.call(svgIcon("#iD-icon-save"));
       button.append("span").attr("class", "count").attr("aria-hidden", "true").text("0");
       updateCount();
-      context.keybinding().on(key, save, true);
-      context.history().on("change.save", updateCount);
-      context.on("enter.save", function() {
+      context2.keybinding().on(key, save, true);
+      context2.history().on("change.save", updateCount);
+      context2.on("enter.save", function() {
         if (button) {
           button.classed("disabled", isDisabled());
           if (isSaving()) {
@@ -63071,9 +63071,9 @@ ${content}</tr>
       });
     };
     tool.uninstall = function() {
-      context.keybinding().off(key, true);
-      context.history().on("change.save", null);
-      context.on("enter.save", null);
+      context2.keybinding().off(key, true);
+      context2.history().on("change.save", null);
+      context2.on("enter.save", null);
       button = null;
       tooltipBehavior = null;
     };
@@ -63081,23 +63081,23 @@ ${content}</tr>
   }
 
   // modules/ui/tools/sidebar_toggle.js
-  function uiToolSidebarToggle(context) {
+  function uiToolSidebarToggle(context2) {
     var tool = {
       id: "sidebar_toggle",
       label: _t.html("toolbar.inspect")
     };
     tool.render = function(selection2) {
       selection2.append("button").attr("class", "bar-button").attr("aria-label", _t("sidebar.tooltip")).on("click", function() {
-        context.ui().sidebar.toggle();
+        context2.ui().sidebar.toggle();
       }).call(
-        uiTooltip().placement("bottom").title(_t.html("sidebar.tooltip")).keys([_t("sidebar.key")]).scrollContainer(context.container().select(".top-toolbar"))
+        uiTooltip().placement("bottom").title(_t.html("sidebar.tooltip")).keys([_t("sidebar.key")]).scrollContainer(context2.container().select(".top-toolbar"))
       ).call(svgIcon("#iD-icon-sidebar-" + (_mainLocalizer.textDirection() === "rtl" ? "right" : "left")));
     };
     return tool;
   }
 
   // modules/ui/tools/undo_redo.js
-  function uiToolUndoRedo(context) {
+  function uiToolUndoRedo(context2) {
     var tool = {
       id: "undo_redo",
       label: _t.html("toolbar.undo_redo")
@@ -63106,32 +63106,32 @@ ${content}</tr>
       id: "undo",
       cmd: uiCmd("\u2318Z"),
       action: function() {
-        context.undo();
+        context2.undo();
       },
       annotation: function() {
-        return context.history().undoAnnotation();
+        return context2.history().undoAnnotation();
       },
       icon: "iD-icon-" + (_mainLocalizer.textDirection() === "rtl" ? "redo" : "undo")
     }, {
       id: "redo",
       cmd: uiCmd("\u2318\u21E7Z"),
       action: function() {
-        context.redo();
+        context2.redo();
       },
       annotation: function() {
-        return context.history().redoAnnotation();
+        return context2.history().redoAnnotation();
       },
       icon: "iD-icon-" + (_mainLocalizer.textDirection() === "rtl" ? "undo" : "redo")
     }];
     function editable() {
-      return context.mode() && context.mode().id !== "save" && context.map().editableDataEnabled(true);
+      return context2.mode() && context2.mode().id !== "save" && context2.map().editableDataEnabled(true);
     }
     tool.render = function(selection2) {
       var tooltipBehavior = uiTooltip().placement("bottom").title(function(d) {
         return d.annotation() ? _t.html(d.id + ".tooltip", { action: d.annotation() }) : _t.html(d.id + ".nothing");
       }).keys(function(d) {
         return [d.cmd];
-      }).scrollContainer(context.container().select(".top-toolbar"));
+      }).scrollContainer(context2.container().select(".top-toolbar"));
       var lastPointerUpType;
       var buttons = selection2.selectAll("button").data(commands).enter().append("button").attr("class", function(d) {
         return "disabled " + d.id + "-button bar-button";
@@ -63145,14 +63145,14 @@ ${content}</tr>
         }
         if (editable() && (lastPointerUpType === "touch" || lastPointerUpType === "pen")) {
           var text2 = annotation ? _t.html(d.id + ".tooltip", { action: annotation }) : _t.html(d.id + ".nothing");
-          context.ui().flash.duration(2e3).iconName("#" + d.icon).iconClass(annotation ? "" : "disabled").label(text2)();
+          context2.ui().flash.duration(2e3).iconName("#" + d.icon).iconClass(annotation ? "" : "disabled").label(text2)();
         }
         lastPointerUpType = null;
       }).call(tooltipBehavior);
       buttons.each(function(d) {
         select_default2(this).call(svgIcon("#" + d.icon));
       });
-      context.keybinding().on(commands[0].cmd, function(d3_event) {
+      context2.keybinding().on(commands[0].cmd, function(d3_event) {
         d3_event.preventDefault();
         if (editable())
           commands[0].action();
@@ -63162,12 +63162,12 @@ ${content}</tr>
           commands[1].action();
       });
       var debouncedUpdate = debounce_default(update, 500, { leading: true, trailing: true });
-      context.map().on("move.undo_redo", debouncedUpdate).on("drawn.undo_redo", debouncedUpdate);
-      context.history().on("change.undo_redo", function(difference) {
+      context2.map().on("move.undo_redo", debouncedUpdate).on("drawn.undo_redo", debouncedUpdate);
+      context2.history().on("change.undo_redo", function(difference) {
         if (difference)
           update();
       });
-      context.on("enter.undo_redo", update);
+      context2.on("enter.undo_redo", update);
       function update() {
         buttons.classed("disabled", function(d) {
           return !editable() || !d.annotation();
@@ -63180,19 +63180,19 @@ ${content}</tr>
       }
     };
     tool.uninstall = function() {
-      context.keybinding().off(commands[0].cmd).off(commands[1].cmd);
-      context.map().on("move.undo_redo", null).on("drawn.undo_redo", null);
-      context.history().on("change.undo_redo", null);
-      context.on("enter.undo_redo", null);
+      context2.keybinding().off(commands[0].cmd).off(commands[1].cmd);
+      context2.map().on("move.undo_redo", null).on("drawn.undo_redo", null);
+      context2.history().on("change.undo_redo", null);
+      context2.on("enter.undo_redo", null);
     };
     return tool;
   }
 
   // modules/ui/top_toolbar.js
-  function uiTopToolbar(context) {
-    var sidebarToggle = uiToolSidebarToggle(context), modes = uiToolDrawModes(context), notes = uiToolNotes(context), undoRedo = uiToolUndoRedo(context), save = uiToolSave(context);
+  function uiTopToolbar(context2) {
+    var sidebarToggle = uiToolSidebarToggle(context2), modes = uiToolDrawModes(context2), notes = uiToolNotes(context2), undoRedo = uiToolUndoRedo(context2), save = uiToolSave(context2);
     function notesEnabled() {
-      var noteLayer = context.layers().layer("notes");
+      var noteLayer = context2.layers().layer("notes");
       return noteLayer && noteLayer.enabled();
     }
     function topToolbar(bar) {
@@ -63202,7 +63202,7 @@ ${content}</tr>
         }
       });
       var debouncedUpdate = debounce_default(update, 500, { leading: true, trailing: true });
-      context.layers().on("change.topToolbar", debouncedUpdate);
+      context2.layers().on("change.topToolbar", debouncedUpdate);
       update();
       function update() {
         var tools = [
@@ -63244,9 +63244,9 @@ ${content}</tr>
   }
 
   // modules/ui/zoom_to_selection.js
-  function uiZoomToSelection(context) {
+  function uiZoomToSelection(context2) {
     function isDisabled() {
-      var mode = context.mode();
+      var mode = context2.mode();
       return !mode || !mode.zoomToSelected;
     }
     var _lastPointerUpType;
@@ -63257,10 +63257,10 @@ ${content}</tr>
       d3_event.preventDefault();
       if (isDisabled()) {
         if (_lastPointerUpType === "touch" || _lastPointerUpType === "pen") {
-          context.ui().flash.duration(2e3).iconName("#iD-icon-framed-dot").iconClass("disabled").label(_t.html("inspector.zoom_to.no_selection"))();
+          context2.ui().flash.duration(2e3).iconName("#iD-icon-framed-dot").iconClass("disabled").label(_t.html("inspector.zoom_to.no_selection"))();
         }
       } else {
-        var mode = context.mode();
+        var mode = context2.mode();
         if (mode && mode.zoomToSelected) {
           mode.zoomToSelected();
         }
@@ -63281,13 +63281,13 @@ ${content}</tr>
           button.call(tooltipBehavior.updateContent);
         }
       }
-      context.on("enter.uiZoomToSelection", setEnabledState);
+      context2.on("enter.uiZoomToSelection", setEnabledState);
       setEnabledState();
     };
   }
 
   // modules/ui/pane.js
-  function uiPane(id2, context) {
+  function uiPane(id2, context2) {
     var _key;
     var _label = "";
     var _description = "";
@@ -63332,13 +63332,13 @@ ${content}</tr>
       return _paneSelection;
     };
     function hidePane() {
-      context.ui().togglePanes();
+      context2.ui().togglePanes();
     }
     pane.togglePane = function(d3_event) {
       if (d3_event)
         d3_event.preventDefault();
       _paneTooltip.hide();
-      context.ui().togglePanes(!_paneSelection.classed("shown") ? _paneSelection : void 0);
+      context2.ui().togglePanes(!_paneSelection.classed("shown") ? _paneSelection : void 0);
     };
     pane.renderToggleButton = function(selection2) {
       if (!_paneTooltip) {
@@ -63360,15 +63360,15 @@ ${content}</tr>
       heading.append("button").attr("title", _t("icons.close")).on("click", hidePane).call(svgIcon("#iD-icon-close"));
       _paneSelection.append("div").attr("class", "pane-content").call(pane.renderContent);
       if (_key) {
-        context.keybinding().on(_key, pane.togglePane);
+        context2.keybinding().on(_key, pane.togglePane);
       }
     };
     return pane;
   }
 
   // modules/ui/sections/background_display_options.js
-  function uiSectionBackgroundDisplayOptions(context) {
-    var section = uiSection("background-display-options", context).label(_t.html("background.display_options")).disclosureContent(renderDisclosureContent);
+  function uiSectionBackgroundDisplayOptions(context2) {
+    var section = uiSection("background-display-options", context2).label(_t.html("background.display_options")).disclosureContent(renderDisclosureContent);
     var _storedOpacity = corePreferences("background-opacity");
     var _minVal = 0;
     var _maxVal = 3;
@@ -63385,7 +63385,7 @@ ${content}</tr>
     function updateValue(d, val) {
       val = clamp3(val, _minVal, _maxVal);
       _options[d] = val;
-      context.background()[d](val);
+      context2.background()[d](val);
       if (d === "brightness") {
         corePreferences("background-opacity", val);
       }
@@ -63438,7 +63438,7 @@ ${content}</tr>
         return _options[d] === 1;
       });
       if (containerEnter.size() && _options.brightness !== 1) {
-        context.background().brightness(_options.brightness);
+        context2.background().brightness(_options.brightness);
       }
     }
     return section;
@@ -63503,11 +63503,11 @@ ${content}</tr>
   }
 
   // modules/ui/sections/background_list.js
-  function uiSectionBackgroundList(context) {
+  function uiSectionBackgroundList(context2) {
     var _backgroundList = select_default2(null);
-    var _customSource = context.background().findSource("custom");
-    var _settingsCustomBackground = uiSettingsCustomBackground(context).on("change", customChanged);
-    var section = uiSection("background-list", context).label(_t.html("background.backgrounds")).disclosureContent(renderDisclosureContent);
+    var _customSource = context2.background().findSource("custom");
+    var _settingsCustomBackground = uiSettingsCustomBackground(context2).on("change", customChanged);
+    var section = uiSection("background-list", context2).label(_t.html("background.backgrounds")).disclosureContent(renderDisclosureContent);
     function previousBackgroundID() {
       return corePreferences("background-last-used-toggle");
     }
@@ -63528,7 +63528,7 @@ ${content}</tr>
       );
       panelLabelEnter.append("input").attr("type", "checkbox").on("change", function(d3_event) {
         d3_event.preventDefault();
-        context.ui().info.toggle("background");
+        context2.ui().info.toggle("background");
       });
       panelLabelEnter.append("span").call(_t.append("background.panel.description"));
       var locPanelLabelEnter = bgExtrasListEnter.append("li").attr("class", "location-panel-toggle-item").append("label").call(
@@ -63536,7 +63536,7 @@ ${content}</tr>
       );
       locPanelLabelEnter.append("input").attr("type", "checkbox").on("change", function(d3_event) {
         d3_event.preventDefault();
-        context.ui().info.toggle("location");
+        context2.ui().info.toggle("location");
       });
       locPanelLabelEnter.append("span").call(_t.append("background.location_panel.description"));
       selection2.selectAll(".imagery-faq").data([0]).enter().append("div").attr("class", "imagery-faq").append("a").attr("target", "_blank").call(svgIcon("#iD-icon-out-link", "inline")).attr("href", "https://github.com/openstreetmap/iD/blob/develop/FAQ.md#how-can-i-report-an-issue-with-background-imagery").append("span").call(_t.append("background.imagery_problem_faq"));
@@ -63566,7 +63566,7 @@ ${content}</tr>
       });
     }
     function drawListItems(layerList, type3, change, filter2) {
-      var sources = context.background().sources(context.map().extent(), context.map().zoom(), true).filter(filter2).sort(function(a, b) {
+      var sources = context2.background().sources(context2.map().extent(), context2.map().zoom(), true).filter(filter2).sort(function(a, b) {
         return a.best() && !b.best() ? -1 : b.best() && !a.best() ? 1 : descending(a.area(), b.area()) || ascending(a.name(), b.name()) || 0;
       });
       var layerLinks = layerList.selectAll("li").data(sources, function(d, i2) {
@@ -63602,7 +63602,7 @@ ${content}</tr>
     }
     function updateLayerSelections(selection2) {
       function active(d) {
-        return context.background().showsLayer(d);
+        return context2.background().showsLayer(d);
       }
       selection2.selectAll("li").classed("active", active).classed("switch", function(d) {
         return d.id === previousBackgroundID();
@@ -63612,10 +63612,10 @@ ${content}</tr>
       if (d.id === "custom" && !d.template()) {
         return editCustom();
       }
-      var previousBackground = context.background().baseLayerSource();
+      var previousBackground = context2.background().baseLayerSource();
       corePreferences("background-last-used-toggle", previousBackground.id);
       corePreferences("background-last-used", d.id);
-      context.background().baseLayerSource(d);
+      context2.background().baseLayerSource(d);
     }
     function customChanged(d) {
       if (d && d.template) {
@@ -63623,16 +63623,16 @@ ${content}</tr>
         chooseBackground(_customSource);
       } else {
         _customSource.template("");
-        chooseBackground(context.background().findSource("none"));
+        chooseBackground(context2.background().findSource("none"));
       }
     }
     function editCustom() {
-      context.container().call(_settingsCustomBackground);
+      context2.container().call(_settingsCustomBackground);
     }
-    context.background().on("change.background_list", function() {
+    context2.background().on("change.background_list", function() {
       _backgroundList.call(updateLayerSelections);
     });
-    context.map().on(
+    context2.map().on(
       "move.background_list",
       debounce_default(function() {
         window.requestIdleCallback(section.reRender);
@@ -63642,8 +63642,8 @@ ${content}</tr>
   }
 
   // modules/ui/sections/background_offset.js
-  function uiSectionBackgroundOffset(context) {
-    var section = uiSection("background-offset", context).label(_t.html("background.fix_misalignment")).disclosureContent(renderDisclosureContent).expandedByDefault(false);
+  function uiSectionBackgroundOffset(context2) {
+    var section = uiSection("background-offset", context2).label(_t.html("background.fix_misalignment")).disclosureContent(renderDisclosureContent).expandedByDefault(false);
     var _pointerPrefix = "PointerEvent" in window ? "pointer" : "mouse";
     var _directions = [
       ["top", [0, -0.5]],
@@ -63652,20 +63652,20 @@ ${content}</tr>
       ["bottom", [0, 0.5]]
     ];
     function updateValue() {
-      var meters = geoOffsetToMeters(context.background().offset());
+      var meters = geoOffsetToMeters(context2.background().offset());
       var x = +meters[0].toFixed(2);
       var y = +meters[1].toFixed(2);
-      context.container().selectAll(".nudge-inner-rect").select("input").classed("error", false).property("value", x + ", " + y);
-      context.container().selectAll(".nudge-reset").classed("disabled", function() {
+      context2.container().selectAll(".nudge-inner-rect").select("input").classed("error", false).property("value", x + ", " + y);
+      context2.container().selectAll(".nudge-reset").classed("disabled", function() {
         return x === 0 && y === 0;
       });
     }
     function resetOffset() {
-      context.background().offset([0, 0]);
+      context2.background().offset([0, 0]);
       updateValue();
     }
     function nudge(d) {
-      context.background().nudge(d, context.map().zoom());
+      context2.background().nudge(d, context2.map().zoom());
       updateValue();
     }
     function inputOffset() {
@@ -63680,7 +63680,7 @@ ${content}</tr>
         input.classed("error", true);
         return;
       }
-      context.background().offset(geoMetersToOffset(d));
+      context2.background().offset(geoMetersToOffset(d));
       updateValue();
     }
     function dragOffset(d3_event) {
@@ -63688,7 +63688,7 @@ ${content}</tr>
         return;
       var origin = [d3_event.clientX, d3_event.clientY];
       var pointerId = d3_event.pointerId || "mouse";
-      context.container().append("div").attr("class", "nudge-surface");
+      context2.container().append("div").attr("class", "nudge-surface");
       select_default2(window).on(_pointerPrefix + "move.drag-bg-offset", pointermove).on(_pointerPrefix + "up.drag-bg-offset", pointerup);
       if (_pointerPrefix === "pointer") {
         select_default2(window).on("pointercancel.drag-bg-offset", pointerup);
@@ -63709,7 +63709,7 @@ ${content}</tr>
           return;
         if (d3_event2.button !== 0)
           return;
-        context.container().selectAll(".nudge-surface").remove();
+        context2.container().selectAll(".nudge-surface").remove();
         select_default2(window).on(".drag-bg-offset", null);
       }
     }
@@ -63733,13 +63733,13 @@ ${content}</tr>
       }).call(svgIcon("#iD-icon-" + (_mainLocalizer.textDirection() === "rtl" ? "redo" : "undo")));
       updateValue();
     }
-    context.background().on("change.backgroundOffset-update", updateValue);
+    context2.background().on("change.backgroundOffset-update", updateValue);
     return section;
   }
 
   // modules/ui/sections/overlay_list.js
-  function uiSectionOverlayList(context) {
-    var section = uiSection("overlay-list", context).label(_t.html("background.overlays")).disclosureContent(renderDisclosureContent);
+  function uiSectionOverlayList(context2) {
+    var section = uiSection("overlay-list", context2).label(_t.html("background.overlays")).disclosureContent(renderDisclosureContent);
     var _overlayList = select_default2(null);
     function setTooltips(selection2) {
       selection2.each(function(d, i2, nodes) {
@@ -63758,18 +63758,18 @@ ${content}</tr>
     }
     function updateLayerSelections(selection2) {
       function active(d) {
-        return context.background().showsLayer(d);
+        return context2.background().showsLayer(d);
       }
       selection2.selectAll("li").classed("active", active).call(setTooltips).selectAll("input").property("checked", active);
     }
     function chooseOverlay(d3_event, d) {
       d3_event.preventDefault();
-      context.background().toggleOverlayLayer(d);
+      context2.background().toggleOverlayLayer(d);
       _overlayList.call(updateLayerSelections);
       document.activeElement.blur();
     }
     function drawListItems(layerList, type3, change, filter2) {
-      var sources = context.background().sources(context.map().extent(), context.map().zoom(), true).filter(filter2);
+      var sources = context2.background().sources(context2.map().extent(), context2.map().zoom(), true).filter(filter2);
       var layerLinks = layerList.selectAll("li").data(sources, function(d) {
         return d.name();
       });
@@ -63793,7 +63793,7 @@ ${content}</tr>
         return !d.isHidden() && d.overlay;
       });
     }
-    context.map().on(
+    context2.map().on(
       "move.overlay_list",
       debounce_default(function() {
         window.requestIdleCallback(section.reRender);
@@ -63803,18 +63803,18 @@ ${content}</tr>
   }
 
   // modules/ui/panes/background.js
-  function uiPaneBackground(context) {
-    var backgroundPane = uiPane("background", context).key(_t("background.key")).label(_t.html("background.title")).description(_t.html("background.description")).iconName("iD-icon-layers").sections([
-      uiSectionBackgroundList(context),
-      uiSectionOverlayList(context),
-      uiSectionBackgroundDisplayOptions(context),
-      uiSectionBackgroundOffset(context)
+  function uiPaneBackground(context2) {
+    var backgroundPane = uiPane("background", context2).key(_t("background.key")).label(_t.html("background.title")).description(_t.html("background.description")).iconName("iD-icon-layers").sections([
+      uiSectionBackgroundList(context2),
+      uiSectionOverlayList(context2),
+      uiSectionBackgroundDisplayOptions(context2),
+      uiSectionBackgroundOffset(context2)
     ]);
     return backgroundPane;
   }
 
   // modules/ui/panes/help.js
-  function uiPaneHelp(context) {
+  function uiPaneHelp(context2) {
     var docKeys = [
       ["help", [
         "welcome",
@@ -64030,7 +64030,7 @@ ${content}</tr>
     };
     var docs = docKeys.map(function(key) {
       var helpkey = "help." + key[0];
-      var helpPaneReplacements = { version: context.version };
+      var helpPaneReplacements = { version: context2.version };
       var text2 = key[1].reduce(function(all, part) {
         var subkey = helpkey + "." + part;
         var depth = headings[subkey];
@@ -64042,7 +64042,7 @@ ${content}</tr>
         content: marked(text2.trim()).replace(/<code>/g, "<kbd>").replace(/<\/code>/g, "</kbd>")
       };
     });
-    var helpPane = uiPane("help", context).key(_t("help.key")).label(_t.html("help.title")).description(_t.html("help.title")).iconName("iD-icon-help");
+    var helpPane = uiPane("help", context2).key(_t("help.key")).label(_t.html("help.title")).description(_t.html("help.title")).iconName("iD-icon-help");
     helpPane.renderContent = function(content) {
       function clickHelp(d, i2) {
         var rtl = _mainLocalizer.textDirection() === "rtl";
@@ -64080,14 +64080,14 @@ ${content}</tr>
       }
       function clickWalkthrough(d3_event) {
         d3_event.preventDefault();
-        if (context.inIntro())
+        if (context2.inIntro())
           return;
-        context.container().call(uiIntro(context));
-        context.ui().togglePanes();
+        context2.container().call(uiIntro(context2));
+        context2.ui().togglePanes();
       }
       function clickShortcuts(d3_event) {
         d3_event.preventDefault();
-        context.container().call(context.ui().shortcuts, true);
+        context2.container().call(context2.ui().shortcuts, true);
       }
       var toc = content.append("ul").attr("class", "toc");
       var menuItems = toc.selectAll("li").data(docs).enter().append("li").append("a").attr("role", "button").attr("href", "#").html(function(d) {
@@ -64112,9 +64112,9 @@ ${content}</tr>
   }
 
   // modules/ui/sections/validation_issues.js
-  function uiSectionValidationIssues(id2, severity, context) {
+  function uiSectionValidationIssues(id2, severity, context2) {
     var _issues = [];
-    var section = uiSection(id2, context).label(function() {
+    var section = uiSection(id2, context2).label(function() {
       if (!_issues)
         return "";
       var issueCountText = _issues.length > 1e3 ? "1000+" : String(_issues.length);
@@ -64129,11 +64129,11 @@ ${content}</tr>
       };
     }
     function reloadIssues() {
-      _issues = context.validator().getIssuesBySeverity(getOptions())[severity];
+      _issues = context2.validator().getIssuesBySeverity(getOptions())[severity];
     }
     function renderDisclosureContent(selection2) {
-      var center = context.map().center();
-      var graph = context.graph();
+      var center = context2.map().center();
+      var graph = context2.graph();
       var issues = _issues.map(function withDistance(issue) {
         var extent = issue.extent(graph);
         var dist = extent ? geoSphericalDistance(center, extent.center()) : 0;
@@ -64155,11 +64155,11 @@ ${content}</tr>
         return "issue severity-" + d.severity;
       });
       var labelsEnter = itemsEnter.append("button").attr("class", "issue-label").on("click", function(d3_event, d) {
-        context.validator().focusIssue(d);
+        context2.validator().focusIssue(d);
       }).on("mouseover", function(d3_event, d) {
-        utilHighlightEntities(d.entityIds, true, context);
+        utilHighlightEntities(d.entityIds, true, context2);
       }).on("mouseout", function(d3_event, d) {
-        utilHighlightEntities(d.entityIds, false, context);
+        utilHighlightEntities(d.entityIds, false, context2);
       });
       var textEnter = labelsEnter.append("span").attr("class", "issue-text");
       textEnter.append("span").attr("class", "issue-icon").each(function(d) {
@@ -64169,16 +64169,16 @@ ${content}</tr>
       textEnter.append("span").attr("class", "issue-message");
       items = items.merge(itemsEnter).order();
       items.selectAll(".issue-message").html(function(d) {
-        return d.message(context);
+        return d.message(context2);
       });
     }
-    context.validator().on("validated.uiSectionValidationIssues" + id2, function() {
+    context2.validator().on("validated.uiSectionValidationIssues" + id2, function() {
       window.requestIdleCallback(function() {
         reloadIssues();
         section.reRender();
       });
     });
-    context.map().on(
+    context2.map().on(
       "move.uiSectionValidationIssues" + id2,
       debounce_default(function() {
         window.requestIdleCallback(function() {
@@ -64193,8 +64193,8 @@ ${content}</tr>
   }
 
   // modules/ui/sections/validation_options.js
-  function uiSectionValidationOptions(context) {
-    var section = uiSection("issues-options", context).content(renderContent);
+  function uiSectionValidationOptions(context2) {
+    var section = uiSection("issues-options", context2).content(renderContent);
     function renderContent(selection2) {
       var container = selection2.selectAll(".issues-options-container").data([0]);
       container = container.enter().append("div").attr("class", "issues-options-container").merge(container);
@@ -64240,18 +64240,18 @@ ${content}</tr>
         val = d3_event.target.value;
       }
       corePreferences("validate-" + d, val);
-      context.validator().validate();
+      context2.validator().validate();
     }
     return section;
   }
 
   // modules/ui/sections/validation_rules.js
-  function uiSectionValidationRules(context) {
+  function uiSectionValidationRules(context2) {
     var MINSQUARE = 0;
     var MAXSQUARE = 20;
     var DEFAULTSQUARE = 5;
-    var section = uiSection("issues-rules", context).disclosureContent(renderDisclosureContent).label(_t.html("issues.rules.title"));
-    var _ruleKeys = context.validator().getRuleKeys().filter(function(key) {
+    var section = uiSection("issues-rules", context2).disclosureContent(renderDisclosureContent).label(_t.html("issues.rules.title"));
+    var _ruleKeys = context2.validator().getRuleKeys().filter(function(key) {
       return key !== "maprules";
     }).sort(function(key1, key2) {
       return _t("issues." + key1 + ".title") < _t("issues." + key2 + ".title") ? -1 : 1;
@@ -64263,11 +64263,11 @@ ${content}</tr>
       var ruleLinks = containerEnter.append("div").attr("class", "issue-rules-links section-footer");
       ruleLinks.append("a").attr("class", "issue-rules-link").attr("role", "button").attr("href", "#").call(_t.append("issues.disable_all")).on("click", function(d3_event) {
         d3_event.preventDefault();
-        context.validator().disableRules(_ruleKeys);
+        context2.validator().disableRules(_ruleKeys);
       });
       ruleLinks.append("a").attr("class", "issue-rules-link").attr("role", "button").attr("href", "#").call(_t.append("issues.enable_all")).on("click", function(d3_event) {
         d3_event.preventDefault();
-        context.validator().disableRules([]);
+        context2.validator().disableRules([]);
       });
       container = container.merge(containerEnter);
       container.selectAll(".issue-rules-list").call(drawListItems, _ruleKeys, "checkbox", "rule", toggleRule, isRuleEnabled);
@@ -64326,24 +64326,24 @@ ${content}</tr>
       degStr = degNum.toString();
       input.property("value", degStr);
       corePreferences("validate-square-degrees", degStr);
-      context.validator().revalidateUnsquare();
+      context2.validator().revalidateUnsquare();
     }
     function isRuleEnabled(d) {
-      return context.validator().isRuleEnabled(d);
+      return context2.validator().isRuleEnabled(d);
     }
     function toggleRule(d3_event, d) {
-      context.validator().toggleRule(d);
+      context2.validator().toggleRule(d);
     }
-    context.validator().on("validated.uiSectionValidationRules", function() {
+    context2.validator().on("validated.uiSectionValidationRules", function() {
       window.requestIdleCallback(section.reRender);
     });
     return section;
   }
 
   // modules/ui/sections/validation_status.js
-  function uiSectionValidationStatus(context) {
-    var section = uiSection("issues-status", context).content(renderContent).shouldDisplay(function() {
-      var issues = context.validator().getIssues(getOptions());
+  function uiSectionValidationStatus(context2) {
+    var section = uiSection("issues-status", context2).content(renderContent).shouldDisplay(function() {
+      var issues = context2.validator().getIssues(getOptions());
       return issues.length === 0;
     });
     function getOptions() {
@@ -64364,7 +64364,7 @@ ${content}</tr>
       setNoIssuesText(selection2);
     }
     function renderIgnoredIssuesReset(selection2) {
-      var ignoredIssues = context.validator().getIssues({ what: "all", where: "all", includeDisabledRules: true, includeIgnored: "only" });
+      var ignoredIssues = context2.validator().getIssues({ what: "all", where: "all", includeDisabledRules: true, includeIgnored: "only" });
       var resetIgnored = selection2.selectAll(".reset-ignored").data(ignoredIssues.length ? [0] : []);
       resetIgnored.exit().remove();
       var resetIgnoredEnter = resetIgnored.enter().append("div").attr("class", "reset-ignored section-footer");
@@ -64373,7 +64373,7 @@ ${content}</tr>
       resetIgnored.select("a").html(_t.html("inspector.title_count", { title: { html: _t.html("issues.reset_ignored") }, count: ignoredIssues.length }));
       resetIgnored.on("click", function(d3_event) {
         d3_event.preventDefault();
-        context.validator().resetIgnoredIssues();
+        context2.validator().resetIgnoredIssues();
       });
     }
     function setNoIssuesText(selection2) {
@@ -64381,7 +64381,7 @@ ${content}</tr>
       function checkForHiddenIssues(cases) {
         for (var type3 in cases) {
           var hiddenOpts = cases[type3];
-          var hiddenIssues = context.validator().getIssues(hiddenOpts);
+          var hiddenIssues = context2.validator().getIssues(hiddenOpts);
           if (hiddenIssues.length) {
             selection2.select(".box .details").html("").call(_t.append(
               "issues.no_issues.hidden_issues." + type3,
@@ -64427,15 +64427,15 @@ ${content}</tr>
           ignored_issues: { what: "all", where: "all", includeIgnored: "only" }
         });
       }
-      if (opts.what === "edited" && context.history().difference().summary().length === 0) {
+      if (opts.what === "edited" && context2.history().difference().summary().length === 0) {
         messageType = "no_edits";
       }
       selection2.select(".box .message").html("").call(_t.append("issues.no_issues.message." + messageType));
     }
-    context.validator().on("validated.uiSectionValidationStatus", function() {
+    context2.validator().on("validated.uiSectionValidationStatus", function() {
       window.requestIdleCallback(section.reRender);
     });
-    context.map().on(
+    context2.map().on(
       "move.uiSectionValidationStatus",
       debounce_default(function() {
         window.requestIdleCallback(section.reRender);
@@ -64445,22 +64445,22 @@ ${content}</tr>
   }
 
   // modules/ui/panes/issues.js
-  function uiPaneIssues(context) {
-    var issuesPane = uiPane("issues", context).key(_t("issues.key")).label(_t.html("issues.title")).description(_t.html("issues.title")).iconName("iD-icon-alert").sections([
-      uiSectionValidationOptions(context),
-      uiSectionValidationStatus(context),
-      uiSectionValidationIssues("issues-errors", "error", context),
-      uiSectionValidationIssues("issues-warnings", "warning", context),
-      uiSectionValidationRules(context)
+  function uiPaneIssues(context2) {
+    var issuesPane = uiPane("issues", context2).key(_t("issues.key")).label(_t.html("issues.title")).description(_t.html("issues.title")).iconName("iD-icon-alert").sections([
+      uiSectionValidationOptions(context2),
+      uiSectionValidationStatus(context2),
+      uiSectionValidationIssues("issues-errors", "error", context2),
+      uiSectionValidationIssues("issues-warnings", "warning", context2),
+      uiSectionValidationRules(context2)
     ]);
     return issuesPane;
   }
 
   // modules/ui/settings/custom_data.js
-  function uiSettingsCustomData(context) {
+  function uiSettingsCustomData(context2) {
     var dispatch10 = dispatch_default("change");
     function render(selection2) {
-      var dataLayer = context.layers().layer("data");
+      var dataLayer = context2.layers().layer("data");
       var _origSettings = {
         fileList: dataLayer && dataLayer.fileList() || null,
         url: corePreferences("settings-custom-data-url")
@@ -64518,10 +64518,10 @@ ${content}</tr>
   }
 
   // modules/ui/sections/data_layers.js
-  function uiSectionDataLayers(context) {
-    var settingsCustomData = uiSettingsCustomData(context).on("change", customChanged);
-    var layers = context.layers();
-    var section = uiSection("data-layers", context).label(_t.html("map_data.data_layers")).disclosureContent(renderDisclosureContent);
+  function uiSectionDataLayers(context2) {
+    var settingsCustomData = uiSettingsCustomData(context2).on("change", customChanged);
+    var layers = context2.layers();
+    var section = uiSection("data-layers", context2).label(_t.html("map_data.data_layers")).disclosureContent(renderDisclosureContent);
     function renderDisclosureContent(selection2) {
       var container = selection2.selectAll(".data-layer-container").data([0]);
       container.enter().append("div").attr("class", "data-layer-container").merge(container).call(drawOsmItems).call(drawQAItems).call(drawCustomDataItems).call(drawVectorItems).call(drawPanelItems);
@@ -64534,14 +64534,14 @@ ${content}</tr>
       return false;
     }
     function setLayer(which, enabled) {
-      var mode = context.mode();
+      var mode = context2.mode();
       if (mode && /^draw/.test(mode.id))
         return;
       var layer = layers.layer(which);
       if (layer) {
         layer.enabled(enabled);
         if (!enabled && (which === "osm" || which === "notes")) {
-          context.enter(modeBrowse(context));
+          context2.enter(modeBrowse(context2));
         }
       }
     }
@@ -64635,7 +64635,7 @@ ${content}</tr>
         }
       ];
       var detroit = geoExtent([-83.5, 42.1], [-82.8, 42.5]);
-      var showVectorItems = context.map().zoom() > 9 && detroit.contains(context.map().center());
+      var showVectorItems = context2.map().zoom() > 9 && detroit.contains(context2.map().center());
       var container = selection2.selectAll(".vectortile-container").data(showVectorItems ? [0] : []);
       container.exit().remove();
       var containerEnter = container.enter().append("div").attr("class", "vectortile-container");
@@ -64705,7 +64705,7 @@ ${content}</tr>
       ul.selectAll("button.zoom-to-data").classed("disabled", !hasData);
     }
     function editCustom() {
-      context.container().call(settingsCustomData);
+      context2.container().call(settingsCustomData);
     }
     function customChanged(d) {
       var dataLayer = layers.layer("data");
@@ -64722,7 +64722,7 @@ ${content}</tr>
       );
       historyPanelLabelEnter.append("input").attr("type", "checkbox").on("change", function(d3_event) {
         d3_event.preventDefault();
-        context.ui().info.toggle("history");
+        context2.ui().info.toggle("history");
       });
       historyPanelLabelEnter.append("span").call(_t.append("map_data.history_panel.title"));
       var measurementPanelLabelEnter = panelsListEnter.append("li").attr("class", "measurement-panel-toggle-item").append("label").call(
@@ -64730,12 +64730,12 @@ ${content}</tr>
       );
       measurementPanelLabelEnter.append("input").attr("type", "checkbox").on("change", function(d3_event) {
         d3_event.preventDefault();
-        context.ui().info.toggle("measurement");
+        context2.ui().info.toggle("measurement");
       });
       measurementPanelLabelEnter.append("span").call(_t.append("map_data.measurement_panel.title"));
     }
-    context.layers().on("change.uiSectionDataLayers", section.reRender);
-    context.map().on(
+    context2.layers().on("change.uiSectionDataLayers", section.reRender);
+    context2.map().on(
       "move.uiSectionDataLayers",
       debounce_default(function() {
         window.requestIdleCallback(section.reRender);
@@ -64745,9 +64745,9 @@ ${content}</tr>
   }
 
   // modules/ui/sections/map_features.js
-  function uiSectionMapFeatures(context) {
-    var _features = context.features().keys();
-    var section = uiSection("map-features", context).label(_t.html("map_data.map_features")).disclosureContent(renderDisclosureContent).expandedByDefault(false);
+  function uiSectionMapFeatures(context2) {
+    var _features = context2.features().keys();
+    var section = uiSection("map-features", context2).label(_t.html("map_data.map_features")).disclosureContent(renderDisclosureContent).expandedByDefault(false);
     function renderDisclosureContent(selection2) {
       var container = selection2.selectAll(".layer-feature-list-container").data([0]);
       var containerEnter = container.enter().append("div").attr("class", "layer-feature-list-container");
@@ -64755,11 +64755,11 @@ ${content}</tr>
       var footer = containerEnter.append("div").attr("class", "feature-list-links section-footer");
       footer.append("a").attr("class", "feature-list-link").attr("role", "button").attr("href", "#").call(_t.append("issues.disable_all")).on("click", function(d3_event) {
         d3_event.preventDefault();
-        context.features().disableAll();
+        context2.features().disableAll();
       });
       footer.append("a").attr("class", "feature-list-link").attr("role", "button").attr("href", "#").call(_t.append("issues.enable_all")).on("click", function(d3_event) {
         d3_event.preventDefault();
-        context.features().enableAll();
+        context2.features().enableAll();
       });
       container = container.merge(containerEnter);
       container.selectAll(".layer-feature-list").call(drawListItems, _features, "checkbox", "feature", clickFeature, showsFeature);
@@ -64786,31 +64786,31 @@ ${content}</tr>
       items.classed("active", active).selectAll("input").property("checked", active).property("indeterminate", autoHiddenFeature);
     }
     function autoHiddenFeature(d) {
-      return context.features().autoHidden(d);
+      return context2.features().autoHidden(d);
     }
     function showsFeature(d) {
-      return context.features().enabled(d);
+      return context2.features().enabled(d);
     }
     function clickFeature(d3_event, d) {
-      context.features().toggle(d);
+      context2.features().toggle(d);
     }
     function showsLayer(id2) {
-      var layer = context.layers().layer(id2);
+      var layer = context2.layers().layer(id2);
       return layer && layer.enabled();
     }
-    context.features().on("change.map_features", section.reRender);
+    context2.features().on("change.map_features", section.reRender);
     return section;
   }
 
   // modules/ui/sections/map_style_options.js
-  function uiSectionMapStyleOptions(context) {
-    var section = uiSection("fill-area", context).label(_t.html("map_data.style_options")).disclosureContent(renderDisclosureContent).expandedByDefault(false);
+  function uiSectionMapStyleOptions(context2) {
+    var section = uiSection("fill-area", context2).label(_t.html("map_data.style_options")).disclosureContent(renderDisclosureContent).expandedByDefault(false);
     function renderDisclosureContent(selection2) {
       var container = selection2.selectAll(".layer-fill-list").data([0]);
-      container.enter().append("ul").attr("class", "layer-list layer-fill-list").merge(container).call(drawListItems, context.map().areaFillOptions, "radio", "area_fill", setFill, isActiveFill);
+      container.enter().append("ul").attr("class", "layer-list layer-fill-list").merge(container).call(drawListItems, context2.map().areaFillOptions, "radio", "area_fill", setFill, isActiveFill);
       var container2 = selection2.selectAll(".layer-visual-diff-list").data([0]);
       container2.enter().append("ul").attr("class", "layer-list layer-visual-diff-list").merge(container2).call(drawListItems, ["highlight_edits"], "checkbox", "visual_diff", toggleHighlightEdited, function() {
-        return context.surface().classed("highlight-edited");
+        return context2.surface().classed("highlight-edited");
       });
     }
     function drawListItems(selection2, data, type3, name, change, active) {
@@ -64835,29 +64835,29 @@ ${content}</tr>
       items.classed("active", active).selectAll("input").property("checked", active).property("indeterminate", false);
     }
     function isActiveFill(d) {
-      return context.map().activeAreaFill() === d;
+      return context2.map().activeAreaFill() === d;
     }
     function toggleHighlightEdited(d3_event) {
       d3_event.preventDefault();
-      context.map().toggleHighlightEdited();
+      context2.map().toggleHighlightEdited();
     }
     function setFill(d3_event, d) {
-      context.map().activeAreaFill(d);
+      context2.map().activeAreaFill(d);
     }
-    context.map().on("changeHighlighting.ui_style, changeAreaFill.ui_style", section.reRender);
+    context2.map().on("changeHighlighting.ui_style, changeAreaFill.ui_style", section.reRender);
     return section;
   }
 
   // modules/ui/sections/photo_overlays.js
-  function uiSectionPhotoOverlays(context) {
-    var layers = context.layers();
-    var section = uiSection("photo-overlays", context).label(_t.html("photo_overlays.title")).disclosureContent(renderDisclosureContent).expandedByDefault(false);
+  function uiSectionPhotoOverlays(context2) {
+    var layers = context2.layers();
+    var section = uiSection("photo-overlays", context2).label(_t.html("photo_overlays.title")).disclosureContent(renderDisclosureContent).expandedByDefault(false);
     function renderDisclosureContent(selection2) {
       var container = selection2.selectAll(".photo-overlay-container").data([0]);
       container.enter().append("div").attr("class", "photo-overlay-container").merge(container).call(drawPhotoItems).call(drawPhotoTypeItems).call(drawDateFilter).call(drawUsernameFilter);
     }
     function drawPhotoItems(selection2) {
-      var photoKeys = context.photos().overlayLayerIDs();
+      var photoKeys = context2.photos().overlayLayerIDs();
       var photoLayers = layers.all().filter(function(obj) {
         return photoKeys.indexOf(obj.id) !== -1;
       });
@@ -64907,14 +64907,14 @@ ${content}</tr>
       li.merge(liEnter).classed("active", layerEnabled).selectAll("input").property("checked", layerEnabled);
     }
     function drawPhotoTypeItems(selection2) {
-      var data = context.photos().allPhotoTypes();
+      var data = context2.photos().allPhotoTypes();
       function typeEnabled(d) {
-        return context.photos().showsPhotoType(d);
+        return context2.photos().showsPhotoType(d);
       }
       var ul = selection2.selectAll(".layer-list-photo-types").data([0]);
       ul.exit().remove();
       ul = ul.enter().append("ul").attr("class", "layer-list layer-list-photo-types").merge(ul);
-      var li = ul.selectAll(".list-item-photo-types").data(context.photos().shouldFilterByPhotoType() ? data : []);
+      var li = ul.selectAll(".list-item-photo-types").data(context2.photos().shouldFilterByPhotoType() ? data : []);
       li.exit().remove();
       var liEnter = li.enter().append("li").attr("class", function(d) {
         return "list-item-photo-types list-item-" + d;
@@ -64925,7 +64925,7 @@ ${content}</tr>
         );
       });
       labelEnter.append("input").attr("type", "checkbox").on("change", function(d3_event, d) {
-        context.photos().togglePhotoType(d);
+        context2.photos().togglePhotoType(d);
       });
       labelEnter.append("span").html(function(d) {
         return _t.html("photo_overlays.photo_type." + d + ".title");
@@ -64933,14 +64933,14 @@ ${content}</tr>
       li.merge(liEnter).classed("active", typeEnabled).selectAll("input").property("checked", typeEnabled);
     }
     function drawDateFilter(selection2) {
-      var data = context.photos().dateFilters();
+      var data = context2.photos().dateFilters();
       function filterEnabled(d) {
-        return context.photos().dateFilterValue(d);
+        return context2.photos().dateFilterValue(d);
       }
       var ul = selection2.selectAll(".layer-list-date-filter").data([0]);
       ul.exit().remove();
       ul = ul.enter().append("ul").attr("class", "layer-list layer-list-date-filter").merge(ul);
-      var li = ul.selectAll(".list-item-date-filter").data(context.photos().shouldFilterByDate() ? data : []);
+      var li = ul.selectAll(".list-item-date-filter").data(context2.photos().shouldFilterByDate() ? data : []);
       li.exit().remove();
       var liEnter = li.enter().append("li").attr("class", "list-item-date-filter");
       var labelEnter = liEnter.append("label").each(function(d) {
@@ -64952,24 +64952,24 @@ ${content}</tr>
         return _t.html("photo_overlays.date_filter." + d + ".title");
       });
       labelEnter.append("input").attr("type", "date").attr("class", "list-item-input").attr("placeholder", _t("units.year_month_day")).call(utilNoAuto).each(function(d) {
-        utilGetSetValue(select_default2(this), context.photos().dateFilterValue(d) || "");
+        utilGetSetValue(select_default2(this), context2.photos().dateFilterValue(d) || "");
       }).on("change", function(d3_event, d) {
         var value = utilGetSetValue(select_default2(this)).trim();
-        context.photos().setDateFilter(d, value, true);
+        context2.photos().setDateFilter(d, value, true);
         li.selectAll("input").each(function(d2) {
-          utilGetSetValue(select_default2(this), context.photos().dateFilterValue(d2) || "");
+          utilGetSetValue(select_default2(this), context2.photos().dateFilterValue(d2) || "");
         });
       });
       li = li.merge(liEnter).classed("active", filterEnabled);
     }
     function drawUsernameFilter(selection2) {
       function filterEnabled() {
-        return context.photos().usernames();
+        return context2.photos().usernames();
       }
       var ul = selection2.selectAll(".layer-list-username-filter").data([0]);
       ul.exit().remove();
       ul = ul.enter().append("ul").attr("class", "layer-list layer-list-username-filter").merge(ul);
-      var li = ul.selectAll(".list-item-username-filter").data(context.photos().shouldFilterByUsername() ? ["username-filter"] : []);
+      var li = ul.selectAll(".list-item-username-filter").data(context2.photos().shouldFilterByUsername() ? ["username-filter"] : []);
       li.exit().remove();
       var liEnter = li.enter().append("li").attr("class", "list-item-username-filter");
       var labelEnter = liEnter.append("label").each(function() {
@@ -64980,12 +64980,12 @@ ${content}</tr>
       labelEnter.append("span").call(_t.append("photo_overlays.username_filter.title"));
       labelEnter.append("input").attr("type", "text").attr("class", "list-item-input").call(utilNoAuto).property("value", usernameValue).on("change", function() {
         var value = select_default2(this).property("value");
-        context.photos().setUsernameFilter(value, true);
+        context2.photos().setUsernameFilter(value, true);
         select_default2(this).property("value", usernameValue);
       });
       li.merge(liEnter).classed("active", filterEnabled);
       function usernameValue() {
-        var usernames = context.photos().usernames();
+        var usernames = context2.photos().usernames();
         if (usernames)
           return usernames.join("; ");
         return usernames;
@@ -65007,32 +65007,32 @@ ${content}</tr>
         layer.enabled(enabled);
       }
     }
-    context.layers().on("change.uiSectionPhotoOverlays", section.reRender);
-    context.photos().on("change.uiSectionPhotoOverlays", section.reRender);
+    context2.layers().on("change.uiSectionPhotoOverlays", section.reRender);
+    context2.photos().on("change.uiSectionPhotoOverlays", section.reRender);
     return section;
   }
 
   // modules/ui/panes/map_data.js
-  function uiPaneMapData(context) {
-    var mapDataPane = uiPane("map-data", context).key(_t("map_data.key")).label(_t.html("map_data.title")).description(_t.html("map_data.description")).iconName("iD-icon-data").sections([
-      uiSectionDataLayers(context),
-      uiSectionPhotoOverlays(context),
-      uiSectionMapStyleOptions(context),
-      uiSectionMapFeatures(context)
+  function uiPaneMapData(context2) {
+    var mapDataPane = uiPane("map-data", context2).key(_t("map_data.key")).label(_t.html("map_data.title")).description(_t.html("map_data.description")).iconName("iD-icon-data").sections([
+      uiSectionDataLayers(context2),
+      uiSectionPhotoOverlays(context2),
+      uiSectionMapStyleOptions(context2),
+      uiSectionMapFeatures(context2)
     ]);
     return mapDataPane;
   }
 
   // modules/ui/panes/preferences.js
-  function uiPanePreferences(context) {
-    let preferencesPane = uiPane("preferences", context).key(_t("preferences.key")).label(_t.html("preferences.title")).description(_t.html("preferences.description")).iconName("fas-user-cog").sections([
-      uiSectionPrivacy(context)
+  function uiPanePreferences(context2) {
+    let preferencesPane = uiPane("preferences", context2).key(_t("preferences.key")).label(_t.html("preferences.title")).description(_t.html("preferences.description")).iconName("fas-user-cog").sections([
+      uiSectionPrivacy(context2)
     ]);
     return preferencesPane;
   }
 
   // modules/ui/init.js
-  function uiInit(context) {
+  function uiInit(context2) {
     var _initCounter = 0;
     var _needWidth = {};
     var _lastPointerType;
@@ -65068,8 +65068,8 @@ ${content}</tr>
         container.attr("pointer", "mouse");
       }
       container.attr("lang", _mainLocalizer.localeCode()).attr("dir", _mainLocalizer.textDirection());
-      container.call(uiFullScreen(context));
-      var map2 = context.map();
+      container.call(uiFullScreen(context2));
+      var map2 = context2.map();
       map2.redrawEnable(false);
       map2.on("hitMinZoom.ui", function() {
         ui.flash.iconName("#iD-icon-no").label(_t.html("cannot_zoom"))();
@@ -65077,17 +65077,17 @@ ${content}</tr>
       container.append("svg").attr("id", "ideditor-defs").call(ui.svgDefs);
       container.append("div").attr("class", "sidebar").call(ui.sidebar);
       var content = container.append("div").attr("class", "main-content active");
-      content.append("div").attr("class", "top-toolbar-wrap").append("div").attr("class", "top-toolbar fillD").call(uiTopToolbar(context));
+      content.append("div").attr("class", "top-toolbar-wrap").append("div").attr("class", "top-toolbar fillD").call(uiTopToolbar(context2));
       content.append("div").attr("class", "main-map").attr("dir", "ltr").call(map2);
       var overMap = content.append("div").attr("class", "over-map");
       overMap.append("div").attr("class", "select-trap").text("t");
-      overMap.call(uiMapInMap(context)).call(uiNotice(context));
-      overMap.append("div").attr("class", "spinner").call(uiSpinner(context));
+      overMap.call(uiMapInMap(context2)).call(uiNotice(context2));
+      overMap.append("div").attr("class", "spinner").call(uiSpinner(context2));
       var controlsWrap = overMap.append("div").attr("class", "map-controls-wrap");
       var controls = controlsWrap.append("div").attr("class", "map-controls");
-      controls.append("div").attr("class", "map-control zoombuttons").call(uiZoom(context));
-      controls.append("div").attr("class", "map-control zoom-to-selection-control").call(uiZoomToSelection(context));
-      controls.append("div").attr("class", "map-control geolocate-control").call(uiGeolocate(context));
+      controls.append("div").attr("class", "map-control zoombuttons").call(uiZoom(context2));
+      controls.append("div").attr("class", "map-control zoom-to-selection-control").call(uiZoomToSelection(context2));
+      controls.append("div").attr("class", "map-control geolocate-control").call(uiGeolocate(context2));
       controlsWrap.on("wheel.mapControls", function(d3_event) {
         if (!d3_event.deltaX) {
           controlsWrap.node().scrollTop += d3_event.deltaY;
@@ -65095,112 +65095,112 @@ ${content}</tr>
       });
       var panes = overMap.append("div").attr("class", "map-panes");
       var uiPanes = [
-        uiPaneBackground(context),
-        uiPaneMapData(context),
-        uiPaneIssues(context),
-        uiPanePreferences(context),
-        uiPaneHelp(context)
+        uiPaneBackground(context2),
+        uiPaneMapData(context2),
+        uiPaneIssues(context2),
+        uiPanePreferences(context2),
+        uiPaneHelp(context2)
       ];
       uiPanes.forEach(function(pane) {
         controls.append("div").attr("class", "map-control map-pane-control " + pane.id + "-control").call(pane.renderToggleButton);
         panes.call(pane.renderPane);
       });
-      ui.info = uiInfo(context);
+      ui.info = uiInfo(context2);
       overMap.call(ui.info);
       overMap.append("div").attr("class", "photoviewer").classed("al", true).classed("hide", true).call(ui.photoviewer);
-      overMap.append("div").attr("class", "attribution-wrap").attr("dir", "ltr").call(uiAttribution(context));
+      overMap.append("div").attr("class", "attribution-wrap").attr("dir", "ltr").call(uiAttribution(context2));
       var about = content.append("div").attr("class", "map-footer");
-      about.append("div").attr("class", "api-status").call(uiStatus(context));
+      about.append("div").attr("class", "api-status").call(uiStatus(context2));
       var footer = about.append("div").attr("class", "map-footer-bar fillD");
       footer.append("div").attr("class", "flash-wrap footer-hide");
       var footerWrap = footer.append("div").attr("class", "main-footer-wrap footer-show");
-      footerWrap.append("div").attr("class", "scale-block").call(uiScale(context));
+      footerWrap.append("div").attr("class", "scale-block").call(uiScale(context2));
       var aboutList = footerWrap.append("div").attr("class", "info-block").append("ul").attr("class", "map-footer-list");
-      aboutList.append("li").attr("class", "user-list").call(uiContributors(context));
-      var apiConnections = context.apiConnections();
+      aboutList.append("li").attr("class", "user-list").call(uiContributors(context2));
+      var apiConnections = context2.apiConnections();
       if (apiConnections && apiConnections.length > 1) {
         aboutList.append("li").attr("class", "source-switch").call(
-          uiSourceSwitch(context).keys(apiConnections)
+          uiSourceSwitch(context2).keys(apiConnections)
         );
       }
-      aboutList.append("li").attr("class", "issues-info").call(uiIssuesInfo(context));
-      aboutList.append("li").attr("class", "feature-warning").call(uiFeatureInfo(context));
+      aboutList.append("li").attr("class", "issues-info").call(uiIssuesInfo(context2));
+      aboutList.append("li").attr("class", "feature-warning").call(uiFeatureInfo(context2));
       var issueLinks = aboutList.append("li");
       issueLinks.append("a").attr("target", "_blank").attr("href", "https://github.com/openstreetmap/iD/issues").attr("aria-label", _t("report_a_bug")).call(svgIcon("#iD-icon-bug", "light")).call(uiTooltip().title(_t.html("report_a_bug")).placement("top"));
       issueLinks.append("a").attr("target", "_blank").attr("href", "https://github.com/openstreetmap/iD/blob/develop/CONTRIBUTING.md#translating").attr("aria-label", _t("help_translate")).call(svgIcon("#iD-icon-translate", "light")).call(uiTooltip().title(_t.html("help_translate")).placement("top"));
-      aboutList.append("li").attr("class", "version").call(uiVersion(context));
-      if (!context.embed()) {
-        aboutList.call(uiAccount(context));
+      aboutList.append("li").attr("class", "version").call(uiVersion(context2));
+      if (!context2.embed()) {
+        aboutList.call(uiAccount(context2));
       }
       ui.onResize();
       map2.redrawEnable(true);
-      ui.hash = behaviorHash(context);
+      ui.hash = behaviorHash(context2);
       ui.hash();
       if (!ui.hash.hadHash) {
         map2.centerZoom([0, 0], 2);
       }
       window.onbeforeunload = function() {
-        return context.save();
+        return context2.save();
       };
       window.onunload = function() {
-        context.history().unlock();
+        context2.history().unlock();
       };
       select_default2(window).on("resize.editor", function() {
         ui.onResize();
       });
       var panPixels = 80;
-      context.keybinding().on("\u232B", function(d3_event) {
+      context2.keybinding().on("\u232B", function(d3_event) {
         d3_event.preventDefault();
       }).on([_t("sidebar.key"), "`", "\xB2", "@"], ui.sidebar.toggle).on("\u2190", pan([panPixels, 0])).on("\u2191", pan([0, panPixels])).on("\u2192", pan([-panPixels, 0])).on("\u2193", pan([0, -panPixels])).on(uiCmd("\u2325\u2190"), pan([map2.dimensions()[0], 0])).on(uiCmd("\u2325\u2191"), pan([0, map2.dimensions()[1]])).on(uiCmd("\u2325\u2192"), pan([-map2.dimensions()[0], 0])).on(uiCmd("\u2325\u2193"), pan([0, -map2.dimensions()[1]])).on(uiCmd("\u2318" + _t("background.key")), function quickSwitch(d3_event) {
         if (d3_event) {
           d3_event.stopImmediatePropagation();
           d3_event.preventDefault();
         }
-        var previousBackground = context.background().findSource(corePreferences("background-last-used-toggle"));
+        var previousBackground = context2.background().findSource(corePreferences("background-last-used-toggle"));
         if (previousBackground) {
-          var currentBackground = context.background().baseLayerSource();
+          var currentBackground = context2.background().baseLayerSource();
           corePreferences("background-last-used-toggle", currentBackground.id);
           corePreferences("background-last-used", previousBackground.id);
-          context.background().baseLayerSource(previousBackground);
+          context2.background().baseLayerSource(previousBackground);
         }
       }).on(_t("area_fill.wireframe.key"), function toggleWireframe(d3_event) {
         d3_event.preventDefault();
         d3_event.stopPropagation();
-        context.map().toggleWireframe();
+        context2.map().toggleWireframe();
       }).on(uiCmd("\u2325" + _t("area_fill.wireframe.key")), function toggleOsmData(d3_event) {
         d3_event.preventDefault();
         d3_event.stopPropagation();
-        var mode = context.mode();
+        var mode = context2.mode();
         if (mode && /^draw/.test(mode.id))
           return;
-        var layer = context.layers().layer("osm");
+        var layer = context2.layers().layer("osm");
         if (layer) {
           layer.enabled(!layer.enabled());
           if (!layer.enabled()) {
-            context.enter(modeBrowse(context));
+            context2.enter(modeBrowse(context2));
           }
         }
       }).on(_t("map_data.highlight_edits.key"), function toggleHighlightEdited(d3_event) {
         d3_event.preventDefault();
-        context.map().toggleHighlightEdited();
+        context2.map().toggleHighlightEdited();
       });
-      context.on("enter.editor", function(entered) {
+      context2.on("enter.editor", function(entered) {
         container.classed("mode-" + entered.id, true);
       }).on("exit.editor", function(exited) {
         container.classed("mode-" + exited.id, false);
       });
-      context.enter(modeBrowse(context));
+      context2.enter(modeBrowse(context2));
       if (!_initCounter++) {
         if (!ui.hash.startWalkthrough) {
-          context.container().call(uiSplash(context)).call(uiRestore(context));
+          context2.container().call(uiSplash(context2)).call(uiRestore(context2));
         }
-        context.container().call(ui.shortcuts);
+        context2.container().call(ui.shortcuts);
       }
-      var osm = context.connection();
-      var auth = uiLoading(context).message(_t.html("loading_auth")).blocking(true);
+      var osm = context2.connection();
+      var auth = uiLoading(context2).message(_t.html("loading_auth")).blocking(true);
       if (osm && auth) {
         osm.on("authLoading.ui", function() {
-          context.container().call(auth);
+          context2.container().call(auth);
         }).on("authDone.ui", function() {
           auth.close();
         });
@@ -65208,16 +65208,16 @@ ${content}</tr>
       _initCounter++;
       if (ui.hash.startWalkthrough) {
         ui.hash.startWalkthrough = false;
-        context.container().call(uiIntro(context));
+        context2.container().call(uiIntro(context2));
       }
       function pan(d) {
         return function(d3_event) {
           if (d3_event.shiftKey)
             return;
-          if (context.container().select(".combobox").size())
+          if (context2.container().select(".combobox").size())
             return;
           d3_event.preventDefault();
-          context.map().pan(d, 100);
+          context2.map().pan(d, 100);
         };
       }
     }
@@ -65230,28 +65230,28 @@ ${content}</tr>
         _mainLocalizer.ensureLoaded(),
         _mainPresetIndex.ensureLoaded()
       ]).then(() => {
-        if (!context.container().empty())
-          render(context.container());
+        if (!context2.container().empty())
+          render(context2.container());
       }).catch((err) => console.error(err));
     };
     ui.restart = function() {
-      context.keybinding().clear();
+      context2.keybinding().clear();
       _loadPromise = null;
-      context.container().selectAll("*").remove();
+      context2.container().selectAll("*").remove();
       ui.ensureLoaded();
     };
     ui.lastPointerType = function() {
       return _lastPointerType;
     };
-    ui.svgDefs = svgDefs(context);
-    ui.flash = uiFlash(context);
-    ui.sidebar = uiSidebar(context);
-    ui.photoviewer = uiPhotoviewer(context);
-    ui.shortcuts = uiShortcuts(context);
+    ui.svgDefs = svgDefs(context2);
+    ui.flash = uiFlash(context2);
+    ui.sidebar = uiSidebar(context2);
+    ui.photoviewer = uiPhotoviewer(context2);
+    ui.shortcuts = uiShortcuts(context2);
     ui.onResize = function(withPan) {
-      var map2 = context.map();
-      var mapDimensions = utilGetDimensions(context.container().select(".main-content"), true);
-      utilGetDimensions(context.container().select(".sidebar"), true);
+      var map2 = context2.map();
+      var mapDimensions = utilGetDimensions(context2.container().select(".main-content"), true);
+      utilGetDimensions(context2.container().select(".sidebar"), true);
       if (withPan !== void 0) {
         map2.redrawEnable(false);
         map2.pan(withPan);
@@ -65269,7 +65269,7 @@ ${content}</tr>
       if (reset) {
         delete _needWidth[selector];
       }
-      var selection2 = context.container().select(selector);
+      var selection2 = context2.container().select(selector);
       if (selection2.empty())
         return;
       var scrollWidth = selection2.property("scrollWidth");
@@ -65285,13 +65285,13 @@ ${content}</tr>
       }
     };
     ui.togglePanes = function(showPane) {
-      var hidePanes = context.container().selectAll(".map-pane.shown");
+      var hidePanes = context2.container().selectAll(".map-pane.shown");
       var side = _mainLocalizer.textDirection() === "ltr" ? "right" : "left";
       hidePanes.classed("shown", false).classed("hide", true);
-      context.container().selectAll(".map-pane-control button").classed("active", false);
+      context2.container().selectAll(".map-pane-control button").classed("active", false);
       if (showPane) {
         hidePanes.classed("shown", false).classed("hide", true).style(side, "-500px");
-        context.container().selectAll("." + showPane.attr("pane") + "-control button").classed("active", true);
+        context2.container().selectAll("." + showPane.attr("pane") + "-control button").classed("active", true);
         showPane.classed("shown", true).classed("hide", false);
         if (hidePanes.empty()) {
           showPane.style(side, "-500px").transition().duration(200).style(side, "0px");
@@ -65304,19 +65304,19 @@ ${content}</tr>
         });
       }
     };
-    var _editMenu = uiEditMenu(context);
+    var _editMenu = uiEditMenu(context2);
     ui.editMenu = function() {
       return _editMenu;
     };
     ui.showEditMenu = function(anchorPoint, triggerType, operations) {
       ui.closeEditMenu();
-      if (!operations && context.mode().operations)
-        operations = context.mode().operations();
+      if (!operations && context2.mode().operations)
+        operations = context2.mode().operations();
       if (!operations || !operations.length)
         return;
-      if (!context.map().editableDataEnabled())
+      if (!context2.map().editableDataEnabled())
         return;
-      var surfaceNode = context.surface().node();
+      var surfaceNode = context2.surface().node();
       if (surfaceNode.focus) {
         surfaceNode.focus();
       }
@@ -65325,15 +65325,15 @@ ${content}</tr>
           operation.point(anchorPoint);
       });
       _editMenu.anchorLoc(anchorPoint).triggerType(triggerType).operations(operations);
-      context.map().supersurface.call(_editMenu);
+      context2.map().supersurface.call(_editMenu);
     };
     ui.closeEditMenu = function() {
-      context.map().supersurface.select(".edit-menu").remove();
+      context2.map().supersurface.select(".edit-menu").remove();
     };
     var _saveLoading = select_default2(null);
-    context.uploader().on("saveStarted.ui", function() {
-      _saveLoading = uiLoading(context).message(_t.html("save.uploading")).blocking(true);
-      context.container().call(_saveLoading);
+    context2.uploader().on("saveStarted.ui", function() {
+      _saveLoading = uiLoading(context2).message(_t.html("save.uploading")).blocking(true);
+      context2.container().call(_saveLoading);
     }).on("saveEnded.ui", function() {
       _saveLoading.close();
       _saveLoading = select_default2(null);
@@ -65344,79 +65344,85 @@ ${content}</tr>
   // modules/core/context.js
   function coreContext() {
     const dispatch10 = dispatch_default("enter", "exit", "change");
-    let context = utilRebind({}, dispatch10, "on");
+    let context2 = utilRebind({}, dispatch10, "on");
     let _deferred2 = /* @__PURE__ */ new Set();
-    context.version = "1.0.1";
-    context.privacyVersion = "20201202";
-    context.initialHashParams = window.location.hash ? utilStringQs(window.location.hash) : {};
-    context.changeset = null;
-    let _defaultChangesetComment = context.initialHashParams.comment;
-    let _defaultChangesetSource = context.initialHashParams.source;
-    let _defaultChangesetHashtags = context.initialHashParams.hashtags;
-    context.defaultChangesetComment = function(val) {
+    context2.version = "1.0.1";
+    context2.privacyVersion = "20201202";
+    context2.initialHashParams = window.location.hash ? utilStringQs(window.location.hash) : {};
+    context2.changeset = null;
+    let _defaultChangesetComment = context2.initialHashParams.comment;
+    let _defaultChangesetSource = context2.initialHashParams.source;
+    let _defaultChangesetHashtags = context2.initialHashParams.hashtags;
+    context2.defaultChangesetComment = function(val) {
       if (!arguments.length)
         return _defaultChangesetComment;
       _defaultChangesetComment = val;
-      return context;
+      return context2;
     };
-    context.defaultChangesetSource = function(val) {
+    context2.defaultChangesetSource = function(val) {
       if (!arguments.length)
         return _defaultChangesetSource;
       _defaultChangesetSource = val;
-      return context;
+      return context2;
     };
-    context.defaultChangesetHashtags = function(val) {
+    context2.defaultChangesetHashtags = function(val) {
       if (!arguments.length)
         return _defaultChangesetHashtags;
       _defaultChangesetHashtags = val;
-      return context;
+      return context2;
     };
     let _setsDocumentTitle = true;
-    context.setsDocumentTitle = function(val) {
+    context2.setsDocumentTitle = function(val) {
       if (!arguments.length)
         return _setsDocumentTitle;
       _setsDocumentTitle = val;
-      return context;
+      return context2;
     };
     let _documentTitleBase = document.title;
-    context.documentTitleBase = function(val) {
+    context2.documentTitleBase = function(val) {
       if (!arguments.length)
         return _documentTitleBase;
       _documentTitleBase = val;
-      return context;
+      return context2;
     };
     let _ui;
-    context.ui = () => _ui;
-    context.lastPointerType = () => _ui.lastPointerType();
+    context2.ui = () => _ui;
+    context2.lastPointerType = () => _ui.lastPointerType();
     let _keybinding = utilKeybinding("context");
-    context.keybinding = () => _keybinding;
+    context2.keybinding = () => _keybinding;
     select_default2(document).call(_keybinding);
     let _connection = services.osm;
     let _history;
     let _validator;
     let _uploader;
-    context.connection = () => _connection;
-    context.history = () => _history;
-    context.validator = () => _validator;
-    context.uploader = () => _uploader;
-    context.preauth = (options2) => {
+    context2.connection = () => _connection;
+    context2.history = () => _history;
+    context2.validator = () => _validator;
+    context2.uploader = () => _uploader;
+    context2.preauth = (options2) => {
       if (_connection) {
         _connection.switch(options2);
       }
-      return context;
+      return context2;
     };
     let _apiConnections;
-    context.apiConnections = function(val) {
+    context2.apiConnections = function(val) {
       if (!arguments.length)
         return _apiConnections;
       _apiConnections = val;
-      return context;
+      return context2;
     };
-    context.locale = function(locale2) {
+    context2.locale = function(locale2) {
       if (!arguments.length)
         return _mainLocalizer.localeCode();
       _mainLocalizer.preferredLocaleCodes(locale2);
-      return context;
+      return context2;
+    };
+    context2.includeOnlyFilter = function(obj) {
+      if (!arguments.length)
+        return _connection.includeOnlyFilter();
+      _connection.includeOnlyFilter(obj);
+      return context2;
     };
     function afterLoad(cid, callback) {
       return (err, result) => {
@@ -65444,35 +65450,35 @@ ${content}</tr>
         }
       };
     }
-    context.loadTiles = (projection2, callback) => {
+    context2.loadTiles = (projection2, callback) => {
       const handle = window.requestIdleCallback(() => {
         _deferred2.delete(handle);
-        if (_connection && context.editableDataEnabled()) {
+        if (_connection && context2.editableDataEnabled()) {
           const cid = _connection.getConnectionId();
           _connection.loadTiles(projection2, afterLoad(cid, callback));
         }
       });
       _deferred2.add(handle);
     };
-    context.loadTileAtLoc = (loc, callback) => {
+    context2.loadTileAtLoc = (loc, callback) => {
       const handle = window.requestIdleCallback(() => {
         _deferred2.delete(handle);
-        if (_connection && context.editableDataEnabled()) {
+        if (_connection && context2.editableDataEnabled()) {
           const cid = _connection.getConnectionId();
           _connection.loadTileAtLoc(loc, afterLoad(cid, callback));
         }
       });
       _deferred2.add(handle);
     };
-    context.loadEntity = (entityID, callback) => {
+    context2.loadEntity = (entityID, callback) => {
       if (_connection) {
         const cid = _connection.getConnectionId();
         _connection.loadEntity(entityID, afterLoad(cid, callback));
         _connection.loadEntityRelations(entityID, afterLoad(cid, callback));
       }
     };
-    context.zoomToEntity = (entityID, zoomTo) => {
-      context.loadEntity(entityID, (err, result) => {
+    context2.zoomToEntity = (entityID, zoomTo) => {
+      context2.loadEntity(entityID, (err, result) => {
         if (err)
           return;
         if (zoomTo !== false) {
@@ -65483,32 +65489,32 @@ ${content}</tr>
         }
       });
       _map.on("drawn.zoomToEntity", () => {
-        if (!context.hasEntity(entityID))
+        if (!context2.hasEntity(entityID))
           return;
         _map.on("drawn.zoomToEntity", null);
-        context.on("enter.zoomToEntity", null);
-        context.enter(modeSelect(context, [entityID]));
+        context2.on("enter.zoomToEntity", null);
+        context2.enter(modeSelect(context2, [entityID]));
       });
-      context.on("enter.zoomToEntity", () => {
+      context2.on("enter.zoomToEntity", () => {
         if (_mode.id !== "browse") {
           _map.on("drawn.zoomToEntity", null);
-          context.on("enter.zoomToEntity", null);
+          context2.on("enter.zoomToEntity", null);
         }
       });
     };
     let _minEditableZoom = 14;
-    context.minEditableZoom = function(val) {
+    context2.minEditableZoom = function(val) {
       if (!arguments.length)
         return _minEditableZoom;
       _minEditableZoom = val;
       if (_connection) {
         _connection.tileZoom(val);
       }
-      return context;
+      return context2;
     };
-    context.maxCharsForTagKey = () => 255;
-    context.maxCharsForTagValue = () => 255;
-    context.maxCharsForRelationRole = () => 255;
+    context2.maxCharsForTagKey = () => 255;
+    context2.maxCharsForTagValue = () => 255;
+    context2.maxCharsForRelationRole = () => 255;
     function cleanOsmString(val, maxChars) {
       if (val === void 0 || val === null) {
         val = "";
@@ -65520,18 +65526,18 @@ ${content}</tr>
         val = val.normalize("NFC");
       return utilUnicodeCharsTruncated(val, maxChars);
     }
-    context.cleanTagKey = (val) => cleanOsmString(val, context.maxCharsForTagKey());
-    context.cleanTagValue = (val) => cleanOsmString(val, context.maxCharsForTagValue());
-    context.cleanRelationRole = (val) => cleanOsmString(val, context.maxCharsForRelationRole());
+    context2.cleanTagKey = (val) => cleanOsmString(val, context2.maxCharsForTagKey());
+    context2.cleanTagValue = (val) => cleanOsmString(val, context2.maxCharsForTagValue());
+    context2.cleanRelationRole = (val) => cleanOsmString(val, context2.maxCharsForRelationRole());
     let _inIntro = false;
-    context.inIntro = function(val) {
+    context2.inIntro = function(val) {
       if (!arguments.length)
         return _inIntro;
       _inIntro = val;
-      return context;
+      return context2;
     };
-    context.save = () => {
-      if (_inIntro || context.container().select(".modal").size())
+    context2.save = () => {
+      if (_inIntro || context2.container().select(".modal").size())
         return;
       let canSave;
       if (_mode && _mode.id === "save") {
@@ -65541,8 +65547,8 @@ ${content}</tr>
           return;
         }
       } else {
-        canSave = context.selectedIDs().every((id2) => {
-          const entity = context.hasEntity(id2);
+        canSave = context2.selectedIDs().every((id2) => {
+          const entity = context2.hasEntity(id2);
           return entity && !entity.isDegenerate();
         });
       }
@@ -65553,19 +65559,19 @@ ${content}</tr>
         return _t("save.unsaved_changes");
       }
     };
-    context.debouncedSave = debounce_default(context.save, 350);
+    context2.debouncedSave = debounce_default(context2.save, 350);
     function withDebouncedSave(fn) {
       return function() {
         const result = fn.apply(_history, arguments);
-        context.debouncedSave();
+        context2.debouncedSave();
         return result;
       };
     }
-    context.hasEntity = (id2) => _history.graph().hasEntity(id2);
-    context.entity = (id2) => _history.graph().entity(id2);
+    context2.hasEntity = (id2) => _history.graph().hasEntity(id2);
+    context2.entity = (id2) => _history.graph().entity(id2);
     let _mode;
-    context.mode = () => _mode;
-    context.enter = (newMode) => {
+    context2.mode = () => _mode;
+    context2.enter = (newMode) => {
       if (_mode) {
         _mode.exit();
         dispatch10.call("exit", this, _mode);
@@ -65574,60 +65580,60 @@ ${content}</tr>
       _mode.enter();
       dispatch10.call("enter", this, _mode);
     };
-    context.selectedIDs = () => _mode && _mode.selectedIDs && _mode.selectedIDs() || [];
-    context.activeID = () => _mode && _mode.activeID && _mode.activeID();
+    context2.selectedIDs = () => _mode && _mode.selectedIDs && _mode.selectedIDs() || [];
+    context2.activeID = () => _mode && _mode.activeID && _mode.activeID();
     let _selectedNoteID;
-    context.selectedNoteID = function(noteID) {
+    context2.selectedNoteID = function(noteID) {
       if (!arguments.length)
         return _selectedNoteID;
       _selectedNoteID = noteID;
-      return context;
+      return context2;
     };
     let _selectedErrorID;
-    context.selectedErrorID = function(errorID) {
+    context2.selectedErrorID = function(errorID) {
       if (!arguments.length)
         return _selectedErrorID;
       _selectedErrorID = errorID;
-      return context;
+      return context2;
     };
-    context.install = (behavior) => context.surface().call(behavior);
-    context.uninstall = (behavior) => context.surface().call(behavior.off);
+    context2.install = (behavior) => context2.surface().call(behavior);
+    context2.uninstall = (behavior) => context2.surface().call(behavior.off);
     let _copyGraph;
-    context.copyGraph = () => _copyGraph;
+    context2.copyGraph = () => _copyGraph;
     let _copyIDs = [];
-    context.copyIDs = function(val) {
+    context2.copyIDs = function(val) {
       if (!arguments.length)
         return _copyIDs;
       _copyIDs = val;
       _copyGraph = _history.graph();
-      return context;
+      return context2;
     };
     let _copyLonLat;
-    context.copyLonLat = function(val) {
+    context2.copyLonLat = function(val) {
       if (!arguments.length)
         return _copyLonLat;
       _copyLonLat = val;
-      return context;
+      return context2;
     };
     let _background;
-    context.background = () => _background;
+    context2.background = () => _background;
     let _features;
-    context.features = () => _features;
-    context.hasHiddenConnections = (id2) => {
+    context2.features = () => _features;
+    context2.hasHiddenConnections = (id2) => {
       const graph = _history.graph();
       const entity = graph.entity(id2);
       return _features.hasHiddenConnections(entity, graph);
     };
     let _photos;
-    context.photos = () => _photos;
+    context2.photos = () => _photos;
     let _map;
-    context.map = () => _map;
-    context.layers = () => _map.layers();
-    context.surface = () => _map.surface;
-    context.editableDataEnabled = () => _map.editableDataEnabled();
-    context.surfaceRect = () => _map.surface.node().getBoundingClientRect();
-    context.editable = () => {
-      const mode = context.mode();
+    context2.map = () => _map;
+    context2.layers = () => _map.layers();
+    context2.surface = () => _map.surface;
+    context2.editableDataEnabled = () => _map.editableDataEnabled();
+    context2.surfaceRect = () => _map.surface.node().getBoundingClientRect();
+    context2.editable = () => {
+      const mode = context2.mode();
       if (!mode || mode.id === "save")
         return false;
       return _map.editableDataEnabled();
@@ -65639,109 +65645,109 @@ ${content}</tr>
       target: false,
       downloaded: false
     };
-    context.debugFlags = () => _debugFlags;
-    context.getDebug = (flag) => flag && _debugFlags[flag];
-    context.setDebug = function(flag, val) {
+    context2.debugFlags = () => _debugFlags;
+    context2.getDebug = (flag) => flag && _debugFlags[flag];
+    context2.setDebug = function(flag, val) {
       if (arguments.length === 1)
         val = true;
       _debugFlags[flag] = val;
       dispatch10.call("change");
-      return context;
+      return context2;
     };
     let _container = select_default2(null);
-    context.container = function(val) {
+    context2.container = function(val) {
       if (!arguments.length)
         return _container;
       _container = val;
       _container.classed("ideditor", true);
-      return context;
+      return context2;
     };
-    context.containerNode = function(val) {
+    context2.containerNode = function(val) {
       if (!arguments.length)
-        return context.container().node();
-      context.container(select_default2(val));
-      return context;
+        return context2.container().node();
+      context2.container(select_default2(val));
+      return context2;
     };
     let _embed;
-    context.embed = function(val) {
+    context2.embed = function(val) {
       if (!arguments.length)
         return _embed;
       _embed = val;
-      return context;
+      return context2;
     };
     let _assetPath = "";
-    context.assetPath = function(val) {
+    context2.assetPath = function(val) {
       if (!arguments.length)
         return _assetPath;
       _assetPath = val;
       _mainFileFetcher.assetPath(val);
-      return context;
+      return context2;
     };
     let _assetMap = {};
-    context.assetMap = function(val) {
+    context2.assetMap = function(val) {
       if (!arguments.length)
         return _assetMap;
       _assetMap = val;
       _mainFileFetcher.assetMap(val);
-      return context;
+      return context2;
     };
-    context.asset = (val) => {
+    context2.asset = (val) => {
       if (/^http(s)?:\/\//i.test(val))
         return val;
       const filename = _assetPath + val;
       return _assetMap[filename] || filename;
     };
-    context.imagePath = (val) => context.asset(`img/${val}`);
-    context.reset = context.flush = () => {
-      context.debouncedSave.cancel();
+    context2.imagePath = (val) => context2.asset(`img/${val}`);
+    context2.reset = context2.flush = () => {
+      context2.debouncedSave.cancel();
       Array.from(_deferred2).forEach((handle) => {
         window.cancelIdleCallback(handle);
         _deferred2.delete(handle);
       });
       Object.values(services).forEach((service) => {
         if (service && typeof service.reset === "function") {
-          service.reset(context);
+          service.reset(context2);
         }
       });
-      context.changeset = null;
+      context2.changeset = null;
       _validator.reset();
       _features.reset();
       _history.reset();
       _uploader.reset();
-      context.container().select(".inspector-wrap *").remove();
-      return context;
+      context2.container().select(".inspector-wrap *").remove();
+      return context2;
     };
-    context.projection = geoRawMercator();
-    context.curtainProjection = geoRawMercator();
-    context.init = () => {
+    context2.projection = geoRawMercator();
+    context2.curtainProjection = geoRawMercator();
+    context2.init = () => {
       instantiateInternal();
       initializeDependents();
-      return context;
+      return context2;
       function instantiateInternal() {
-        _history = coreHistory(context);
-        context.graph = _history.graph;
-        context.pauseChangeDispatch = _history.pauseChangeDispatch;
-        context.resumeChangeDispatch = _history.resumeChangeDispatch;
-        context.perform = withDebouncedSave(_history.perform);
-        context.replace = withDebouncedSave(_history.replace);
-        context.pop = withDebouncedSave(_history.pop);
-        context.overwrite = withDebouncedSave(_history.overwrite);
-        context.undo = withDebouncedSave(_history.undo);
-        context.redo = withDebouncedSave(_history.redo);
-        _validator = coreValidator(context);
-        _uploader = coreUploader(context);
-        _background = rendererBackground(context);
-        _features = rendererFeatures(context);
-        _map = rendererMap(context);
-        _photos = rendererPhotos(context);
-        _ui = uiInit(context);
+        _history = coreHistory(context2);
+        context2.graph = _history.graph;
+        context2.pauseChangeDispatch = _history.pauseChangeDispatch;
+        context2.resumeChangeDispatch = _history.resumeChangeDispatch;
+        context2.perform = withDebouncedSave(_history.perform);
+        context2.replace = withDebouncedSave(_history.replace);
+        context2.pop = withDebouncedSave(_history.pop);
+        context2.overwrite = withDebouncedSave(_history.overwrite);
+        context2.undo = withDebouncedSave(_history.undo);
+        context2.redo = withDebouncedSave(_history.redo);
+        _validator = coreValidator(context2);
+        _uploader = coreUploader(context2);
+        _background = rendererBackground(context2);
+        _features = rendererFeatures(context2);
+        _map = rendererMap(context2);
+        _photos = rendererPhotos(context2);
+        _ui = uiInit(context2);
       }
       function initializeDependents() {
-        if (context.initialHashParams.presets) {
-          _mainPresetIndex.addablePresetIDs(new Set(context.initialHashParams.presets.split(",")));
+        if (context2.initialHashParams.presets) {
+          _mainPresetIndex.addablePresetIDs(new Set(context2.initialHashParams.presets.split(",")));
         }
-        if (context.initialHashParams.locale) {
-          _mainLocalizer.preferredLocaleCodes(context.initialHashParams.locale);
+        if (context2.initialHashParams.locale) {
+          _mainLocalizer.preferredLocaleCodes(context2.initialHashParams.locale);
         }
         _mainLocalizer.ensureLoaded();
         _background.ensureLoaded();
@@ -65754,21 +65760,21 @@ ${content}</tr>
         _map.init();
         _validator.init();
         _features.init();
-        if (services.maprules && context.initialHashParams.maprules) {
-          json_default(context.initialHashParams.maprules).then((mapcss) => {
+        if (services.maprules && context2.initialHashParams.maprules) {
+          json_default(context2.initialHashParams.maprules).then((mapcss) => {
             services.maprules.init();
             mapcss.forEach((mapcssSelector) => services.maprules.addRule(mapcssSelector));
           }).catch(() => {
           });
         }
-        if (!context.container().empty()) {
+        if (!context2.container().empty()) {
           _ui.ensureLoaded().then(() => {
             _photos.init();
           });
         }
       }
     };
-    return context;
+    return context2;
   }
 
   // modules/services/nsi.js
@@ -66386,10 +66392,10 @@ ${content}</tr>
       var url = apibase2 + "/1.0/list/nearby-photos/";
       loadTiles2("images", url, projection2);
     },
-    ensureViewerLoaded: function(context) {
+    ensureViewerLoaded: function(context2) {
       if (_loadViewerPromise2)
         return _loadViewerPromise2;
-      var wrap2 = context.container().select(".photoviewer").selectAll(".kartaview-wrapper").data([0]);
+      var wrap2 = context2.container().select(".photoviewer").selectAll(".kartaview-wrapper").data([0]);
       var that = this;
       var wrapEnter = wrap2.enter().append("div").attr("class", "photo-wrapper kartaview-wrapper").classed("hide", true).call(imgZoom.on("zoom", zoomPan)).on("dblclick.zoom", null);
       wrapEnter.append("div").attr("class", "photo-attribution fillD");
@@ -66399,12 +66405,12 @@ ${content}</tr>
       controlsEnter.append("button").on("click.rotate-cw", rotate(90)).text("\u293E");
       controlsEnter.append("button").on("click.forward", step(1)).text("\u25BA");
       wrapEnter.append("div").attr("class", "kartaview-image-wrap");
-      context.ui().photoviewer.on("resize.kartaview", function(dimensions) {
+      context2.ui().photoviewer.on("resize.kartaview", function(dimensions) {
         imgZoom = zoom_default2().extent([[0, 0], dimensions]).translateExtent([[0, 0], dimensions]).scaleExtent([1, 15]).on("zoom", zoomPan);
       });
       function zoomPan(d3_event) {
         var t = d3_event.transform;
-        context.container().select(".photoviewer .kartaview-image-wrap").call(utilSetTransform, t.x, t.y, t.k);
+        context2.container().select(".photoviewer .kartaview-image-wrap").call(utilSetTransform, t.x, t.y, t.k);
       }
       function rotate(deg) {
         return function() {
@@ -66421,7 +66427,7 @@ ${content}</tr>
           if (r < -180)
             r += 360;
           sequence.rotation = r;
-          var wrap3 = context.container().select(".photoviewer .kartaview-wrapper");
+          var wrap3 = context2.container().select(".photoviewer .kartaview-wrapper");
           wrap3.transition().duration(100).call(imgZoom.transform, identity2);
           wrap3.selectAll(".kartaview-image").transition().duration(100).style("transform", "rotate(" + r + "deg)");
         };
@@ -66438,15 +66444,15 @@ ${content}</tr>
           var nextImage = sequence.images[nextIndex];
           if (!nextImage)
             return;
-          context.map().centerEase(nextImage.loc);
-          that.selectImage(context, nextImage.key);
+          context2.map().centerEase(nextImage.loc);
+          that.selectImage(context2, nextImage.key);
         };
       }
       _loadViewerPromise2 = Promise.resolve();
       return _loadViewerPromise2;
     },
-    showViewer: function(context) {
-      var viewer = context.container().select(".photoviewer").classed("hide", false);
+    showViewer: function(context2) {
+      var viewer = context2.container().select(".photoviewer").classed("hide", false);
       var isHidden = viewer.selectAll(".photo-wrapper.kartaview-wrapper.hide").size();
       if (isHidden) {
         viewer.selectAll(".photo-wrapper:not(.kartaview-wrapper)").classed("hide", true);
@@ -66454,28 +66460,28 @@ ${content}</tr>
       }
       return this;
     },
-    hideViewer: function(context) {
+    hideViewer: function(context2) {
       _oscSelectedImage = null;
       this.updateUrlImage(null);
-      var viewer = context.container().select(".photoviewer");
+      var viewer = context2.container().select(".photoviewer");
       if (!viewer.empty())
         viewer.datum(null);
       viewer.classed("hide", true).selectAll(".photo-wrapper").classed("hide", true);
-      context.container().selectAll(".viewfield-group, .sequence, .icon-sign").classed("currentView", false);
-      return this.setStyles(context, null, true);
+      context2.container().selectAll(".viewfield-group, .sequence, .icon-sign").classed("currentView", false);
+      return this.setStyles(context2, null, true);
     },
-    selectImage: function(context, imageKey) {
+    selectImage: function(context2, imageKey) {
       var d = this.cachedImage(imageKey);
       _oscSelectedImage = d;
       this.updateUrlImage(imageKey);
-      var viewer = context.container().select(".photoviewer");
+      var viewer = context2.container().select(".photoviewer");
       if (!viewer.empty())
         viewer.datum(d);
-      this.setStyles(context, null, true);
-      context.container().selectAll(".icon-sign").classed("currentView", false);
+      this.setStyles(context2, null, true);
+      context2.container().selectAll(".icon-sign").classed("currentView", false);
       if (!d)
         return this;
-      var wrap2 = context.container().select(".photoviewer .kartaview-wrapper");
+      var wrap2 = context2.container().select(".photoviewer .kartaview-wrapper");
       var imageWrap = wrap2.selectAll(".kartaview-image-wrap");
       var attribution = wrap2.selectAll(".photo-attribution").text("");
       wrap2.transition().duration(100).call(imgZoom.transform, identity2);
@@ -66511,10 +66517,10 @@ ${content}</tr>
     getSequenceKeyForImage: function(d) {
       return d && d.sequence_id;
     },
-    setStyles: function(context, hovered, reset) {
+    setStyles: function(context2, hovered, reset) {
       if (reset) {
-        context.container().selectAll(".viewfield-group").classed("highlighted", false).classed("hovered", false).classed("currentView", false);
-        context.container().selectAll(".sequence").classed("highlighted", false).classed("currentView", false);
+        context2.container().selectAll(".viewfield-group").classed("highlighted", false).classed("hovered", false).classed("currentView", false);
+        context2.container().selectAll(".sequence").classed("highlighted", false).classed("currentView", false);
       }
       var hoveredImageKey = hovered && hovered.key;
       var hoveredSequenceKey = this.getSequenceKeyForImage(hovered);
@@ -66522,7 +66528,7 @@ ${content}</tr>
       var hoveredImageKeys = hoveredSequence && hoveredSequence.images.map(function(d) {
         return d.key;
       }) || [];
-      var viewer = context.container().select(".photoviewer");
+      var viewer = context2.container().select(".photoviewer");
       var selected = viewer.empty() ? void 0 : viewer.datum();
       var selectedImageKey = selected && selected.key;
       var selectedSequenceKey = this.getSequenceKeyForImage(selected);
@@ -66531,19 +66537,19 @@ ${content}</tr>
         return d.key;
       }) || [];
       var highlightedImageKeys = utilArrayUnion(hoveredImageKeys, selectedImageKeys);
-      context.container().selectAll(".layer-kartaview .viewfield-group").classed("highlighted", function(d) {
+      context2.container().selectAll(".layer-kartaview .viewfield-group").classed("highlighted", function(d) {
         return highlightedImageKeys.indexOf(d.key) !== -1;
       }).classed("hovered", function(d) {
         return d.key === hoveredImageKey;
       }).classed("currentView", function(d) {
         return d.key === selectedImageKey;
       });
-      context.container().selectAll(".layer-kartaview .sequence").classed("highlighted", function(d) {
+      context2.container().selectAll(".layer-kartaview .sequence").classed("highlighted", function(d) {
         return d.properties.key === hoveredSequenceKey;
       }).classed("currentView", function(d) {
         return d.properties.key === selectedSequenceKey;
       });
-      context.container().selectAll(".layer-kartaview .viewfield-group .viewfield").attr("d", viewfieldPath);
+      context2.container().selectAll(".layer-kartaview .viewfield-group .viewfield").attr("d", viewfieldPath);
       function viewfieldPath() {
         var d = this.parentNode.__data__;
         if (d.pano && d.key !== selectedImageKey) {
@@ -66597,6 +66603,7 @@ ${content}</tr>
   var _userChangesets;
   var _userDetails;
   var _off;
+  var _includeOnlyFilter;
   var _maxWayNodes = 2e3;
   function authLoading() {
     dispatch7.call("authLoading");
@@ -66799,6 +66806,14 @@ ${content}</tr>
         return null;
       var uid;
       uid = osmEntity.id.fromOSM(child.type, child.id);
+      if (_includeOnlyFilter && _includeOnlyFilter.tags) {
+        for (var key in _includeOnlyFilter.tags) {
+          if (!child.tags || _includeOnlyFilter.tags[key] === "*" && !child.tags[key] || child.tags[key] !== _includeOnlyFilter.tags[key]) {
+            _tileCache.seen[uid] = true;
+            return null;
+          }
+        }
+      }
       if (options2.skipSeen) {
         if (_tileCache.seen[uid])
           return null;
@@ -67035,6 +67050,12 @@ ${content}</tr>
       _cachedApiStatus = void 0;
       _changeset = {};
       return this;
+    },
+    includeOnlyFilter: function(includeOnlyFilter) {
+      if (!arguments.length)
+        return _includeOnlyFilter;
+      _includeOnlyFilter = includeOnlyFilter;
+      return context;
     },
     getConnectionId: function() {
       return _connectionID;
@@ -68653,10 +68674,10 @@ ${content}</tr>
       options2.scenes[sceneID] = _sceneOptions;
       _pannellumViewer = window.pannellum.viewer("ideditor-viewer-streetside", options2);
     },
-    ensureViewerLoaded: function(context) {
+    ensureViewerLoaded: function(context2) {
       if (_loadViewerPromise3)
         return _loadViewerPromise3;
-      let wrap2 = context.container().select(".photoviewer").selectAll(".ms-wrapper").data([0]);
+      let wrap2 = context2.container().select(".photoviewer").selectAll(".ms-wrapper").data([0]);
       let wrapEnter = wrap2.enter().append("div").attr("class", "photo-wrapper ms-wrapper").classed("hide", true);
       let that = this;
       let pointerPrefix = "PointerEvent" in window ? "pointer" : "mouse";
@@ -68677,7 +68698,7 @@ ${content}</tr>
       controlsEnter.append("button").on("click.back", step(-1)).text("\u25C4");
       controlsEnter.append("button").on("click.forward", step(1)).text("\u25BA");
       wrap2 = wrap2.merge(wrapEnter).call(setupCanvas, true);
-      context.ui().photoviewer.on("resize.streetside", () => {
+      context2.ui().photoviewer.on("resize.streetside", () => {
         if (_pannellumViewer) {
           _pannellumViewer.resize();
         }
@@ -68690,10 +68711,10 @@ ${content}</tr>
             resolve();
         }
         const head = select_default2("head");
-        head.selectAll("#ideditor-streetside-viewercss").data([0]).enter().append("link").attr("id", "ideditor-streetside-viewercss").attr("rel", "stylesheet").attr("crossorigin", "anonymous").attr("href", context.asset(pannellumViewerCSS)).on("load.serviceStreetside", loaded).on("error.serviceStreetside", function() {
+        head.selectAll("#ideditor-streetside-viewercss").data([0]).enter().append("link").attr("id", "ideditor-streetside-viewercss").attr("rel", "stylesheet").attr("crossorigin", "anonymous").attr("href", context2.asset(pannellumViewerCSS)).on("load.serviceStreetside", loaded).on("error.serviceStreetside", function() {
           reject();
         });
-        head.selectAll("#ideditor-streetside-viewerjs").data([0]).enter().append("script").attr("id", "ideditor-streetside-viewerjs").attr("crossorigin", "anonymous").attr("src", context.asset(pannellumViewerJS)).on("load.serviceStreetside", loaded).on("error.serviceStreetside", function() {
+        head.selectAll("#ideditor-streetside-viewerjs").data([0]).enter().append("script").attr("id", "ideditor-streetside-viewerjs").attr("crossorigin", "anonymous").attr("src", context2.asset(pannellumViewerJS)).on("load.serviceStreetside", loaded).on("error.serviceStreetside", function() {
           reject();
         });
       }).catch(function() {
@@ -68702,7 +68723,7 @@ ${content}</tr>
       return _loadViewerPromise3;
       function step(stepBy) {
         return () => {
-          let viewer = context.container().select(".photoviewer");
+          let viewer = context2.container().select(".photoviewer");
           let selected = viewer.empty() ? void 0 : viewer.datum();
           if (!selected)
             return;
@@ -68753,8 +68774,8 @@ ${content}</tr>
           let nextBubble = nextID && that.cachedImage(nextID);
           if (!nextBubble)
             return;
-          context.map().centerEase(nextBubble.loc);
-          that.selectImage(context, nextBubble.key).yaw(yaw).showViewer(context);
+          context2.map().centerEase(nextBubble.loc);
+          that.selectImage(context2, nextBubble.key).yaw(yaw).showViewer(context2);
         };
       }
     },
@@ -68764,8 +68785,8 @@ ${content}</tr>
       _sceneOptions.yaw = yaw;
       return this;
     },
-    showViewer: function(context) {
-      let wrap2 = context.container().select(".photoviewer").classed("hide", false);
+    showViewer: function(context2) {
+      let wrap2 = context2.container().select(".photoviewer").classed("hide", false);
       let isHidden = wrap2.selectAll(".photo-wrapper.ms-wrapper.hide").size();
       if (isHidden) {
         wrap2.selectAll(".photo-wrapper:not(.ms-wrapper)").classed("hide", true);
@@ -68773,23 +68794,23 @@ ${content}</tr>
       }
       return this;
     },
-    hideViewer: function(context) {
-      let viewer = context.container().select(".photoviewer");
+    hideViewer: function(context2) {
+      let viewer = context2.container().select(".photoviewer");
       if (!viewer.empty())
         viewer.datum(null);
       viewer.classed("hide", true).selectAll(".photo-wrapper").classed("hide", true);
-      context.container().selectAll(".viewfield-group, .sequence, .icon-sign").classed("currentView", false);
+      context2.container().selectAll(".viewfield-group, .sequence, .icon-sign").classed("currentView", false);
       this.updateUrlImage(null);
-      return this.setStyles(context, null, true);
+      return this.setStyles(context2, null, true);
     },
-    selectImage: function(context, key) {
+    selectImage: function(context2, key) {
       let that = this;
       let d = this.cachedImage(key);
-      let viewer = context.container().select(".photoviewer");
+      let viewer = context2.container().select(".photoviewer");
       if (!viewer.empty())
         viewer.datum(d);
-      this.setStyles(context, null, true);
-      let wrap2 = context.container().select(".photoviewer .ms-wrapper");
+      this.setStyles(context2, null, true);
+      let wrap2 = context2.container().select(".photoviewer .ms-wrapper");
       let attribution = wrap2.selectAll(".photo-attribution").html("");
       wrap2.selectAll(".pnlm-load-box").style("display", "block");
       if (!d)
@@ -68810,7 +68831,7 @@ ${content}</tr>
           hfov: _pannellumViewer.getHfov()
         };
         _sceneOptions = Object.assign(_sceneOptions, viewstate);
-        that.selectImage(context, d.key).showViewer(context);
+        that.selectImage(context2, d.key).showViewer(context2);
       });
       label.append("span").call(_t.append("streetside.hires"));
       let captureInfo = line1.append("div").attr("class", "attribution-capture-info");
@@ -68863,25 +68884,25 @@ ${content}</tr>
     getSequenceKeyForBubble: function(d) {
       return d && d.sequenceKey;
     },
-    setStyles: function(context, hovered, reset) {
+    setStyles: function(context2, hovered, reset) {
       if (reset) {
-        context.container().selectAll(".viewfield-group").classed("highlighted", false).classed("hovered", false).classed("currentView", false);
-        context.container().selectAll(".sequence").classed("highlighted", false).classed("currentView", false);
+        context2.container().selectAll(".viewfield-group").classed("highlighted", false).classed("hovered", false).classed("currentView", false);
+        context2.container().selectAll(".sequence").classed("highlighted", false).classed("currentView", false);
       }
       let hoveredBubbleKey = hovered && hovered.key;
       let hoveredSequenceKey = this.getSequenceKeyForBubble(hovered);
       let hoveredSequence = hoveredSequenceKey && _ssCache.sequences[hoveredSequenceKey];
       let hoveredBubbleKeys = hoveredSequence && hoveredSequence.bubbles.map((d) => d.key) || [];
-      let viewer = context.container().select(".photoviewer");
+      let viewer = context2.container().select(".photoviewer");
       let selected = viewer.empty() ? void 0 : viewer.datum();
       let selectedBubbleKey = selected && selected.key;
       let selectedSequenceKey = this.getSequenceKeyForBubble(selected);
       let selectedSequence = selectedSequenceKey && _ssCache.sequences[selectedSequenceKey];
       let selectedBubbleKeys = selectedSequence && selectedSequence.bubbles.map((d) => d.key) || [];
       let highlightedBubbleKeys = utilArrayUnion(hoveredBubbleKeys, selectedBubbleKeys);
-      context.container().selectAll(".layer-streetside-images .viewfield-group").classed("highlighted", (d) => highlightedBubbleKeys.indexOf(d.key) !== -1).classed("hovered", (d) => d.key === hoveredBubbleKey).classed("currentView", (d) => d.key === selectedBubbleKey);
-      context.container().selectAll(".layer-streetside-images .sequence").classed("highlighted", (d) => d.properties.key === hoveredSequenceKey).classed("currentView", (d) => d.properties.key === selectedSequenceKey);
-      context.container().selectAll(".layer-streetside-images .viewfield-group .viewfield").attr("d", viewfieldPath);
+      context2.container().selectAll(".layer-streetside-images .viewfield-group").classed("highlighted", (d) => highlightedBubbleKeys.indexOf(d.key) !== -1).classed("hovered", (d) => d.key === hoveredBubbleKey).classed("currentView", (d) => d.key === selectedBubbleKey);
+      context2.container().selectAll(".layer-streetside-images .sequence").classed("highlighted", (d) => d.properties.key === hoveredSequenceKey).classed("currentView", (d) => d.properties.key === selectedSequenceKey);
+      context2.container().selectAll(".layer-streetside-images .viewfield-group .viewfield").attr("d", viewfieldPath);
       function viewfieldPath() {
         let d = this.parentNode.__data__;
         if (d.pano && d.key !== selectedBubbleKey) {
@@ -69922,12 +69943,12 @@ ${content}</tr>
   };
 
   // modules/modes/drag_note.js
-  function modeDragNote(context) {
+  function modeDragNote(context2) {
     var mode = {
       id: "drag-note",
       button: "browse"
     };
-    var edit2 = behaviorEdit(context);
+    var edit2 = behaviorEdit(context2);
     var _nudgeInterval;
     var _lastLoc;
     var _note;
@@ -69935,7 +69956,7 @@ ${content}</tr>
       if (_nudgeInterval)
         window.clearInterval(_nudgeInterval);
       _nudgeInterval = window.setInterval(function() {
-        context.map().pan(nudge);
+        context2.map().pan(nudge);
         doMove(d3_event, nudge);
       }, 50);
     }
@@ -69946,7 +69967,7 @@ ${content}</tr>
       }
     }
     function origin(note) {
-      return context.projection(note.loc);
+      return context2.projection(note.loc);
     }
     function start2(d3_event, note) {
       _note = note;
@@ -69954,16 +69975,16 @@ ${content}</tr>
       if (osm) {
         _note = osm.getNote(_note.id);
       }
-      context.surface().selectAll(".note-" + _note.id).classed("active", true);
-      context.perform(actionNoop());
-      context.enter(mode);
-      context.selectedNoteID(_note.id);
+      context2.surface().selectAll(".note-" + _note.id).classed("active", true);
+      context2.perform(actionNoop());
+      context2.enter(mode);
+      context2.selectedNoteID(_note.id);
     }
     function move(d3_event, entity, point) {
       d3_event.stopPropagation();
-      _lastLoc = context.projection.invert(point);
+      _lastLoc = context2.projection.invert(point);
       doMove(d3_event);
-      var nudge = geoViewportEdge(point, context.map().dimensions());
+      var nudge = geoViewportEdge(point, context2.map().dimensions());
       if (nudge) {
         startNudge(d3_event, nudge);
       } else {
@@ -69972,28 +69993,28 @@ ${content}</tr>
     }
     function doMove(d3_event, nudge) {
       nudge = nudge || [0, 0];
-      var currPoint = d3_event && d3_event.point || context.projection(_lastLoc);
+      var currPoint = d3_event && d3_event.point || context2.projection(_lastLoc);
       var currMouse = geoVecSubtract(currPoint, nudge);
-      var loc = context.projection.invert(currMouse);
+      var loc = context2.projection.invert(currMouse);
       _note = _note.move(loc);
       var osm = services.osm;
       if (osm) {
         osm.replaceNote(_note);
       }
-      context.replace(actionNoop());
+      context2.replace(actionNoop());
     }
     function end() {
-      context.replace(actionNoop());
-      context.selectedNoteID(_note.id).enter(modeSelectNote(context, _note.id));
+      context2.replace(actionNoop());
+      context2.selectedNoteID(_note.id).enter(modeSelectNote(context2, _note.id));
     }
-    var drag = behaviorDrag().selector(".layer-touch.markers .target.note.new").surface(context.container().select(".main-map").node()).origin(origin).on("start", start2).on("move", move).on("end", end);
+    var drag = behaviorDrag().selector(".layer-touch.markers .target.note.new").surface(context2.container().select(".main-map").node()).origin(origin).on("start", start2).on("move", move).on("end", end);
     mode.enter = function() {
-      context.install(edit2);
+      context2.install(edit2);
     };
     mode.exit = function() {
-      context.ui().sidebar.hover.cancel();
-      context.uninstall(edit2);
-      context.surface().selectAll(".active").classed("active", false);
+      context2.ui().sidebar.hover.cancel();
+      context2.uninstall(edit2);
+      context2.surface().selectAll(".active").classed("active", false);
       stopNudge();
     };
     mode.behavior = drag;
@@ -70001,64 +70022,64 @@ ${content}</tr>
   }
 
   // modules/modes/select_data.js
-  function modeSelectData(context, selectedDatum) {
+  function modeSelectData(context2, selectedDatum) {
     var mode = {
       id: "select-data",
       button: "browse"
     };
     var keybinding = utilKeybinding("select-data");
-    var dataEditor = uiDataEditor(context);
+    var dataEditor = uiDataEditor(context2);
     var behaviors = [
-      behaviorBreathe(context),
-      behaviorHover(context),
-      behaviorSelect(context),
-      behaviorLasso(context),
-      modeDragNode(context).behavior,
-      modeDragNote(context).behavior
+      behaviorBreathe(context2),
+      behaviorHover(context2),
+      behaviorSelect(context2),
+      behaviorLasso(context2),
+      modeDragNode(context2).behavior,
+      modeDragNote(context2).behavior
     ];
     function selectData(d3_event, drawn) {
-      var selection2 = context.surface().selectAll(".layer-mapdata .data" + selectedDatum.__featurehash__);
+      var selection2 = context2.surface().selectAll(".layer-mapdata .data" + selectedDatum.__featurehash__);
       if (selection2.empty()) {
         var source = d3_event && d3_event.type === "zoom" && d3_event.sourceEvent;
         if (drawn && source && (source.type === "pointermove" || source.type === "mousemove" || source.type === "touchmove")) {
-          context.enter(modeBrowse(context));
+          context2.enter(modeBrowse(context2));
         }
       } else {
         selection2.classed("selected", true);
       }
     }
     function esc() {
-      if (context.container().select(".combobox").size())
+      if (context2.container().select(".combobox").size())
         return;
-      context.enter(modeBrowse(context));
+      context2.enter(modeBrowse(context2));
     }
     mode.zoomToSelected = function() {
       var extent = geoExtent(bounds_default(selectedDatum));
-      context.map().centerZoomEase(extent.center(), context.map().trimmedExtentZoom(extent));
+      context2.map().centerZoomEase(extent.center(), context2.map().trimmedExtentZoom(extent));
     };
     mode.enter = function() {
-      behaviors.forEach(context.install);
+      behaviors.forEach(context2.install);
       keybinding.on(_t("inspector.zoom_to.key"), mode.zoomToSelected).on("\u238B", esc, true);
       select_default2(document).call(keybinding);
       selectData();
-      var sidebar = context.ui().sidebar;
+      var sidebar = context2.ui().sidebar;
       sidebar.show(dataEditor.datum(selectedDatum));
       var extent = geoExtent(bounds_default(selectedDatum));
       sidebar.expand(sidebar.intersects(extent));
-      context.map().on("drawn.select-data", selectData);
+      context2.map().on("drawn.select-data", selectData);
     };
     mode.exit = function() {
-      behaviors.forEach(context.uninstall);
+      behaviors.forEach(context2.uninstall);
       select_default2(document).call(keybinding.unbind);
-      context.surface().selectAll(".layer-mapdata .selected").classed("selected hover", false);
-      context.map().on("drawn.select-data", null);
-      context.ui().sidebar.hide();
+      context2.surface().selectAll(".layer-mapdata .selected").classed("selected hover", false);
+      context2.map().on("drawn.select-data", null);
+      context2.ui().sidebar.hide();
     };
     return mode;
   }
 
   // modules/behavior/select.js
-  function behaviorSelect(context) {
+  function behaviorSelect(context2) {
     var _tolerancePx = 4;
     var _lastMouseEvent = null;
     var _showMenu = false;
@@ -70080,7 +70101,7 @@ ${content}</tr>
         return;
       cancelLongPress();
       if (d3_event.shiftKey) {
-        context.surface().classed("behavior-multiselect", true);
+        context2.surface().classed("behavior-multiselect", true);
       }
       if (d3_event.keyCode === 32) {
         if (!_downPointers.spacebar && _lastMouseEvent) {
@@ -70096,7 +70117,7 @@ ${content}</tr>
     function keyup(d3_event) {
       cancelLongPress();
       if (!d3_event.shiftKey) {
-        context.surface().classed("behavior-multiselect", false);
+        context2.surface().classed("behavior-multiselect", false);
       }
       if (d3_event.keyCode === 93) {
         d3_event.preventDefault();
@@ -70119,7 +70140,7 @@ ${content}</tr>
       cancelLongPress();
       if (d3_event.buttons && d3_event.buttons !== 1)
         return;
-      context.ui().closeEditMenu();
+      context2.ui().closeEditMenu();
       _longPressTimeout = window.setTimeout(didLongPress, 500, id2, "longdown-" + (d3_event.pointerType || "mouse"));
       _downPointers[id2] = {
         firstEvent: d3_event,
@@ -70189,7 +70210,7 @@ ${content}</tr>
     }
     function click(firstEvent, lastEvent, pointerId) {
       cancelLongPress();
-      var mapNode = context.container().select(".main-map").node();
+      var mapNode = context2.container().select(".main-map").node();
       var pointGetter = utilFastMouse(mapNode);
       var p1 = pointGetter(firstEvent);
       var p2 = pointGetter(lastEvent);
@@ -70208,14 +70229,14 @@ ${content}</tr>
           _downPointers[selectPointerInfo.pointerId].done = true;
         }
       }
-      var isMultiselect = context.mode().id === "select" && (lastEvent && lastEvent.shiftKey || context.surface().select(".lasso").node() || _multiselectionPointerId && !multiselectEntityId);
+      var isMultiselect = context2.mode().id === "select" && (lastEvent && lastEvent.shiftKey || context2.surface().select(".lasso").node() || _multiselectionPointerId && !multiselectEntityId);
       processClick(targetDatum, isMultiselect, p2, multiselectEntityId);
       function mapContains(event) {
         var rect = mapNode.getBoundingClientRect();
         return event.clientX >= rect.left && event.clientX <= rect.right && event.clientY >= rect.top && event.clientY <= rect.bottom;
       }
       function pointerDownOnSelection(skipPointerId) {
-        var mode = context.mode();
+        var mode = context2.mode();
         var selectedIDs = mode.id === "select" ? mode.selectedIDs() : [];
         for (var pointerId2 in _downPointers) {
           if (pointerId2 === "spacebar" || pointerId2 === skipPointerId)
@@ -70227,7 +70248,7 @@ ${content}</tr>
             continue;
           var datum2 = pointerInfo.firstEvent.target.__data__;
           var entity = datum2 && datum2.properties && datum2.properties.entity || datum2;
-          if (context.graph().hasEntity(entity.id)) {
+          if (context2.graph().hasEntity(entity.id)) {
             return {
               pointerId: pointerId2,
               entityId: entity.id,
@@ -70239,7 +70260,7 @@ ${content}</tr>
       }
     }
     function processClick(datum2, isMultiselect, point, alsoSelectId) {
-      var mode = context.mode();
+      var mode = context2.mode();
       var showMenu = _showMenu;
       var interactionType = _lastInteractionType;
       var entity = datum2 && datum2.properties && datum2.properties.entity;
@@ -70250,16 +70271,16 @@ ${content}</tr>
       }
       var newMode;
       if (datum2 instanceof osmEntity) {
-        var selectedIDs = context.selectedIDs();
-        context.selectedNoteID(null);
-        context.selectedErrorID(null);
+        var selectedIDs = context2.selectedIDs();
+        context2.selectedNoteID(null);
+        context2.selectedErrorID(null);
         if (!isMultiselect) {
           if (!showMenu || selectedIDs.length <= 1 || selectedIDs.indexOf(datum2.id) === -1) {
             if (alsoSelectId === datum2.id)
               alsoSelectId = null;
             selectedIDs = (alsoSelectId ? [alsoSelectId] : []).concat([datum2.id]);
-            newMode = mode.id === "select" ? mode.selectedIDs(selectedIDs) : modeSelect(context, selectedIDs).selectBehavior(behavior);
-            context.enter(newMode);
+            newMode = mode.id === "select" ? mode.selectedIDs(selectedIDs) : modeSelect(context2, selectedIDs).selectBehavior(behavior);
+            context2.enter(newMode);
           }
         } else {
           if (selectedIDs.indexOf(datum2.id) !== -1) {
@@ -70267,31 +70288,31 @@ ${content}</tr>
               selectedIDs = selectedIDs.filter(function(id2) {
                 return id2 !== datum2.id;
               });
-              newMode = selectedIDs.length ? mode.selectedIDs(selectedIDs) : modeBrowse(context).selectBehavior(behavior);
-              context.enter(newMode);
+              newMode = selectedIDs.length ? mode.selectedIDs(selectedIDs) : modeBrowse(context2).selectBehavior(behavior);
+              context2.enter(newMode);
             }
           } else {
             selectedIDs = selectedIDs.concat([datum2.id]);
             newMode = mode.selectedIDs(selectedIDs);
-            context.enter(newMode);
+            context2.enter(newMode);
           }
         }
       } else if (datum2 && datum2.__featurehash__ && !isMultiselect) {
-        context.selectedNoteID(null).enter(modeSelectData(context, datum2));
+        context2.selectedNoteID(null).enter(modeSelectData(context2, datum2));
       } else if (datum2 instanceof osmNote && !isMultiselect) {
-        context.selectedNoteID(datum2.id).enter(modeSelectNote(context, datum2.id));
+        context2.selectedNoteID(datum2.id).enter(modeSelectNote(context2, datum2.id));
       } else if (datum2 instanceof QAItem && !isMultiselect) {
-        context.selectedErrorID(datum2.id).enter(modeSelectError(context, datum2.id, datum2.service));
+        context2.selectedErrorID(datum2.id).enter(modeSelectError(context2, datum2.id, datum2.service));
       } else {
-        context.selectedNoteID(null);
-        context.selectedErrorID(null);
+        context2.selectedNoteID(null);
+        context2.selectedErrorID(null);
         if (!isMultiselect && mode.id !== "browse") {
-          context.enter(modeBrowse(context));
+          context2.enter(modeBrowse(context2));
         }
       }
-      context.ui().closeEditMenu();
+      context2.ui().closeEditMenu();
       if (showMenu)
-        context.ui().showEditMenu(point, interactionType);
+        context2.ui().showEditMenu(point, interactionType);
       resetProperties();
     }
     function cancelLongPress() {
@@ -70306,7 +70327,7 @@ ${content}</tr>
     }
     function behavior(selection2) {
       resetProperties();
-      _lastMouseEvent = context.map().lastPointerEvent();
+      _lastMouseEvent = context2.map().lastPointerEvent();
       select_default2(window).on("keydown.select", keydown).on("keyup.select", keyup).on(_pointerPrefix + "move.select", pointermove, true).on(_pointerPrefix + "up.select", pointerup, true).on("pointercancel.select", pointercancel, true).on("contextmenu.select-window", function(d3_event) {
         var e = d3_event;
         if (+e.clientX === 0 && +e.clientY === 0) {
@@ -70319,7 +70340,7 @@ ${content}</tr>
       cancelLongPress();
       select_default2(window).on("keydown.select", null).on("keyup.select", null).on("contextmenu.select-window", null).on(_pointerPrefix + "move.select", null, true).on(_pointerPrefix + "up.select", null, true).on("pointercancel.select", null, true);
       selection2.on(_pointerPrefix + "down.select", null).on("contextmenu.select", null);
-      context.surface().classed("behavior-multiselect", false);
+      context2.surface().classed("behavior-multiselect", false);
     };
     return behavior;
   }
@@ -70347,34 +70368,34 @@ ${content}</tr>
   });
 
   // modules/operations/continue.js
-  function operationContinue(context, selectedIDs) {
+  function operationContinue(context2, selectedIDs) {
     var _entities = selectedIDs.map(function(id2) {
-      return context.graph().entity(id2);
+      return context2.graph().entity(id2);
     });
     var _geometries = Object.assign(
       { line: [], vertex: [] },
       utilArrayGroupBy(_entities, function(entity) {
-        return entity.geometry(context.graph());
+        return entity.geometry(context2.graph());
       })
     );
     var _vertex = _geometries.vertex.length && _geometries.vertex[0];
     function candidateWays() {
-      return _vertex ? context.graph().parentWays(_vertex).filter(function(parent) {
-        return parent.geometry(context.graph()) === "line" && !parent.isClosed() && parent.affix(_vertex.id) && (_geometries.line.length === 0 || _geometries.line[0] === parent);
+      return _vertex ? context2.graph().parentWays(_vertex).filter(function(parent) {
+        return parent.geometry(context2.graph()) === "line" && !parent.isClosed() && parent.affix(_vertex.id) && (_geometries.line.length === 0 || _geometries.line[0] === parent);
       }) : [];
     }
     var _candidates = candidateWays();
     var operation = function() {
       var candidate = _candidates[0];
-      context.enter(
-        modeDrawLine(context, candidate.id, context.graph(), "line", candidate.affix(_vertex.id), true)
+      context2.enter(
+        modeDrawLine(context2, candidate.id, context2.graph(), "line", candidate.affix(_vertex.id), true)
       );
     };
     operation.relatedEntityIds = function() {
       return _candidates.length ? [_candidates[0].id] : [];
     };
     operation.available = function() {
-      return _geometries.vertex.length === 1 && _geometries.line.length <= 1 && !context.features().hasHiddenConnections(_vertex, context.graph());
+      return _geometries.vertex.length === 1 && _geometries.line.length <= 1 && !context2.features().hasHiddenConnections(_vertex, context2.graph());
     };
     operation.disabled = function() {
       if (_candidates.length === 0) {
@@ -70394,20 +70415,20 @@ ${content}</tr>
     operation.id = "continue";
     operation.keys = [_t("operations.continue.key")];
     operation.title = _t("operations.continue.title");
-    operation.behavior = behaviorOperation(context).which(operation);
+    operation.behavior = behaviorOperation(context2).which(operation);
     return operation;
   }
 
   // modules/operations/copy.js
-  function operationCopy(context, selectedIDs) {
+  function operationCopy(context2, selectedIDs) {
     function getFilteredIdsToCopy() {
       return selectedIDs.filter(function(selectedID) {
-        var entity = context.graph().hasEntity(selectedID);
-        return entity.hasInterestingTags() || entity.geometry(context.graph()) !== "vertex";
+        var entity = context2.graph().hasEntity(selectedID);
+        return entity.hasInterestingTags() || entity.geometry(context2.graph()) !== "vertex";
       });
     }
     var operation = function() {
-      var graph = context.graph();
+      var graph = context2.graph();
       var selected = groupEntities(getFilteredIdsToCopy(), graph);
       var canCopy = [];
       var skip = {};
@@ -70433,11 +70454,11 @@ ${content}</tr>
           canCopy.push(entity.id);
         }
       }
-      context.copyIDs(canCopy);
+      context2.copyIDs(canCopy);
       if (_point && (canCopy.length !== 1 || graph.entity(canCopy[0]).type !== "node")) {
-        context.copyLonLat(context.projection.invert(_point));
+        context2.copyLonLat(context2.projection.invert(_point));
       } else {
-        context.copyLonLat(null);
+        context2.copyLonLat(null);
       }
     };
     function groupEntities(ids, graph) {
@@ -70474,8 +70495,8 @@ ${content}</tr>
       return getFilteredIdsToCopy().length > 0;
     };
     operation.disabled = function() {
-      var extent = utilTotalExtent(getFilteredIdsToCopy(), context.graph());
-      if (extent.percentContainedIn(context.map().extent()) < 0.8) {
+      var extent = utilTotalExtent(getFilteredIdsToCopy(), context2.graph());
+      if (extent.percentContainedIn(context2.map().extent()) < 0.8) {
         return "too_large";
       }
       return false;
@@ -70499,21 +70520,21 @@ ${content}</tr>
     operation.id = "copy";
     operation.keys = [uiCmd("\u2318C")];
     operation.title = _t("operations.copy.title");
-    operation.behavior = behaviorOperation(context).which(operation);
+    operation.behavior = behaviorOperation(context2).which(operation);
     return operation;
   }
 
   // modules/operations/disconnect.js
-  function operationDisconnect(context, selectedIDs) {
+  function operationDisconnect(context2, selectedIDs) {
     var _vertexIDs = [];
     var _wayIDs = [];
     var _otherIDs = [];
     var _actions = [];
     selectedIDs.forEach(function(id2) {
-      var entity = context.entity(id2);
+      var entity = context2.entity(id2);
       if (entity.type === "way") {
         _wayIDs.push(id2);
-      } else if (entity.geometry(context.graph()) === "vertex") {
+      } else if (entity.geometry(context2.graph()) === "vertex") {
         _vertexIDs.push(id2);
       } else {
         _otherIDs.push(id2);
@@ -70528,28 +70549,28 @@ ${content}</tr>
         var action = actionDisconnect(vertexID);
         if (_wayIDs.length > 0) {
           var waysIDsForVertex = _wayIDs.filter(function(wayID) {
-            var way = context.entity(wayID);
+            var way = context2.entity(wayID);
             return way.nodes.indexOf(vertexID) !== -1;
           });
           action.limitWays(waysIDsForVertex);
         }
         _actions.push(action);
-        _disconnectingWayIds = _disconnectingWayIds.concat(context.graph().parentWays(context.graph().entity(vertexID)).map((d) => d.id));
+        _disconnectingWayIds = _disconnectingWayIds.concat(context2.graph().parentWays(context2.graph().entity(vertexID)).map((d) => d.id));
       });
       _disconnectingWayIds = utilArrayUniq(_disconnectingWayIds).filter(function(id2) {
         return _wayIDs.indexOf(id2) === -1;
       });
       _descriptionID += _actions.length === 1 ? "single_point." : "multiple_points.";
       if (_wayIDs.length === 1) {
-        _descriptionID += "single_way." + context.graph().geometry(_wayIDs[0]);
+        _descriptionID += "single_way." + context2.graph().geometry(_wayIDs[0]);
       } else {
         _descriptionID += _wayIDs.length === 0 ? "no_ways" : "multiple_ways";
       }
     } else if (_wayIDs.length > 0) {
       var ways = _wayIDs.map(function(id2) {
-        return context.entity(id2);
+        return context2.entity(id2);
       });
-      var nodes = utilGetAllNodes(_wayIDs, context.graph());
+      var nodes = utilGetAllNodes(_wayIDs, context2.graph());
       _coords = nodes.map(function(n2) {
         return n2.loc;
       });
@@ -70559,7 +70580,7 @@ ${content}</tr>
       var unsharedNodes = [];
       nodes.forEach(function(node) {
         var action = actionDisconnect(node.id).limitWays(_wayIDs);
-        if (action.disabled(context.graph()) !== "not_connected") {
+        if (action.disabled(context2.graph()) !== "not_connected") {
           var count = 0;
           for (var i2 in ways) {
             var way = ways[i2];
@@ -70589,20 +70610,20 @@ ${content}</tr>
         _actions = unsharedActions;
         _disconnectingVertexIds = unsharedNodes.map((node) => node.id);
         if (_wayIDs.length === 1) {
-          _descriptionID += context.graph().geometry(_wayIDs[0]);
+          _descriptionID += context2.graph().geometry(_wayIDs[0]);
         } else {
           _descriptionID += "separate";
         }
       }
     }
-    var _extent = utilTotalExtent(_disconnectingVertexIds, context.graph());
+    var _extent = utilTotalExtent(_disconnectingVertexIds, context2.graph());
     var operation = function() {
-      context.perform(function(graph) {
+      context2.perform(function(graph) {
         return _actions.reduce(function(graph2, action) {
           return action(graph2);
         }, graph);
       }, operation.annotation());
-      context.validator().validate();
+      context2.validator().validate();
     };
     operation.relatedEntityIds = function() {
       if (_vertexIDs.length) {
@@ -70617,7 +70638,7 @@ ${content}</tr>
         return false;
       if (_vertexIDs.length !== 0 && _wayIDs.length !== 0 && !_wayIDs.every(function(wayID) {
         return _vertexIDs.some(function(vertexID) {
-          var way = context.entity(wayID);
+          var way = context2.entity(wayID);
           return way.nodes.indexOf(vertexID) !== -1;
         });
       }))
@@ -70627,29 +70648,29 @@ ${content}</tr>
     operation.disabled = function() {
       var reason;
       for (var actionIndex in _actions) {
-        reason = _actions[actionIndex].disabled(context.graph());
+        reason = _actions[actionIndex].disabled(context2.graph());
         if (reason)
           return reason;
       }
-      if (_extent && _extent.percentContainedIn(context.map().extent()) < 0.8) {
+      if (_extent && _extent.percentContainedIn(context2.map().extent()) < 0.8) {
         return "too_large." + ((_vertexIDs.length ? _vertexIDs : _wayIDs).length === 1 ? "single" : "multiple");
       } else if (_coords && someMissing()) {
         return "not_downloaded";
-      } else if (selectedIDs.some(context.hasHiddenConnections)) {
+      } else if (selectedIDs.some(context2.hasHiddenConnections)) {
         return "connected_to_hidden";
       }
       return false;
       function someMissing() {
-        if (context.inIntro())
+        if (context2.inIntro())
           return false;
-        var osm = context.connection();
+        var osm = context2.connection();
         if (osm) {
           var missing = _coords.filter(function(loc) {
             return !osm.isDataLoaded(loc);
           });
           if (missing.length) {
             missing.forEach(function(loc) {
-              context.loadTileAtLoc(loc);
+              context2.loadTileAtLoc(loc);
             });
             return true;
           }
@@ -70670,12 +70691,12 @@ ${content}</tr>
     operation.id = "disconnect";
     operation.keys = [_t("operations.disconnect.key")];
     operation.title = _t("operations.disconnect.title");
-    operation.behavior = behaviorOperation(context).which(operation);
+    operation.behavior = behaviorOperation(context2).which(operation);
     return operation;
   }
 
   // modules/operations/downgrade.js
-  function operationDowngrade(context, selectedIDs) {
+  function operationDowngrade(context2, selectedIDs) {
     var _affectedFeatureCount = 0;
     var _downgradeType = downgradeTypeForEntityIDs(selectedIDs);
     var _multi = _affectedFeatureCount === 1 ? "single" : "multiple";
@@ -70701,7 +70722,7 @@ ${content}</tr>
       return downgradeType;
     }
     function downgradeTypeForEntityID(entityID) {
-      var graph = context.graph();
+      var graph = context2.graph();
       var entity = graph.entity(entityID);
       var preset = _mainPresetIndex.match(entity, graph);
       if (!preset || preset.isFallback())
@@ -70723,7 +70744,7 @@ ${content}</tr>
     var buildingKeysToKeep = ["architect", "building", "height", "layer", "source", "type", "wheelchair"];
     var addressKeysToKeep = ["source"];
     var operation = function() {
-      context.perform(function(graph) {
+      context2.perform(function(graph) {
         for (var i2 in selectedIDs) {
           var entityID = selectedIDs[i2];
           var type3 = downgradeTypeForEntityID(entityID);
@@ -70747,8 +70768,8 @@ ${content}</tr>
         }
         return graph;
       }, operation.annotation());
-      context.validator().validate();
-      context.enter(modeSelect(context, selectedIDs));
+      context2.validator().validate();
+      context2.enter(modeSelect(context2, selectedIDs));
     };
     operation.available = function() {
       return _downgradeType;
@@ -70759,7 +70780,7 @@ ${content}</tr>
       }
       return false;
       function hasWikidataTag(id2) {
-        var entity = context.entity(id2);
+        var entity = context2.entity(id2);
         return entity.tags.wikidata && entity.tags.wikidata.trim().length > 0;
       }
     };
@@ -70779,20 +70800,20 @@ ${content}</tr>
     operation.id = "downgrade";
     operation.keys = [uiCmd("\u232B")];
     operation.title = _t("operations.downgrade.title");
-    operation.behavior = behaviorOperation(context).which(operation);
+    operation.behavior = behaviorOperation(context2).which(operation);
     return operation;
   }
 
   // modules/operations/extract.js
-  function operationExtract(context, selectedIDs) {
+  function operationExtract(context2, selectedIDs) {
     var _amount = selectedIDs.length === 1 ? "single" : "multiple";
     var _geometries = utilArrayUniq(selectedIDs.map(function(entityID) {
-      return context.graph().hasEntity(entityID) && context.graph().geometry(entityID);
+      return context2.graph().hasEntity(entityID) && context2.graph().geometry(entityID);
     }).filter(Boolean));
     var _geometryID = _geometries.length === 1 ? _geometries[0] : "feature";
     var _extent;
     var _actions = selectedIDs.map(function(entityID) {
-      var graph = context.graph();
+      var graph = context2.graph();
       var entity = graph.hasEntity(entityID);
       if (!entity || !entity.hasInterestingTags())
         return null;
@@ -70804,7 +70825,7 @@ ${content}</tr>
           return null;
       }
       _extent = _extent ? _extent.extend(entity.extent(graph)) : entity.extent(graph);
-      return actionExtract(entityID, context.projection);
+      return actionExtract(entityID, context2.projection);
     }).filter(Boolean);
     var operation = function() {
       var combinedAction = function(graph) {
@@ -70813,20 +70834,20 @@ ${content}</tr>
         });
         return graph;
       };
-      context.perform(combinedAction, operation.annotation());
+      context2.perform(combinedAction, operation.annotation());
       var extractedNodeIDs = _actions.map(function(action) {
         return action.getExtractedNodeID();
       });
-      context.enter(modeSelect(context, extractedNodeIDs));
+      context2.enter(modeSelect(context2, extractedNodeIDs));
     };
     operation.available = function() {
       return _actions.length && selectedIDs.length === _actions.length;
     };
     operation.disabled = function() {
-      if (_extent && _extent.percentContainedIn(context.map().extent()) < 0.8) {
+      if (_extent && _extent.percentContainedIn(context2.map().extent()) < 0.8) {
         return "too_large";
       } else if (selectedIDs.some(function(entityID) {
-        return context.graph().geometry(entityID) === "vertex" && context.hasHiddenConnections(entityID);
+        return context2.graph().geometry(entityID) === "vertex" && context2.hasHiddenConnections(entityID);
       })) {
         return "connected_to_hidden";
       }
@@ -70846,58 +70867,58 @@ ${content}</tr>
     operation.id = "extract";
     operation.keys = [_t("operations.extract.key")];
     operation.title = _t("operations.extract.title");
-    operation.behavior = behaviorOperation(context).which(operation);
+    operation.behavior = behaviorOperation(context2).which(operation);
     return operation;
   }
 
   // modules/operations/merge.js
-  function operationMerge(context, selectedIDs) {
+  function operationMerge(context2, selectedIDs) {
     var _action = getAction();
     function getAction() {
       var join = actionJoin(selectedIDs);
-      if (!join.disabled(context.graph()))
+      if (!join.disabled(context2.graph()))
         return join;
       var merge3 = actionMerge(selectedIDs);
-      if (!merge3.disabled(context.graph()))
+      if (!merge3.disabled(context2.graph()))
         return merge3;
       var mergePolygon = actionMergePolygon(selectedIDs);
-      if (!mergePolygon.disabled(context.graph()))
+      if (!mergePolygon.disabled(context2.graph()))
         return mergePolygon;
       var mergeNodes = actionMergeNodes(selectedIDs);
-      if (!mergeNodes.disabled(context.graph()))
+      if (!mergeNodes.disabled(context2.graph()))
         return mergeNodes;
-      if (join.disabled(context.graph()) !== "not_eligible")
+      if (join.disabled(context2.graph()) !== "not_eligible")
         return join;
-      if (merge3.disabled(context.graph()) !== "not_eligible")
+      if (merge3.disabled(context2.graph()) !== "not_eligible")
         return merge3;
-      if (mergePolygon.disabled(context.graph()) !== "not_eligible")
+      if (mergePolygon.disabled(context2.graph()) !== "not_eligible")
         return mergePolygon;
       return mergeNodes;
     }
     var operation = function() {
       if (operation.disabled())
         return;
-      context.perform(_action, operation.annotation());
-      context.validator().validate();
-      var resultIDs = selectedIDs.filter(context.hasEntity);
+      context2.perform(_action, operation.annotation());
+      context2.validator().validate();
+      var resultIDs = selectedIDs.filter(context2.hasEntity);
       if (resultIDs.length > 1) {
         var interestingIDs = resultIDs.filter(function(id2) {
-          return context.entity(id2).hasInterestingTags();
+          return context2.entity(id2).hasInterestingTags();
         });
         if (interestingIDs.length)
           resultIDs = interestingIDs;
       }
-      context.enter(modeSelect(context, resultIDs));
+      context2.enter(modeSelect(context2, resultIDs));
     };
     operation.available = function() {
       return selectedIDs.length >= 2;
     };
     operation.disabled = function() {
-      var actionDisabled = _action.disabled(context.graph());
+      var actionDisabled = _action.disabled(context2.graph());
       if (actionDisabled)
         return actionDisabled;
-      var osm = context.connection();
-      if (osm && _action.resultingWayNodesLength && _action.resultingWayNodesLength(context.graph()) > osm.maxWayNodes()) {
+      var osm = context2.connection();
+      if (osm && _action.resultingWayNodesLength && _action.resultingWayNodesLength(context2.graph()) > osm.maxWayNodes()) {
         return "too_many_vertices";
       }
       return false;
@@ -70924,25 +70945,25 @@ ${content}</tr>
     operation.id = "merge";
     operation.keys = [_t("operations.merge.key")];
     operation.title = _t("operations.merge.title");
-    operation.behavior = behaviorOperation(context).which(operation);
+    operation.behavior = behaviorOperation(context2).which(operation);
     return operation;
   }
 
   // modules/operations/paste.js
-  function operationPaste(context) {
+  function operationPaste(context2) {
     var _pastePoint;
     var operation = function() {
       if (!_pastePoint)
         return;
-      var oldIDs = context.copyIDs();
+      var oldIDs = context2.copyIDs();
       if (!oldIDs.length)
         return;
-      var projection2 = context.projection;
+      var projection2 = context2.projection;
       var extent = geoExtent();
-      var oldGraph = context.copyGraph();
+      var oldGraph = context2.copyGraph();
       var newIDs = [];
       var action = actionCopyEntities(oldIDs, oldGraph);
-      context.perform(action);
+      context2.perform(action);
       var copies = action.copies();
       var originals = /* @__PURE__ */ new Set();
       Object.values(copies).forEach(function(entity) {
@@ -70952,7 +70973,7 @@ ${content}</tr>
         var oldEntity = oldGraph.entity(id2);
         var newEntity = copies[id2];
         extent._extend(oldEntity.extent(oldGraph));
-        var parents = context.graph().parentWays(newEntity);
+        var parents = context2.graph().parentWays(newEntity);
         var parentCopied = parents.some(function(parent) {
           return originals.has(parent.id);
         });
@@ -70960,31 +70981,31 @@ ${content}</tr>
           newIDs.push(newEntity.id);
         }
       }
-      var copyPoint = context.copyLonLat() && projection2(context.copyLonLat()) || projection2(extent.center());
+      var copyPoint = context2.copyLonLat() && projection2(context2.copyLonLat()) || projection2(extent.center());
       var delta = geoVecSubtract(_pastePoint, copyPoint);
-      context.replace(actionMove(newIDs, delta, projection2), operation.annotation());
-      context.enter(modeSelect(context, newIDs));
+      context2.replace(actionMove(newIDs, delta, projection2), operation.annotation());
+      context2.enter(modeSelect(context2, newIDs));
     };
     operation.point = function(val) {
       _pastePoint = val;
       return operation;
     };
     operation.available = function() {
-      return context.mode().id === "browse";
+      return context2.mode().id === "browse";
     };
     operation.disabled = function() {
-      return !context.copyIDs().length;
+      return !context2.copyIDs().length;
     };
     operation.tooltip = function() {
-      var oldGraph = context.copyGraph();
-      var ids = context.copyIDs();
+      var oldGraph = context2.copyGraph();
+      var ids = context2.copyIDs();
       if (!ids.length) {
         return _t("operations.paste.nothing_copied");
       }
       return _t("operations.paste.description", { feature: utilDisplayLabel(oldGraph.entity(ids[0]), oldGraph), n: ids.length });
     };
     operation.annotation = function() {
-      var ids = context.copyIDs();
+      var ids = context2.copyIDs();
       return _t("operations.paste.annotation", { n: ids.length });
     };
     operation.id = "paste";
@@ -70994,30 +71015,30 @@ ${content}</tr>
   }
 
   // modules/operations/reverse.js
-  function operationReverse(context, selectedIDs) {
+  function operationReverse(context2, selectedIDs) {
     var operation = function() {
-      context.perform(function combinedReverseAction(graph) {
+      context2.perform(function combinedReverseAction(graph) {
         actions().forEach(function(action) {
           graph = action(graph);
         });
         return graph;
       }, operation.annotation());
-      context.validator().validate();
+      context2.validator().validate();
     };
     function actions(situation) {
       return selectedIDs.map(function(entityID) {
-        var entity = context.hasEntity(entityID);
+        var entity = context2.hasEntity(entityID);
         if (!entity)
           return null;
         if (situation === "toolbar") {
           if (entity.type === "way" && (!entity.isOneWay() && !entity.isSided()))
             return null;
         }
-        var geometry = entity.geometry(context.graph());
+        var geometry = entity.geometry(context2.graph());
         if (entity.type !== "node" && geometry !== "line")
           return null;
         var action = actionReverse(entityID);
-        if (action.disabled(context.graph()))
+        if (action.disabled(context2.graph()))
           return null;
         return action;
       }).filter(Boolean);
@@ -71025,7 +71046,7 @@ ${content}</tr>
     function reverseTypeID() {
       var acts = actions();
       var nodeActionCount = acts.filter(function(act) {
-        var entity = context.hasEntity(act.entityID());
+        var entity = context2.hasEntity(act.entityID());
         return entity && entity.type === "node";
       }).length;
       if (nodeActionCount === 0)
@@ -71050,17 +71071,17 @@ ${content}</tr>
     operation.id = "reverse";
     operation.keys = [_t("operations.reverse.key")];
     operation.title = _t("operations.reverse.title");
-    operation.behavior = behaviorOperation(context).which(operation);
+    operation.behavior = behaviorOperation(context2).which(operation);
     return operation;
   }
 
   // modules/operations/split.js
-  function operationSplit(context, selectedIDs) {
+  function operationSplit(context2, selectedIDs) {
     var _vertexIds = selectedIDs.filter(function(id2) {
-      return context.graph().geometry(id2) === "vertex";
+      return context2.graph().geometry(id2) === "vertex";
     });
     var _selectedWayIds = selectedIDs.filter(function(id2) {
-      var entity = context.graph().hasEntity(id2);
+      var entity = context2.graph().hasEntity(id2);
       return entity && entity.type === "way";
     });
     var _isAvailable = _vertexIds.length > 0 && _vertexIds.length + _selectedWayIds.length === selectedIDs.length;
@@ -71072,10 +71093,10 @@ ${content}</tr>
     if (_isAvailable) {
       if (_selectedWayIds.length)
         _action.limitWays(_selectedWayIds);
-      _ways = _action.ways(context.graph());
+      _ways = _action.ways(context2.graph());
       var geometries = {};
       _ways.forEach(function(way) {
-        geometries[way.geometry(context.graph())] = true;
+        geometries[way.geometry(context2.graph())] = true;
       });
       if (Object.keys(geometries).length === 1) {
         _geometry = Object.keys(geometries)[0];
@@ -71083,11 +71104,11 @@ ${content}</tr>
       _waysAmount = _ways.length === 1 ? "single" : "multiple";
     }
     var operation = function() {
-      var difference = context.perform(_action, operation.annotation());
+      var difference = context2.perform(_action, operation.annotation());
       var idsToSelect = _vertexIds.concat(difference.extantIDs().filter(function(id2) {
-        return context.entity(id2).type === "way";
+        return context2.entity(id2).type === "way";
       }));
-      context.enter(modeSelect(context, idsToSelect));
+      context2.enter(modeSelect(context2, idsToSelect));
     };
     operation.relatedEntityIds = function() {
       return _selectedWayIds.length ? [] : _ways.map((way) => way.id);
@@ -71096,10 +71117,10 @@ ${content}</tr>
       return _isAvailable;
     };
     operation.disabled = function() {
-      var reason = _action.disabled(context.graph());
+      var reason = _action.disabled(context2.graph());
       if (reason) {
         return reason;
-      } else if (selectedIDs.some(context.hasHiddenConnections)) {
+      } else if (selectedIDs.some(context2.hasHiddenConnections)) {
         return "connected_to_hidden";
       }
       return false;
@@ -71123,12 +71144,12 @@ ${content}</tr>
     operation.id = "split";
     operation.keys = [_t("operations.split.key")];
     operation.title = _t("operations.split.title");
-    operation.behavior = behaviorOperation(context).which(operation);
+    operation.behavior = behaviorOperation(context2).which(operation);
     return operation;
   }
 
   // modules/operations/straighten.js
-  function operationStraighten(context, selectedIDs) {
+  function operationStraighten(context2, selectedIDs) {
     var _wayIDs = selectedIDs.filter(function(id2) {
       return id2.charAt(0) === "w";
     });
@@ -71136,22 +71157,22 @@ ${content}</tr>
       return id2.charAt(0) === "n";
     });
     var _amount = (_wayIDs.length ? _wayIDs : _nodeIDs).length === 1 ? "single" : "multiple";
-    var _nodes = utilGetAllNodes(selectedIDs, context.graph());
+    var _nodes = utilGetAllNodes(selectedIDs, context2.graph());
     var _coords = _nodes.map(function(n2) {
       return n2.loc;
     });
-    var _extent = utilTotalExtent(selectedIDs, context.graph());
+    var _extent = utilTotalExtent(selectedIDs, context2.graph());
     var _action = chooseAction();
     var _geometry;
     function chooseAction() {
       if (_wayIDs.length === 0 && _nodeIDs.length > 2) {
         _geometry = "point";
-        return actionStraightenNodes(_nodeIDs, context.projection);
+        return actionStraightenNodes(_nodeIDs, context2.projection);
       } else if (_wayIDs.length > 0 && (_nodeIDs.length === 0 || _nodeIDs.length === 2)) {
         var startNodeIDs = [];
         var endNodeIDs = [];
         for (var i2 = 0; i2 < selectedIDs.length; i2++) {
-          var entity = context.entity(selectedIDs[i2]);
+          var entity = context2.entity(selectedIDs[i2]);
           if (entity.type === "node") {
             continue;
           } else if (entity.type !== "way" || entity.isClosed()) {
@@ -71168,7 +71189,7 @@ ${content}</tr>
         });
         if (utilArrayDifference(startNodeIDs, endNodeIDs).length + utilArrayDifference(endNodeIDs, startNodeIDs).length !== 2)
           return null;
-        var wayNodeIDs = utilGetAllNodes(_wayIDs, context.graph()).map(function(node) {
+        var wayNodeIDs = utilGetAllNodes(_wayIDs, context2.graph()).map(function(node) {
           return node.id;
         });
         if (wayNodeIDs.length <= 2)
@@ -71176,47 +71197,47 @@ ${content}</tr>
         if (_nodeIDs.length === 2 && (wayNodeIDs.indexOf(_nodeIDs[0]) === -1 || wayNodeIDs.indexOf(_nodeIDs[1]) === -1))
           return null;
         if (_nodeIDs.length) {
-          _extent = utilTotalExtent(_nodeIDs, context.graph());
+          _extent = utilTotalExtent(_nodeIDs, context2.graph());
         }
         _geometry = "line";
-        return actionStraightenWay(selectedIDs, context.projection);
+        return actionStraightenWay(selectedIDs, context2.projection);
       }
       return null;
     }
     function operation() {
       if (!_action)
         return;
-      context.perform(_action, operation.annotation());
+      context2.perform(_action, operation.annotation());
       window.setTimeout(function() {
-        context.validator().validate();
+        context2.validator().validate();
       }, 300);
     }
     operation.available = function() {
       return Boolean(_action);
     };
     operation.disabled = function() {
-      var reason = _action.disabled(context.graph());
+      var reason = _action.disabled(context2.graph());
       if (reason) {
         return reason;
-      } else if (_extent.percentContainedIn(context.map().extent()) < 0.8) {
+      } else if (_extent.percentContainedIn(context2.map().extent()) < 0.8) {
         return "too_large";
       } else if (someMissing()) {
         return "not_downloaded";
-      } else if (selectedIDs.some(context.hasHiddenConnections)) {
+      } else if (selectedIDs.some(context2.hasHiddenConnections)) {
         return "connected_to_hidden";
       }
       return false;
       function someMissing() {
-        if (context.inIntro())
+        if (context2.inIntro())
           return false;
-        var osm = context.connection();
+        var osm = context2.connection();
         if (osm) {
           var missing = _coords.filter(function(loc) {
             return !osm.isDataLoaded(loc);
           });
           if (missing.length) {
             missing.forEach(function(loc) {
-              context.loadTileAtLoc(loc);
+              context2.loadTileAtLoc(loc);
             });
             return true;
           }
@@ -71234,19 +71255,19 @@ ${content}</tr>
     operation.id = "straighten";
     operation.keys = [_t("operations.straighten.key")];
     operation.title = _t("operations.straighten.title");
-    operation.behavior = behaviorOperation(context).which(operation);
+    operation.behavior = behaviorOperation(context2).which(operation);
     return operation;
   }
 
   // modules/modes/select.js
-  function modeSelect(context, selectedIDs) {
+  function modeSelect(context2, selectedIDs) {
     var mode = {
       id: "select",
       button: "browse"
     };
     var keybinding = utilKeybinding("select");
-    var _breatheBehavior = behaviorBreathe(context);
-    var _modeDragNode = modeDragNode(context);
+    var _breatheBehavior = behaviorBreathe(context2);
+    var _modeDragNode = modeDragNode(context2);
     var _selectBehavior;
     var _behaviors = [];
     var _operations = [];
@@ -71256,36 +71277,36 @@ ${content}</tr>
     var _focusedVertexIds;
     function singular() {
       if (selectedIDs && selectedIDs.length === 1) {
-        return context.hasEntity(selectedIDs[0]);
+        return context2.hasEntity(selectedIDs[0]);
       }
     }
     function selectedEntities() {
       return selectedIDs.map(function(id2) {
-        return context.hasEntity(id2);
+        return context2.hasEntity(id2);
       }).filter(Boolean);
     }
     function checkSelectedIDs() {
       var ids = [];
       if (Array.isArray(selectedIDs)) {
         ids = selectedIDs.filter(function(id2) {
-          return context.hasEntity(id2);
+          return context2.hasEntity(id2);
         });
       }
       if (!ids.length) {
-        context.enter(modeBrowse(context));
+        context2.enter(modeBrowse(context2));
         return false;
       } else if (selectedIDs.length > 1 && ids.length === 1 || selectedIDs.length === 1 && ids.length > 1) {
-        context.enter(modeSelect(context, ids));
+        context2.enter(modeSelect(context2, ids));
         return false;
       }
       selectedIDs = ids;
       return true;
     }
     function parentWaysIdsOfSelection(onlyCommonParents) {
-      var graph = context.graph();
+      var graph = context2.graph();
       var parents = [];
       for (var i2 = 0; i2 < selectedIDs.length; i2++) {
-        var entity = context.hasEntity(selectedIDs[i2]);
+        var entity = context2.hasEntity(selectedIDs[i2]);
         if (!entity || entity.geometry(graph) !== "vertex") {
           return [];
         }
@@ -71304,10 +71325,10 @@ ${content}</tr>
       return parents;
     }
     function childNodeIdsOfSelection(onlyCommon) {
-      var graph = context.graph();
+      var graph = context2.graph();
       var childs = [];
       for (var i2 = 0; i2 < selectedIDs.length; i2++) {
-        var entity = context.hasEntity(selectedIDs[i2]);
+        var entity = context2.hasEntity(selectedIDs[i2]);
         if (!entity || !["area", "line"].includes(entity.geometry(graph))) {
           return [];
         }
@@ -71346,7 +71367,7 @@ ${content}</tr>
       return mode;
     };
     mode.zoomToSelected = function() {
-      context.map().zoomToEase(selectedEntities());
+      context2.map().zoomToEase(selectedEntities());
     };
     mode.newFeature = function(val) {
       if (!arguments.length)
@@ -71369,26 +71390,26 @@ ${content}</tr>
     function loadOperations() {
       _operations.forEach(function(operation) {
         if (operation.behavior) {
-          context.uninstall(operation.behavior);
+          context2.uninstall(operation.behavior);
         }
       });
       _operations = Object.values(operations_exports).map(function(o) {
-        return o(context, selectedIDs);
+        return o(context2, selectedIDs);
       }).filter(function(o) {
         return o.id !== "delete" && o.id !== "downgrade" && o.id !== "copy";
       }).concat([
-        operationCopy(context, selectedIDs),
-        operationDowngrade(context, selectedIDs),
-        operationDelete(context, selectedIDs)
+        operationCopy(context2, selectedIDs),
+        operationDowngrade(context2, selectedIDs),
+        operationDelete(context2, selectedIDs)
       ]).filter(function(operation) {
         return operation.available();
       });
       _operations.forEach(function(operation) {
         if (operation.behavior) {
-          context.install(operation.behavior);
+          context2.install(operation.behavior);
         }
       });
-      context.ui().closeEditMenu();
+      context2.ui().closeEditMenu();
     }
     mode.operations = function() {
       return _operations;
@@ -71396,77 +71417,77 @@ ${content}</tr>
     mode.enter = function() {
       if (!checkSelectedIDs())
         return;
-      context.features().forceVisible(selectedIDs);
+      context2.features().forceVisible(selectedIDs);
       _modeDragNode.restoreSelectedIDs(selectedIDs);
       loadOperations();
       if (!_behaviors.length) {
         if (!_selectBehavior)
-          _selectBehavior = behaviorSelect(context);
+          _selectBehavior = behaviorSelect(context2);
         _behaviors = [
-          behaviorPaste(context),
+          behaviorPaste(context2),
           _breatheBehavior,
-          behaviorHover(context).on("hover", context.ui().sidebar.hoverModeSelect),
+          behaviorHover(context2).on("hover", context2.ui().sidebar.hoverModeSelect),
           _selectBehavior,
-          behaviorLasso(context),
+          behaviorLasso(context2),
           _modeDragNode.behavior,
-          modeDragNote(context).behavior
+          modeDragNote(context2).behavior
         ];
       }
-      _behaviors.forEach(context.install);
+      _behaviors.forEach(context2.install);
       keybinding.on(_t("inspector.zoom_to.key"), mode.zoomToSelected).on(["[", "pgup"], previousVertex).on(["]", "pgdown"], nextVertex).on(["{", uiCmd("\u2318["), "home"], firstVertex).on(["}", uiCmd("\u2318]"), "end"], lastVertex).on(uiCmd("\u21E7\u2190"), nudgeSelection([-10, 0])).on(uiCmd("\u21E7\u2191"), nudgeSelection([0, -10])).on(uiCmd("\u21E7\u2192"), nudgeSelection([10, 0])).on(uiCmd("\u21E7\u2193"), nudgeSelection([0, 10])).on(uiCmd("\u21E7\u2325\u2190"), nudgeSelection([-100, 0])).on(uiCmd("\u21E7\u2325\u2191"), nudgeSelection([0, -100])).on(uiCmd("\u21E7\u2325\u2192"), nudgeSelection([100, 0])).on(uiCmd("\u21E7\u2325\u2193"), nudgeSelection([0, 100])).on(utilKeybinding.plusKeys.map((key) => uiCmd("\u21E7" + key)), scaleSelection(1.05)).on(utilKeybinding.plusKeys.map((key) => uiCmd("\u21E7\u2325" + key)), scaleSelection(Math.pow(1.05, 5))).on(utilKeybinding.minusKeys.map((key) => uiCmd("\u21E7" + key)), scaleSelection(1 / 1.05)).on(utilKeybinding.minusKeys.map((key) => uiCmd("\u21E7\u2325" + key)), scaleSelection(1 / Math.pow(1.05, 5))).on(["\\", "pause"], focusNextParent).on(uiCmd("\u2318\u2191"), selectParent).on(uiCmd("\u2318\u2193"), selectChild).on("\u238B", esc, true);
       select_default2(document).call(keybinding);
-      context.ui().sidebar.select(selectedIDs, _newFeature);
-      context.history().on("change.select", function() {
+      context2.ui().sidebar.select(selectedIDs, _newFeature);
+      context2.history().on("change.select", function() {
         loadOperations();
         selectElements();
       }).on("undone.select", checkSelectedIDs).on("redone.select", checkSelectedIDs);
-      context.map().on("drawn.select", selectElements).on("crossEditableZoom.select", function() {
+      context2.map().on("drawn.select", selectElements).on("crossEditableZoom.select", function() {
         selectElements();
-        _breatheBehavior.restartIfNeeded(context.surface());
+        _breatheBehavior.restartIfNeeded(context2.surface());
       });
-      context.map().doubleUpHandler().on("doubleUp.modeSelect", didDoubleUp);
+      context2.map().doubleUpHandler().on("doubleUp.modeSelect", didDoubleUp);
       selectElements();
       if (_follow) {
         var extent = geoExtent();
-        var graph = context.graph();
+        var graph = context2.graph();
         selectedIDs.forEach(function(id2) {
-          var entity = context.entity(id2);
+          var entity = context2.entity(id2);
           extent._extend(entity.extent(graph));
         });
         var loc = extent.center();
-        context.map().centerEase(loc);
+        context2.map().centerEase(loc);
         _follow = false;
       }
       function nudgeSelection(delta) {
         return function() {
-          if (!context.map().withinEditableZoom())
+          if (!context2.map().withinEditableZoom())
             return;
-          var moveOp = operationMove(context, selectedIDs);
+          var moveOp = operationMove(context2, selectedIDs);
           if (moveOp.disabled()) {
-            context.ui().flash.duration(4e3).iconName("#iD-operation-" + moveOp.id).iconClass("operation disabled").label(moveOp.tooltip)();
+            context2.ui().flash.duration(4e3).iconName("#iD-operation-" + moveOp.id).iconClass("operation disabled").label(moveOp.tooltip)();
           } else {
-            context.perform(actionMove(selectedIDs, delta, context.projection), moveOp.annotation());
-            context.validator().validate();
+            context2.perform(actionMove(selectedIDs, delta, context2.projection), moveOp.annotation());
+            context2.validator().validate();
           }
         };
       }
       function scaleSelection(factor) {
         return function() {
-          if (!context.map().withinEditableZoom())
+          if (!context2.map().withinEditableZoom())
             return;
-          let nodes = utilGetAllNodes(selectedIDs, context.graph());
+          let nodes = utilGetAllNodes(selectedIDs, context2.graph());
           let isUp = factor > 1;
           if (nodes.length <= 1)
             return;
-          let extent2 = utilTotalExtent(selectedIDs, context.graph());
+          let extent2 = utilTotalExtent(selectedIDs, context2.graph());
           function scalingDisabled() {
             if (tooSmall()) {
               return "too_small";
-            } else if (extent2.percentContainedIn(context.map().extent()) < 0.8) {
+            } else if (extent2.percentContainedIn(context2.map().extent()) < 0.8) {
               return "too_large";
             } else if (someMissing() || selectedIDs.some(incompleteRelation)) {
               return "not_downloaded";
-            } else if (selectedIDs.some(context.hasHiddenConnections)) {
+            } else if (selectedIDs.some(context2.hasHiddenConnections)) {
               return "connected_to_hidden";
             }
             return false;
@@ -71478,16 +71499,16 @@ ${content}</tr>
               return dLon < geoMetersToLon(1, extent2[1][1]) && dLat < geoMetersToLat(1);
             }
             function someMissing() {
-              if (context.inIntro())
+              if (context2.inIntro())
                 return false;
-              let osm = context.connection();
+              let osm = context2.connection();
               if (osm) {
                 let missing = nodes.filter(function(n2) {
                   return !osm.isDataLoaded(n2.loc);
                 });
                 if (missing.length) {
                   missing.forEach(function(loc2) {
-                    context.loadTileAtLoc(loc2);
+                    context2.loadTileAtLoc(loc2);
                   });
                   return true;
                 }
@@ -71495,24 +71516,24 @@ ${content}</tr>
               return false;
             }
             function incompleteRelation(id2) {
-              let entity = context.entity(id2);
-              return entity.type === "relation" && !entity.isComplete(context.graph());
+              let entity = context2.entity(id2);
+              return entity.type === "relation" && !entity.isComplete(context2.graph());
             }
           }
           const disabled = scalingDisabled();
           if (disabled) {
             let multi = selectedIDs.length === 1 ? "single" : "multiple";
-            context.ui().flash.duration(4e3).iconName("#iD-icon-no").iconClass("operation disabled").label(_t.html("operations.scale." + disabled + "." + multi))();
+            context2.ui().flash.duration(4e3).iconName("#iD-icon-no").iconClass("operation disabled").label(_t.html("operations.scale." + disabled + "." + multi))();
           } else {
-            const pivot = context.projection(extent2.center());
+            const pivot = context2.projection(extent2.center());
             const annotation = _t("operations.scale.annotation." + (isUp ? "up" : "down") + ".feature", { n: selectedIDs.length });
-            context.perform(actionScale(selectedIDs, pivot, factor, context.projection), annotation);
-            context.validator().validate();
+            context2.perform(actionScale(selectedIDs, pivot, factor, context2.projection), annotation);
+            context2.validator().validate();
           }
         };
       }
       function didDoubleUp(d3_event, loc2) {
-        if (!context.map().withinEditableZoom())
+        if (!context2.map().withinEditableZoom())
           return;
         var target = select_default2(d3_event.target);
         var datum2 = target.datum();
@@ -71520,26 +71541,26 @@ ${content}</tr>
         if (!entity)
           return;
         if (entity instanceof osmWay && target.classed("target")) {
-          var choice = geoChooseEdge(context.graph().childNodes(entity), loc2, context.projection);
+          var choice = geoChooseEdge(context2.graph().childNodes(entity), loc2, context2.projection);
           var prev = entity.nodes[choice.index - 1];
           var next = entity.nodes[choice.index];
-          context.perform(
+          context2.perform(
             actionAddMidpoint({ loc: choice.loc, edge: [prev, next] }, osmNode()),
             _t("operations.add.annotation.vertex")
           );
-          context.validator().validate();
+          context2.validator().validate();
         } else if (entity.type === "midpoint") {
-          context.perform(
+          context2.perform(
             actionAddMidpoint({ loc: entity.loc, edge: entity.edge }, osmNode()),
             _t("operations.add.annotation.vertex")
           );
-          context.validator().validate();
+          context2.validator().validate();
         }
       }
       function selectElements() {
         if (!checkSelectedIDs())
           return;
-        var surface = context.surface();
+        var surface = context2.surface();
         surface.selectAll(".selected-member").classed("selected-member", false);
         surface.selectAll(".selected").classed("selected", false);
         surface.selectAll(".related").classed("related", false);
@@ -71547,15 +71568,15 @@ ${content}</tr>
         if (_focusedParentWayId) {
           surface.selectAll(utilEntitySelector([_focusedParentWayId])).classed("related", true);
         }
-        if (context.map().withinEditableZoom()) {
-          surface.selectAll(utilDeepMemberSelector(selectedIDs, context.graph(), true)).classed("selected-member", true);
-          surface.selectAll(utilEntityOrDeepMemberSelector(selectedIDs, context.graph())).classed("selected", true);
+        if (context2.map().withinEditableZoom()) {
+          surface.selectAll(utilDeepMemberSelector(selectedIDs, context2.graph(), true)).classed("selected-member", true);
+          surface.selectAll(utilEntityOrDeepMemberSelector(selectedIDs, context2.graph())).classed("selected", true);
         }
       }
       function esc() {
-        if (context.container().select(".combobox").size())
+        if (context2.container().select(".combobox").size())
           return;
-        context.enter(modeBrowse(context));
+        context2.enter(modeBrowse(context2));
       }
       function firstVertex(d3_event) {
         d3_event.preventDefault();
@@ -71565,11 +71586,11 @@ ${content}</tr>
         if (entity && entity.type === "way") {
           way = entity;
         } else if (parentId) {
-          way = context.entity(parentId);
+          way = context2.entity(parentId);
         }
         _focusedParentWayId = way && way.id;
         if (way) {
-          context.enter(
+          context2.enter(
             mode.selectedIDs([way.first()]).follow(true)
           );
         }
@@ -71582,11 +71603,11 @@ ${content}</tr>
         if (entity && entity.type === "way") {
           way = entity;
         } else if (parentId) {
-          way = context.entity(parentId);
+          way = context2.entity(parentId);
         }
         _focusedParentWayId = way && way.id;
         if (way) {
-          context.enter(
+          context2.enter(
             mode.selectedIDs([way.last()]).follow(true)
           );
         }
@@ -71597,7 +71618,7 @@ ${content}</tr>
         _focusedParentWayId = parentId;
         if (!parentId)
           return;
-        var way = context.entity(parentId);
+        var way = context2.entity(parentId);
         var length = way.nodes.length;
         var curr = way.nodes.indexOf(selectedIDs[0]);
         var index = -1;
@@ -71607,7 +71628,7 @@ ${content}</tr>
           index = length - 2;
         }
         if (index !== -1) {
-          context.enter(
+          context2.enter(
             mode.selectedIDs([way.nodes[index]]).follow(true)
           );
         }
@@ -71618,7 +71639,7 @@ ${content}</tr>
         _focusedParentWayId = parentId;
         if (!parentId)
           return;
-        var way = context.entity(parentId);
+        var way = context2.entity(parentId);
         var length = way.nodes.length;
         var curr = way.nodes.indexOf(selectedIDs[0]);
         var index = -1;
@@ -71628,7 +71649,7 @@ ${content}</tr>
           index = 0;
         }
         if (index !== -1) {
-          context.enter(
+          context2.enter(
             mode.selectedIDs([way.nodes[index]]).follow(true)
           );
         }
@@ -71644,7 +71665,7 @@ ${content}</tr>
         } else {
           _focusedParentWayId = parents[index + 1];
         }
-        var surface = context.surface();
+        var surface = context2.surface();
         surface.selectAll(".related").classed("related", false);
         if (_focusedParentWayId) {
           surface.selectAll(utilEntitySelector([_focusedParentWayId])).classed("related", true);
@@ -71656,7 +71677,7 @@ ${content}</tr>
         var parentIds = _focusedParentWayId ? [_focusedParentWayId] : parentWaysIdsOfSelection(false);
         if (!parentIds.length)
           return;
-        context.enter(
+        context2.enter(
           mode.selectedIDs(parentIds)
         );
         _focusedVertexIds = currentSelectedIds;
@@ -71664,12 +71685,12 @@ ${content}</tr>
       function selectChild(d3_event) {
         d3_event.preventDefault();
         var currentSelectedIds = mode.selectedIDs();
-        var childIds = _focusedVertexIds ? _focusedVertexIds.filter((id2) => context.hasEntity(id2)) : childNodeIdsOfSelection(true);
+        var childIds = _focusedVertexIds ? _focusedVertexIds.filter((id2) => context2.hasEntity(id2)) : childNodeIdsOfSelection(true);
         if (!childIds || !childIds.length)
           return;
         if (currentSelectedIds.length === 1)
           _focusedParentWayId = currentSelectedIds[0];
-        context.enter(
+        context2.enter(
           mode.selectedIDs(childIds)
         );
       }
@@ -71679,34 +71700,34 @@ ${content}</tr>
       _focusedVertexIds = null;
       _operations.forEach(function(operation) {
         if (operation.behavior) {
-          context.uninstall(operation.behavior);
+          context2.uninstall(operation.behavior);
         }
       });
       _operations = [];
-      _behaviors.forEach(context.uninstall);
+      _behaviors.forEach(context2.uninstall);
       select_default2(document).call(keybinding.unbind);
-      context.ui().closeEditMenu();
-      context.history().on("change.select", null).on("undone.select", null).on("redone.select", null);
-      var surface = context.surface();
+      context2.ui().closeEditMenu();
+      context2.history().on("change.select", null).on("undone.select", null).on("redone.select", null);
+      var surface = context2.surface();
       surface.selectAll(".selected-member").classed("selected-member", false);
       surface.selectAll(".selected").classed("selected", false);
       surface.selectAll(".highlighted").classed("highlighted", false);
       surface.selectAll(".related").classed("related", false);
-      context.map().on("drawn.select", null);
-      context.ui().sidebar.hide();
-      context.features().forceVisible([]);
+      context2.map().on("drawn.select", null);
+      context2.ui().sidebar.hide();
+      context2.features().forceVisible([]);
       var entity = singular();
-      if (_newFeature && entity && entity.type === "relation" && Object.keys(entity.tags).length === 0 && context.graph().parentRelations(entity).length === 0 && (entity.members.length === 0 || entity.members.length === 1 && !entity.members[0].role)) {
+      if (_newFeature && entity && entity.type === "relation" && Object.keys(entity.tags).length === 0 && context2.graph().parentRelations(entity).length === 0 && (entity.members.length === 0 || entity.members.length === 1 && !entity.members[0].role)) {
         var deleteAction = actionDeleteRelation(entity.id, true);
-        context.perform(deleteAction, _t("operations.delete.annotation.relation"));
-        context.validator().validate();
+        context2.perform(deleteAction, _t("operations.delete.annotation.relation"));
+        context2.validator().validate();
       }
     };
     return mode;
   }
 
   // modules/behavior/lasso.js
-  function behaviorLasso(context) {
+  function behaviorLasso(context2) {
     var _pointerPrefix = "PointerEvent" in window ? "pointer" : "mouse";
     var behavior = function(selection2) {
       var lasso;
@@ -71720,10 +71741,10 @@ ${content}</tr>
       }
       function pointermove() {
         if (!lasso) {
-          lasso = uiLasso(context);
-          context.surface().call(lasso);
+          lasso = uiLasso(context2);
+          context2.surface().call(lasso);
         }
-        lasso.p(context.map().mouse());
+        lasso.p(context2.map().mouse());
       }
       function normalize2(a, b) {
         return [
@@ -71734,17 +71755,17 @@ ${content}</tr>
       function lassoed() {
         if (!lasso)
           return [];
-        var graph = context.graph();
+        var graph = context2.graph();
         var limitToNodes;
-        if (context.map().editableDataEnabled(true) && context.map().isInWideSelection()) {
-          limitToNodes = new Set(utilGetAllNodes(context.selectedIDs(), graph));
-        } else if (!context.map().editableDataEnabled()) {
+        if (context2.map().editableDataEnabled(true) && context2.map().isInWideSelection()) {
+          limitToNodes = new Set(utilGetAllNodes(context2.selectedIDs(), graph));
+        } else if (!context2.map().editableDataEnabled()) {
           return [];
         }
-        var bounds = lasso.extent().map(context.projection.invert);
+        var bounds = lasso.extent().map(context2.projection.invert);
         var extent = geoExtent(normalize2(bounds[0], bounds[1]));
-        var intersects = context.history().intersects(extent).filter(function(entity) {
-          return entity.type === "node" && (!limitToNodes || limitToNodes.has(entity)) && geoPointInPolygon(context.projection(entity.loc), lasso.coordinates) && !context.features().isHidden(entity, graph, entity.geometry(graph));
+        var intersects = context2.history().intersects(extent).filter(function(entity) {
+          return entity.type === "node" && (!limitToNodes || limitToNodes.has(entity)) && geoPointInPolygon(context2.projection(entity.loc), lasso.coordinates) && !context2.features().isHidden(entity, graph, entity.geometry(graph));
         });
         intersects.sort(function(node1, node2) {
           var parents1 = graph.parentWays(node1);
@@ -71773,7 +71794,7 @@ ${content}</tr>
         var ids = lassoed();
         lasso.close();
         if (ids.length) {
-          context.enter(modeSelect(context, ids));
+          context2.enter(modeSelect(context2, ids));
         }
       }
       selection2.on(_pointerPrefix + "down.lasso", pointerdown);
@@ -71785,7 +71806,7 @@ ${content}</tr>
   }
 
   // modules/modes/browse.js
-  function modeBrowse(context) {
+  function modeBrowse(context2) {
     var mode = {
       button: "browse",
       id: "browse",
@@ -71804,31 +71825,31 @@ ${content}</tr>
     mode.enter = function() {
       if (!_behaviors.length) {
         if (!_selectBehavior)
-          _selectBehavior = behaviorSelect(context);
+          _selectBehavior = behaviorSelect(context2);
         _behaviors = [
-          behaviorPaste(context),
-          behaviorHover(context).on("hover", context.ui().sidebar.hover),
+          behaviorPaste(context2),
+          behaviorHover(context2).on("hover", context2.ui().sidebar.hover),
           _selectBehavior,
-          behaviorLasso(context),
-          modeDragNode(context).behavior,
-          modeDragNote(context).behavior
+          behaviorLasso(context2),
+          modeDragNode(context2).behavior,
+          modeDragNote(context2).behavior
         ];
       }
-      _behaviors.forEach(context.install);
+      _behaviors.forEach(context2.install);
       if (document.activeElement && document.activeElement.blur) {
         document.activeElement.blur();
       }
       if (sidebar) {
-        context.ui().sidebar.show(sidebar);
+        context2.ui().sidebar.show(sidebar);
       } else {
-        context.ui().sidebar.select(null);
+        context2.ui().sidebar.select(null);
       }
     };
     mode.exit = function() {
-      context.ui().sidebar.hover.cancel();
-      _behaviors.forEach(context.uninstall);
+      context2.ui().sidebar.hover.cancel();
+      _behaviors.forEach(context2.uninstall);
       if (sidebar) {
-        context.ui().sidebar.hide();
+        context2.ui().sidebar.hide();
       }
     };
     mode.sidebar = function(_) {
@@ -71838,15 +71859,15 @@ ${content}</tr>
       return mode;
     };
     mode.operations = function() {
-      return [operationPaste(context)];
+      return [operationPaste(context2)];
     };
     return mode;
   }
 
   // modules/behavior/add_way.js
-  function behaviorAddWay(context) {
+  function behaviorAddWay(context2) {
     var dispatch10 = dispatch_default("start", "startFromWay", "startFromNode");
-    var draw = behaviorDraw(context);
+    var draw = behaviorDraw(context2);
     function behavior(surface) {
       draw.on("click", function() {
         dispatch10.apply("start", this, arguments);
@@ -71855,7 +71876,7 @@ ${content}</tr>
       }).on("clickNode", function() {
         dispatch10.apply("startFromNode", this, arguments);
       }).on("cancel", behavior.cancel).on("finish", behavior.cancel);
-      context.map().dblclickZoomEnable(false);
+      context2.map().dblclickZoomEnable(false);
       surface.call(draw);
     }
     behavior.off = function(surface) {
@@ -71863,19 +71884,19 @@ ${content}</tr>
     };
     behavior.cancel = function() {
       window.setTimeout(function() {
-        context.map().dblclickZoomEnable(true);
+        context2.map().dblclickZoomEnable(true);
       }, 1e3);
-      context.enter(modeBrowse(context));
+      context2.enter(modeBrowse(context2));
     };
     return utilRebind(behavior, dispatch10, "on");
   }
 
   // modules/behavior/hash.js
-  function behaviorHash(context) {
+  function behaviorHash(context2) {
     var _cachedHash = null;
     var _latitudeLimit = 90 - 1e-8;
     function computedHashParameters() {
-      var map2 = context.map();
+      var map2 = context2.map();
       var center = map2.center();
       var zoom = map2.zoom();
       var precision2 = Math.max(0, Math.ceil(Math.log(zoom) / Math.LN2));
@@ -71885,8 +71906,8 @@ ${content}</tr>
       );
       var newParams = {};
       delete oldParams.id;
-      var selected = context.selectedIDs().filter(function(id2) {
-        return context.hasEntity(id2);
+      var selected = context2.selectedIDs().filter(function(id2) {
+        return context2.hasEntity(id2);
       });
       if (selected.length) {
         newParams.id = selected.join(",");
@@ -71898,15 +71919,15 @@ ${content}</tr>
       return "#" + utilQsString(computedHashParameters(), true);
     }
     function computedTitle(includeChangeCount) {
-      var baseTitle = context.documentTitleBase() || "iD";
+      var baseTitle = context2.documentTitleBase() || "iD";
       var contextual;
       var changeCount;
       var titleID;
-      var selected = context.selectedIDs().filter(function(id2) {
-        return context.hasEntity(id2);
+      var selected = context2.selectedIDs().filter(function(id2) {
+        return context2.hasEntity(id2);
       });
       if (selected.length) {
-        var firstLabel = utilDisplayLabel(context.entity(selected[0]), context.graph());
+        var firstLabel = utilDisplayLabel(context2.entity(selected[0]), context2.graph());
         if (selected.length > 1) {
           contextual = _t("title.labeled_and_more", {
             labeled: firstLabel,
@@ -71918,7 +71939,7 @@ ${content}</tr>
         titleID = "context";
       }
       if (includeChangeCount) {
-        changeCount = context.history().difference().summary().length;
+        changeCount = context2.history().difference().summary().length;
         if (changeCount > 0) {
           titleID = contextual ? "changes_context" : "changes";
         }
@@ -71933,7 +71954,7 @@ ${content}</tr>
       return baseTitle;
     }
     function updateTitle(includeChangeCount) {
-      if (!context.setsDocumentTitle())
+      if (!context2.setsDocumentTitle())
         return;
       var newTitle = computedTitle(includeChangeCount);
       if (document.title !== newTitle) {
@@ -71941,7 +71962,7 @@ ${content}</tr>
       }
     }
     function updateHashIfNeeded() {
-      if (context.inIntro())
+      if (context2.inIntro())
         return;
       var latestHash = computedHash();
       if (_cachedHash !== latestHash) {
@@ -71965,35 +71986,35 @@ ${content}</tr>
       } else {
         if (_cachedHash === computedHash())
           return;
-        var mode = context.mode();
-        context.map().centerZoom([mapArgs[2], Math.min(_latitudeLimit, Math.max(-_latitudeLimit, mapArgs[1]))], mapArgs[0]);
+        var mode = context2.mode();
+        context2.map().centerZoom([mapArgs[2], Math.min(_latitudeLimit, Math.max(-_latitudeLimit, mapArgs[1]))], mapArgs[0]);
         if (q.id && mode) {
           var ids = q.id.split(",").filter(function(id2) {
-            return context.hasEntity(id2);
+            return context2.hasEntity(id2);
           });
           if (ids.length && (mode.id === "browse" || mode.id === "select" && !utilArrayIdentical(mode.selectedIDs(), ids))) {
-            context.enter(modeSelect(context, ids));
+            context2.enter(modeSelect(context2, ids));
             return;
           }
         }
-        var center = context.map().center();
+        var center = context2.map().center();
         var dist = geoSphericalDistance(center, [mapArgs[2], mapArgs[1]]);
         var maxdist = 500;
         if (mode && mode.id.match(/^draw/) !== null && dist > maxdist) {
-          context.enter(modeBrowse(context));
+          context2.enter(modeBrowse(context2));
           return;
         }
       }
     }
     function behavior() {
-      context.map().on("move.behaviorHash", _throttledUpdate);
-      context.history().on("change.behaviorHash", _throttledUpdateTitle);
-      context.on("enter.behaviorHash", _throttledUpdate);
+      context2.map().on("move.behaviorHash", _throttledUpdate);
+      context2.history().on("change.behaviorHash", _throttledUpdateTitle);
+      context2.on("enter.behaviorHash", _throttledUpdate);
       select_default2(window).on("hashchange.behaviorHash", hashchange);
       if (window.location.hash) {
         var q = utilStringQs(window.location.hash);
         if (q.id) {
-          context.zoomToEntity(q.id.split(",")[0], !q.map);
+          context2.zoomToEntity(q.id.split(",")[0], !q.map);
         }
         if (q.walkthrough === "true") {
           behavior.startWalkthrough = true;
@@ -72008,8 +72029,8 @@ ${content}</tr>
     behavior.off = function() {
       _throttledUpdate.cancel();
       _throttledUpdateTitle.cancel();
-      context.map().on("move.behaviorHash", null);
-      context.on("enter.behaviorHash", null);
+      context2.map().on("move.behaviorHash", null);
+      context2.on("enter.behaviorHash", null);
       select_default2(window).on("hashchange.behaviorHash", null);
       window.location.hash = "";
     };

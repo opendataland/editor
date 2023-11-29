@@ -26247,7 +26247,7 @@
       ]
     },
     "modules/core/context.js": {
-      "bytes": 16942,
+      "bytes": 17229,
       "imports": [
         {
           "path": "node_modules/lodash-es/debounce.js",
@@ -26431,7 +26431,7 @@
       "imports": []
     },
     "modules/services/osm.js": {
-      "bytes": 46293,
+      "bytes": 47049,
       "imports": [
         {
           "path": "node_modules/lodash-es/throttle.js",
@@ -30602,7 +30602,7 @@
       "imports": [],
       "exports": [],
       "inputs": {},
-      "bytes": 5228964
+      "bytes": 5241941
     },
     "dist/iD.js": {
       "imports": [],
@@ -30877,7 +30877,7 @@
           "bytesInOutput": 2060
         },
         "node_modules/d3-geo/src/path/context.js": {
-          "bytesInOutput": 930
+          "bytesInOutput": 932
         },
         "node_modules/d3-geo/src/path/measure.js": {
           "bytesInOutput": 874
@@ -30886,7 +30886,7 @@
           "bytesInOutput": 2157
         },
         "node_modules/d3-geo/src/path/index.js": {
-          "bytesInOutput": 2198
+          "bytesInOutput": 2204
         },
         "node_modules/d3-geo/src/transform.js": {
           "bytesInOutput": 818
@@ -30997,7 +30997,7 @@
           "bytesInOutput": 569
         },
         "node_modules/d3-selection/src/selection/merge.js": {
-          "bytesInOutput": 653
+          "bytesInOutput": 657
         },
         "node_modules/d3-selection/src/selection/order.js": {
           "bytesInOutput": 420
@@ -31306,7 +31306,7 @@
           "bytesInOutput": 1746
         },
         "modules/util/util.js": {
-          "bytesInOutput": 13987
+          "bytesInOutput": 13990
         },
         "modules/util/svg_paths_rtl_fix.js": {
           "bytesInOutput": 1588
@@ -31606,13 +31606,13 @@
           "bytesInOutput": 1986
         },
         "modules/behavior/edit.js": {
-          "bytesInOutput": 219
+          "bytesInOutput": 223
         },
         "modules/behavior/hover.js": {
-          "bytesInOutput": 5833
+          "bytesInOutput": 5840
         },
         "modules/behavior/draw.js": {
-          "bytesInOutput": 7099
+          "bytesInOutput": 7122
         },
         "modules/behavior/breathe.js": {
           "bytesInOutput": 4102
@@ -31690,43 +31690,43 @@
           "bytesInOutput": 1255
         },
         "modules/behavior/operation.js": {
-          "bytesInOutput": 1203
+          "bytesInOutput": 1209
         },
         "modules/operations/circularize.js": {
-          "bytesInOutput": 3124
+          "bytesInOutput": 3139
         },
         "modules/ui/cmd.js": {
           "bytesInOutput": 2000
         },
         "modules/operations/delete.js": {
-          "bytesInOutput": 4551
+          "bytesInOutput": 4582
         },
         "modules/operations/orthogonalize.js": {
-          "bytesInOutput": 3780
+          "bytesInOutput": 3798
         },
         "modules/operations/reflect.js": {
-          "bytesInOutput": 2659
+          "bytesInOutput": 2677
         },
         "modules/operations/move.js": {
-          "bytesInOutput": 2259
+          "bytesInOutput": 2273
         },
         "modules/modes/rotate.js": {
-          "bytesInOutput": 4449
+          "bytesInOutput": 4482
         },
         "modules/operations/rotate.js": {
-          "bytesInOutput": 2272
+          "bytesInOutput": 2286
         },
         "modules/modes/move.js": {
-          "bytesInOutput": 4355
+          "bytesInOutput": 4397
         },
         "modules/behavior/paste.js": {
-          "bytesInOutput": 1815
+          "bytesInOutput": 1831
         },
         "modules/behavior/drag.js": {
           "bytesInOutput": 4633
         },
         "modules/modes/drag_node.js": {
-          "bytesInOutput": 12423
+          "bytesInOutput": 12500
         },
         "modules/services/keepRight.js": {
           "bytesInOutput": 11881
@@ -31753,10 +31753,10 @@
           "bytesInOutput": 70043
         },
         "modules/services/mapillary.js": {
-          "bytesInOutput": 19739
+          "bytesInOutput": 19766
         },
         "modules/core/validation/models.js": {
-          "bytesInOutput": 2203
+          "bytesInOutput": 2206
         },
         "modules/core/validation/index.js": {
           "bytesInOutput": 0
@@ -31801,73 +31801,73 @@
           "bytesInOutput": 1959
         },
         "modules/ui/loading.js": {
-          "bytesInOutput": 1126
+          "bytesInOutput": 1128
         },
         "modules/core/history.js": {
-          "bytesInOutput": 17997
+          "bytesInOutput": 18007
         },
         "modules/validations/index.js": {
           "bytesInOutput": 1017
         },
         "modules/validations/almost_junction.js": {
-          "bytesInOutput": 9892
+          "bytesInOutput": 9896
         },
         "modules/validations/close_nodes.js": {
-          "bytesInOutput": 9037
+          "bytesInOutput": 9039
         },
         "modules/validations/crossing_ways.js": {
-          "bytesInOutput": 25885
+          "bytesInOutput": 25887
         },
         "modules/behavior/draw_way.js": {
-          "bytesInOutput": 12413
+          "bytesInOutput": 12490
         },
         "modules/modes/draw_line.js": {
-          "bytesInOutput": 813
+          "bytesInOutput": 818
         },
         "modules/validations/disconnected_way.js": {
-          "bytesInOutput": 6303
+          "bytesInOutput": 6316
         },
         "modules/validations/invalid_format.js": {
-          "bytesInOutput": 1547
+          "bytesInOutput": 1550
         },
         "modules/validations/help_request.js": {
-          "bytesInOutput": 1353
+          "bytesInOutput": 1355
         },
         "modules/validations/impossible_oneway.js": {
-          "bytesInOutput": 7486
+          "bytesInOutput": 7501
         },
         "modules/validations/incompatible_source.js": {
-          "bytesInOutput": 2134
+          "bytesInOutput": 2137
         },
         "modules/validations/maprules.js": {
           "bytesInOutput": 470
         },
         "modules/validations/mismatched_geometry.js": {
-          "bytesInOutput": 12054
+          "bytesInOutput": 12078
         },
         "modules/validations/missing_role.js": {
-          "bytesInOutput": 3111
+          "bytesInOutput": 3120
         },
         "modules/validations/missing_tag.js": {
-          "bytesInOutput": 4139
+          "bytesInOutput": 4141
         },
         "modules/validations/outdated_tags.js": {
-          "bytesInOutput": 8327
+          "bytesInOutput": 8339
         },
         "modules/validations/private_data.js": {
-          "bytesInOutput": 3261
+          "bytesInOutput": 3266
         },
         "modules/validations/suspicious_name.js": {
-          "bytesInOutput": 5821
+          "bytesInOutput": 5833
         },
         "modules/validations/unsquare_way.js": {
-          "bytesInOutput": 3662
+          "bytesInOutput": 3665
         },
         "modules/core/validator.js": {
-          "bytesInOutput": 17729
+          "bytesInOutput": 17750
         },
         "modules/core/uploader.js": {
-          "bytesInOutput": 9772
+          "bytesInOutput": 9787
         },
         "modules/util/IntervalTasksQueue.js": {
           "bytesInOutput": 575
@@ -31879,16 +31879,16 @@
           "bytesInOutput": 0
         },
         "modules/renderer/background.js": {
-          "bytesInOutput": 13789
+          "bytesInOutput": 13809
         },
         "modules/renderer/tile_layer.js": {
-          "bytesInOutput": 6663
+          "bytesInOutput": 6666
         },
         "modules/renderer/features.js": {
-          "bytesInOutput": 15509
+          "bytesInOutput": 15513
         },
         "modules/svg/areas.js": {
-          "bytesInOutput": 6075
+          "bytesInOutput": 6082
         },
         "modules/svg/helpers.js": {
           "bytesInOutput": 7112
@@ -31903,55 +31903,55 @@
           "bytesInOutput": 0
         },
         "modules/svg/data.js": {
-          "bytesInOutput": 12165
+          "bytesInOutput": 12170
         },
         "node_modules/@tmcw/togeojson/dist/togeojson.es.js": {
           "bytesInOutput": 17027
         },
         "modules/svg/debug.js": {
-          "bytesInOutput": 3330
+          "bytesInOutput": 3344
         },
         "modules/svg/defs.js": {
-          "bytesInOutput": 5456
+          "bytesInOutput": 5459
         },
         "modules/svg/keepRight.js": {
-          "bytesInOutput": 4856
+          "bytesInOutput": 4864
         },
         "modules/svg/geolocate.js": {
           "bytesInOutput": 2702
         },
         "modules/svg/labels.js": {
-          "bytesInOutput": 21403
+          "bytesInOutput": 21416
         },
         "modules/svg/improveOSM.js": {
-          "bytesInOutput": 4767
+          "bytesInOutput": 4775
         },
         "modules/svg/osmose.js": {
-          "bytesInOutput": 4809
+          "bytesInOutput": 4817
         },
         "modules/svg/streetside.js": {
-          "bytesInOutput": 8005
+          "bytesInOutput": 8025
         },
         "modules/svg/mapillary_images.js": {
-          "bytesInOutput": 7387
+          "bytesInOutput": 7407
         },
         "modules/svg/mapillary_position.js": {
-          "bytesInOutput": 3422
+          "bytesInOutput": 3426
         },
         "modules/svg/mapillary_signs.js": {
-          "bytesInOutput": 4662
+          "bytesInOutput": 4674
         },
         "modules/svg/mapillary_map_features.js": {
-          "bytesInOutput": 5036
+          "bytesInOutput": 5048
         },
         "modules/svg/kartaview_images.js": {
-          "bytesInOutput": 7038
+          "bytesInOutput": 7057
         },
         "modules/svg/osm.js": {
-          "bytesInOutput": 1418
+          "bytesInOutput": 1421
         },
         "modules/svg/notes.js": {
-          "bytesInOutput": 5521
+          "bytesInOutput": 5530
         },
         "modules/svg/touch.js": {
           "bytesInOutput": 284
@@ -31960,22 +31960,22 @@
           "bytesInOutput": 869
         },
         "modules/svg/layers.js": {
-          "bytesInOutput": 3199
+          "bytesInOutput": 3215
         },
         "modules/svg/lines.js": {
-          "bytesInOutput": 9654
+          "bytesInOutput": 9664
         },
         "modules/svg/midpoints.js": {
-          "bytesInOutput": 4418
+          "bytesInOutput": 4423
         },
         "modules/svg/points.js": {
-          "bytesInOutput": 3814
+          "bytesInOutput": 3820
         },
         "modules/svg/turns.js": {
-          "bytesInOutput": 3170
+          "bytesInOutput": 3172
         },
         "modules/svg/vertices.js": {
-          "bytesInOutput": 12968
+          "bytesInOutput": 12986
         },
         "modules/util/bind_once.js": {
           "bytesInOutput": 257
@@ -31987,19 +31987,19 @@
           "bytesInOutput": 1927
         },
         "modules/renderer/map.js": {
-          "bytesInOutput": 27702
+          "bytesInOutput": 27752
         },
         "modules/renderer/photos.js": {
-          "bytesInOutput": 6895
+          "bytesInOutput": 6904
         },
         "modules/ui/account.js": {
-          "bytesInOutput": 2188
+          "bytesInOutput": 2190
         },
         "modules/ui/attribution.js": {
-          "bytesInOutput": 2255
+          "bytesInOutput": 2263
         },
         "modules/ui/contributors.js": {
-          "bytesInOutput": 1938
+          "bytesInOutput": 1945
         },
         "modules/ui/popover.js": {
           "bytesInOutput": 9540
@@ -32008,43 +32008,43 @@
           "bytesInOutput": 2249
         },
         "modules/ui/edit_menu.js": {
-          "bytesInOutput": 7165
+          "bytesInOutput": 7178
         },
         "modules/ui/feature_info.js": {
-          "bytesInOutput": 1263
+          "bytesInOutput": 1268
         },
         "modules/ui/flash.js": {
-          "bytesInOutput": 2226
+          "bytesInOutput": 2232
         },
         "modules/ui/full_screen.js": {
-          "bytesInOutput": 1609
+          "bytesInOutput": 1612
         },
         "modules/ui/geolocate.js": {
-          "bytesInOutput": 2298
+          "bytesInOutput": 2308
         },
         "modules/ui/panels/background.js": {
-          "bytesInOutput": 4622
+          "bytesInOutput": 4638
         },
         "modules/ui/panels/index.js": {
           "bytesInOutput": 159
         },
         "modules/ui/panels/history.js": {
-          "bytesInOutput": 5201
+          "bytesInOutput": 5211
         },
         "modules/util/units.js": {
           "bytesInOutput": 3535
         },
         "modules/ui/panels/location.js": {
-          "bytesInOutput": 1584
+          "bytesInOutput": 1589
         },
         "modules/ui/panels/measurement.js": {
-          "bytesInOutput": 6325
+          "bytesInOutput": 6338
         },
         "modules/ui/info.js": {
-          "bytesInOutput": 3275
+          "bytesInOutput": 3280
         },
         "modules/ui/intro/helper.js": {
-          "bytesInOutput": 9029
+          "bytesInOutput": 9037
         },
         "modules/ui/toggle.js": {
           "bytesInOutput": 362
@@ -32053,64 +32053,64 @@
           "bytesInOutput": 6891
         },
         "modules/ui/intro/welcome.js": {
-          "bytesInOutput": 1391
+          "bytesInOutput": 1394
         },
         "modules/ui/intro/navigation.js": {
-          "bytesInOutput": 17341
+          "bytesInOutput": 17462
         },
         "modules/ui/intro/point.js": {
-          "bytesInOutput": 14162
+          "bytesInOutput": 14268
         },
         "modules/ui/intro/area.js": {
-          "bytesInOutput": 14645
+          "bytesInOutput": 14744
         },
         "modules/ui/intro/line.js": {
-          "bytesInOutput": 36029
+          "bytesInOutput": 36322
         },
         "modules/ui/intro/building.js": {
-          "bytesInOutput": 23187
+          "bytesInOutput": 23366
         },
         "modules/ui/intro/start_editing.js": {
-          "bytesInOutput": 2075
+          "bytesInOutput": 2080
         },
         "modules/ui/intro/intro.js": {
-          "bytesInOutput": 5451
+          "bytesInOutput": 5487
         },
         "modules/ui/intro/index.js": {
           "bytesInOutput": 0
         },
         "modules/ui/issues_info.js": {
-          "bytesInOutput": 2103
+          "bytesInOutput": 2109
         },
         "modules/ui/map_in_map.js": {
-          "bytesInOutput": 7433
+          "bytesInOutput": 7448
         },
         "modules/ui/notice.js": {
-          "bytesInOutput": 870
+          "bytesInOutput": 877
         },
         "modules/ui/photoviewer.js": {
-          "bytesInOutput": 4607
+          "bytesInOutput": 4614
         },
         "modules/ui/restore.js": {
-          "bytesInOutput": 1358
+          "bytesInOutput": 1362
         },
         "modules/ui/scale.js": {
-          "bytesInOutput": 2030
+          "bytesInOutput": 2034
         },
         "modules/ui/shortcuts.js": {
-          "bytesInOutput": 6245
+          "bytesInOutput": 6248
         },
         "modules/ui/data_header.js": {
           "bytesInOutput": 842
         },
         "modules/ui/combobox.js": {
-          "bytesInOutput": 12550
+          "bytesInOutput": 12554
         },
         "modules/ui/disclosure.js": {
-          "bytesInOutput": 3073
+          "bytesInOutput": 3074
         },
         "modules/ui/section.js": {
-          "bytesInOutput": 2922
+          "bytesInOutput": 2924
         },
         "modules/ui/tag_reference.js": {
           "bytesInOutput": 4424
@@ -32119,136 +32119,136 @@
           "bytesInOutput": 0
         },
         "modules/ui/field_help.js": {
-          "bytesInOutput": 5623
+          "bytesInOutput": 5627
         },
         "modules/ui/fields/check.js": {
-          "bytesInOutput": 5410
+          "bytesInOutput": 5416
         },
         "modules/ui/fields/index.js": {
           "bytesInOutput": 836
         },
         "modules/ui/fields/combo.js": {
-          "bytesInOutput": 18926
+          "bytesInOutput": 18936
         },
         "modules/ui/fields/input.js": {
-          "bytesInOutput": 8896
+          "bytesInOutput": 8901
         },
         "modules/ui/fields/access.js": {
-          "bytesInOutput": 6251
+          "bytesInOutput": 6254
         },
         "modules/ui/fields/address.js": {
-          "bytesInOutput": 8259
+          "bytesInOutput": 8272
         },
         "modules/ui/fields/cycleway.js": {
-          "bytesInOutput": 4167
+          "bytesInOutput": 4170
         },
         "modules/ui/fields/lanes.js": {
-          "bytesInOutput": 2719
+          "bytesInOutput": 2722
         },
         "modules/ui/fields/localized.js": {
-          "bytesInOutput": 13243
+          "bytesInOutput": 13251
         },
         "modules/ui/fields/roadheight.js": {
-          "bytesInOutput": 5202
+          "bytesInOutput": 5208
         },
         "modules/ui/fields/roadspeed.js": {
-          "bytesInOutput": 3471
+          "bytesInOutput": 3477
         },
         "modules/ui/fields/radio.js": {
-          "bytesInOutput": 7859
+          "bytesInOutput": 7862
         },
         "modules/ui/fields/restrictions.js": {
-          "bytesInOutput": 17908
+          "bytesInOutput": 17922
         },
         "modules/ui/fields/textarea.js": {
-          "bytesInOutput": 1516
+          "bytesInOutput": 1518
         },
         "modules/ui/fields/wikidata.js": {
-          "bytesInOutput": 9326
+          "bytesInOutput": 9335
         },
         "modules/ui/fields/wikipedia.js": {
-          "bytesInOutput": 7980
+          "bytesInOutput": 7990
         },
         "modules/ui/field.js": {
-          "bytesInOutput": 7822
+          "bytesInOutput": 7832
         },
         "modules/ui/form_fields.js": {
-          "bytesInOutput": 3246
+          "bytesInOutput": 3248
         },
         "modules/ui/changeset_editor.js": {
-          "bytesInOutput": 3108
+          "bytesInOutput": 3115
         },
         "modules/ui/commit.js": {
-          "bytesInOutput": 15478
+          "bytesInOutput": 15533
         },
         "modules/util/jxon.js": {
           "bytesInOutput": 5704
         },
         "modules/ui/sections/changes.js": {
-          "bytesInOutput": 3386
+          "bytesInOutput": 3396
         },
         "modules/ui/commit_warnings.js": {
-          "bytesInOutput": 2339
+          "bytesInOutput": 2346
         },
         "modules/ui/confirm.js": {
           "bytesInOutput": 724
         },
         "modules/ui/conflicts.js": {
-          "bytesInOutput": 7294
+          "bytesInOutput": 7305
         },
         "modules/ui/entity_editor.js": {
-          "bytesInOutput": 8394
+          "bytesInOutput": 8420
         },
         "modules/ui/sections/entity_issues.js": {
-          "bytesInOutput": 6881
+          "bytesInOutput": 6897
         },
         "modules/ui/preset_icon.js": {
           "bytesInOutput": 12048
         },
         "modules/ui/sections/feature_type.js": {
-          "bytesInOutput": 3585
+          "bytesInOutput": 3589
         },
         "modules/ui/sections/preset_fields.js": {
-          "bytesInOutput": 4362
+          "bytesInOutput": 4372
         },
         "modules/ui/sections/raw_member_editor.js": {
-          "bytesInOutput": 9830
+          "bytesInOutput": 9864
         },
         "modules/actions/delete_members.js": {
           "bytesInOutput": 283
         },
         "modules/ui/sections/raw_membership_editor.js": {
-          "bytesInOutput": 14732
+          "bytesInOutput": 14770
         },
         "modules/ui/sections/selection_list.js": {
-          "bytesInOutput": 2848
+          "bytesInOutput": 2861
         },
         "modules/ui/feature_list.js": {
-          "bytesInOutput": 8680
+          "bytesInOutput": 8696
         },
         "modules/ui/improveOSM_comments.js": {
           "bytesInOutput": 2045
         },
         "modules/ui/improveOSM_details.js": {
-          "bytesInOutput": 3047
+          "bytesInOutput": 3062
         },
         "modules/ui/improveOSM_header.js": {
           "bytesInOutput": 1576
         },
         "modules/ui/improveOSM_editor.js": {
-          "bytesInOutput": 4652
+          "bytesInOutput": 4660
         },
         "modules/ui/preset_list.js": {
-          "bytesInOutput": 14996
+          "bytesInOutput": 15018
         },
         "modules/ui/view_on_osm.js": {
-          "bytesInOutput": 938
+          "bytesInOutput": 940
         },
         "modules/ui/inspector.js": {
-          "bytesInOutput": 3926
+          "bytesInOutput": 3937
         },
         "modules/ui/keepRight_details.js": {
-          "bytesInOutput": 3257
+          "bytesInOutput": 3272
         },
         "modules/ui/keepRight_header.js": {
           "bytesInOutput": 1442
@@ -32257,10 +32257,10 @@
           "bytesInOutput": 819
         },
         "modules/ui/keepRight_editor.js": {
-          "bytesInOutput": 4769
+          "bytesInOutput": 4777
         },
         "modules/ui/lasso.js": {
-          "bytesInOutput": 1088
+          "bytesInOutput": 1091
         },
         "modules/ui/note_comments.js": {
           "bytesInOutput": 2911
@@ -32272,22 +32272,22 @@
           "bytesInOutput": 771
         },
         "modules/ui/note_editor.js": {
-          "bytesInOutput": 8559
+          "bytesInOutput": 8569
         },
         "modules/ui/source_switch.js": {
-          "bytesInOutput": 1083
+          "bytesInOutput": 1091
         },
         "modules/ui/spinner.js": {
-          "bytesInOutput": 451
+          "bytesInOutput": 454
         },
         "modules/ui/sections/privacy.js": {
-          "bytesInOutput": 1735
+          "bytesInOutput": 1737
         },
         "modules/ui/splash.js": {
-          "bytesInOutput": 2631
+          "bytesInOutput": 2639
         },
         "modules/ui/status.js": {
-          "bytesInOutput": 2027
+          "bytesInOutput": 2032
         },
         "node_modules/osm-community-index/lib/simplify.js": {
           "bytesInOutput": 61
@@ -32296,22 +32296,22 @@
           "bytesInOutput": 0
         },
         "modules/ui/success.js": {
-          "bytesInOutput": 1119
+          "bytesInOutput": 1120
         },
         "modules/ui/version.js": {
-          "bytesInOutput": 787
+          "bytesInOutput": 789
         },
         "modules/ui/zoom.js": {
-          "bytesInOutput": 3094
+          "bytesInOutput": 3107
         },
         "modules/ui/sections/raw_tag_editor.js": {
-          "bytesInOutput": 15510
+          "bytesInOutput": 15524
         },
         "modules/ui/data_editor.js": {
-          "bytesInOutput": 1479
+          "bytesInOutput": 1483
         },
         "modules/ui/osmose_details.js": {
-          "bytesInOutput": 4412
+          "bytesInOutput": 4429
         },
         "modules/ui/osmose_header.js": {
           "bytesInOutput": 1533
@@ -32320,142 +32320,142 @@
           "bytesInOutput": 788
         },
         "modules/ui/osmose_editor.js": {
-          "bytesInOutput": 3224
+          "bytesInOutput": 3232
         },
         "modules/ui/sidebar.js": {
-          "bytesInOutput": 11429
+          "bytesInOutput": 11455
         },
         "modules/modes/draw_area.js": {
-          "bytesInOutput": 699
+          "bytesInOutput": 704
         },
         "modules/modes/add_area.js": {
-          "bytesInOutput": 1808
+          "bytesInOutput": 1824
         },
         "modules/modes/index.js": {
           "bytesInOutput": 0
         },
         "modules/modes/add_line.js": {
-          "bytesInOutput": 1569
+          "bytesInOutput": 1585
         },
         "modules/modes/add_point.js": {
-          "bytesInOutput": 1575
+          "bytesInOutput": 1586
         },
         "modules/modes/select_note.js": {
-          "bytesInOutput": 2912
+          "bytesInOutput": 2940
         },
         "modules/modes/add_note.js": {
-          "bytesInOutput": 846
+          "bytesInOutput": 855
         },
         "modules/modes/save.js": {
-          "bytesInOutput": 5399
+          "bytesInOutput": 5422
         },
         "modules/modes/select_error.js": {
-          "bytesInOutput": 3608
+          "bytesInOutput": 3643
         },
         "modules/ui/tools/modes.js": {
-          "bytesInOutput": 3442
+          "bytesInOutput": 3464
         },
         "modules/ui/tools/index.js": {
           "bytesInOutput": 0
         },
         "modules/ui/tools/notes.js": {
-          "bytesInOutput": 2985
+          "bytesInOutput": 3009
         },
         "modules/ui/tools/save.js": {
-          "bytesInOutput": 2973
+          "bytesInOutput": 2987
         },
         "modules/ui/tools/sidebar_toggle.js": {
-          "bytesInOutput": 654
+          "bytesInOutput": 657
         },
         "modules/ui/tools/undo_redo.js": {
-          "bytesInOutput": 3576
+          "bytesInOutput": 3594
         },
         "modules/ui/top_toolbar.js": {
-          "bytesInOutput": 1951
+          "bytesInOutput": 1959
         },
         "modules/ui/zoom_to_selection.js": {
-          "bytesInOutput": 1608
+          "bytesInOutput": 1613
         },
         "modules/ui/pane.js": {
-          "bytesInOutput": 2444
+          "bytesInOutput": 2448
         },
         "modules/ui/sections/background_display_options.js": {
-          "bytesInOutput": 3516
+          "bytesInOutput": 3520
         },
         "modules/ui/settings/custom_background.js": {
           "bytesInOutput": 3085
         },
         "modules/ui/sections/background_list.js": {
-          "bytesInOutput": 7132
+          "bytesInOutput": 7148
         },
         "modules/ui/sections/background_offset.js": {
-          "bytesInOutput": 4190
+          "bytesInOutput": 4202
         },
         "modules/ui/sections/overlay_list.js": {
-          "bytesInOutput": 2783
+          "bytesInOutput": 2791
         },
         "modules/ui/panes/background.js": {
-          "bytesInOutput": 447
+          "bytesInOutput": 453
         },
         "modules/ui/panes/help.js": {
-          "bytesInOutput": 9378
+          "bytesInOutput": 9387
         },
         "modules/ui/sections/validation_issues.js": {
-          "bytesInOutput": 3293
+          "bytesInOutput": 3304
         },
         "modules/ui/sections/validation_options.js": {
-          "bytesInOutput": 2085
+          "bytesInOutput": 2088
         },
         "modules/ui/sections/validation_rules.js": {
-          "bytesInOutput": 4326
+          "bytesInOutput": 4335
         },
         "modules/ui/sections/validation_status.js": {
-          "bytesInOutput": 5080
+          "bytesInOutput": 5089
         },
         "modules/ui/panes/issues.js": {
-          "bytesInOutput": 509
+          "bytesInOutput": 516
         },
         "modules/ui/settings/custom_data.js": {
-          "bytesInOutput": 3093
+          "bytesInOutput": 3095
         },
         "modules/ui/sections/data_layers.js": {
-          "bytesInOutput": 11356
+          "bytesInOutput": 11370
         },
         "modules/ui/sections/map_features.js": {
-          "bytesInOutput": 2834
+          "bytesInOutput": 2844
         },
         "modules/ui/sections/map_style_options.js": {
-          "bytesInOutput": 2303
+          "bytesInOutput": 2311
         },
         "modules/ui/sections/photo_overlays.js": {
-          "bytesInOutput": 7592
+          "bytesInOutput": 7612
         },
         "modules/ui/panes/map_data.js": {
-          "bytesInOutput": 412
+          "bytesInOutput": 418
         },
         "modules/ui/panes/preferences.js": {
-          "bytesInOutput": 316
+          "bytesInOutput": 319
         },
         "modules/ui/init.js": {
-          "bytesInOutput": 14077
+          "bytesInOutput": 14157
         },
         "modules/core/context.js": {
-          "bytesInOutput": 14329
+          "bytesInOutput": 14676
         },
         "modules/core/index.js": {
           "bytesInOutput": 0
         },
         "modules/services/kartaview.js": {
-          "bytesInOutput": 15089
+          "bytesInOutput": 15114
         },
         "modules/services/osm.js": {
-          "bytesInOutput": 37770
+          "bytesInOutput": 38335
         },
         "modules/services/osm_wikibase.js": {
           "bytesInOutput": 8424
         },
         "modules/services/streetside.js": {
-          "bytesInOutput": 27213
+          "bytesInOutput": 27241
         },
         "modules/util/jsonp_request.js": {
           "bytesInOutput": 1358
@@ -32488,64 +32488,64 @@
           "bytesInOutput": 506
         },
         "modules/modes/drag_note.js": {
-          "bytesInOutput": 2440
+          "bytesInOutput": 2461
         },
         "modules/modes/select_data.js": {
-          "bytesInOutput": 2163
+          "bytesInOutput": 2186
         },
         "modules/behavior/select.js": {
-          "bytesInOutput": 10501
+          "bytesInOutput": 10533
         },
         "modules/operations/index.js": {
           "bytesInOutput": 879
         },
         "modules/operations/continue.js": {
-          "bytesInOutput": 2024
+          "bytesInOutput": 2035
         },
         "modules/operations/copy.js": {
-          "bytesInOutput": 3570
+          "bytesInOutput": 3581
         },
         "modules/operations/disconnect.js": {
-          "bytesInOutput": 5994
+          "bytesInOutput": 6016
         },
         "modules/operations/downgrade.js": {
-          "bytesInOutput": 3987
+          "bytesInOutput": 3995
         },
         "modules/operations/extract.js": {
-          "bytesInOutput": 2665
+          "bytesInOutput": 2677
         },
         "modules/operations/merge.js": {
-          "bytesInOutput": 2841
+          "bytesInOutput": 2859
         },
         "modules/operations/paste.js": {
-          "bytesInOutput": 2269
+          "bytesInOutput": 2285
         },
         "modules/operations/reverse.js": {
-          "bytesInOutput": 2046
+          "bytesInOutput": 2054
         },
         "modules/operations/split.js": {
-          "bytesInOutput": 2707
+          "bytesInOutput": 2719
         },
         "modules/operations/straighten.js": {
-          "bytesInOutput": 4187
+          "bytesInOutput": 4204
         },
         "modules/modes/select.js": {
-          "bytesInOutput": 18340
+          "bytesInOutput": 18436
         },
         "modules/behavior/lasso.js": {
-          "bytesInOutput": 3150
+          "bytesInOutput": 3165
         },
         "modules/modes/browse.js": {
-          "bytesInOutput": 1573
+          "bytesInOutput": 1588
         },
         "modules/behavior/add_way.js": {
-          "bytesInOutput": 935
+          "bytesInOutput": 941
         },
         "modules/behavior/index.js": {
           "bytesInOutput": 0
         },
         "modules/behavior/hash.js": {
-          "bytesInOutput": 5064
+          "bytesInOutput": 5090
         },
         "modules/ui/panes/index.js": {
           "bytesInOutput": 0
@@ -32569,7 +32569,7 @@
           "bytesInOutput": 472
         }
       },
-      "bytes": 3325455
+      "bytes": 3329754
     }
   }
 }

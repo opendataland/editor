@@ -119,6 +119,12 @@ export function coreContext() {
     return context;
   };
 
+  // An object containing tags that must be present on features in order for them to be appear in the editor
+  context.entityFilter = function(obj) {
+    if (!arguments.length) return _connection.entityFilter();
+    _connection.entityFilter(obj);
+    return context;
+  };
 
   function afterLoad(cid, callback) {
     return (err, result) => {

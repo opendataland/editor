@@ -41,6 +41,8 @@ var _userChangesets;
 var _userDetails;
 var _off;
 
+var _entityFilter;
+
 // set a default but also load this from the API status
 var _maxWayNodes = 2000;
 
@@ -280,6 +282,16 @@ function parseJSON(payload, callback, options) {
         var uid;
 
         uid = osmEntity.id.fromOSM(child.type, child.id);
+        if (_entityFilter && _entityFilter.tags) {
+            for (var key in _entityFilter.tags) {
+                if (!child.tags ||
+                    (_entityFilter.tags[key] === "*" && !child.tags[key]) ||
+                    child.tags[key] !== _entityFilter.tags[key]) {
+                    _tileCache.seen[uid] = true;
+                    return null;
+                }
+            }
+        }
         if (options.skipSeen) {
             if (_tileCache.seen[uid]) return null;  // avoid reparsing a "seen" entity
             _tileCache.seen[uid] = true;
@@ -558,6 +570,13 @@ export default {
         _changeset = {};
 
         return this;
+    },
+
+    // An object containing tags that must be present on features in order for them to be appear in the editor
+    entityFilter: function(entityFilter) {
+        if (!arguments.length) return _entityFilter;
+        _entityFilter = entityFilter;
+        return context;
     },
 
 
