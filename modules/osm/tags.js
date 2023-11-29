@@ -5,6 +5,7 @@ export function osmIsInterestingTag(key) {
         key !== 'odbl' &&
         key.indexOf('source:') !== 0 &&
         key.indexOf('source_ref') !== 0 && // purposely exclude colon
+        key.indexOf('PDM:') !== 0 && // PDM is an internal namespace to PDMap
         key.indexOf('tiger:') !== 0;
 }
 

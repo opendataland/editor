@@ -12410,7 +12410,7 @@
 
   // modules/osm/tags.js
   function osmIsInterestingTag(key) {
-    return key !== "attribution" && key !== "created_by" && key !== "source" && key !== "odbl" && key.indexOf("source:") !== 0 && key.indexOf("source_ref") !== 0 && key.indexOf("tiger:") !== 0;
+    return key !== "attribution" && key !== "created_by" && key !== "source" && key !== "odbl" && key.indexOf("source:") !== 0 && key.indexOf("source_ref") !== 0 && key.indexOf("PDM:") !== 0 && key.indexOf("tiger:") !== 0;
   }
   var osmAreaKeys = {};
   function osmSetAreaKeys(value) {

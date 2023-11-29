@@ -17,7 +17,7 @@
       "imports": []
     },
     "modules/osm/tags.js": {
-      "bytes": 5902,
+      "bytes": 5980,
       "imports": []
     },
     "node_modules/d3-array/src/ascending.js": {
@@ -30614,7 +30614,7 @@
       "imports": [],
       "exports": [],
       "inputs": {},
-      "bytes": 5243437
+      "bytes": 5243542
     },
     "dist/iD.js": {
       "imports": [],
@@ -30766,7 +30766,7 @@
           "bytesInOutput": 4381
         },
         "modules/osm/tags.js": {
-          "bytesInOutput": 4651
+          "bytesInOutput": 4680
         },
         "node_modules/d3-array/src/ascending.js": {
           "bytesInOutput": 118
@@ -32584,7 +32584,7 @@
           "bytesInOutput": 472
         }
       },
-      "bytes": 3330686
+      "bytes": 3330715
     }
   }
 }
